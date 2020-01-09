@@ -14,19 +14,19 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="内网渗透劫持内网数据包，强行更改DNS 环境攻击机：Kali(192.168.209.137)靶机：32位XP(192.168.209.129)我们使用ETTERCAP ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。使用vim &#x2F;etc&#x2F;ettercap&#x2F;etter.dns编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS， 这">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img4.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img5.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img6.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img7.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img7.jpg">
 <meta property="article:published_time" content="2020-01-08T03:38:20.000Z">
-<meta property="article:modified_time" content="2020-01-08T09:40:42.749Z">
+<meta property="article:modified_time" content="2020-01-09T03:41:00.441Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="嗅探劫持">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/08/ettercap/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -102,13 +102,13 @@
 <p>ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。<br>使用<strong><em>vim /etc/ettercap/etter.dns</em></strong>编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS，</p>
 <p>这个时候我们的ettercap就该上场了，我们首先设置我们的DNS劫持页面。<br><strong><em>vim /etc/ettercap/etter.dns</em></strong> 使用VIM进行编辑，也可以用自带的文本进行编辑。<br>将下面的这段文本找到并改为这个样子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">microsoft.com      A   107.170.40.56</span><br><span class="line">*.microsoft.com    A   107.170.40.56</span><br><span class="line">www.microsoft.com  PTR 107.170.40.56      # Wildcards in PTR are not allowed</span><br><span class="line">*				 A	 192.168.209.137   #这两条使我们添加的</span><br><span class="line">*				 PTR  192.168.209.137  #这两条使我们添加的</span><br></pre></td></tr></table></figure>
-<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="ettercap/img1.jpg" alt="网卡设置"></p>
-<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="ettercap/img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="ettercap/img3.jpg" alt="网卡设置"></p>
+<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="img1.jpg" alt="网卡设置"></p>
+<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="img3.jpg" alt="网卡设置"></p>
 <p>首先.1的使我Win10的机子，.2是我的网关，.129是目标的机子，这个时候我们将.2的机子Add to Target1，.129的机子Add to Target2.<br>之后我们设置我们的ARP，根据我这个样子进行设置：</p>
-<p><img src="ettercap/img4.jpg" alt="网卡设置"></p>
+<p><img src="img4.jpg" alt="网卡设置"></p>
 <p>设置我之后我们选择插件进行执行了，选择</p>
-<p><img src="ettercap/img5.jpg" alt="网卡设置"></p>
-<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="ettercap/img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="ettercap/img7.jpg" alt="网卡设置"></p>
+<p><img src="img5.jpg" alt="网卡设置"></p>
+<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="img7.jpg" alt="网卡设置"></p>
 <p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
 
       
