@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ettercap | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="内网渗透劫持内网数据包，强行更改DNS 环境攻击机：Kali(192.168.209.137)靶机：32位XP(192.168.209.129)我们使用ETTERCAP ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。使用vim &#x2F;etc&#x2F;ettercap&#x2F;etter.dns编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS， 这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ettercap">
+<meta property="og:url" content="http://yoursite.com/2020/01/08/ettercap/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="内网渗透劫持内网数据包，强行更改DNS 环境攻击机：Kali(192.168.209.137)靶机：32位XP(192.168.209.129)我们使用ETTERCAP ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。使用vim &#x2F;etc&#x2F;ettercap&#x2F;etter.dns编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS， 这">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img7.jpg">
+<meta property="article:published_time" content="2020-01-08T03:38:20.000Z">
+<meta property="article:modified_time" content="2020-01-08T09:40:42.749Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="嗅探劫持">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/08/ettercap/ettercap/img1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ettercap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/08/ettercap/" class="article-date">
+  <time datetime="2020-01-08T03:38:20.000Z" itemprop="datePublished">2020-01-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ettercap
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>劫持内网数据包，强行更改DNS</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.137)<br>靶机：32位XP(192.168.209.129)<br>我们使用ETTERCAP</p>
+<p>ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。<br>使用<strong><em>vim /etc/ettercap/etter.dns</em></strong>编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS，</p>
+<p>这个时候我们的ettercap就该上场了，我们首先设置我们的DNS劫持页面。<br><strong><em>vim /etc/ettercap/etter.dns</em></strong> 使用VIM进行编辑，也可以用自带的文本进行编辑。<br>将下面的这段文本找到并改为这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">microsoft.com      A   107.170.40.56</span><br><span class="line">*.microsoft.com    A   107.170.40.56</span><br><span class="line">www.microsoft.com  PTR 107.170.40.56      # Wildcards in PTR are not allowed</span><br><span class="line">*				 A	 192.168.209.137   #这两条使我们添加的</span><br><span class="line">*				 PTR  192.168.209.137  #这两条使我们添加的</span><br></pre></td></tr></table></figure>
+<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="ettercap/img1.jpg" alt="网卡设置"></p>
+<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="ettercap/img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="ettercap/img3.jpg" alt="网卡设置"></p>
+<p>首先.1的使我Win10的机子，.2是我的网关，.129是目标的机子，这个时候我们将.2的机子Add to Target1，.129的机子Add to Target2.<br>之后我们设置我们的ARP，根据我这个样子进行设置：</p>
+<p><img src="ettercap/img4.jpg" alt="网卡设置"></p>
+<p>设置我之后我们选择插件进行执行了，选择</p>
+<p><img src="ettercap/img5.jpg" alt="网卡设置"></p>
+<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="ettercap/img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="ettercap/img7.jpg" alt="网卡设置"></p>
+<p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/08/ettercap/" data-id="ck566kj0v0000hswj0toqd4m0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/06/BEEF-MSF/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">BEEF+MSF</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" rel="tag">内网入侵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 10px;">脱壳篇</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/08/ettercap/">ettercap</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/06/BEEF-MSF/">BEEF+MSF</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/">脱壳学习1</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/05/Hexo-Method/">Hexo-Method</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/05/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
