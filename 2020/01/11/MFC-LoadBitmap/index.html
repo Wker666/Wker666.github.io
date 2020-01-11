@@ -5,22 +5,20 @@
   
 
   
-  <title>Hexo-Method | Wker</title>
+  <title>MFC-LoadBitmap | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hexo语法文章持续更新 新建文章新建一篇文章，先试用hexo new “title”新建一篇文章，使用hexo -g d命令部署发布。 删除文章先删除你要删除的文章md文章，然后进行hexo -g d部署就可以了(别忘记删除文章的文件夹)但是部署之后可能需要好几秒种之后才会在网站上刷新 注意事项在我们想使用#的时候要注意，#后面我们需要加上一个空格，否则不会解析 加入图片12![你想输入的替代文">
+  <meta name="description" content="MFC学习记录今天在回头用Picture control这个控件的时候，发现出现一些错误，这里记录一下，不要以后踩坑了。当我们要加载一幅位图时，我们要讲这个控件的Type属性设置为Bitmap，否则你将会一直加载不出位图，默认的只是加载一个无填充的矩形框。下面是一些属性：  Type属性  Frame：显示一个无填充的矩形框，边框颜色可以通过Color属性的下拉列表设定Etched Horz：显示">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo-Method">
-<meta property="og:url" content="http://yoursite.com/2020/01/05/Hexo-Method/index.html">
+<meta property="og:title" content="MFC-LoadBitmap">
+<meta property="og:url" content="http://yoursite.com/2020/01/11/MFC-LoadBitmap/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="Hexo语法文章持续更新 新建文章新建一篇文章，先试用hexo new “title”新建一篇文章，使用hexo -g d命令部署发布。 删除文章先删除你要删除的文章md文章，然后进行hexo -g d部署就可以了(别忘记删除文章的文件夹)但是部署之后可能需要好几秒种之后才会在网站上刷新 注意事项在我们想使用#的时候要注意，#后面我们需要加上一个空格，否则不会解析 加入图片12![你想输入的替代文">
+<meta property="og:description" content="MFC学习记录今天在回头用Picture control这个控件的时候，发现出现一些错误，这里记录一下，不要以后踩坑了。当我们要加载一幅位图时，我们要讲这个控件的Type属性设置为Bitmap，否则你将会一直加载不出位图，默认的只是加载一个无填充的矩形框。下面是一些属性：  Type属性  Frame：显示一个无填充的矩形框，边框颜色可以通过Color属性的下拉列表设定Etched Horz：显示">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/05/Hexo-Method/test/test.jpg">
-<meta property="article:published_time" content="2020-01-05T13:24:03.000Z">
-<meta property="article:modified_time" content="2020-01-11T03:09:13.988Z">
+<meta property="article:published_time" content="2020-01-11T02:53:16.000Z">
+<meta property="article:modified_time" content="2020-01-11T03:07:44.706Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="程序员">
+<meta property="article:tag" content="MFC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/05/Hexo-Method/test/test.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
   
@@ -73,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Hexo-Method" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-MFC-LoadBitmap" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/05/Hexo-Method/" class="article-date">
-  <time datetime="2020-01-05T13:24:03.000Z" itemprop="datePublished">2020-01-05</time>
+    <a href="/2020/01/11/MFC-LoadBitmap/" class="article-date">
+  <time datetime="2020-01-11T02:53:16.000Z" itemprop="datePublished">2020-01-11</time>
 </a>
     
   </div>
@@ -87,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hexo-Method
+      MFC-LoadBitmap
     </h1>
   
 
@@ -95,35 +93,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hexo语法"><a href="#Hexo语法" class="headerlink" title="Hexo语法"></a>Hexo语法</h1><p>文章持续更新</p>
-<h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>新建一篇文章，先试用hexo new “title”新建一篇文章，使用hexo -g d命令部署发布。</p>
-<h2 id="删除文章"><a href="#删除文章" class="headerlink" title="删除文章"></a>删除文章</h2><p>先删除你要删除的文章md文章，然后进行hexo -g d部署就可以了(别忘记删除文章的文件夹)<br>但是部署之后可能需要好几秒种之后才会在网站上刷新</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>在我们想使用#的时候要注意，#后面我们需要加上一个空格，否则不会解析</p>
-<h2 id="加入图片"><a href="#加入图片" class="headerlink" title="加入图片"></a>加入图片</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![你想输入的替代文字](xxxx&#x2F;图片名.jpg)</span><br><span class="line">这个图片要放在生成的文件的文件夹中，网上好多的方法不知道是不是错误的，反正我是不行，可能是编译器的问题吧</span><br></pre></td></tr></table></figure>
-<p>测试效果如下：<br><img src="test/test.jpg" alt="测试的图片"></p>
-<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><p>使用&gt;可以设置我们的层次，可以多个&gt;多层次</p>
+        <h1 id="MFC学习记录"><a href="#MFC学习记录" class="headerlink" title="MFC学习记录"></a>MFC学习记录</h1><p>今天在回头用Picture control这个控件的时候，发现出现一些错误，这里记录一下，不要以后踩坑了。<br>当我们要加载一幅位图时，我们要讲这个控件的Type属性设置为Bitmap，否则你将会一直加载不出位图，默认的只是加载一个无填充的矩形框。<br>下面是一些属性：</p>
+<blockquote>
+<p>Type属性</p>
+<blockquote>
+<p>Frame：显示一个无填充的矩形框，边框颜色可以通过Color属性的下拉列表设定<br>Etched Horz：显示一条横分割线<br>Etched Vert：显示一条竖分割线<br>Rectangle：显示一个填充的矩形框，矩形颜色可通过Color属性的下拉列表设定<br>Icon：显示一个图标（Icon），图标通过Image 下拉列表来设置图标资源ID<br>Bitmap：显示一个位图（Bitmap），位图通过Image 下拉列表来设置位图资源ID<br>Enhanced Metafile：显示一个加强的元数据文件（Metafile）<br>Owner Draw：自绘</p>
+</blockquote>
+</blockquote>
+<p>并且在这里我们设置好后，如果我们要用MFC给我们的CBitmap类的话呢，可以直接使用图片的ID号，如果用LoadBitmap(Hinstance可以通过AfxGetApp()-&gt;m_hinstance获得)，我们的第二个参数要通过MAKEINTRESOURCE转换，而不是文件路径，LoadImage也有个坑也需要记录一下，LR_LOADFROMFILE这个才是加载文件到内存。常用的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/05/Hexo-Method/" data-id="ck566w31e00067swjfh5egcpn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/11/MFC-LoadBitmap/" data-id="ck590gooj0000wcwj7fr47p89" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          脱壳学习1
-        
-      </div>
-    </a>
   
+    <a href="/2020/01/08/ettercap/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ettercap</div>
+    </a>
   
 </nav>
 
