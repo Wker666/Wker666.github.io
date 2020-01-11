@@ -101,7 +101,7 @@
 </blockquote>
 </blockquote>
 <p>并且在这里我们设置好后，如果我们要用MFC给我们的CBitmap类的话呢，可以直接使用图片的ID号，如果用LoadBitmap(Hinstance可以通过AfxGetApp()-&gt;m_hinstance获得)，我们的第二个参数要通过MAKEINTRESOURCE转换，而不是文件路径，LoadImage也有个坑也需要记录一下，LR_LOADFROMFILE这个才是加载文件到内存。常用的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap </span><br><span class="line">hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
 
       
     </div>
