@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/12/Common-Unshell/img16.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/01/12/Common-Unshell/img17.jpg">
 <meta property="article:published_time" content="2020-01-12T11:46:40.000Z">
-<meta property="article:modified_time" content="2020-01-12T16:24:18.097Z">
+<meta property="article:modified_time" content="2020-01-13T02:30:18.913Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="脱壳篇">
 <meta name="twitter:card" content="summary">
@@ -111,7 +111,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
-<h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RVE1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
+<h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RAV1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
 <h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>其实也就是ESP改变的时候我们下一个硬件断点，然后运行，ESP改变的时候程序暂停，我么单步跟下就可以了。<br><img src="img7.jpg" alt="HWESP"><br>然后我们运行（删除硬件断点不要忘记），会来到这个位置：<br><img src="img8.jpg" alt="OEPJmp"><br>可以看到确实快到了，我们但不跟踪几下就可以了。</p>
 <h2 id="关键搜索"><a href="#关键搜索" class="headerlink" title="关键搜索"></a>关键搜索</h2><p>其实也就是搜索popad，记住不要搜索整个快，因为太大了，我们Ctrl+F进行搜索，会看到如下的结果：<br><img src="img9.jpg" alt="区段"><br>我们Ctrl+L就可以搜索下一个，记住一般来说，附近都有大的跳转和返回，一般也就是跨区段的跳转。</p>
 <h2 id="二次镜像法"><a href="#二次镜像法" class="headerlink" title="二次镜像法"></a>二次镜像法</h2><p>首先我们对我们rsrc（资源）断下内存写入断点，这个就是进行解密，然后再对我们的code（代码）断进行下内存写入断点，这个样子就能到达我们的OEP了，具体操作如下：<br>点击M打开区段表。<br><img src="img10.jpg" alt="区段"><br>然后我们就会运行到这个位置：<br><img src="img11.jpg" alt="断下"><br>然后我们下我们code断点，然后运行。<br><img src="img12.jpg" alt="断下"><br>然后我们运行之后会运行到这个地方：<br><img src="img13.jpg" alt="OEPJmp"><br>然后就到我们熟悉的地方了。</p>
@@ -132,6 +132,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/01/13/LoadPE-and-importREC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LoadPE and importREC
+        
+      </div>
+    </a>
   
   
     <a href="/2020/01/12/OD-QuickKeyBoard/" id="article-nav-older" class="article-nav-link-wrap">
@@ -165,7 +174,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -187,6 +196,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/13/LoadPE-and-importREC/">LoadPE and importREC</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/12/Common-Unshell/">Common-Unshell</a>
           </li>
         
@@ -200,10 +213,6 @@
         
           <li>
             <a href="/2020/01/08/ettercap/">ettercap</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/06/BEEF-MSF/">BEEF+MSF</a>
           </li>
         
       </ul>

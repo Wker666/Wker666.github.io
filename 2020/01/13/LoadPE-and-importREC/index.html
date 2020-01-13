@@ -5,20 +5,31 @@
   
 
   
-  <title>OD-QuickKeyBoard | Wker</title>
+  <title>LoadPE and importREC | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CALC :         判断表达式WATCH :      添加监视表达式AT :             在指定地址进行反汇编FOLLOW :     跟随命令ORIG :         反汇编于 EIPDUMP           在指定地址进行转存DA :            转存为反汇编代码DB :            使用十六进制字节格式转存DC :            使">
+  <meta name="description" content="LoadPE这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。首先我们先对找到OEP的工具加载。在这个列表框中找到我们所在的进程纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。 import REC这款工具是用来修复IAT的一些信息，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OD-QuickKeyBoard">
-<meta property="og:url" content="http://yoursite.com/2020/01/12/OD-QuickKeyBoard/index.html">
+<meta property="og:title" content="LoadPE and importREC">
+<meta property="og:url" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="CALC :         判断表达式WATCH :      添加监视表达式AT :             在指定地址进行反汇编FOLLOW :     跟随命令ORIG :         反汇编于 EIPDUMP           在指定地址进行转存DA :            转存为反汇编代码DB :            使用十六进制字节格式转存DC :            使">
+<meta property="og:description" content="LoadPE这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。首先我们先对找到OEP的工具加载。在这个列表框中找到我们所在的进程纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。 import REC这款工具是用来修复IAT的一些信息，">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-12T11:41:50.000Z">
-<meta property="article:modified_time" content="2020-01-12T11:42:45.634Z">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img9.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img7.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img10.jpg">
+<meta property="article:published_time" content="2020-01-13T01:57:36.000Z">
+<meta property="article:modified_time" content="2020-01-13T02:27:56.339Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="反汇编工具">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/13/LoadPE-and-importREC/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
   
@@ -71,10 +82,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-OD-QuickKeyBoard" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-LoadPE-and-importREC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/12/OD-QuickKeyBoard/" class="article-date">
-  <time datetime="2020-01-12T11:41:50.000Z" itemprop="datePublished">2020-01-12</time>
+    <a href="/2020/01/13/LoadPE-and-importREC/" class="article-date">
+  <time datetime="2020-01-13T01:57:36.000Z" itemprop="datePublished">2020-01-13</time>
 </a>
     
   </div>
@@ -85,7 +96,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      OD-QuickKeyBoard
+      LoadPE and importREC
     </h1>
   
 
@@ -93,12 +104,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>CALC :         判断表达式<br>WATCH :      添加监视表达式<br>AT :             在指定地址进行反汇编<br>FOLLOW :     跟随命令<br>ORIG :         反汇编于 EIP<br>DUMP           在指定地址进行转存<br>DA :            转存为反汇编代码<br>DB :            使用十六进制字节格式转存<br>DC :            使用 ASCII 格式转存<br>DD :            转存在堆栈格式<br>DU :            转存在 UNICODE 格式<br>DW :           使用十六进制字词格式转存<br>STK :          前往堆栈中的地址<br>AS  :          （AS + 地址 + 字符串） 在指定地址进行汇编<br>BP :             进行条件中断（有条件的断点）<br>BPX :           中断在全部调用 （Call）<br>BPD :           清除全部调用中的断点<br>BC :             清除断点<br>MR :             内存断点于访问时<br>MW :            内存断点于写入时<br>MD :             清除内存断点<br>HR :             访问时进行硬件中断<br>HW :            写入时进行硬件中断<br>HE :              执行时进行硬件中断<br>HD :              清除硬件断点<br>STOP :          停止运行程序调试<br>PAUSE :        暂停执行程序调试<br>RUN :            运行程序进行调试<br>GE :              运行和通过例外<br>SI :              单步进入 Call 中<br>SO :             步过 Call<br>TI :              跟踪进入直到地址<br>TO :            跟踪步过直到地址<br>TC :            跟踪进入直到满足条件<br>TOC :          跟踪步过直到满足条件<br>TR :            运行直到返回<br>TU :            运行直到用户代码<br>LOG :          查看记录窗口<br>MOD :         查看模块窗口<br>MEM :          查看内存窗口<br>CPU :           查看 CPU 窗口<br>CS :            查看 Call 堆栈<br>BRK :           查看断点窗口<br>OPT :           打开选项设置窗口<br>EXIT :          退出 OllyDbg<br>QUIT :          退出 OllyDbg<br>OPEN :         打开一个可执行文件<br>CLOSE :       关闭可执行文件  </p>
+        <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
+<h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/12/OD-QuickKeyBoard/" data-id="ck5ay92gf0000rwwjd3fwc5gc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/13/LoadPE-and-importREC/" data-id="ck5btylm50000cwwj0st17iwu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li></ul>
@@ -109,19 +121,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/01/12/Common-Unshell/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Common-Unshell
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/11/MFC-LoadBitmap/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/12/Common-Unshell/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">MFC-LoadBitmap</div>
+      <div class="article-nav-title">Common-Unshell</div>
     </a>
   
 </nav>
