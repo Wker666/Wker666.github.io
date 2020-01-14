@@ -71,6 +71,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Common-Unshell2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/14/Common-Unshell2/" class="article-date">
+  <time datetime="2020-01-14T11:12:49.000Z" itemprop="datePublished">2020-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/14/Common-Unshell2/">Common-Unshell2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="比较常用的脱壳技巧2"><a href="#比较常用的脱壳技巧2" class="headerlink" title="比较常用的脱壳技巧2"></a>比较常用的脱壳技巧2</h1><p>之前文章介绍了一些比较常见的，下面再介绍几种</p>
+<h2 id="VirtualFree法1"><a href="#VirtualFree法1" class="headerlink" title="VirtualFree法1"></a>VirtualFree法1</h2><p>这种方法首先是下VirtualFree的断点，执行到我们的用户组代码，然后搜索push 8000，之后我们就往下跟踪，然后大跳转跟过去，一般就到了我们的OEP，具体操作看截图：<br>首先下端之后运行，然后回到我们的程序领空。<br><img src="img1.jpg" alt="从VirtualFree回到程序"><br>然后接下来我们搜索push 8000，进行下断。<br><img src="img2.jpg" alt="在push 8000下断"><br>最后就来到了我们的OEP</p>
+<h2 id="VirtualFree法2"><a href="#VirtualFree法2" class="headerlink" title="VirtualFree法2"></a>VirtualFree法2</h2><p>这个更加简单，我们下VirtualFree的断点，然后执行两次，意思就是在第二次断在VirtualFree的时候我们返回到程序领空，继续单步就好了。</p>
+<h2 id="mov转移法"><a href="#mov转移法" class="headerlink" title="mov转移法"></a>mov转移法</h2><p>就是说当我们刚进入程序的时候，如果首句出现mov指令的时候，我们给他后面的地址下断点，例如：<br><img src="img3.jpg" alt="查看数据"><br>然后运行，跟下去就好了<br>但在这里我们看到一个函数片段，也就是有一个retn，我们在片段下方进行下断：<br><img src="img4.jpg" alt="下断"><br>然后运行，继续往下跟踪，就到了OEP。</p>
+<h2 id="VirtualAlloc法"><a href="#VirtualAlloc法" class="headerlink" title="VirtualAlloc法"></a>VirtualAlloc法</h2><p>这个法子和VirtualFree法2基本没差别，一个操作方法，无非下的函数变了，但是后面跟踪的会有点长。</p>
+<h2 id="最后一次异常法"><a href="#最后一次异常法" class="headerlink" title="最后一次异常法"></a>最后一次异常法</h2><p>首先我们先将OD中的所有异常全取消掉，然后重新载入程序，操作如下：<br><img src="img5.jpg" alt="设置OD"><br>然后我们运行程序，程序会中断，直到我们运行N次之后，程序顺利跑起来了，那我们再次重新运行，然后运行N-1次，查看SE（异常）处理器在堆栈中记录的地址：<br><img src="img6.jpg" alt="SE处理器地址"><br>然后转到这个地址，接下来的操作和我们的mov转移法相同了。（不要忘记调节回去哦！）</p>
+<h2 id="at-GetVersion"><a href="#at-GetVersion" class="headerlink" title="at GetVersion"></a>at GetVersion</h2><p>程序就会运行到GetVersion，然后我们在段尾下端，然后返回去，发现你发现你现在就在OEP下方，嘻嘻。<br><img src="img7.jpg" alt="OEP附近"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/14/Common-Unshell2/" data-id="ck5dwbpo80000t0wj6wcq2sm0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Rebuilt-input-list" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/14/Rebuilt-input-list/" class="article-date">
@@ -522,6 +567,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/14/Common-Unshell2/">Common-Unshell2</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/14/Rebuilt-input-list/">Rebuilt input list</a>
           </li>
         
@@ -535,10 +584,6 @@
         
           <li>
             <a href="/2020/01/12/OD-QuickKeyBoard/">OD-QuickKeyBoard</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/11/MFC-LoadBitmap/">MFC-LoadBitmap</a>
           </li>
         
       </ul>
