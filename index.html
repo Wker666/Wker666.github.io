@@ -71,6 +71,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Rebuilt-input-list" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/14/Rebuilt-input-list/" class="article-date">
+  <time datetime="2020-01-14T09:18:45.000Z" itemprop="datePublished">2020-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/14/Rebuilt-input-list/">Rebuilt input list</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="找OEP的一个小技巧"><a href="#找OEP的一个小技巧" class="headerlink" title="找OEP的一个小技巧"></a>找OEP的一个小技巧</h1><p>我们载入程序，但在这里我发现了一个小问题，我用之前的一个OD载入之后我进入的却是系统的领空，而且一直进入不了用户组的代码，如下图所示：<br><img src="img1.jpg" alt="未进入程序领空"><br>但是我重换了一个比较基础的OD却发现是停留在程序的领空，如下图所示：<br><img src="img2.jpg" alt="程序领空"><br>这个时候我们先暂且不去深究这个的原因，之后再去研究具体的错误设置。<br>这个程序我们使用单步跟踪法来进行脱壳。<br>一步一步的往下跟踪，直到这个地方：<br><img src="img3.jpg" alt="程序OEP关键跳转"><br>我们可以看到这个时候的jnz是准备跳过去，但是我们发现塔下一个CALL却是call了一个[EBX+C]，这个地方就是比较关键的地方，因为一般壳为了保护自身，都会喜欢将地址转换到一些寄存在加偏移的一个相对基址寻址的地方，我们修改我们标志寄存器的值，让他不进行跳转，然后步入，我们会进入这个地方：<br><img src="img4.jpg" alt="程序OEP"><br>这里我们比较要注意的地方是，OD在这个地方我们一般要进行分析代码，也就是Ctrl+A，有的时候壳非常喜欢这个寄存器间接跳转，我们可以用回车键，或者Ctrl+G跳转到那个位置，看看像不像，然后选择步入。</p>
+<h1 id="重建输入表"><a href="#重建输入表" class="headerlink" title="重建输入表"></a>重建输入表</h1><p>接着上面的，我们用我们常用的方法，进行dump，这里不演示了，我就直接脱掉。<br>这个时候我们在使用import REC的时候我们发现，貌似所有的函数都是无效的，这个时候我们就需要进行手动修改了，这里我提供两种方法：</p>
+<h2 id="第一种：快速搜索法"><a href="#第一种：快速搜索法" class="headerlink" title="第一种：快速搜索法"></a>第一种：快速搜索法</h2><p>其实虽然import REC给我们的不是很正确，但是我们DD过去看一下：<br><img src="img5.jpg" alt="输入表附近"><br>这个时候我们自己定位一下，看一下上下方否是一片0的地方，从头拉到尾。<br><img src="img6.jpg" alt="输入表头部"><br><img src="img7.jpg" alt="输入表结尾"><br>这个时候就是可以了的，我们输入起始的RVA：2500，大小0x538,这个大小如果不是太确定，我们可以使用1000，但不是太建议，特殊情况下不要了，这个时候我们常规方法进行dump。</p>
+<h2 id="第二种：CALL地址搜索法"><a href="#第二种：CALL地址搜索法" class="headerlink" title="第二种：CALL地址搜索法"></a>第二种：CALL地址搜索法</h2><p>这个方法比较直接，我们可以直接看他OEP下方CALL的地址，例如：<br><img src="img8.jpg" alt="快速CALL定位输入表"><br>只要是下方的CALL地址就行，这个时候就到输入表的头部了，然后就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/14/Rebuilt-input-list/" data-id="ck5dpucar0000nowj4orf7fhx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-LoadPE-and-importREC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/13/LoadPE-and-importREC/" class="article-date">
@@ -458,7 +500,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 20px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -480,6 +522,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/14/Rebuilt-input-list/">Rebuilt input list</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/13/LoadPE-and-importREC/">LoadPE and importREC</a>
           </li>
         
@@ -493,10 +539,6 @@
         
           <li>
             <a href="/2020/01/11/MFC-LoadBitmap/">MFC-LoadBitmap</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/08/ettercap/">ettercap</a>
           </li>
         
       </ul>
