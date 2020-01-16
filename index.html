@@ -71,6 +71,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OverLay-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/16/OverLay-UnShell/" class="article-date">
+  <time datetime="2020-01-16T12:40:41.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/16/OverLay-UnShell/">OverLay-UnShell</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>当我们在查壳的时候碰到覆盖（OverLay）的时候，我们就需要如下操作：<br><img src="img10.jpg" alt="查壳"></p>
+<h1 id="OverLay数据处理"><a href="#OverLay数据处理" class="headerlink" title="OverLay数据处理"></a>OverLay数据处理</h1><p>今天刚学习了这种数据处理的方法，具体原因之后深入分析，其实也就是区段数据的一个补充，首先需要找到我们的多余数据，分为两种简单方法：</p>
+<h2 id="数据查找法"><a href="#数据查找法" class="headerlink" title="数据查找法"></a>数据查找法</h2><p>这种方法比较简单也比较直接，我们从最底部自下往上寻找一大片00，用快捷键就可以了，记住是搜索没有脱壳的数据：<br><img src="img1.jpg" alt="查找方法"><br><img src="img2.jpg" alt="结果数据"><br>我们从00后面的数据复制，最好用shift范围性复制，复制到结尾。<br><img src="img3.jpg" alt="复制数据"></p>
+<h2 id="区段查找法"><a href="#区段查找法" class="headerlink" title="区段查找法"></a>区段查找法</h2><p>这个通过LoadPE查找最后的一个区段的范围，然后通过真实的RVA+Size计算出来我们要找的数据：<br><img src="img4.jpg" alt="PE计算"><br>8800+400=8C00，我们这里Ctrl+G进行转到，然后看到和我们刚才一样的地方，同样复制。<br><img src="img5.jpg" alt="地址转到"></p>
+<h1 id="修复数据"><a href="#修复数据" class="headerlink" title="修复数据"></a>修复数据</h1><p>复制完毕之后我们打开我们脱壳完毕的程序，然后拖到底部，然后将我们刚才的数据复制上去。<br><img src="img6.jpg" alt="粘贴数据"><br>粘贴上去会询问我们，我们点击确定就好了：<br><img src="img7.jpg" alt="确定"><br>之后我们就会看到数据变成这个样子的：<br><img src="img8.jpg" alt="修改的数据"><br>我们Ctrl+S保存，然后用PEid进行查壳：<br><img src="img9.jpg" alt="查壳"><br>我们发现我们的程序脱壳完毕，并且后面还有一个“[覆盖]”，运行也正常这个样子就算是可以了的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/16/OverLay-UnShell/" data-id="ck5gqyfsu000080wjhp1736s4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-IF-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/16/IF-UnShell/" class="article-date">
@@ -445,53 +488,6 @@
 
 
   
-    <article id="post-MFC-LoadBitmap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/11/MFC-LoadBitmap/" class="article-date">
-  <time datetime="2020-01-11T02:53:16.000Z" itemprop="datePublished">2020-01-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/11/MFC-LoadBitmap/">MFC-LoadBitmap</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MFC学习记录"><a href="#MFC学习记录" class="headerlink" title="MFC学习记录"></a>MFC学习记录</h1><p>今天在回头用Picture control这个控件的时候，发现出现一些错误，这里记录一下，不要以后踩坑了。<br>当我们要加载一幅位图时，我们要讲这个控件的Type属性设置为Bitmap，否则你将会一直加载不出位图，默认的只是加载一个无填充的矩形框。<br>下面是一些属性：</p>
-<blockquote>
-<p>Type属性</p>
-<blockquote>
-<p>Frame：显示一个无填充的矩形框，边框颜色可以通过Color属性的下拉列表设定<br>Etched Horz：显示一条横分割线<br>Etched Vert：显示一条竖分割线<br>Rectangle：显示一个填充的矩形框，矩形颜色可通过Color属性的下拉列表设定<br>Icon：显示一个图标（Icon），图标通过Image 下拉列表来设置图标资源ID<br>Bitmap：显示一个位图（Bitmap），位图通过Image 下拉列表来设置位图资源ID<br>Enhanced Metafile：显示一个加强的元数据文件（Metafile）<br>Owner Draw：自绘</p>
-</blockquote>
-</blockquote>
-<p>并且在这里我们设置好后，如果我们要用MFC给我们的CBitmap类的话呢，可以直接使用图片的ID号，如果用LoadBitmap(Hinstance可以通过AfxGetApp()-&gt;m_hinstance获得)，我们的第二个参数要通过MAKEINTRESOURCE转换，而不是文件路径，LoadImage也有个坑也需要记录一下，LR_LOADFROMFILE这个才是加载文件到内存。常用的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap </span><br><span class="line">hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/11/MFC-LoadBitmap/" data-id="ck590gooj0000wcwj7fr47p89" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -542,6 +538,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/16/OverLay-UnShell/">OverLay-UnShell</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/16/IF-UnShell/">IF-UnShell</a>
           </li>
         
@@ -555,10 +555,6 @@
         
           <li>
             <a href="/2020/01/16/Rebuilt-input-list2/">Rebuilt input list2</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/14/Common-Unshell2/">Common-Unshell2</a>
           </li>
         
       </ul>
