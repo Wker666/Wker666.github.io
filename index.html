@@ -93,10 +93,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="Rebuilt-input-list2/img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="Rebuilt-input-list2/img2.jpg" alt="错误"><br>解决办法如下：</p>
-<h2 id="LoadPE纠正镜像"><a href="#LoadPE纠正镜像" class="headerlink" title="LoadPE纠正镜像"></a>LoadPE纠正镜像</h2><p><img src="Rebuilt-input-list2/img3.jpg" alt="纠正镜像"></p>
-<h2 id="import-REC修复转储文件"><a href="#import-REC修复转储文件" class="headerlink" title="import REC修复转储文件"></a>import REC修复转储文件</h2><p>我们可以看到import REC已经正确的查找到了我们需要的东西<br><img src="Rebuilt-input-list2/img4.jpg" alt="修复转储文件"><br>我们接下来获取输入表，剪切输入表dump出来就好了。<br>但是我们发现我们又一次的出现之前的错误！<br><img src="Rebuilt-input-list2/img5.jpg" alt="再次出现错误"></p>
-<h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="Rebuilt-input-list2/img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="Rebuilt-input-list2/img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
+        <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="img2.jpg" alt="错误"><br>解决办法如下：</p>
+<h2 id="LoadPE纠正镜像"><a href="#LoadPE纠正镜像" class="headerlink" title="LoadPE纠正镜像"></a>LoadPE纠正镜像</h2><p><img src="img3.jpg" alt="纠正镜像"></p>
+<h2 id="import-REC修复转储文件"><a href="#import-REC修复转储文件" class="headerlink" title="import REC修复转储文件"></a>import REC修复转储文件</h2><p>我们可以看到import REC已经正确的查找到了我们需要的东西<br><img src="img4.jpg" alt="修复转储文件"><br>我们接下来获取输入表，剪切输入表dump出来就好了。<br>但是我们发现我们又一次的出现之前的错误！<br><img src="img5.jpg" alt="再次出现错误"></p>
+<h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
 
       
     </div>
