@@ -5,25 +5,28 @@
   
 
   
-  <title>脱壳学习1 | Wker</title>
+  <title>Rebuilt input list2 | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="脱壳学习ESP定律初学脱壳，之前学习了反汇编的知识，开始学习脱壳 最初接触的脱壳比较好用的就是ESP定律脱壳，方法比较简单，在ESP的值改变的时候给ESP下硬件的一个断点，比较方便的是：我们点击运行，之后他一一般会断下，之后就会看到一些跳转，这些跳转中比较重要的是jmp跳转，jmp跳转之后我们但不跟过去，一般就是可以跳到我们的OEP位置这个时候可能会有向上的跳转，我们不分析太细节的话呢，我们直接在">
+  <meta name="description" content="今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：然后我们进行dump文件，首先我们用OD自带的插件进行dump。然后运行dump出来的文件，会出现出错的问题：解决办法如下： LoadPE纠正镜像 import REC修复转储文件我们可以看到import REC已经正确的查找到了我们需要的东西我们接下来获取输入表，剪切输入表dump出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="脱壳学习1">
-<meta property="og:url" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/index.html">
+<meta property="og:title" content="Rebuilt input list2">
+<meta property="og:url" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="脱壳学习ESP定律初学脱壳，之前学习了反汇编的知识，开始学习脱壳 最初接触的脱壳比较好用的就是ESP定律脱壳，方法比较简单，在ESP的值改变的时候给ESP下硬件的一个断点，比较方便的是：我们点击运行，之后他一一般会断下，之后就会看到一些跳转，这些跳转中比较重要的是jmp跳转，jmp跳转之后我们但不跟过去，一般就是可以跳到我们的OEP位置这个时候可能会有向上的跳转，我们不分析太细节的话呢，我们直接在">
+<meta property="og:description" content="今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：然后我们进行dump文件，首先我们用OD自带的插件进行dump。然后运行dump出来的文件，会出现出错的问题：解决办法如下： LoadPE纠正镜像 import REC修复转储文件我们可以看到import REC已经正确的查找到了我们需要的东西我们接下来获取输入表，剪切输入表dump出">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/TK1/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/TK1/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/TK1/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/TK1/img4.jpg">
-<meta property="article:published_time" content="2020-01-06T04:02:06.000Z">
-<meta property="article:modified_time" content="2020-01-06T04:27:10.320Z">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img7.jpg">
+<meta property="article:published_time" content="2020-01-16T00:04:44.000Z">
+<meta property="article:modified_time" content="2020-01-16T00:26:52.663Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="脱壳篇">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/TK1/img1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/16/Rebuilt-input-list2/Rebuilt-input-list2/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
   
@@ -76,10 +79,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-脱壳学习1" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Rebuilt-input-list2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/" class="article-date">
-  <time datetime="2020-01-06T04:02:06.000Z" itemprop="datePublished">2020-01-06</time>
+    <a href="/2020/01/16/Rebuilt-input-list2/" class="article-date">
+  <time datetime="2020-01-16T00:04:44.000Z" itemprop="datePublished">2020-01-16</time>
 </a>
     
   </div>
@@ -90,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      脱壳学习1
+      Rebuilt input list2
     </h1>
   
 
@@ -98,14 +101,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="脱壳学习"><a href="#脱壳学习" class="headerlink" title="脱壳学习"></a>脱壳学习</h1><h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>初学脱壳，之前学习了反汇编的知识，开始学习脱壳</p>
-<p>最初接触的脱壳比较好用的就是ESP定律脱壳，方法比较简单，在ESP的值改变的时候给ESP下硬件的一个断点，比较方便的是：<br><img src="TK1/img1.jpg" alt="ESP断点"><br>我们点击运行，之后他一一般会断下，之后就会看到一些跳转，这些跳转中比较重要的是jmp跳转，jmp跳转之后我们但不跟过去，一般就是可以跳到我们的OEP位置<br><img src="TK1/img2.jpg" alt="ESP断点"><br><strong>这个时候可能会有向上的跳转，我们不分析太细节的话呢，我们直接在jmp上下断点，运行，让他直接到jmp，之后就会跳到OEP，主要要关注的是否是跨区段的跳转，如果是跨区段的跳转，并且跳转的结束位置是我们的代码区块，那么一般就到我们真正的OEP，但是可能出现OD将这段代码误认为ASCII码，所以我们需要删除分析或者分析代码，效果图如下：</strong><br><img src="TK1/img3.jpg" alt="ESP断点"></p>
-<h1 id="Dump出脱壳文件"><a href="#Dump出脱壳文件" class="headerlink" title="Dump出脱壳文件"></a>Dump出脱壳文件</h1><p>这里可以简单的使用OD带的插件，如果不行的话呢用import REC，再不行我们就手动修改IAT使用loadPE，这里这个小程序我们使用OD的插件就可以了，具体操作如下：<br><img src="TK1/img4.jpg" alt="ESP断点"><br>这里注意，如果我们插件不行的话呢，我们需要取消勾选重建输入表，目的是为了我们能够在其他工具中重新建表，这样子生成的文件我们就能够方便调试了。</p>
+        <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="Rebuilt-input-list2/img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="Rebuilt-input-list2/img2.jpg" alt="错误"><br>解决办法如下：</p>
+<h2 id="LoadPE纠正镜像"><a href="#LoadPE纠正镜像" class="headerlink" title="LoadPE纠正镜像"></a>LoadPE纠正镜像</h2><p><img src="Rebuilt-input-list2/img3.jpg" alt="纠正镜像"></p>
+<h2 id="import-REC修复转储文件"><a href="#import-REC修复转储文件" class="headerlink" title="import REC修复转储文件"></a>import REC修复转储文件</h2><p>我们可以看到import REC已经正确的查找到了我们需要的东西<br><img src="Rebuilt-input-list2/img4.jpg" alt="修复转储文件"><br>我们接下来获取输入表，剪切输入表dump出来就好了。<br>但是我们发现我们又一次的出现之前的错误！<br><img src="Rebuilt-input-list2/img5.jpg" alt="再次出现错误"></p>
+<h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="Rebuilt-input-list2/img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="Rebuilt-input-list2/img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/" data-id="ck566w31u00077swj1oox07nf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/16/Rebuilt-input-list2/" data-id="ck5fzveom000014wj03m12e9w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
@@ -116,19 +120,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/01/06/BEEF-MSF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          BEEF+MSF
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/05/Hexo-Method/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/14/Common-Unshell2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hexo-Method</div>
+      <div class="article-nav-title">Common-Unshell2</div>
     </a>
   
 </nav>
