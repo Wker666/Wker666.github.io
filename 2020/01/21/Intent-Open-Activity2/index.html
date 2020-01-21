@@ -5,26 +5,20 @@
   
 
   
-  <title>IF-UnShell | Wker</title>
+  <title>Intent Open Activity2 | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="快捷判断找OEP有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是">
+  <meta name="description" content="Intent打开Activity的其他显示调用一. 通过全类名 123Intent inten1 &#x3D; new Intent();inten1.setClassName(this, &quot;com.example.lx.activity&quot;);startActivity(inten1); 二.通过包名和全类名 123Intent inten2 &#x3D; new Intent();inten2.setClassNa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IF-UnShell">
-<meta property="og:url" content="http://yoursite.com/2020/01/16/IF-UnShell/index.html">
+<meta property="og:title" content="Intent Open Activity2">
+<meta property="og:url" content="http://yoursite.com/2020/01/21/Intent-Open-Activity2/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="快捷判断找OEP有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是">
+<meta property="og:description" content="Intent打开Activity的其他显示调用一. 通过全类名 123Intent inten1 &#x3D; new Intent();inten1.setClassName(this, &quot;com.example.lx.activity&quot;);startActivity(inten1); 二.通过包名和全类名 123Intent inten2 &#x3D; new Intent();inten2.setClassNa">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img4.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img5.jpg">
-<meta property="article:published_time" content="2020-01-16T07:55:00.000Z">
-<meta property="article:modified_time" content="2020-01-16T08:09:30.713Z">
+<meta property="article:published_time" content="2020-01-21T06:48:50.000Z">
+<meta property="article:modified_time" content="2020-01-21T07:01:01.391Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="脱壳篇">
+<meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/16/IF-UnShell/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
   
@@ -77,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-IF-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Intent-Open-Activity2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/16/IF-UnShell/" class="article-date">
-  <time datetime="2020-01-16T07:55:00.000Z" itemprop="datePublished">2020-01-16</time>
+    <a href="/2020/01/21/Intent-Open-Activity2/" class="article-date">
+  <time datetime="2020-01-21T06:48:50.000Z" itemprop="datePublished">2020-01-21</time>
 </a>
     
   </div>
@@ -91,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      IF-UnShell
+      Intent Open Activity2
     </h1>
   
 
@@ -99,17 +93,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="快捷判断找OEP"><a href="#快捷判断找OEP" class="headerlink" title="快捷判断找OEP"></a>快捷判断找OEP</h2><p>有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：<br><img src="img1.jpg" alt="关键跳"><br>我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是OEP，但是我们dump修复的时候我们发现我们发现不了任何一个输入表，这就对了，<strong>下面的这一下跳转其实就是我们的输入表重建工作，比较明显的就是我们的我们寄存器中会出现输入表的一些信息</strong>：<br><img src="img2.jpg" alt="关键跳"><br>这个时候我们要注意了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0043E633    09C0            or eax,eax                               ; 跑跑排行.0043E746</span><br><span class="line">0043E635  - 0F84 E3BDFCFF   je 跑跑排行.0040A41E</span><br></pre></td></tr></table></figure>
-<p>我们可以看到，只有只有在我们的eax的值为0的时候我们的跳转才会实现，这个时候OD提供给了我们一个很强大的功能就是跳转断点，我们设置只有在eax==0的时候才会停下来就好了，具体操作如下：<br><img src="img3.jpg" alt="条件断点"><br>键入我们的条件：eax==0<br><img src="img4.jpg" alt="条件"><br>然后我们运行程序：<br><img src="img5.jpg" alt="断下"><br>这个时候我们跟过去就是我们的OEP了。</p>
+        <h1 id="Intent打开Activity的其他显示调用"><a href="#Intent打开Activity的其他显示调用" class="headerlink" title="Intent打开Activity的其他显示调用"></a>Intent打开Activity的其他显示调用</h1><p>一. 通过全类名</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
+<p>二.通过包名和全类名</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten2 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten2.setClassName(<span class="string">"com.example.test"</span>, <span class="string">"com.example.test.st"</span>);<span class="comment">//支持调用其他的应用程序</span></span><br><span class="line">startActivity(inten2);</span><br></pre></td></tr></table></figure>
+<p>注意我的注释，可以打开其他的应用程序，意思就是远程打开另外APP的Activity，但在这我们需要注意，包名是包名，全类名要填写打开的Activity的全类名，但是有一点要注意，如果我们打开的是主界面那倒是无所谓，但是如果我们打开的不是主界面，那么我们就需要注意了，我们需要在配置我们的Activity属性的时候加上这么一句话：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".st"</span> <span class="attr">android:exported</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到有一个exported的属性，这个就是是否允许远程调用，默认是false。<br>三.通过Component</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">inten1.setComponent(<span class="keyword">new</span> ComponentName(<span class="keyword">this</span>,activity<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
+<p>new一个就可以了</p>
+<h2 id="安卓Listener"><a href="#安卓Listener" class="headerlink" title="安卓Listener"></a>安卓Listener</h2><p>一点小补充，我们如果偏要设置监听时候要用this，习惯win32的话呢我们需要将我们的类接上类似于：<code>OnClickListener</code>这个样子的一个借口，然后完成：<code>public void onClick(View v)</code>这个函数，<code>v.getId()</code>可以获得事件源，在R文件中的定义对比，建议还是用switch进行判断。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/IF-UnShell/" data-id="ck5ggdzol0000hcwj810w6cue" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/21/Intent-Open-Activity2/" data-id="ck5nj8pmn0000r0wj74kffujd" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
 
     </footer>
   </div>
@@ -117,19 +118,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/01/16/OverLay-UnShell/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          OverLay-UnShell
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/16/special-UnShell/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/21/Dir-Monitor/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">special-UnShell</div>
+      <div class="article-nav-title">Dir Monitor</div>
     </a>
   
 </nav>
