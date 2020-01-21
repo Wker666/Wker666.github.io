@@ -71,6 +71,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="w-track-API" class="article article-type-w" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/16/track-API/" class="article-date">
+  <time datetime="2020-01-16T02:09:14.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/16/track-API/">track API</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
+<h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/16/track-API/" data-id="ck5g55edg00002cwjeysf7uq1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Rebuilt-input-list2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/16/Rebuilt-input-list2/" class="article-date">
@@ -480,47 +520,6 @@
 
 
   
-    <article id="post-脱壳学习1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/" class="article-date">
-  <time datetime="2020-01-06T04:02:06.000Z" itemprop="datePublished">2020-01-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/">BeginToLearn-Unshell</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="脱壳学习"><a href="#脱壳学习" class="headerlink" title="脱壳学习"></a>脱壳学习</h1><h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>初学脱壳，之前学习了反汇编的知识，开始学习脱壳</p>
-<p>最初接触的脱壳比较好用的就是ESP定律脱壳，方法比较简单，在ESP的值改变的时候给ESP下硬件的一个断点，比较方便的是：<br><img src="TK1/img1.jpg" alt="ESP断点"><br>我们点击运行，之后他一一般会断下，之后就会看到一些跳转，这些跳转中比较重要的是jmp跳转，jmp跳转之后我们但不跟过去，一般就是可以跳到我们的OEP位置<br><img src="TK1/img2.jpg" alt="ESP断点"><br><strong>这个时候可能会有向上的跳转，我们不分析太细节的话呢，我们直接在jmp上下断点，运行，让他直接到jmp，之后就会跳到OEP，主要要关注的是否是跨区段的跳转，如果是跨区段的跳转，并且跳转的结束位置是我们的代码区块，那么一般就到我们真正的OEP，但是可能出现OD将这段代码误认为ASCII码，所以我们需要删除分析或者分析代码，效果图如下：</strong><br><img src="TK1/img3.jpg" alt="ESP断点"></p>
-<h1 id="Dump出脱壳文件"><a href="#Dump出脱壳文件" class="headerlink" title="Dump出脱壳文件"></a>Dump出脱壳文件</h1><p>这里可以简单的使用OD带的插件，如果不行的话呢用import REC，再不行我们就手动修改IAT使用loadPE，这里这个小程序我们使用OD的插件就可以了，具体操作如下：<br><img src="TK1/img4.jpg" alt="ESP断点"><br>这里注意，如果我们插件不行的话呢，我们需要取消勾选重建输入表，目的是为了我们能够在其他工具中重新建表，这样子生成的文件我们就能够方便调试了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/06/%E8%84%B1%E5%A3%B3%E5%AD%A6%E4%B9%A01/" data-id="ck566w31u00077swj1oox07nf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -571,6 +570,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/21/Dir-Monitor/">Dir Monitor</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/21/C-friend-fun/">C++ friend fun</a>
           </li>
         
@@ -584,10 +587,6 @@
         
           <li>
             <a href="/2020/01/18/adb-Common-method/">adb-Common-method</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/18/NewSectionFindLoseData/">NewSectionFindLoseData</a>
           </li>
         
       </ul>
