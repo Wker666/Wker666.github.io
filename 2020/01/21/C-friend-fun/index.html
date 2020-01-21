@@ -5,28 +5,20 @@
   
 
   
-  <title>ettercap | Wker</title>
+  <title>C++ friend fun | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内网渗透劫持内网数据包，强行更改DNS 环境攻击机：Kali(192.168.209.137)靶机：32位XP(192.168.209.129)我们使用ETTERCAP ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。使用vim &#x2F;etc&#x2F;ettercap&#x2F;etter.dns编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS， 这">
+  <meta name="description" content="友元函数这种函数当时学的时候忘了，在这里重新回忆一下，这种函数的作用和他的名字一样，就是方便我们的使用，就是说你没有必要将这个函数放在你的类中，只需要在生命的时候给他前面加上一个friend，然后就在外部声明就好了，还有就是友元类，这个和友元函数类似。简单的看下友元函数的写法： 123456789101112131415161718192021222324#include &lt;iostream">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ettercap">
-<meta property="og:url" content="http://yoursite.com/2020/01/08/ettercap/index.html">
+<meta property="og:title" content="C++ friend fun">
+<meta property="og:url" content="http://yoursite.com/2020/01/21/C-friend-fun/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="内网渗透劫持内网数据包，强行更改DNS 环境攻击机：Kali(192.168.209.137)靶机：32位XP(192.168.209.129)我们使用ETTERCAP ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。使用vim &#x2F;etc&#x2F;ettercap&#x2F;etter.dns编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS， 这">
+<meta property="og:description" content="友元函数这种函数当时学的时候忘了，在这里重新回忆一下，这种函数的作用和他的名字一样，就是方便我们的使用，就是说你没有必要将这个函数放在你的类中，只需要在生命的时候给他前面加上一个friend，然后就在外部声明就好了，还有就是友元类，这个和友元函数类似。简单的看下友元函数的写法： 123456789101112131415161718192021222324#include &lt;iostream">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img4.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img5.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img6.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/08/ettercap/img7.jpg">
-<meta property="article:published_time" content="2020-01-08T03:38:20.000Z">
-<meta property="article:modified_time" content="2020-01-09T03:41:00.441Z">
+<meta property="article:published_time" content="2020-01-21T00:46:42.000Z">
+<meta property="article:modified_time" content="2020-01-21T00:52:18.602Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="嗅探劫持">
+<meta property="article:tag" content="Win32编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/08/ettercap/img1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
   
@@ -79,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ettercap" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-C-friend-fun" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/08/ettercap/" class="article-date">
-  <time datetime="2020-01-08T03:38:20.000Z" itemprop="datePublished">2020-01-08</time>
+    <a href="/2020/01/21/C-friend-fun/" class="article-date">
+  <time datetime="2020-01-21T00:46:42.000Z" itemprop="datePublished">2020-01-21</time>
 </a>
     
   </div>
@@ -93,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ettercap
+      C++ friend fun
     </h1>
   
 
@@ -101,27 +93,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>劫持内网数据包，强行更改DNS</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.137)<br>靶机：32位XP(192.168.209.129)<br>我们使用ETTERCAP</p>
-<p>ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。<br>使用<strong><em>vim /etc/ettercap/etter.dns</em></strong>编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS，</p>
-<p>这个时候我们的ettercap就该上场了，我们首先设置我们的DNS劫持页面。<br><strong><em>vim /etc/ettercap/etter.dns</em></strong> 使用VIM进行编辑，也可以用自带的文本进行编辑。<br>将下面的这段文本找到并改为这个样子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">microsoft.com      A   107.170.40.56</span><br><span class="line">*.microsoft.com    A   107.170.40.56</span><br><span class="line">www.microsoft.com  PTR 107.170.40.56      # Wildcards in PTR are not allowed</span><br><span class="line">*				 A	 192.168.209.137   #这两条使我们添加的</span><br><span class="line">*				 PTR  192.168.209.137  #这两条使我们添加的</span><br></pre></td></tr></table></figure>
-<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="img1.jpg" alt="网卡设置"></p>
-<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="img3.jpg" alt="网卡设置"></p>
-<p>首先.1的使我Win10的机子，.2是我的网关，.129是目标的机子，这个时候我们将.2的机子Add to Target1，.129的机子Add to Target2.<br>之后我们设置我们的ARP，根据我这个样子进行设置：</p>
-<p><img src="img4.jpg" alt="网卡设置"></p>
-<p>设置我之后我们选择插件进行执行了，选择</p>
-<p><img src="img5.jpg" alt="网卡设置"></p>
-<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="img7.jpg" alt="网卡设置"></p>
-<p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
-
+        <h1 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h1><p>这种函数当时学的时候忘了，在这里重新回忆一下，这种函数的作用和他的名字一样，就是方便我们的使用，就是说你没有必要将这个函数放在你的类中，只需要在生命的时候给他前面加上一个friend，然后就在外部声明就好了，还有就是友元类，这个和友元函数类似。<br>简单的看下友元函数的写法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Geta</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> a;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">FGA</span><span class="params">(Test&amp; i)</span></span>;<span class="comment">//友元函数的定义</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FGA</span><span class="params">(Test&amp; i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	i.a = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Test *o = <span class="keyword">new</span> Test();</span><br><span class="line">	FGA(*o);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;o-&gt;Geta()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/08/ettercap/" data-id="ck566w30p00007swjbf9zfuj9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/21/C-friend-fun/" data-id="ck5n5zbc90000b4wj01408y2t" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
 
     </footer>
   </div>
@@ -129,19 +109,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/01/11/MFC-LoadBitmap/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          MFC-LoadBitmap
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/06/BEEF-MSF/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/20/Intent-Open-Activity/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">BEEF+MSF</div>
+      <div class="article-nav-title">Intent Open Activity</div>
     </a>
   
 </nav>
