@@ -71,6 +71,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-java-泛型2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/" class="article-date">
+  <time datetime="2020-01-23T11:40:23.000Z" itemprop="datePublished">2020-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/">java-泛型2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><p>这个东西相对而言有点小复杂，这里的话呢简单介绍一些比较常用的方式。泛型的方法的话呢其实也就是在一个类中增加一个泛型的方法，看下面的示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String agrs[])</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">double</span> a = <span class="number">100</span>;</span><br><span class="line">		ceshi tCeshi = <span class="keyword">new</span> ceshi();</span><br><span class="line">		System.out.print(<span class="string">"值:"</span>+tCeshi.&lt;Double&gt;getString(a));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ceshi</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">String <span class="title">getString</span><span class="params">(T a)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> a.toString();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，其实那个尖括号里面的类型就是用来定义参数类型的。<br>而且这里，静态方法需要再次声明，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String agrs[])</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">		ceshi &lt;Integer&gt; tCeshi  = <span class="keyword">new</span> ceshi();</span><br><span class="line">		tCeshi.p(a);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ceshi</span> &lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T aT;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">p</span><span class="params">(T a)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.print(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就像是这个样子，静态方法需要再次定义。</p>
+<h2 id="泛型可变参数方法"><a href="#泛型可变参数方法" class="headerlink" title="泛型可变参数方法"></a>泛型可变参数方法</h2><p>其实大同小异啦，主要还是要说一下是哪个类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String agrs[])</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">		ceshi &lt;Integer&gt; tCeshi  = <span class="keyword">new</span> ceshi();</span><br><span class="line">		tCeshi.p(a,<span class="number">500</span>,<span class="number">600</span>,<span class="number">900</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ceshi</span> &lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">p</span><span class="params">(T... a)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">			System.out.println(a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型上下边界"><a href="#泛型上下边界" class="headerlink" title="泛型上下边界"></a>泛型上下边界</h2><p>这个东西就是一个定义，其实也不难理解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String agrs[])</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		ceshi &lt;Son&gt; tCeshi  = <span class="keyword">new</span> ceshi();</span><br><span class="line">		tCeshi.p(<span class="number">500</span>,<span class="number">600</span>,<span class="number">900</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ceshi</span> &lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">fa</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">p</span><span class="params">(T... a)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">			System.out.println(a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fa</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">fa</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实仔细看看就是对于我们传入的类型界定一下。</p>
+<h2 id="泛型数组"><a href="#泛型数组" class="headerlink" title="泛型数组"></a>泛型数组</h2><p>这个东西有点乱，看了一大顿也不是十分透彻，简单的总结一下。<br>1.不能和创建一个确切的泛型类型数组<br><img src="img1.jpg" alt="错误"><br>可以看到这个样子是不行的，<br>那么我们只能这个样子，使用通配符。<br>但是在最后，取出数据是要做显式的类型转换的。<br>但是我的JDK好像和网上的代码有冲突，这里就不贴图片了。！！！</p>
+<p>最近冠状病毒肆虐，希望大家都能够注意健康，也快过年了，希望大家都平平安安的！！！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/" data-id="ck5qpc95w000084wjbv6j6087" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Intent-Open-Activity3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/23/Intent-Open-Activity3/" class="article-date">
@@ -538,48 +588,6 @@
 
 
   
-    <article id="post-LoseData-find" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/17/LoseData-find/" class="article-date">
-  <time datetime="2020-01-17T03:57:19.000Z" itemprop="datePublished">2020-01-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/17/LoseData-find/">LoseData-find</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="丢失的程序头部"><a href="#丢失的程序头部" class="headerlink" title="丢失的程序头部"></a>丢失的程序头部</h1><p>有的程序加壳之后将原本OEP的部分头部给去除掉了，放在了自身的壳里面，导致我们脱壳之后我们的程序可能入口会出错，这个时候我们就需要自己补充上去：</p>
-<h2 id="丢失数据的OEP"><a href="#丢失数据的OEP" class="headerlink" title="丢失数据的OEP"></a>丢失数据的OEP</h2><p>首先我们需要找到他给我们的OEP，这里ACProcet这个壳比较特殊，我们需要用插件HideOD进行隐藏，然后将我们的调试选项，取消勾选INT3的异常：<br><img src="img1.jpg" alt="调试设置"><br><img src="img2.jpg" alt="隐藏OD"><br>这个时候我们运行程序，使用最后一次异常，将我们的SE栈值下上硬件断点，这里为什么不下INT3断点呢，其实是这个壳有一定的保护系统，下上会出错（别人说的），然后我们的程序会进入下面这个地方：<br><img src="img3.jpg" alt="关键处"><br>这个时候我们看到RETN就到了我们的假的OEP，这个时候我们运行到RETN，然后对我们的code代码段进行下访问断点：<br><img src="img4.jpg" alt="返回处"><br><img src="img5.jpg" alt="访问中断"><br>这个时候运行程序，我们的程序就会到假的OEP：<br><img src="img6.jpg" alt="丢失数据的OEP"><br>这个时候我们知道之后，其实已经错过了找我们的丢失数据的机会，我们重新来过：<br>在我们下断在RETN的时候我们下12ffc0这个硬件访问断点，<br><img src="img7.jpg" alt="硬件断点"><br>然后他会带我们跳到：<br><img src="img8.jpg" alt="丢失的数据"><br>我们复制二进制数据，然后相同的方法到达我们刚才的OEP，把那一段给粘贴上去：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">55 8B EC 6A FF</span><br></pre></td></tr></table></figure>
-<p>我们找到假的OEP其实有个坑，程序代码会混淆，这个时候我们Ctrl+A分析代码就好了，然后在上面5个字节粘贴我们的二进制：<br><img src="img9.jpg" alt="补充数据"><br>这个时候我们将我们当前的EIP进行转到我们的补充好的数据上面，然后进行脱壳：<br><img src="img10.jpg" alt="修改EIP"><br>这个时候我们打开LoadPE，修改我们的镜像，然后拖出来，之后的操作和我们之前的都是一样的（import REC需要修复数据），然后生成我们的脱壳程序。<br>但是我们发现我们的程序还是没办法运行起来。这里别人说应该是保护的一个机制：<br><img src="img11.jpg" alt="启动失败"><br>我们去到我们没有脱壳前程序的OEP，然后将我们的一些丢失数据放回去这个样子他就检测不出来了。<br><img src="img12.jpg" alt="原先OEP"><br>入口的OEP是AC000，我们跳过去，把我们的二进制数据粘贴上去，然后用jmp跳转跳转到我们的真正的OEP：<br><img src="img13.jpg" alt="假OEP"><br>修改完毕之后我们保存（OD自带的保存修改），但是这个时候还是不行，因为我们现在PE头部的OEP还是我们真正的OEP，我们用LoadPE指过去：<br><img src="img14.jpg" alt="修改入口点地址"><br>我们点击保存，确定就好了，但是我们发现我们PEid还是找不到壳子，这个就是后话了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/17/LoseData-find/" data-id="ck5howzh80000k0wj4mwo4387" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -608,7 +616,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 17.5px;">Android学习</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 17.5px;">Android学习</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -630,6 +638,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/">java-泛型2</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/23/Intent-Open-Activity3/">Intent Open Activity3</a>
           </li>
         
@@ -643,10 +655,6 @@
         
           <li>
             <a href="/2020/01/21/Dir-Monitor/">Dir Monitor</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/21/C-friend-fun/">C++ friend fun</a>
           </li>
         
       </ul>
