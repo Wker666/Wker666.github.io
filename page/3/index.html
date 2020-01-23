@@ -71,6 +71,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-MFC-LoadBitmap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/11/MFC-LoadBitmap/" class="article-date">
+  <time datetime="2020-01-11T02:53:16.000Z" itemprop="datePublished">2020-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/11/MFC-LoadBitmap/">MFC-LoadBitmap</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MFC学习记录"><a href="#MFC学习记录" class="headerlink" title="MFC学习记录"></a>MFC学习记录</h1><p>今天在回头用Picture control这个控件的时候，发现出现一些错误，这里记录一下，不要以后踩坑了。<br>当我们要加载一幅位图时，我们要讲这个控件的Type属性设置为Bitmap，否则你将会一直加载不出位图，默认的只是加载一个无填充的矩形框。<br>下面是一些属性：</p>
+<blockquote>
+<p>Type属性</p>
+<blockquote>
+<p>Frame：显示一个无填充的矩形框，边框颜色可以通过Color属性的下拉列表设定<br>Etched Horz：显示一条横分割线<br>Etched Vert：显示一条竖分割线<br>Rectangle：显示一个填充的矩形框，矩形颜色可通过Color属性的下拉列表设定<br>Icon：显示一个图标（Icon），图标通过Image 下拉列表来设置图标资源ID<br>Bitmap：显示一个位图（Bitmap），位图通过Image 下拉列表来设置位图资源ID<br>Enhanced Metafile：显示一个加强的元数据文件（Metafile）<br>Owner Draw：自绘</p>
+</blockquote>
+</blockquote>
+<p>并且在这里我们设置好后，如果我们要用MFC给我们的CBitmap类的话呢，可以直接使用图片的ID号，如果用LoadBitmap(Hinstance可以通过AfxGetApp()-&gt;m_hinstance获得)，我们的第二个参数要通过MAKEINTRESOURCE转换，而不是文件路径，LoadImage也有个坑也需要记录一下，LR_LOADFROMFILE这个才是加载文件到内存。常用的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap </span><br><span class="line">hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/11/MFC-LoadBitmap/" data-id="ck590gooj0000wcwj7fr47p89" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ettercap" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/08/ettercap/" class="article-date">
@@ -291,7 +338,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 17.5px;">Android学习</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -313,6 +360,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/23/Intent-Open-Activity3/">Intent Open Activity3</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/21/Java-%E6%B3%9B%E5%9E%8B/">Java 泛型</a>
           </li>
         
@@ -326,10 +377,6 @@
         
           <li>
             <a href="/2020/01/21/C-friend-fun/">C++ friend fun</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/20/Intent-Open-Activity/">Intent Open Activity</a>
           </li>
         
       </ul>
