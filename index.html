@@ -71,6 +71,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-File-operate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/24/File-operate/" class="article-date">
+  <time datetime="2020-01-24T01:35:09.000Z" itemprop="datePublished">2020-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/24/File-operate/">File operate</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><p>上篇博客说道了强大的CreateFile函数，现在就介绍如何进行文件的具体操作。</p>
+<h2 id="SetFilePointer移动文件指针"><a href="#SetFilePointer移动文件指针" class="headerlink" title="SetFilePointer移动文件指针"></a><code>SetFilePointer</code>移动文件指针</h2><p>读文件的时候我们要标志我们具体读到了哪个地方，那么我们就需要一个指针，这个指针代表我们具体读到了什么地方。<br><code>SetFilePointer</code>这个函数就是设置这个指针的位置，方便我们可以随机读取文件。<br>看下MSDN的一个介绍：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">SetFilePointer</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,          <span class="comment">// handle of file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LONG lDistanceToMove,  <span class="comment">// number of bytes to move file pointer</span></span></span></span><br><span class="line"><span class="function"><span class="params">  PLONG lpDistanceToMoveHigh,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="comment">// pointer to high-order DWORD of </span></span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="comment">// distance to move</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwMoveMethod     <span class="comment">// how to move</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>hFile</code>这个就是我们打开文件的一个文件句柄，通过CreateFile就可获得。</li>
+<li><code>lDistanceToMove</code>移动的一个距离</li>
+<li><code>lpDistanceToMoveHigh</code>看名字就知道了这个是移动距离的高32位，一般至于超大文件才会用的到。</li>
+<li><code>dwMoveMethod</code>指针的一个移动方式，主要是下面这三个值：<ul>
+<li>FILE_BEGIN：从文件的开头进行移动</li>
+<li>FILE_CURRENT：从当前的一个位置进行移动</li>
+<li>FILE_END：从文件的结尾进行移动<br>简单易懂一下就看明白了。</li>
+</ul>
+</li>
+</ol>
+<p>返回值就是当前文件指针的位置，如果失败就是-1。<br>这个函数有个强大的功能，就是说比如你当前的这个文件有100KB，但是我却移动到了1000KB，那么再写入的时候我的文件就会增大。</p>
+<h2 id="SetEndOfFile截断文件"><a href="#SetEndOfFile截断文件" class="headerlink" title="SetEndOfFile截断文件"></a><code>SetEndOfFile</code>截断文件</h2><p><code>SetEndOfFile</code>这个函数MSDN的一个定义：*The SetEndOfFile function moves the end-of-file (EOF) position for the specified file to the current position of the file pointer. *<br>简单的翻译一下：SetEndOfFile函数将指定文件的end-of (EOF)位置移动到文件指针的当前位置。<br>其实简单的说作用就是用来截断文件的。可以用来扩展，也可以用来截断一部分。</p>
+<h2 id="ReadFile与WriteFile"><a href="#ReadFile与WriteFile" class="headerlink" title="ReadFile与WriteFile"></a><code>ReadFile</code>与<code>WriteFile</code></h2><p>看名字就知道这是读写文件的操作<br>首先我们看一下ReadFile的一个文件定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">WriteFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,                    <span class="comment">// handle to file to write to</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBuffer,                <span class="comment">// pointer to data to write to file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToWrite,     <span class="comment">// number of bytes to write</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpNumberOfBytesWritten,  <span class="comment">// pointer to number of bytes written</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPOVERLAPPED lpOverlapped        <span class="comment">// pointer to structure for overlapped I/O</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>下面说几个重点的参数就好了</p>
+<ul>
+<li><code>lpBuffer</code>这个参数就是接受的一个缓冲区</li>
+<li><code>nNumberOfBytesToWrite</code>这个是用来读取的一个长度</li>
+<li><code>lpNumberOfBytesWritten</code>实际读取的一个大小，用来判断是否结束了一般</li>
+<li><code>lpOverlapped</code>重叠I/O的，NULL就好了，基本用不大到<br>说了这么多我们操作一下试试，首先还是要用到我们之前的<code>CreateFile</code>来打开我们的文件，获得文件的一个指针：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE hFile;</span><br><span class="line">	hFile = CreateFile(<span class="string">"Wker.txt"</span>,</span><br><span class="line">					FILE_SHARE_READ,<span class="comment">//要读这个文件	</span></span><br><span class="line">					<span class="number">0</span>,<span class="comment">//不共享</span></span><br><span class="line">					<span class="literal">NULL</span>,<span class="comment">//默认的安全属性</span></span><br><span class="line">					OPEN_EXISTING,<span class="comment">//打开文件</span></span><br><span class="line">					FILE_ATTRIBUTE_NORMAL,<span class="comment">//普通文件 </span></span><br><span class="line">					<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"打开失败，看看是不是有杀毒软件哦！"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	DWORD realRead;</span><br><span class="line">	SetFilePointer(hFile,<span class="number">0</span>, <span class="literal">NULL</span>, FILE_BEGIN); </span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">char</span>* t = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">20</span>];</span><br><span class="line">		<span class="keyword">if</span>( !ReadFile(hFile,t,<span class="number">20</span>,&amp;realRead,<span class="literal">NULL</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">"fail"</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		t[realRead] = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;t;</span><br><span class="line">	&#125;<span class="keyword">while</span>(realRead == <span class="number">20</span>);</span><br><span class="line">	 </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这个地方我们要注意我们的文件属性，要与你的文本属性相同！</strong><br>写文件的话呢其实也很简单：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">WriteFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,                    <span class="comment">// handle to file to write to</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBuffer,                <span class="comment">// pointer to data to write to file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToWrite,     <span class="comment">// number of bytes to write</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpNumberOfBytesWritten,  <span class="comment">// pointer to number of bytes written</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPOVERLAPPED lpOverlapped        <span class="comment">// pointer to structure for overlapped I/O</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数可以看出基本上是一模一样的，那我们还是看个小例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE hFile;</span><br><span class="line">	hFile = CreateFile(<span class="string">"Wker.txt"</span>,</span><br><span class="line">					GENERIC_WRITE,<span class="comment">//要写这个文件	</span></span><br><span class="line">					<span class="number">0</span>,<span class="comment">//不共享</span></span><br><span class="line">					<span class="literal">NULL</span>,<span class="comment">//默认的安全属性</span></span><br><span class="line">					OPEN_EXISTING,<span class="comment">//打开文件</span></span><br><span class="line">					FILE_ATTRIBUTE_NORMAL,<span class="comment">//普通文件 </span></span><br><span class="line">					<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"打开失败，看看是不是有杀毒软件哦！"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	DWORD RealWrite;</span><br><span class="line">	<span class="keyword">char</span> t[<span class="number">4</span>] = <span class="string">"aaa"</span>;</span><br><span class="line">	WriteFile(hFile,t,<span class="number">3</span>,&amp;RealWrite,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(RealWrite != <span class="number">3</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"fail:"</span>&lt;&lt;RealWrite;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"Write Success"</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但在这个地方我们要注意，我们要写入的自己不需要带最后的00，他好像可以自己加上去。<br>PS：注意了！！！在用这个函数的时候，我们写完的时候，其实内容没有立马改变，而是写在了缓冲区中，Windows会找到合适的时机再写入磁盘的。<br>立即刷新的话呢，我们可以用<code>CloseHandle</code>或者使用比较有针对性的函数：<code>FlushFileBuffers</code>，参数都是一样的，最后一个是专门用来刷新缓冲区数据的。</p>
+<h2 id="LockFile与UnlockFile"><a href="#LockFile与UnlockFile" class="headerlink" title="LockFile与UnlockFile"></a><code>LockFile</code>与<code>UnlockFile</code></h2><p>对于文件的安全性，防止文件在写入的过程中内容又被读取我们可以使用这两个函数，主要是对文件的缓冲区进行一定的保护作用，看一下这两个函数的一个定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加锁</span></span><br><span class="line"><span class="function">BOOL <span class="title">LockFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,           <span class="comment">// handle of file to lock</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetLow,  <span class="comment">// low-order word of lock region offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetHigh,  <span class="comment">// high-order word of lock region offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToLockLow,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="comment">// low-order word of length to lock</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToLockHigh </span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="comment">// high-order word of length to lock</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//解锁</span></span><br><span class="line"><span class="function">BOOL <span class="title">UnlockFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,           <span class="comment">// handle of file to unlock</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetLow,  <span class="comment">// low-order word of lock region offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetHigh,  <span class="comment">// high-order word of lock region offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToUnlockLow,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="comment">// low-order word of length to unlock</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nNumberOfBytesToUnlockHigh </span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="comment">// high-order word of length to unlock</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数基本一致那几个High的值很明显就是针对于特大文件的高32位的值，我们用NULL就可以了的，其他参数就是一个文件的加锁开始位置和加锁区域。<br>在这里需要注意的是，虽然我们的加锁文件结束进程的时候会自动解锁，但是这个还是最好显示的调用解锁函数避免我们有的时候文件无法正常的打开，而且Windows解锁文件的时间取决于当前可用的系统内存。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/24/File-operate/" data-id="ck5rli8es00008gwj8k6gc87m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Windows-CreateFile" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/23/Windows-CreateFile/" class="article-date">
@@ -603,60 +675,6 @@
 
 
   
-    <article id="post-adb-Common-method" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/18/adb-Common-method/" class="article-date">
-  <time datetime="2020-01-18T13:29:47.000Z" itemprop="datePublished">2020-01-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/18/adb-Common-method/">adb-Common-method</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>初学Android</p>
-<h1 id="ADB常用命令"><a href="#ADB常用命令" class="headerlink" title="ADB常用命令"></a>ADB常用命令</h1><ul>
-<li>adb devices<br>这个用于查看当前连接的模拟器。<br><img src="img1.jpg" alt="查看当前连接对象"></li>
-<li>adb start-server <strong>开启调试器</strong></li>
-<li>adb kill-server  <strong>终止调试器</strong></li>
-<li>adb -s 参数 install 路径 <strong>安装一个apk文件</strong> 参数适用于指定安装的路径</li>
-<li>adb shell 获取Android的Shell <strong>这个命令有点类似于Linux的命令，且当前目录是我们的根目录</strong><br><img src="img2.jpg" alt="Shell权限"><blockquote>
-<p>在这里我刚了解到，原来Android的内核是基于Linux的。<br>exit 退出当前的Shell</p>
-</blockquote>
-</li>
-<li>adb push &lt;Windows的一个文件&gt;&lt;手机文件目录&gt; <strong>主要用来传给我们手机电脑上的一个文件</strong><br>但是如果你遇到：<em>Unable to chmod ***: Read-only file system</em><br>那么解决办法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">首先我们需要adb切换到root权限：adb remount</span><br><span class="line">然后我们重新挂载：mount -rw -o remount &#x2F;</span><br><span class="line"></span><br><span class="line">	注：</span><br><span class="line">  	mount 是挂载命令</span><br><span class="line">  	-rw  是说指定的挂载文件是可读&#x2F;写的</span><br><span class="line"> 	-o remount &#x2F; 是说重新挂载根</span><br><span class="line">然后我们chmod 777 文件夹</span><br><span class="line">777就是可读可写，具体忘记了，Linux的一些操作过短时间需要复习了看来。</span><br></pre></td></tr></table></figure>
-<img src="img3.jpg" alt="重新挂载"><br><img src="img4.jpg" alt="赋予权限"></li>
-<li>adb pull &lt;手机文件&gt;&lt;Windows文件路径&gt;</li>
-<li>Ctrl+F11横竖屏切换（现在貌似废弃了，在…中有）。</li>
-</ul>
-<p>上述的许多命令用eclipse基本可以代替，所一这里不过多的赘述。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/18/adb-Common-method/" data-id="ck5jpee5w0000v4wjehlefinf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -685,7 +703,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">Android学习</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 17.5px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -707,6 +725,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/24/File-operate/">File operate</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/23/Windows-CreateFile/">Windows-CreateFile</a>
           </li>
         
@@ -720,10 +742,6 @@
         
           <li>
             <a href="/2020/01/21/Java-%E6%B3%9B%E5%9E%8B/">Java 泛型</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/21/Intent-Open-Activity2/">Intent Open Activity2</a>
           </li>
         
       </ul>
