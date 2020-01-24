@@ -71,6 +71,138 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-File-Attribute" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/24/File-Attribute/" class="article-date">
+  <time datetime="2020-01-24T09:39:30.000Z" itemprop="datePublished">2020-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/24/File-Attribute/">File Attribute</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件属性的读取"><a href="#文件属性的读取" class="headerlink" title="文件属性的读取"></a>文件属性的读取</h1><p>文件属性的一些读取，主要就是依靠。</p>
+<h2 id="GetFileType获取文件类型"><a href="#GetFileType获取文件类型" class="headerlink" title="GetFileType获取文件类型"></a><code>GetFileType</code>获取文件类型</h2><p>就一个参数，文件句柄，<code>CreateFile</code>获得的，返回值：</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FILE_TYPE_UNKNOWN</td>
+<td>The type of the specified file is unknown.</td>
+</tr>
+<tr>
+<td>FILE_TYPE_DISK</td>
+<td>The specified file is a disk file.</td>
+</tr>
+<tr>
+<td>FILE_TYPE_CHAR</td>
+<td>The specified file is a character file, typically an LPT device or a console.</td>
+</tr>
+<tr>
+<td>FILE_TYPE_PIPE</td>
+<td>The specified file is either a named or anonymous pipe.</td>
+</tr>
+</tbody></table>
+<h2 id="GetFileSize获取文件尺寸"><a href="#GetFileSize获取文件尺寸" class="headerlink" title="GetFileSize获取文件尺寸"></a><code>GetFileSize</code>获取文件尺寸</h2><p>这个函数用来获取文件的大小，在读取文件的时候很好用</p>
+<p><strong>如果函数成功，则返回的值是文件大小的低阶双字，如果lpFileSizeHigh是非null，则函数将文件大小的高阶双字放入该参数指向的变量中。<br>如果函数失败且lpFileSizeHigh为NULL，则返回值为0xFFFFFFFF。要获取扩展的错误信息，请调用GetLastError。<br>如果函数失败并且lpFileSizeHigh是非空的，则返回值为0xFFFFFFFF, GetLastError将返回一个NO_ERROR以外的值。</strong><br>返回值的一个判定，简单看看就好了。</p>
+<h2 id="GetFileAttributes获取文件属性"><a href="#GetFileAttributes获取文件属性" class="headerlink" title="GetFileAttributes获取文件属性"></a><code>GetFileAttributes</code>获取文件属性</h2><p>这个东西不复杂就是有点乱，参数就是一个字符串，不要忘记转义就好了。<br>看一下MSDN的一些说明。</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FILE_ATTRIBUTE_ARCHIVE</td>
+<td>The file or directory is an archive file or directory. Applications use this attribute to mark files for backup or removal.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_COMPRESSED</td>
+<td>The file or directory is compressed. For a file, this means that all of the data in the file is compressed. For a directory, this means that compression is the default for newly created files and subdirectories.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_DIRECTORY</td>
+<td>The handle identifies a directory.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_ENCRYPTED</td>
+<td>The file or directory is encrypted. For a file, this means that all data streams are encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_HIDDEN</td>
+<td>The file or directory is hidden. It is not included in an ordinary directory listing.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_NORMAL</td>
+<td>The file or directory has no other attributes set. This attribute is valid only if used alone.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_OFFLINE</td>
+<td>The data of the file is not immediately available. Indicates that the file data has been physically moved to offline storage.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_READONLY</td>
+<td>The file or directory is read-only. Applications can read the file but cannot write to it or delete it. In the case of a directory, applications cannot delete it.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_REPARSE_POINT</td>
+<td>The file has an associated reparse point.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_SPARSE_FILE</td>
+<td>The file is a sparse file.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_SYSTEM</td>
+<td>The file or directory is part of, or is used exclusively by, the operating system.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_TEMPORARY</td>
+<td>The file is being used for temporary storage. File systems attempt to keep all of the data in memory for quicker access rather than flushing the data back to mass storage. A temporary file should be deleted by the application as soon as it is no longer needed.</td>
+</tr>
+<tr>
+<td>（呼~，终于写完了，手都累酸了）</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>返回值就是这样子判断，这些东西对与目录一样也是适用的。<br>示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD dwAttributes = GetFileAttributes(<span class="string">"Wker.txt"</span>) ; </span><br><span class="line">	<span class="keyword">if</span>(dwAttributes == <span class="number">0XFFFFFFFF</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"这是个什么东西？"</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>((dwAttributes &amp; FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊！是个目录啊"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊!是个文件啊"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置文件属性：<code>SetFileAttributes</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetFileAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpFileName,  <span class="comment">// pointer to filename</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileAttributes   <span class="comment">// attributes to set</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数就不介绍了，很简单，第二个参数值太多，百度一下就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/24/File-Attribute/" data-id="ck5s1grg00000b0wj4nuy3gqo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Intent-过滤器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/" class="article-date">
@@ -671,61 +803,6 @@
 
 
   
-    <article id="post-Intent-Open-Activity" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/20/Intent-Open-Activity/" class="article-date">
-  <time datetime="2020-01-20T10:47:35.000Z" itemprop="datePublished">2020-01-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/20/Intent-Open-Activity/">Intent Open Activity</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="通过Intent打开Activity"><a href="#通过Intent打开Activity" class="headerlink" title="通过Intent打开Activity"></a>通过Intent打开Activity</h1><h2 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h2><p>官方解释：<br>[^Intent]:Intent（意图）主要是解决Android应用的各项组件之间的通讯。<br>Intent负责对应用中一次操作的动作、动作涉及数据、附加数据进行描述，Android则根据此Intent的描述，负责找到对应的组件，将 Intent传递给被调用的组件，并完成组件的调用。<br>因此，Intent在这里起着一个媒体中介的作用，专门提供组件互相调用的相关信息，实现调用者与被调用者之间的解耦。</p>
-<p>简单的说，这个东西通俗的将其实就是一个媒介，通过在他里面放东西，然后做一些事情（目前我的层面是这么理解）。</p>
-<h2 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h2><p>这个东西就类似是一个界面，用于和用户进行界面交互。</p>
-<h2 id="通过Intent打开一个Activity"><a href="#通过Intent打开一个Activity" class="headerlink" title="通过Intent打开一个Activity"></a>通过Intent打开一个Activity</h2><p>我们经常会有这样子的需求，就是说我们需要在这个页面通过一个按钮打开另外的一个页面，那么我们就可以这个样子进行操作。<br>首先我们用eclipse创建一个安卓项目，自带一个Activity，然后我们编辑：res/layout下生成的xml文件，我们添加一个button，布局什么的这些测试的过程中不是很重要。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/btn_OpenActivity"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/textView1"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/textView1"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"@string/Open"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- PS：</span></span><br><span class="line"><span class="comment">第一句代码，是用来指定我们的button的ID为：btn_OpenActivity</span></span><br><span class="line"><span class="comment">第二三句代码：用来指定我们的button宽与高（wrap_content表示与文字同高宽）</span></span><br><span class="line"><span class="comment">四五句：layout_alignLeft：这个表示与给定ID同左边，五类似四</span></span><br><span class="line"><span class="comment">@string/Open：这个主要是在我们的res/values/strings.xml这个文件中有我们给定的常量值。</span></span><br><span class="line"><span class="comment"> --&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们编辑完Activity.xml之后我们再添加一个布局，这个就是我们通过Intent打开的一个界面，编辑的话呢，也不是很重要，参考上面就好。</p>
-<p><strong>然后我们在 AndroidManifest.xml 文件中的加上Activity一个节点：<code>&lt;activity android:name=&quot;.activity&quot;&gt;&lt;/activity&gt;</code>，这个就有点类似于声明一个Activity。</strong></p>
-<p>编辑完之后我们新建一个类，这个类是我们的第二个界面，这个类要继承于Activity这个类，表明他是一个窗口，我们重载<code>onCreate</code>这个函数用来添加我们的上下文对象（注意这里与Win32有点类似，Win32称之为DC，但是我Java称之为Layout），具体代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">activity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_01);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">比较好理解，其实setContentView这个函数就是一个就是关联一个布局，这个布局的ID在我们gen/R.java这个文件中进行定义，final static定义的一个常量。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<p>我们编辑完我们的Activity打开页面之后，我们来编辑我们的初始界面，这个界面我们使用下面的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.Menu;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuItem;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Button btn_test;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">		btn_test = (Button) findViewById(R.id.btn_OpenActivity);</span><br><span class="line">		btn_test.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">				Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">				intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">				startActivity(intent);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span></span><br><span class="line">		getMenuInflater().inflate(R.menu.main, menu);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// Handle action bar item clicks here. The action bar will</span></span><br><span class="line">		<span class="comment">// automatically handle clicks on the Home/Up button, so long</span></span><br><span class="line">		<span class="comment">// as you specify a parent activity in AndroidManifest.xml.</span></span><br><span class="line">		<span class="keyword">int</span> id = item.getItemId();</span><br><span class="line">		<span class="keyword">if</span> (id == R.id.action_settings) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>大部分不是太重要，关键的就是我们的看：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Button btn_test;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">		btn_test = (Button) findViewById(R.id.btn_OpenActivity);</span><br><span class="line">		btn_test.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">				Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">				intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">				startActivity(intent);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>这一段代码使我们的关键，首先我定义了一个private权限的button，然后我们用<code>findviewById</code>这个函数进行关联，还是用到了R文件下的全局ID，然后进行了强制转换，关联之后我们设置一个监听器，new一个就好，不要用this那种方法，反正我不是很喜欢，那种写法让我想起了Win32繁杂的switch case语句，很烦的，题外话。然后我们在那个消息器中new一个Intent，然后将我们的Intent设置一下Class，setClass这个方法其实我也不是很明白，但是看样子就是讲我们的一个上下文对象关联到一个类上面，网上看了一下介绍：</p>
-<ul>
-<li>intent.setClass(目前的acitivy.this, 目标activity.class);<br>应该就是这个样子的一个意思，然后我们startActivity就可以了。最后的效果：<br><img src="img1.gif" alt="实现效果"><br>记录一下东西，Ctrl+shift+/这个就可以进行快速注释，Alt+/就可以快速联想。<br>扩展：match_parent:是layout_width和layout_height的属性值之一，表示和父组件一样的长度。<br>这些Activity是以栈的形式在内存中保存的，这个动脑子想一下也就知道了。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/20/Intent-Open-Activity/" data-id="ck5meu3ns0000xswj7tis9le5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -754,7 +831,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">Android学习</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 17.5px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -776,6 +853,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/24/File-Attribute/">File Attribute</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/">Intent-过滤器</a>
           </li>
         
@@ -789,10 +870,6 @@
         
           <li>
             <a href="/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/">java-泛型2</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/23/Intent-Open-Activity3/">Intent Open Activity3</a>
           </li>
         
       </ul>
