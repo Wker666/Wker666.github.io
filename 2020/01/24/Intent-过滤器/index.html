@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Intent-过滤器 | Wker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Intent过滤器这个东西就是一个过滤器，用于过滤intent发送给Activity信息的时候对发送对象的一个过滤，那么我们具体怎么使用呢？首先我们需要用隐式Intent进行消息的发送，首先我们对我们的Activity进行过滤器的设置例如如下： 12345&lt;intent-filter &gt;    &lt;action android:name&#x3D;&quot;com.wker.top&quot;&#x2F;&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intent-过滤器">
+<meta property="og:url" content="http://yoursite.com/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="Intent过滤器这个东西就是一个过滤器，用于过滤intent发送给Activity信息的时候对发送对象的一个过滤，那么我们具体怎么使用呢？首先我们需要用隐式Intent进行消息的发送，首先我们对我们的Activity进行过滤器的设置例如如下： 12345&lt;intent-filter &gt;    &lt;action android:name&#x3D;&quot;com.wker.top&quot;&#x2F;&gt;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-24T08:24:35.000Z">
+<meta property="article:modified_time" content="2020-01-24T09:34:26.289Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="Android学习">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Wker</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">计算机安全</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Intent-过滤器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/" class="article-date">
+  <time datetime="2020-01-24T08:24:35.000Z" itemprop="datePublished">2020-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Intent-过滤器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Intent过滤器"><a href="#Intent过滤器" class="headerlink" title="Intent过滤器"></a>Intent过滤器</h1><p>这个东西就是一个过滤器，用于过滤intent发送给Activity信息的时候对发送对象的一个过滤，那么我们具体怎么使用呢？<br>首先我们需要用隐式Intent进行消息的发送，首先我们对我们的Activity进行过滤器的设置例如如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"com.wker.top"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>例如这个样子，我们需要设置intent的时候是这个样子的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setAction(<span class="string">"com.wker.top"</span>);</span><br><span class="line">intent.addCategory(Intent.CATEGORY_DEFAULT);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http:"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+<p>这个时候我们需要注意，我们设置的协议scheme的时候是http，但是我们要用Data数据的时候我们需要填写完整的‘http:’，这个使我们需要注意的，这个时候我们就能成功的打开我们的页面了，那么我们看到Data还有好多的属性，我们继续设置。主要看我们的Data数据设置和我们的URI的一个设置。<br><code>&lt;data android:scheme=&quot;http&quot; android:host=&quot;wker666.github.io&quot; android:port=&quot;80&quot; android:path=&quot;/Android&quot;/&gt;</code><br><code>intent.setData(Uri.parse(&quot;http://wker666.github.io:80/Android&quot;));</code><br>其实可以看到也就是按照一个URL类似的格式进行填写的。<br><strong>Intent过滤器中的category属性称之为类别判定，其实也很好理解，就是对于APP类型的一个判定（我猜的，因为我看到值有default和browser这类的值，所以我感觉应该就是），而且这里还需要注意，可以设置多个category是不会影响的，就是说一个正确了其他的不正确也不影响。</strong></p>
+<p>而且category这个节点的属性是必须存在的！！！</p>
+<p>下面说说Data这个节点的属性，有点繁杂，但是也是比较好用的，重点的上面提到了，主要说说那个mimeType：</p>
+<table>
+<thead>
+<tr>
+<th>文件拓展名</th>
+<th>MIMEType</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>png</td>
+<td>image/png</td>
+</tr>
+<tr>
+<td>bmp\dib</td>
+<td>image/bmp</td>
+</tr>
+<tr>
+<td>jpg\jpeg\jpg</td>
+<td>image/ipeg</td>
+</tr>
+<tr>
+<td>gif</td>
+<td>image/gif</td>
+</tr>
+<tr>
+<td>mp3</td>
+<td>audio/mpeg</td>
+</tr>
+<tr>
+<td>mp4\mpg4\m4v\mp4v</td>
+<td>video/mp4</td>
+</tr>
+<tr>
+<td>js</td>
+<td>application/javascript</td>
+</tr>
+<tr>
+<td>pdf</td>
+<td>application/pdf</td>
+</tr>
+<tr>
+<td>text\txt</td>
+<td>text/plan</td>
+</tr>
+<tr>
+<td>json</td>
+<td>application/json</td>
+</tr>
+<tr>
+<td>xml</td>
+<td>text/xml</td>
+</tr>
+</tbody></table>
+<p>这个就是从网上摘录的一部分，在网站上经常见到，就是来设定格式的，在渗透测试中需要注意就是只是单纯的过滤这个格式的话呢是存在漏洞的，之后再提这个，但是在Win32中这个东西简直是个噩梦，之后有机会再说。<br>这个东西有点两样，谷歌把他单纯的分离出来了，而且它的函数比较特殊，我们来看一下。<br><code>SetDate</code>：<em>This method automaticallyclears any type that was previously set by setType or setTypeAndNormalize. *<br>很怪，这东西的意思是说会清除我们之前设置的<code>setType</code>，然而我们我们的<code>setType</code>这个也是：</em>This method automatically clears any data that waspreviously set (for example by setData). *<br>就是一个矛盾的函数，那么我们怎么办？谷歌给我们了一个方法专门用来解决这个问题：<br><code>intent.setDataAndType(data, type)</code><br>这个方法就是可以解决的，我们的XML设置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span> <span class="attr">android:host</span>=<span class="string">"wker666.github.io"</span> <span class="attr">android:port</span>=<span class="string">"80"</span> <span class="attr">android:path</span>=<span class="string">"/Android"</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plan"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Intent设置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intent.setDataAndType(Uri.parse(<span class="string">"http://wker666.github.io:80/Android"</span>), <span class="string">"text/plan"</span>);</span><br></pre></td></tr></table></figure>
+<p>这个样子就是正常了的！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/" data-id="ck5ryy9470000wwwj97d3bo0b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/24/File-operate/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">File operate</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" rel="tag">内网入侵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/">Intent-过滤器</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/24/File-operate/">File operate</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/23/Windows-CreateFile/">Windows-CreateFile</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/23/java-%E6%B3%9B%E5%9E%8B2/">java-泛型2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/23/Intent-Open-Activity3/">Intent Open Activity3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wker<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
