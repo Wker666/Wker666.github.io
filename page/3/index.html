@@ -71,6 +71,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-IF-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/16/IF-UnShell/" class="article-date">
+  <time datetime="2020-01-16T07:55:00.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/16/IF-UnShell/">IF-UnShell</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="快捷判断找OEP"><a href="#快捷判断找OEP" class="headerlink" title="快捷判断找OEP"></a>快捷判断找OEP</h2><p>有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：<br><img src="img1.jpg" alt="关键跳"><br>我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是OEP，但是我们dump修复的时候我们发现我们发现不了任何一个输入表，这就对了，<strong>下面的这一下跳转其实就是我们的输入表重建工作，比较明显的就是我们的我们寄存器中会出现输入表的一些信息</strong>：<br><img src="img2.jpg" alt="关键跳"><br>这个时候我们要注意了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0043E633    09C0            or eax,eax                               ; 跑跑排行.0043E746</span><br><span class="line">0043E635  - 0F84 E3BDFCFF   je 跑跑排行.0040A41E</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，只有只有在我们的eax的值为0的时候我们的跳转才会实现，这个时候OD提供给了我们一个很强大的功能就是跳转断点，我们设置只有在eax==0的时候才会停下来就好了，具体操作如下：<br><img src="img3.jpg" alt="条件断点"><br>键入我们的条件：eax==0<br><img src="img4.jpg" alt="条件"><br>然后我们运行程序：<br><img src="img5.jpg" alt="断下"><br>这个时候我们跟过去就是我们的OEP了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/16/IF-UnShell/" data-id="ck5ggdzol0000hcwj810w6cue" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-special-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/16/special-UnShell/" class="article-date">
@@ -451,57 +492,6 @@
 
 
   
-    <article id="post-ettercap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/08/ettercap/" class="article-date">
-  <time datetime="2020-01-08T03:38:20.000Z" itemprop="datePublished">2020-01-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/08/ettercap/">ettercap</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>劫持内网数据包，强行更改DNS</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.137)<br>靶机：32位XP(192.168.209.129)<br>我们使用ETTERCAP</p>
-<p>ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。<br>使用<strong><em>vim /etc/ettercap/etter.dns</em></strong>编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS，</p>
-<p>这个时候我们的ettercap就该上场了，我们首先设置我们的DNS劫持页面。<br><strong><em>vim /etc/ettercap/etter.dns</em></strong> 使用VIM进行编辑，也可以用自带的文本进行编辑。<br>将下面的这段文本找到并改为这个样子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">microsoft.com      A   107.170.40.56</span><br><span class="line">*.microsoft.com    A   107.170.40.56</span><br><span class="line">www.microsoft.com  PTR 107.170.40.56      # Wildcards in PTR are not allowed</span><br><span class="line">*				 A	 192.168.209.137   #这两条使我们添加的</span><br><span class="line">*				 PTR  192.168.209.137  #这两条使我们添加的</span><br></pre></td></tr></table></figure>
-<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="img1.jpg" alt="网卡设置"></p>
-<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="img3.jpg" alt="网卡设置"></p>
-<p>首先.1的使我Win10的机子，.2是我的网关，.129是目标的机子，这个时候我们将.2的机子Add to Target1，.129的机子Add to Target2.<br>之后我们设置我们的ARP，根据我这个样子进行设置：</p>
-<p><img src="img4.jpg" alt="网卡设置"></p>
-<p>设置我之后我们选择插件进行执行了，选择</p>
-<p><img src="img5.jpg" alt="网卡设置"></p>
-<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="img7.jpg" alt="网卡设置"></p>
-<p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/08/ettercap/" data-id="ck566w30p00007swjbf9zfuj9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -530,7 +520,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">Android学习</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 17.5px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -552,6 +542,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">PE文件判定</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
           </li>
         
@@ -565,10 +559,6 @@
         
           <li>
             <a href="/2020/01/24/File-Attribute/">File Attribute</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/">Intent-过滤器</a>
           </li>
         
       </ul>
