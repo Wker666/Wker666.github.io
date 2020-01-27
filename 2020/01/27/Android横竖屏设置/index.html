@@ -5,17 +5,17 @@
   
 
   
-  <title>Intent Open Activity2 | Wker</title>
+  <title>Android横竖屏设置 | Wker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Intent打开Activity的其他显示调用一. 通过全类名 123Intent inten1 &#x3D; new Intent();inten1.setClassName(this, &quot;com.example.lx.activity&quot;);startActivity(inten1); 二.通过包名和全类名 123Intent inten2 &#x3D; new Intent();inten2.setClassNa">
+  <meta name="description" content="横竖屏的设置在Android的生命周期中，如果我们横竖屏了，那么他将会默认执行销毁和重构Activity界面的一系列操作，这个样子给我们带来了很多麻烦。同样的屏幕大小变换（低版本安卓不会），键盘出现都会出现这个问题，那如何解决：我们在Activity设置中设置：android:configChanges&#x3D;&quot;keyboardHidden|orientation|screenSize&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Intent Open Activity2">
-<meta property="og:url" content="http://yoursite.com/2020/01/21/Intent-Open-Activity2/index.html">
+<meta property="og:title" content="Android横竖屏设置">
+<meta property="og:url" content="http://yoursite.com/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="Intent打开Activity的其他显示调用一. 通过全类名 123Intent inten1 &#x3D; new Intent();inten1.setClassName(this, &quot;com.example.lx.activity&quot;);startActivity(inten1); 二.通过包名和全类名 123Intent inten2 &#x3D; new Intent();inten2.setClassNa">
+<meta property="og:description" content="横竖屏的设置在Android的生命周期中，如果我们横竖屏了，那么他将会默认执行销毁和重构Activity界面的一系列操作，这个样子给我们带来了很多麻烦。同样的屏幕大小变换（低版本安卓不会），键盘出现都会出现这个问题，那如何解决：我们在Activity设置中设置：android:configChanges&#x3D;&quot;keyboardHidden|orientation|screenSize&amp;quo">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-21T06:48:50.000Z">
-<meta property="article:modified_time" content="2020-01-21T07:01:01.391Z">
+<meta property="article:published_time" content="2020-01-27T02:13:04.000Z">
+<meta property="article:modified_time" content="2020-01-27T02:23:54.632Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
@@ -71,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Intent-Open-Activity2" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Android横竖屏设置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/01/21/Intent-Open-Activity2/" class="article-date">
-  <time datetime="2020-01-21T06:48:50.000Z" itemprop="datePublished">2020-01-21</time>
+    <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" class="article-date">
+  <time datetime="2020-01-27T02:13:04.000Z" itemprop="datePublished">2020-01-27</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Intent Open Activity2
+      Android横竖屏设置
     </h1>
   
 
@@ -93,21 +93,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Intent打开Activity的其他显示调用"><a href="#Intent打开Activity的其他显示调用" class="headerlink" title="Intent打开Activity的其他显示调用"></a>Intent打开Activity的其他显示调用</h1><p>一. 通过全类名</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
-<p>二.通过包名和全类名</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten2 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten2.setClassName(<span class="string">"com.example.test"</span>, <span class="string">"com.example.test.st"</span>);<span class="comment">//支持调用其他的应用程序</span></span><br><span class="line">startActivity(inten2);</span><br></pre></td></tr></table></figure>
-<p>注意我的注释，可以打开其他的应用程序，意思就是远程打开另外APP的Activity，但在这我们需要注意，包名是包名，全类名要填写打开的Activity的全类名，但是有一点要注意，如果我们打开的是主界面那倒是无所谓，但是如果我们打开的不是主界面，那么我们就需要注意了，我们需要在配置我们的Activity属性的时候加上这么一句话：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".st"</span> <span class="attr">android:exported</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>可以看到有一个exported的属性，这个就是是否允许远程调用，默认是false。<br>三.通过Component</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">inten1.setComponent(<span class="keyword">new</span> ComponentName(<span class="keyword">this</span>,activity<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
-<p>new一个就可以了</p>
-<h2 id="安卓Listener"><a href="#安卓Listener" class="headerlink" title="安卓Listener"></a>安卓Listener</h2><p>一点小补充，我们如果偏要设置监听时候要用this，习惯win32的话呢我们需要将我们的类接上类似于：<code>OnClickListener</code>这个样子的一个借口，然后完成：<code>public void onClick(View v)</code>这个函数，<code>v.getId()</code>可以获得事件源，在R文件中的定义对比，建议还是用switch进行判断。</p>
+        <h2 id="横竖屏的设置"><a href="#横竖屏的设置" class="headerlink" title="横竖屏的设置"></a>横竖屏的设置</h2><p>在Android的生命周期中，如果我们横竖屏了，那么他将会默认执行销毁和重构Activity界面的一系列操作，这个样子给我们带来了很多麻烦。<br>同样的屏幕大小变换（低版本安卓不会），键盘出现都会出现这个问题，那如何解决：<br>我们在Activity设置中设置：<br><code>android:configChanges=&quot;keyboardHidden|orientation|screenSize&quot;</code><br>设置这么一条代码，就可以实现我们的效果了，这样的话呢我们将不会执行那一系列操作（相当于关程序重新打开程序的操作）了，它将会执行新的一个函数：<code>onConfigurationChanged</code>这个函数，我们只需要在这个地方写代码就好了。</p>
+<h2 id="如何知道是横竖屏？"><a href="#如何知道是横竖屏？" class="headerlink" title="如何知道是横竖屏？"></a>如何知道是横竖屏？</h2><p>其实也很简单，就是判断宽和高就可以了！<br>例如如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line"></span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">Log.d(<span class="string">"ttt"</span>, dm.heightPixels+<span class="string">""</span>+dm.widthPixels);</span><br></pre></td></tr></table></figure>
+<p>再就是判断宽和高大小就可以了！</p>
+<h2 id="设置一直是横竖屏"><a href="#设置一直是横竖屏" class="headerlink" title="设置一直是横竖屏"></a>设置一直是横竖屏</h2><p>其实也很简单，在Activity配置中配置如下项：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:screenOrientation="portrait"</span><br><span class="line">android:screenOrientation="landscape"</span><br></pre></td></tr></table></figure>
+<p>第一个设置竖屏，第二个设置横屏（只能设置一个！）。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/21/Intent-Open-Activity2/" data-id="ck5nj8pmn0000r0wj74kffujd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" data-id="ck5vtvy7u0000dowj6b3igiej" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
@@ -118,19 +115,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/01/21/Java-%E6%B3%9B%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Java 泛型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/21/Dir-Monitor/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/01/26/File-operate2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Dir Monitor</div>
+      <div class="article-nav-title">File operate2</div>
     </a>
   
 </nav>

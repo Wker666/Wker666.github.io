@@ -71,6 +71,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android横竖屏设置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" class="article-date">
+  <time datetime="2020-01-27T02:13:04.000Z" itemprop="datePublished">2020-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="横竖屏的设置"><a href="#横竖屏的设置" class="headerlink" title="横竖屏的设置"></a>横竖屏的设置</h2><p>在Android的生命周期中，如果我们横竖屏了，那么他将会默认执行销毁和重构Activity界面的一系列操作，这个样子给我们带来了很多麻烦。<br>同样的屏幕大小变换（低版本安卓不会），键盘出现都会出现这个问题，那如何解决：<br>我们在Activity设置中设置：<br><code>android:configChanges=&quot;keyboardHidden|orientation|screenSize&quot;</code><br>设置这么一条代码，就可以实现我们的效果了，这样的话呢我们将不会执行那一系列操作（相当于关程序重新打开程序的操作）了，它将会执行新的一个函数：<code>onConfigurationChanged</code>这个函数，我们只需要在这个地方写代码就好了。</p>
+<h2 id="如何知道是横竖屏？"><a href="#如何知道是横竖屏？" class="headerlink" title="如何知道是横竖屏？"></a>如何知道是横竖屏？</h2><p>其实也很简单，就是判断宽和高就可以了！<br>例如如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line"></span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">Log.d(<span class="string">"ttt"</span>, dm.heightPixels+<span class="string">""</span>+dm.widthPixels);</span><br></pre></td></tr></table></figure>
+<p>再就是判断宽和高大小就可以了！</p>
+<h2 id="设置一直是横竖屏"><a href="#设置一直是横竖屏" class="headerlink" title="设置一直是横竖屏"></a>设置一直是横竖屏</h2><p>其实也很简单，在Activity配置中配置如下项：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:screenOrientation="portrait"</span><br><span class="line">android:screenOrientation="landscape"</span><br></pre></td></tr></table></figure>
+<p>第一个设置竖屏，第二个设置横屏（只能设置一个！）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" data-id="ck5vtvy7u0000dowj6b3igiej" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-File-operate2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/26/File-operate2/" class="article-date">
@@ -804,74 +849,6 @@
 
 
   
-    <article id="w-Dir-Monitor" class="article article-type-w" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/21/Dir-Monitor/" class="article-date">
-  <time datetime="2020-01-21T04:42:05.000Z" itemprop="datePublished">2020-01-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/21/Dir-Monitor/">Dir Monitor</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="目录监视功能"><a href="#目录监视功能" class="headerlink" title="目录监视功能"></a>目录监视功能</h1><p>这个实现的效果有很多办法，比如说Hook，但是这个的话呢相对而言有点小麻烦，但是灵活性比较好，但当我们要求比较低，只是想单纯的监视的时候（对更改的内容和文件名之类不感兴趣的时候），我们可以考虑<code>FindFirstChangeNotification</code>这个相关的函数。</p>
-<h2 id="FindFirstChangeNotification"><a href="#FindFirstChangeNotification" class="headerlink" title="FindFirstChangeNotification"></a><code>FindFirstChangeNotification</code></h2><p>这个函数是队目录监控的一个函数，具体微软怎么实现的不知道（感觉应该也跟钩子有关系），这个函数调用比较简单，共有下面三个参数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">FindFirstChangeNotification</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpPathName,    <span class="comment">// pointer to name of directory to watch</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bWatchSubtree,    <span class="comment">// flag for monitoring directory or </span></span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="comment">// directory tree</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNotifyFilter   <span class="comment">// filter conditions to watch for</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>lpPathName：监视的目录文件夹</li>
-<li>bWatchSubtree ：是否监视子目录</li>
-<li>dwNotifyFilter：监视的类型</li>
-</ol>
-<ul>
-<li>FILE_NOTIFY_CHANGE_FILE_NAME</li>
-<li>FILE_NOTIFY_CHANGE_DIR_NAME</li>
-<li>FILE_NOTIFY_CHANGE_ATTRIBUTES</li>
-<li>FILE_NOTIFY_CHANGE_SIZE</li>
-<li>FILE_NOTIFY_CHANGE_LAST_WRITE</li>
-<li>FILE_NOTIFY_CHANGE_SECURITY<br>看名字就能看明白了。<br>返回值是一个句柄，这个句柄可以通过等待进行相应，这也就是下面我将要说到的一个函数。和这个相关的是：<code>FindNextChangeNotification</code>, <code>FindCloseChangeNotification</code>这个在最后提。<h2 id="WaitForMultipleObjects"><a href="#WaitForMultipleObjects" class="headerlink" title="WaitForMultipleObjects"></a><code>WaitForMultipleObjects</code></h2>这个函数有点类似于：<code>WaitForSingleObject</code>，但是这个我们是支持单个对象的，但对于多对象的我们就需要用到<code>WaitForMultipleObjects</code>，看下MSDN给出的定义：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">WaitForMultipleObjects</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD nCount,             <span class="comment">// number of handles in the handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	CONST HANDLE *lpHandles,  <span class="comment">// pointer to the object-handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	BOOL fWaitAll,            <span class="comment">// wait flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD dwMilliseconds      <span class="comment">// time-out interval in milliseconds);</span></span></span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>nCount：等待的个数</li>
-<li>lpHandles：等待时间句柄的数组</li>
-<li>fWaitAll：是否等待所有时间都相应</li>
-<li>dwMilliseconds：等待的时间</li>
-</ol>
-<p>dwMilliseconds这个参数如果我们提供：INFINITE 这个的话呢将视为无线等待（一般就填写这个就比较好）。<br>返回值：<br>WAIT_OBJECT_0 to (WAIT_OBJECT_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled.<br>If bWaitAll is FALSE, the return value minus WAIT_OBJECT_0 indicates the lpHandles array index of the object that satisfied the wait. If more than one object became signalled during the call, this is the array index of the signalled object with the smallest index value of all the signalled objects.</p>
-<p>WAIT_ABANDONED_0 to (WAIT_ABANDONED_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled and at least one of the objects is an abandoned mutex object.<br>If bWaitAll is FALSE, the return value minus WAIT_ABANDONED_0 indicates the lpHandles array index of an abandoned mutex object that satisfied the wait.</p>
-<p>WAIT_TIMEOUT：The time-out interval elapsed and the conditions specified by the bWaitAll parameter are not satisfied. </p>
-<p>是不是有点眼花缭乱，我翻译一下吧：</p>
-<p>如果bWaitAll为真，则返回值表示所有指定对象的状态都有信号。如果bWaitAll为FALSE，则返回值减去WAIT_OBJECT_0表示满足等待的对象的lpHandles数组索引。如果在调用期间有多个对象被标记，这是标记对象的数组索引，索引值是所有标记对象的最小值。如果bWaitAll为真，则返回值表明所有指定对象的状态都有信号，并且至少有一个对象是废弃的互斥对象。如果bWaitAll为FALSE，则返回值减去wait_oned_0表示满足等待的废弃互斥对象的lpHandles数组索引。超时时间间隔和bWaitAll参数指定的条件不满足。</p>
-<p>简单地说我们如果是无限等待返回给我们的值-WAIT_OBJECT_0就是我们提供的对象句柄的数组的下标值。</p>
-<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE m_charnge[<span class="number">3</span>];</span><br><span class="line">	m_charnge[<span class="number">0</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_FILE_NAME);</span><br><span class="line">	m_charnge[<span class="number">1</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_DIR_NAME);</span><br><span class="line">	m_charnge[<span class="number">2</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_LAST_WRITE);	</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		DWORD Rv = WaitForMultipleObjects(<span class="number">3</span>,m_charnge,FALSE,INFINITE);</span><br><span class="line">		<span class="keyword">switch</span>(Rv-WAIT_OBJECT_0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"文件名改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"目錄改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"內容改變"</span>&lt;&lt;<span class="built_in">endl</span>;			</span><br><span class="line">		&#125;</span><br><span class="line">		FindNextChangeNotification(m_charnge[Rv]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意的是在填写监视目录的时候别忘记转义，其他的都好说。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/21/Dir-Monitor/" data-id="ck5neuqjf0000mgwj3ez8eyc0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -922,6 +899,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/26/File-operate2/">File operate2</a>
           </li>
         
@@ -935,10 +916,6 @@
         
           <li>
             <a href="/2020/01/24/File-operate/">File operate</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/23/Windows-CreateFile/">Windows-CreateFile</a>
           </li>
         
       </ul>

@@ -71,6 +71,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="w-Dir-Monitor" class="article article-type-w" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/21/Dir-Monitor/" class="article-date">
+  <time datetime="2020-01-21T04:42:05.000Z" itemprop="datePublished">2020-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/21/Dir-Monitor/">Dir Monitor</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="目录监视功能"><a href="#目录监视功能" class="headerlink" title="目录监视功能"></a>目录监视功能</h1><p>这个实现的效果有很多办法，比如说Hook，但是这个的话呢相对而言有点小麻烦，但是灵活性比较好，但当我们要求比较低，只是想单纯的监视的时候（对更改的内容和文件名之类不感兴趣的时候），我们可以考虑<code>FindFirstChangeNotification</code>这个相关的函数。</p>
+<h2 id="FindFirstChangeNotification"><a href="#FindFirstChangeNotification" class="headerlink" title="FindFirstChangeNotification"></a><code>FindFirstChangeNotification</code></h2><p>这个函数是队目录监控的一个函数，具体微软怎么实现的不知道（感觉应该也跟钩子有关系），这个函数调用比较简单，共有下面三个参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">FindFirstChangeNotification</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpPathName,    <span class="comment">// pointer to name of directory to watch</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bWatchSubtree,    <span class="comment">// flag for monitoring directory or </span></span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="comment">// directory tree</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNotifyFilter   <span class="comment">// filter conditions to watch for</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>lpPathName：监视的目录文件夹</li>
+<li>bWatchSubtree ：是否监视子目录</li>
+<li>dwNotifyFilter：监视的类型</li>
+</ol>
+<ul>
+<li>FILE_NOTIFY_CHANGE_FILE_NAME</li>
+<li>FILE_NOTIFY_CHANGE_DIR_NAME</li>
+<li>FILE_NOTIFY_CHANGE_ATTRIBUTES</li>
+<li>FILE_NOTIFY_CHANGE_SIZE</li>
+<li>FILE_NOTIFY_CHANGE_LAST_WRITE</li>
+<li>FILE_NOTIFY_CHANGE_SECURITY<br>看名字就能看明白了。<br>返回值是一个句柄，这个句柄可以通过等待进行相应，这也就是下面我将要说到的一个函数。和这个相关的是：<code>FindNextChangeNotification</code>, <code>FindCloseChangeNotification</code>这个在最后提。<h2 id="WaitForMultipleObjects"><a href="#WaitForMultipleObjects" class="headerlink" title="WaitForMultipleObjects"></a><code>WaitForMultipleObjects</code></h2>这个函数有点类似于：<code>WaitForSingleObject</code>，但是这个我们是支持单个对象的，但对于多对象的我们就需要用到<code>WaitForMultipleObjects</code>，看下MSDN给出的定义：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">WaitForMultipleObjects</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD nCount,             <span class="comment">// number of handles in the handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	CONST HANDLE *lpHandles,  <span class="comment">// pointer to the object-handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	BOOL fWaitAll,            <span class="comment">// wait flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD dwMilliseconds      <span class="comment">// time-out interval in milliseconds);</span></span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li>nCount：等待的个数</li>
+<li>lpHandles：等待时间句柄的数组</li>
+<li>fWaitAll：是否等待所有时间都相应</li>
+<li>dwMilliseconds：等待的时间</li>
+</ol>
+<p>dwMilliseconds这个参数如果我们提供：INFINITE 这个的话呢将视为无线等待（一般就填写这个就比较好）。<br>返回值：<br>WAIT_OBJECT_0 to (WAIT_OBJECT_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled.<br>If bWaitAll is FALSE, the return value minus WAIT_OBJECT_0 indicates the lpHandles array index of the object that satisfied the wait. If more than one object became signalled during the call, this is the array index of the signalled object with the smallest index value of all the signalled objects.</p>
+<p>WAIT_ABANDONED_0 to (WAIT_ABANDONED_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled and at least one of the objects is an abandoned mutex object.<br>If bWaitAll is FALSE, the return value minus WAIT_ABANDONED_0 indicates the lpHandles array index of an abandoned mutex object that satisfied the wait.</p>
+<p>WAIT_TIMEOUT：The time-out interval elapsed and the conditions specified by the bWaitAll parameter are not satisfied. </p>
+<p>是不是有点眼花缭乱，我翻译一下吧：</p>
+<p>如果bWaitAll为真，则返回值表示所有指定对象的状态都有信号。如果bWaitAll为FALSE，则返回值减去WAIT_OBJECT_0表示满足等待的对象的lpHandles数组索引。如果在调用期间有多个对象被标记，这是标记对象的数组索引，索引值是所有标记对象的最小值。如果bWaitAll为真，则返回值表明所有指定对象的状态都有信号，并且至少有一个对象是废弃的互斥对象。如果bWaitAll为FALSE，则返回值减去wait_oned_0表示满足等待的废弃互斥对象的lpHandles数组索引。超时时间间隔和bWaitAll参数指定的条件不满足。</p>
+<p>简单地说我们如果是无限等待返回给我们的值-WAIT_OBJECT_0就是我们提供的对象句柄的数组的下标值。</p>
+<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE m_charnge[<span class="number">3</span>];</span><br><span class="line">	m_charnge[<span class="number">0</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_FILE_NAME);</span><br><span class="line">	m_charnge[<span class="number">1</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_DIR_NAME);</span><br><span class="line">	m_charnge[<span class="number">2</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_LAST_WRITE);	</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		DWORD Rv = WaitForMultipleObjects(<span class="number">3</span>,m_charnge,FALSE,INFINITE);</span><br><span class="line">		<span class="keyword">switch</span>(Rv-WAIT_OBJECT_0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"文件名改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"目錄改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"內容改變"</span>&lt;&lt;<span class="built_in">endl</span>;			</span><br><span class="line">		&#125;</span><br><span class="line">		FindNextChangeNotification(m_charnge[Rv]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意的是在填写监视目录的时候别忘记转义，其他的都好说。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/21/Dir-Monitor/" data-id="ck5neuqjf0000mgwj3ez8eyc0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-C-friend-fun" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/21/C-friend-fun/" class="article-date">
@@ -480,46 +548,6 @@
 
 
   
-    <article id="w-track-API" class="article article-type-w" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/track-API/" class="article-date">
-  <time datetime="2020-01-16T02:09:14.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/track-API/">track API</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
-<h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/track-API/" data-id="ck5g55edg00002cwjeysf7uq1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -570,6 +598,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/26/File-operate2/">File operate2</a>
           </li>
         
@@ -583,10 +615,6 @@
         
           <li>
             <a href="/2020/01/24/File-operate/">File operate</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/23/Windows-CreateFile/">Windows-CreateFile</a>
           </li>
         
       </ul>
