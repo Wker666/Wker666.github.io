@@ -71,6 +71,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android-Anr异常" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/" class="article-date">
+  <time datetime="2020-01-27T02:26:57.000Z" itemprop="datePublished">2020-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ANR异常"><a href="#ANR异常" class="headerlink" title="ANR异常"></a>ANR异常</h2><p>其实就是主线程卡死，然后无法响应，大于6秒，会出现如下的一个错误报告：<br><img src="img1.jpg" alt="ANR异常"><br>这个时候就是说我们卡死了，代码里如这个样子写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	Thread.sleep(<span class="number">60000</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决办法也很简单，就是放在子线程中写耗时的操作！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/" data-id="ck5vuc2je0000xkwj0bik7x02" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Android横竖屏设置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" class="article-date">
@@ -801,54 +842,6 @@
 
 
   
-    <article id="post-Intent-Open-Activity2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/21/Intent-Open-Activity2/" class="article-date">
-  <time datetime="2020-01-21T06:48:50.000Z" itemprop="datePublished">2020-01-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/21/Intent-Open-Activity2/">Intent Open Activity2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Intent打开Activity的其他显示调用"><a href="#Intent打开Activity的其他显示调用" class="headerlink" title="Intent打开Activity的其他显示调用"></a>Intent打开Activity的其他显示调用</h1><p>一. 通过全类名</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
-<p>二.通过包名和全类名</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent inten2 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten2.setClassName(<span class="string">"com.example.test"</span>, <span class="string">"com.example.test.st"</span>);<span class="comment">//支持调用其他的应用程序</span></span><br><span class="line">startActivity(inten2);</span><br></pre></td></tr></table></figure>
-<p>注意我的注释，可以打开其他的应用程序，意思就是远程打开另外APP的Activity，但在这我们需要注意，包名是包名，全类名要填写打开的Activity的全类名，但是有一点要注意，如果我们打开的是主界面那倒是无所谓，但是如果我们打开的不是主界面，那么我们就需要注意了，我们需要在配置我们的Activity属性的时候加上这么一句话：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".st"</span> <span class="attr">android:exported</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>可以看到有一个exported的属性，这个就是是否允许远程调用，默认是false。<br>三.通过Component</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent inten1 = <span class="keyword">new</span> Intent();</span><br><span class="line">inten1.setClassName(<span class="keyword">this</span>, <span class="string">"com.example.lx.activity"</span>);</span><br><span class="line">inten1.setComponent(<span class="keyword">new</span> ComponentName(<span class="keyword">this</span>,activity<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">startActivity(inten1);</span><br></pre></td></tr></table></figure>
-<p>new一个就可以了</p>
-<h2 id="安卓Listener"><a href="#安卓Listener" class="headerlink" title="安卓Listener"></a>安卓Listener</h2><p>一点小补充，我们如果偏要设置监听时候要用this，习惯win32的话呢我们需要将我们的类接上类似于：<code>OnClickListener</code>这个样子的一个借口，然后完成：<code>public void onClick(View v)</code>这个函数，<code>v.getId()</code>可以获得事件源，在R文件中的定义对比，建议还是用switch进行判断。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/21/Intent-Open-Activity2/" data-id="ck5nj8pmn0000r0wj74kffujd" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -877,7 +870,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">Android学习</a> <a href="/tags/Java/" style="font-size: 12.5px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 17.5px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 12.5px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
+      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
     </div>
   </div>
 
@@ -899,6 +892,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
           </li>
         
@@ -912,10 +909,6 @@
         
           <li>
             <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/">Intent-过滤器</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/24/File-operate/">File operate</a>
           </li>
         
       </ul>
