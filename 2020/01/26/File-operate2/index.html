@@ -1,99 +1,64 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   
+  <title>File operate2 | Wker</title>
+  <meta name="author" content="Wker">
+  
+  <meta name="description" content="一个萌新">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="File operate2"/>
+  <meta property="og:site_name" content="Wker"/>
 
   
-  <title>File operate2 | Wker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CopyFileEx文件拷贝一开始想用CopyFile,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义： 1234567891011BOOL CopyFileEx(  LPCWSTR lpExistingFileName,                    &#x2F;&#x2F; pointer to name of an existing file  LPCWSTR lpNewFil">
-<meta property="og:type" content="article">
-<meta property="og:title" content="File operate2">
-<meta property="og:url" content="http://yoursite.com/2020/01/26/File-operate2/index.html">
-<meta property="og:site_name" content="Wker">
-<meta property="og:description" content="CopyFileEx文件拷贝一开始想用CopyFile,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义： 1234567891011BOOL CopyFileEx(  LPCWSTR lpExistingFileName,                    &#x2F;&#x2F; pointer to name of an existing file  LPCWSTR lpNewFil">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-26T13:17:20.000Z">
-<meta property="article:modified_time" content="2020-01-26T14:42:42.314Z">
-<meta property="article:author" content="Wker">
-<meta property="article:tag" content="Win32编程">
-<meta name="twitter:card" content="summary">
+    <meta property="og:image" content=""/>
   
-    <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Wker" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link href="/favicon.png" rel="icon">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
-  
-<link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Wker</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">计算机安全</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-File-operate2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/26/File-operate2/" class="article-date">
-  <time datetime="2020-01-26T13:17:20.000Z" itemprop="datePublished">2020-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Wker</a><span class="split"></span><span class="title">File operate2</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2020-01-26</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
   
-    <h1 class="article-title" itemprop="name">
-      File operate2
-    </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="CopyFileEx文件拷贝"><a href="#CopyFileEx文件拷贝" class="headerlink" title="CopyFileEx文件拷贝"></a><code>CopyFileEx</code>文件拷贝</h2><p>一开始想用<code>CopyFile</code>,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义：</p>
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h2 id="CopyFileEx文件拷贝"><a href="#CopyFileEx文件拷贝" class="headerlink" title="CopyFileEx文件拷贝"></a><code>CopyFileEx</code>文件拷贝</h2><p>一开始想用<code>CopyFile</code>,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CopyFileEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpExistingFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to name of an existing file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpNewFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to filename to copy to</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPPROGRESS_ROUTINE lpProgressRoutine,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData,    <span class="comment">// to be passed to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPBOOL pbCancel,  <span class="comment">// flag that can be used to cancel the operation</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCopyFlags <span class="comment">// flags that specify how the file is copied</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>前两个还是比较简单的，第三个参数是一个回调函数，定义如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD CALLBACK <span class="title">CopyProgressRoutine</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalFileSize,  <span class="comment">// total file size, in bytes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamSize,  <span class="comment">// total number of bytes for this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwStreamNumber,     <span class="comment">// the current stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCallbackReason,   <span class="comment">// reason for callback</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hSourceFile,       <span class="comment">// handle to the source file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hDestinationFile,  <span class="comment">// handle to the destination file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData             <span class="comment">// passed by CopyFileEx</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
@@ -163,147 +128,212 @@
 <p>第三个的参数有点古怪：<br>比较有意思的一个值：“MOVEFILE_DELAY_UNTIL_REBOOT”，这个值的意思就是说重启才会移动，具体怎么用我也没有去深入研究，没啥意思我感觉，而且与其他的不能同时使用。<br>MOVEFILE_COPY_ALLOWED：这个就是说可以移动到别的盘符，还有就是好像指定了这个就是类似于先Copy再删除这个样子的操作。<br>MOVEFILE_REPLACE_EXISTING：替换掉存在的。<br>MOVEFILE_WRITE_THROUGH：这个就是说等待函数结束才会返回。<br>说了这么多就实验一下吧。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	MoveFileEx(<span class="string">"1.txt"</span>,<span class="string">"2.txt"</span>,MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>好吧也没啥可以验证的…</p>
+	  
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/26/File-operate2/" data-id="ck5v4pvmc00004gwj3w9a9exr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2020/01/24/File-Attribute/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
 
-    </footer>
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
   </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2020 Wker
   
-    
-<nav id="article-nav">
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/" target="_blank" rel="noopener">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
   
-    <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Android横竖屏设置
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/01/24/File-Attribute/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">File Attribute</div>
-    </a>
-  
-</nav>
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
 
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" rel="tag">内网入侵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-    </div>
-  </div>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/01/28/Intent%E5%AE%9E%E7%8E%B0%E6%8B%A8%E5%8F%B7/">Intent实现拨号</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">PE文件判定</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/26/File-operate2/">File operate2</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Wker<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
 
 
 
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
 </body>
 </html>

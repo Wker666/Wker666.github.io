@@ -1,99 +1,64 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   
+  <title>通用对话框 | Wker</title>
+  <meta name="author" content="Wker">
+  
+  <meta name="description" content="一个萌新">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="通用对话框"/>
+  <meta property="og:site_name" content="Wker"/>
 
   
-  <title>通用对话框 | Wker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="通用对话框通用对话框其实还是比较常用的，这里主要分为获取文件目录和获取文件夹目录两种对话框形式，并且获取文件目录的对话框还分为打开文件和写入文件两种对话框形式。 获取文件目录这个相对而言是比较简单的，主要的牵扯到GetOpenFileName()和GetSaveFileName()这两个函数，这两个函数需要一个同样的参数，这个参数也就是一个OPENFILENAME类型的指针，这个类型在MSDN中的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="通用对话框">
-<meta property="og:url" content="http://yoursite.com/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/index.html">
-<meta property="og:site_name" content="Wker">
-<meta property="og:description" content="通用对话框通用对话框其实还是比较常用的，这里主要分为获取文件目录和获取文件夹目录两种对话框形式，并且获取文件目录的对话框还分为打开文件和写入文件两种对话框形式。 获取文件目录这个相对而言是比较简单的，主要的牵扯到GetOpenFileName()和GetSaveFileName()这两个函数，这两个函数需要一个同样的参数，这个参数也就是一个OPENFILENAME类型的指针，这个类型在MSDN中的">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-19T09:44:06.000Z">
-<meta property="article:modified_time" content="2020-01-19T11:41:42.026Z">
-<meta property="article:author" content="Wker">
-<meta property="article:tag" content="Win32编程">
-<meta name="twitter:card" content="summary">
+    <meta property="og:image" content=""/>
   
-    <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Wker" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link href="/favicon.png" rel="icon">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
-  
-<link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Wker</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">计算机安全</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-通用对话框" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/" class="article-date">
-  <time datetime="2020-01-19T09:44:06.000Z" itemprop="datePublished">2020-01-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">Wker</a><span class="split"></span><span class="title">通用对话框</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2020-01-19</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
   
-    <h1 class="article-title" itemprop="name">
-      通用对话框
-    </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="通用对话框"><a href="#通用对话框" class="headerlink" title="通用对话框"></a>通用对话框</h1><p>通用对话框其实还是比较常用的，这里主要分为获取文件目录和获取文件夹目录两种对话框形式，并且获取文件目录的对话框还分为打开文件和写入文件两种对话框形式。</p>
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h1 id="通用对话框"><a href="#通用对话框" class="headerlink" title="通用对话框"></a>通用对话框</h1><p>通用对话框其实还是比较常用的，这里主要分为获取文件目录和获取文件夹目录两种对话框形式，并且获取文件目录的对话框还分为打开文件和写入文件两种对话框形式。</p>
 <h2 id="获取文件目录"><a href="#获取文件目录" class="headerlink" title="获取文件目录"></a>获取文件目录</h2><p>这个相对而言是比较简单的，主要的牵扯到GetOpenFileName()和GetSaveFileName()这两个函数，这两个函数需要一个同样的参数，这个参数也就是一个OPENFILENAME类型的指针，这个类型在MSDN中的定义：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagOFN</span> &#123;</span> <span class="comment">// ofn </span></span><br><span class="line">    DWORD         lStructSize; </span><br><span class="line">    HWND          hwndOwner; </span><br><span class="line">    HINSTANCE     hInstance; </span><br><span class="line">    LPCTSTR       lpstrFilter; </span><br><span class="line">    LPTSTR        lpstrCustomFilter; </span><br><span class="line">    DWORD         nMaxCustFilter; </span><br><span class="line">    DWORD         nFilterIndex; </span><br><span class="line">    LPTSTR        lpstrFile; </span><br><span class="line">    DWORD         nMaxFile; </span><br><span class="line">    LPTSTR        lpstrFileTitle; </span><br><span class="line">    DWORD         nMaxFileTitle; </span><br><span class="line">    LPCTSTR       lpstrInitialDir; </span><br><span class="line">    LPCTSTR       lpstrTitle; </span><br><span class="line">    DWORD         Flags; </span><br><span class="line">    WORD          nFileOffset; </span><br><span class="line">    WORD          nFileExtension; </span><br><span class="line">    LPCTSTR       lpstrDefExt; </span><br><span class="line">    DWORD         lCustData; </span><br><span class="line">    LPOFNHOOKPROC lpfnHook; </span><br><span class="line">    LPCTSTR       lpTemplateName; </span><br><span class="line">&#125; OPENFILENAME;</span><br></pre></td></tr></table></figure>
 <p>这里面比较重要的也就是</p>
@@ -106,147 +71,212 @@
 简单说明一下SHGetPathFromIDList这个函数，LPITEMIDLIST这个结构体比较复杂，但是我们通过这个函数我们就可以简单的获取到我们输入的内容。<br>如果我们要用的话呢我们只需要<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CDirDialog.h"</span></span></span><br><span class="line">CDirDialog dir;</span><br><span class="line"><span class="keyword">if</span>(dir.DoBrowse(<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">	MessageBox(<span class="literal">NULL</span>,dir.GetDirPath(),<span class="string">"打開的文件"</span>,MB_OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 这样就可以打开一个文件目录了。</li>
 </ul>
+	  
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/" data-id="ck5kunt4j00002swj481dcxz0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li></ul>
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+	
+	
+		<li class="prev"><a href="/2020/01/20/Intent-Open-Activity/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2020/01/18/adb-Common-method/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
 
-    </footer>
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
   </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2020 Wker
   
-    
-<nav id="article-nav">
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/" target="_blank" rel="noopener">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
   
-    <a href="/2020/01/20/Intent-Open-Activity/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Intent Open Activity
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/01/18/adb-Common-method/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">adb-Common-method</div>
-    </a>
-  
-</nav>
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
 
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" rel="tag">内网入侵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-    </div>
-  </div>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/01/28/Intent%E5%AE%9E%E7%8E%B0%E6%8B%A8%E5%8F%B7/">Intent实现拨号</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">PE文件判定</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/26/File-operate2/">File operate2</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Wker<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
 
 
 
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
 </body>
 </html>
