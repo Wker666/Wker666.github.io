@@ -1,12 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  
-  <title>Wker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
   <meta name="description" content="一个萌新">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Wker">
@@ -17,83 +56,159 @@
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="程序员">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Wker" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<link rel="canonical" href="http://yoursite.com/page/3/">
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Wker</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">计算机安全</a>
-        </h2>
-      
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false
+  };
+</script>
+
+  <title>Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
-</header>
-      <div class="outer">
-        <section id="main">
+</div>
+
+
+<nav class="site-nav">
   
-    <article id="post-OverLay-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/OverLay-UnShell/" class="article-date">
-  <time datetime="2020-01-16T12:40:41.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/OverLay-UnShell/">OverLay-UnShell</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/OverLay-UnShell/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/OverLay-UnShell/" class="post-title-link" itemprop="url">OverLay-UnShell</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-16 20:40:41 / Modified: 21:05:16" itemprop="dateCreated datePublished" datetime="2020-01-16T20:40:41+08:00">2020-01-16</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>当我们在查壳的时候碰到覆盖（OverLay）的时候，我们就需要如下操作：<br><img src="img10.jpg" alt="查壳"></p>
+          <p>当我们在查壳的时候碰到覆盖（OverLay）的时候，我们就需要如下操作：<br><img src="img10.jpg" alt="查壳"></p>
 <h1 id="OverLay数据处理"><a href="#OverLay数据处理" class="headerlink" title="OverLay数据处理"></a>OverLay数据处理</h1><p>今天刚学习了这种数据处理的方法，具体原因之后深入分析，其实也就是区段数据的一个补充，首先需要找到我们的多余数据，分为两种简单方法：</p>
 <h2 id="数据查找法"><a href="#数据查找法" class="headerlink" title="数据查找法"></a>数据查找法</h2><p>这种方法比较简单也比较直接，我们从最底部自下往上寻找一大片00，用快捷键就可以了，记住是搜索没有脱壳的数据：<br><img src="img1.jpg" alt="查找方法"><br><img src="img2.jpg" alt="结果数据"><br>我们从00后面的数据复制，最好用shift范围性复制，复制到结尾。<br><img src="img3.jpg" alt="复制数据"></p>
 <h2 id="区段查找法"><a href="#区段查找法" class="headerlink" title="区段查找法"></a>区段查找法</h2><p>这个通过LoadPE查找最后的一个区段的范围，然后通过真实的RVA+Size计算出来我们要找的数据：<br><img src="img4.jpg" alt="PE计算"><br>8800+400=8C00，我们这里Ctrl+G进行转到，然后看到和我们刚才一样的地方，同样复制。<br><img src="img5.jpg" alt="地址转到"></p>
@@ -101,204 +216,304 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/OverLay-UnShell/" data-id="ck5xilzk5001dtkwjbkqq3ohg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-IF-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/IF-UnShell/" class="article-date">
-  <time datetime="2020-01-16T07:55:00.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/IF-UnShell/">IF-UnShell</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/IF-UnShell/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/IF-UnShell/" class="post-title-link" itemprop="url">IF-UnShell</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-16 15:55:00 / Modified: 16:09:30" itemprop="dateCreated datePublished" datetime="2020-01-16T15:55:00+08:00">2020-01-16</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="快捷判断找OEP"><a href="#快捷判断找OEP" class="headerlink" title="快捷判断找OEP"></a>快捷判断找OEP</h2><p>有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：<br><img src="img1.jpg" alt="关键跳"><br>我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是OEP，但是我们dump修复的时候我们发现我们发现不了任何一个输入表，这就对了，<strong>下面的这一下跳转其实就是我们的输入表重建工作，比较明显的就是我们的我们寄存器中会出现输入表的一些信息</strong>：<br><img src="img2.jpg" alt="关键跳"><br>这个时候我们要注意了：</p>
+          <h2 id="快捷判断找OEP"><a href="#快捷判断找OEP" class="headerlink" title="快捷判断找OEP"></a>快捷判断找OEP</h2><p>有的时候我们在脱壳的时候经常其实眼睛观察就能观察到OEP的位置（比较大的一个跨区段跳转），但是这个时候我们的跳转并没有实现，原因有很多，比较典型的原因就是我们的输入表重新构建的工作并没有完成，所以紧跟其后的就是我们的输入表重建工作，比较典型的就是下面这段代码：<br><img src="img1.jpg" alt="关键跳"><br>我们来看这句，这么多字节，很明显的啊，就是一个跨区段的跳转，但是我们发现这个时候我们并没有跳转实现，我们先转过去，发现确实是OEP，但是我们dump修复的时候我们发现我们发现不了任何一个输入表，这就对了，<strong>下面的这一下跳转其实就是我们的输入表重建工作，比较明显的就是我们的我们寄存器中会出现输入表的一些信息</strong>：<br><img src="img2.jpg" alt="关键跳"><br>这个时候我们要注意了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0043E633    09C0            or eax,eax                               ; 跑跑排行.0043E746</span><br><span class="line">0043E635  - 0F84 E3BDFCFF   je 跑跑排行.0040A41E</span><br></pre></td></tr></table></figure>
 <p>我们可以看到，只有只有在我们的eax的值为0的时候我们的跳转才会实现，这个时候OD提供给了我们一个很强大的功能就是跳转断点，我们设置只有在eax==0的时候才会停下来就好了，具体操作如下：<br><img src="img3.jpg" alt="条件断点"><br>键入我们的条件：eax==0<br><img src="img4.jpg" alt="条件"><br>然后我们运行程序：<br><img src="img5.jpg" alt="断下"><br>这个时候我们跟过去就是我们的OEP了。</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/IF-UnShell/" data-id="ck5xilzjt000ktkwjh1nw3yo5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-special-UnShell" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/special-UnShell/" class="article-date">
-  <time datetime="2020-01-16T07:36:34.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/special-UnShell/">special-UnShell</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/special-UnShell/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/special-UnShell/" class="post-title-link" itemprop="url">special-UnShell</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-16 15:36:34 / Modified: 15:42:41" itemprop="dateCreated datePublished" datetime="2020-01-16T15:36:34+08:00">2020-01-16</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="是否正在调试法"><a href="#是否正在调试法" class="headerlink" title="是否正在调试法"></a>是否正在调试法</h2><p>有的时候一些壳会有防止调试的检测，这个时候我们就可以下：IsDebuggerPresent这个断点，然后返回到用户组，下面应该就有OEP的一些运算了，手下我们先下断点：<br><img src="img1.jpg" alt="下断点"><br>然后我们执行到程序领空：<br>我们看到了下面这几句话：<br><img src="img2.jpg" alt="OEP计算"><br>这个时候我们执行完这两句，我们看edi的值：<br><img src="img3.jpg" alt="EDI"><br>这个时候我们转到EDI的这个地址：<br><img src="img4.jpg" alt="OEP"><br>这个时候F4运行到就好了！</p>
+          <h2 id="是否正在调试法"><a href="#是否正在调试法" class="headerlink" title="是否正在调试法"></a>是否正在调试法</h2><p>有的时候一些壳会有防止调试的检测，这个时候我们就可以下：IsDebuggerPresent这个断点，然后返回到用户组，下面应该就有OEP的一些运算了，手下我们先下断点：<br><img src="img1.jpg" alt="下断点"><br>然后我们执行到程序领空：<br>我们看到了下面这几句话：<br><img src="img2.jpg" alt="OEP计算"><br>这个时候我们执行完这两句，我们看edi的值：<br><img src="img3.jpg" alt="EDI"><br>这个时候我们转到EDI的这个地址：<br><img src="img4.jpg" alt="OEP"><br>这个时候F4运行到就好了！</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/special-UnShell/" data-id="ck5xilzkh001vtkwj0kpyczhq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="w-track-API" class="article article-type-w" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/track-API/" class="article-date">
-  <time datetime="2020-01-16T02:09:14.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/track-API/">track API</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/track-API/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/track-API/" class="post-title-link" itemprop="url">track API</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-16 10:09:14 / Modified: 10:54:40" itemprop="dateCreated datePublished" datetime="2020-01-16T10:09:14+08:00">2020-01-16</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
+          <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
 <h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/track-API/" data-id="ck5xilzkj001ztkwjffiy9c4u" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-Rebuilt-input-list2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/16/Rebuilt-input-list2/" class="article-date">
-  <time datetime="2020-01-16T00:04:44.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/16/Rebuilt-input-list2/">Rebuilt input list2</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/Rebuilt-input-list2/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/Rebuilt-input-list2/" class="post-title-link" itemprop="url">Rebuilt input list2</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-16 08:04:44 / Modified: 08:29:39" itemprop="dateCreated datePublished" datetime="2020-01-16T08:04:44+08:00">2020-01-16</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="img2.jpg" alt="错误"><br>解决办法如下：</p>
+          <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="img2.jpg" alt="错误"><br>解决办法如下：</p>
 <h2 id="LoadPE纠正镜像"><a href="#LoadPE纠正镜像" class="headerlink" title="LoadPE纠正镜像"></a>LoadPE纠正镜像</h2><p><img src="img3.jpg" alt="纠正镜像"></p>
 <h2 id="import-REC修复转储文件"><a href="#import-REC修复转储文件" class="headerlink" title="import REC修复转储文件"></a>import REC修复转储文件</h2><p>我们可以看到import REC已经正确的查找到了我们需要的东西<br><img src="img4.jpg" alt="修复转储文件"><br>我们接下来获取输入表，剪切输入表dump出来就好了。<br>但是我们发现我们又一次的出现之前的错误！<br><img src="img5.jpg" alt="再次出现错误"></p>
 <h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/16/Rebuilt-input-list2/" data-id="ck5xilzk6001itkwj3vx9elfo" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-Common-Unshell2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/14/Common-Unshell2/" class="article-date">
-  <time datetime="2020-01-14T11:12:49.000Z" itemprop="datePublished">2020-01-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/14/Common-Unshell2/">Common-Unshell2</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/14/Common-Unshell2/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/Common-Unshell2/" class="post-title-link" itemprop="url">Common-Unshell2</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 19:12:49 / Modified: 21:05:27" itemprop="dateCreated datePublished" datetime="2020-01-14T19:12:49+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="比较常用的脱壳技巧2"><a href="#比较常用的脱壳技巧2" class="headerlink" title="比较常用的脱壳技巧2"></a>比较常用的脱壳技巧2</h1><p>之前文章介绍了一些比较常见的，下面再介绍几种</p>
+          <h1 id="比较常用的脱壳技巧2"><a href="#比较常用的脱壳技巧2" class="headerlink" title="比较常用的脱壳技巧2"></a>比较常用的脱壳技巧2</h1><p>之前文章介绍了一些比较常见的，下面再介绍几种</p>
 <h2 id="VirtualFree法1"><a href="#VirtualFree法1" class="headerlink" title="VirtualFree法1"></a>VirtualFree法1</h2><p>这种方法首先是下VirtualFree的断点，执行到我们的用户组代码，然后搜索push 8000，之后我们就往下跟踪，然后大跳转跟过去，一般就到了我们的OEP，具体操作看截图：<br>首先下端之后运行，然后回到我们的程序领空。<br><img src="img1.jpg" alt="从VirtualFree回到程序"><br>然后接下来我们搜索push 8000，进行下断。<br><img src="img2.jpg" alt="在push 8000下断"><br>最后就来到了我们的OEP</p>
 <h2 id="VirtualFree法2"><a href="#VirtualFree法2" class="headerlink" title="VirtualFree法2"></a>VirtualFree法2</h2><p>这个更加简单，我们下VirtualFree的断点，然后执行两次，意思就是在第二次断在VirtualFree的时候我们返回到程序领空，继续单步就好了。</p>
 <h2 id="mov转移法"><a href="#mov转移法" class="headerlink" title="mov转移法"></a>mov转移法</h2><p>就是说当我们刚进入程序的时候，如果首句出现mov指令的时候，我们给他后面的地址下断点，例如：<br><img src="img3.jpg" alt="查看数据"><br>然后运行，跟下去就好了<br>但在这里我们看到一个函数片段，也就是有一个retn，我们在片段下方进行下断：<br><img src="img4.jpg" alt="下断"><br>然后运行，继续往下跟踪，就到了OEP。</p>
@@ -308,124 +523,190 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/14/Common-Unshell2/" data-id="ck5xilzjf0005tkwjber2fush" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-Rebuilt-input-list" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/14/Rebuilt-input-list/" class="article-date">
-  <time datetime="2020-01-14T09:18:45.000Z" itemprop="datePublished">2020-01-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/14/Rebuilt-input-list/">Rebuilt input list</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/14/Rebuilt-input-list/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/Rebuilt-input-list/" class="post-title-link" itemprop="url">Rebuilt input list</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 17:18:45 / Modified: 18:10:36" itemprop="dateCreated datePublished" datetime="2020-01-14T17:18:45+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="找OEP的一个小技巧"><a href="#找OEP的一个小技巧" class="headerlink" title="找OEP的一个小技巧"></a>找OEP的一个小技巧</h1><p>我们载入程序，但在这里我发现了一个小问题，我用之前的一个OD载入之后我进入的却是系统的领空，而且一直进入不了用户组的代码，如下图所示：<br><img src="img1.jpg" alt="未进入程序领空"><br>但是我重换了一个比较基础的OD却发现是停留在程序的领空，如下图所示：<br><img src="img2.jpg" alt="程序领空"><br>这个时候我们先暂且不去深究这个的原因，之后再去研究具体的错误设置。<br>这个程序我们使用单步跟踪法来进行脱壳。<br>一步一步的往下跟踪，直到这个地方：<br><img src="img3.jpg" alt="程序OEP关键跳转"><br>我们可以看到这个时候的jnz是准备跳过去，但是我们发现塔下一个CALL却是call了一个[EBX+C]，这个地方就是比较关键的地方，因为一般壳为了保护自身，都会喜欢将地址转换到一些寄存在加偏移的一个相对基址寻址的地方，我们修改我们标志寄存器的值，让他不进行跳转，然后步入，我们会进入这个地方：<br><img src="img4.jpg" alt="程序OEP"><br>这里我们比较要注意的地方是，OD在这个地方我们一般要进行分析代码，也就是Ctrl+A，有的时候壳非常喜欢这个寄存器间接跳转，我们可以用回车键，或者Ctrl+G跳转到那个位置，看看像不像，然后选择步入。</p>
+          <h1 id="找OEP的一个小技巧"><a href="#找OEP的一个小技巧" class="headerlink" title="找OEP的一个小技巧"></a>找OEP的一个小技巧</h1><p>我们载入程序，但在这里我发现了一个小问题，我用之前的一个OD载入之后我进入的却是系统的领空，而且一直进入不了用户组的代码，如下图所示：<br><img src="img1.jpg" alt="未进入程序领空"><br>但是我重换了一个比较基础的OD却发现是停留在程序的领空，如下图所示：<br><img src="img2.jpg" alt="程序领空"><br>这个时候我们先暂且不去深究这个的原因，之后再去研究具体的错误设置。<br>这个程序我们使用单步跟踪法来进行脱壳。<br>一步一步的往下跟踪，直到这个地方：<br><img src="img3.jpg" alt="程序OEP关键跳转"><br>我们可以看到这个时候的jnz是准备跳过去，但是我们发现塔下一个CALL却是call了一个[EBX+C]，这个地方就是比较关键的地方，因为一般壳为了保护自身，都会喜欢将地址转换到一些寄存在加偏移的一个相对基址寻址的地方，我们修改我们标志寄存器的值，让他不进行跳转，然后步入，我们会进入这个地方：<br><img src="img4.jpg" alt="程序OEP"><br>这里我们比较要注意的地方是，OD在这个地方我们一般要进行分析代码，也就是Ctrl+A，有的时候壳非常喜欢这个寄存器间接跳转，我们可以用回车键，或者Ctrl+G跳转到那个位置，看看像不像，然后选择步入。</p>
 <h1 id="重建输入表"><a href="#重建输入表" class="headerlink" title="重建输入表"></a>重建输入表</h1><p>接着上面的，我们用我们常用的方法，进行dump，这里不演示了，我就直接脱掉。<br>这个时候我们在使用import REC的时候我们发现，貌似所有的函数都是无效的，这个时候我们就需要进行手动修改了，这里我提供两种方法：</p>
 <h2 id="第一种：快速搜索法"><a href="#第一种：快速搜索法" class="headerlink" title="第一种：快速搜索法"></a>第一种：快速搜索法</h2><p>其实虽然import REC给我们的不是很正确，但是我们DD过去看一下：<br><img src="img5.jpg" alt="输入表附近"><br>这个时候我们自己定位一下，看一下上下方否是一片0的地方，从头拉到尾。<br><img src="img6.jpg" alt="输入表头部"><br><img src="img7.jpg" alt="输入表结尾"><br>这个时候就是可以了的，我们输入起始的RVA：2500，大小0x538,这个大小如果不是太确定，我们可以使用1000，但不是太建议，特殊情况下不要了，这个时候我们常规方法进行dump。</p>
 <h2 id="第二种：CALL地址搜索法"><a href="#第二种：CALL地址搜索法" class="headerlink" title="第二种：CALL地址搜索法"></a>第二种：CALL地址搜索法</h2><p>这个方法比较直接，我们可以直接看他OEP下方CALL的地址，例如：<br><img src="img8.jpg" alt="快速CALL定位输入表"><br>只要是下方的CALL地址就行，这个时候就到输入表的头部了，然后就可以了。</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/14/Rebuilt-input-list/" data-id="ck5xilzk7001ltkwjd0l5bsme" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-LoadPE-and-importREC" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/13/LoadPE-and-importREC/" class="article-date">
-  <time datetime="2020-01-13T01:57:36.000Z" itemprop="datePublished">2020-01-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/13/LoadPE-and-importREC/">LoadPE and importREC</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/LoadPE-and-importREC/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/13/LoadPE-and-importREC/" class="post-title-link" itemprop="url">LoadPE and importREC</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-13 09:57:36 / Modified: 10:27:56" itemprop="dateCreated datePublished" datetime="2020-01-13T09:57:36+08:00">2020-01-13</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
+          <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
 <h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/13/LoadPE-and-importREC/" data-id="ck5xilzk00011tkwj5bbb793y" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-Common-Unshell" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/12/Common-Unshell/" class="article-date">
-  <time datetime="2020-01-12T11:46:40.000Z" itemprop="datePublished">2020-01-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/12/Common-Unshell/">Common-Unshell</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/Common-Unshell/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/Common-Unshell/" class="post-title-link" itemprop="url">Common-Unshell</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-12 19:46:40" itemprop="dateCreated datePublished" datetime="2020-01-12T19:46:40+08:00">2020-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-13 10:30:18" itemprop="dateModified" datetime="2020-01-13T10:30:18+08:00">2020-01-13</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
+          <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
 <h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RAV1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
 <h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>其实也就是ESP改变的时候我们下一个硬件断点，然后运行，ESP改变的时候程序暂停，我么单步跟下就可以了。<br><img src="img7.jpg" alt="HWESP"><br>然后我们运行（删除硬件断点不要忘记），会来到这个位置：<br><img src="img8.jpg" alt="OEPJmp"><br>可以看到确实快到了，我们但不跟踪几下就可以了。</p>
 <h2 id="关键搜索"><a href="#关键搜索" class="headerlink" title="关键搜索"></a>关键搜索</h2><p>其实也就是搜索popad，记住不要搜索整个快，因为太大了，我们Ctrl+F进行搜索，会看到如下的结果：<br><img src="img9.jpg" alt="区段"><br>我们Ctrl+L就可以搜索下一个，记住一般来说，附近都有大的跳转和返回，一般也就是跨区段的跳转。</p>
@@ -436,171 +717,239 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/12/Common-Unshell/" data-id="ck5xilzjb0003tkwj6xjzgtlk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
 
-    </footer>
-  </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-</article>
-
-
   
-    <article id="post-OD-QuickKeyBoard" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/12/OD-QuickKeyBoard/" class="article-date">
-  <time datetime="2020-01-12T11:41:50.000Z" itemprop="datePublished">2020-01-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+  
+
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/12/OD-QuickKeyBoard/">OD-QuickKeyBoard</a>
-    </h1>
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/OD-QuickKeyBoard/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/OD-QuickKeyBoard/" class="post-title-link" itemprop="url">OD-QuickKeyBoard</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-12 19:41:50 / Modified: 19:42:45" itemprop="dateCreated datePublished" datetime="2020-01-12T19:41:50+08:00">2020-01-12</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>CALC :         判断表达式<br>WATCH :      添加监视表达式<br>AT :             在指定地址进行反汇编<br>FOLLOW :     跟随命令<br>ORIG :         反汇编于 EIP<br>DUMP           在指定地址进行转存<br>DA :            转存为反汇编代码<br>DB :            使用十六进制字节格式转存<br>DC :            使用 ASCII 格式转存<br>DD :            转存在堆栈格式<br>DU :            转存在 UNICODE 格式<br>DW :           使用十六进制字词格式转存<br>STK :          前往堆栈中的地址<br>AS  :          （AS + 地址 + 字符串） 在指定地址进行汇编<br>BP :             进行条件中断（有条件的断点）<br>BPX :           中断在全部调用 （Call）<br>BPD :           清除全部调用中的断点<br>BC :             清除断点<br>MR :             内存断点于访问时<br>MW :            内存断点于写入时<br>MD :             清除内存断点<br>HR :             访问时进行硬件中断<br>HW :            写入时进行硬件中断<br>HE :              执行时进行硬件中断<br>HD :              清除硬件断点<br>STOP :          停止运行程序调试<br>PAUSE :        暂停执行程序调试<br>RUN :            运行程序进行调试<br>GE :              运行和通过例外<br>SI :              单步进入 Call 中<br>SO :             步过 Call<br>TI :              跟踪进入直到地址<br>TO :            跟踪步过直到地址<br>TC :            跟踪进入直到满足条件<br>TOC :          跟踪步过直到满足条件<br>TR :            运行直到返回<br>TU :            运行直到用户代码<br>LOG :          查看记录窗口<br>MOD :         查看模块窗口<br>MEM :          查看内存窗口<br>CPU :           查看 CPU 窗口<br>CS :            查看 Call 堆栈<br>BRK :           查看断点窗口<br>OPT :           打开选项设置窗口<br>EXIT :          退出 OllyDbg<br>QUIT :          退出 OllyDbg<br>OPEN :         打开一个可执行文件<br>CLOSE :       关闭可执行文件  </p>
+          <p>CALC :         判断表达式<br>WATCH :      添加监视表达式<br>AT :             在指定地址进行反汇编<br>FOLLOW :     跟随命令<br>ORIG :         反汇编于 EIP<br>DUMP           在指定地址进行转存<br>DA :            转存为反汇编代码<br>DB :            使用十六进制字节格式转存<br>DC :            使用 ASCII 格式转存<br>DD :            转存在堆栈格式<br>DU :            转存在 UNICODE 格式<br>DW :           使用十六进制字词格式转存<br>STK :          前往堆栈中的地址<br>AS  :          （AS + 地址 + 字符串） 在指定地址进行汇编<br>BP :             进行条件中断（有条件的断点）<br>BPX :           中断在全部调用 （Call）<br>BPD :           清除全部调用中的断点<br>BC :             清除断点<br>MR :             内存断点于访问时<br>MW :            内存断点于写入时<br>MD :             清除内存断点<br>HR :             访问时进行硬件中断<br>HW :            写入时进行硬件中断<br>HE :              执行时进行硬件中断<br>HD :              清除硬件断点<br>STOP :          停止运行程序调试<br>PAUSE :        暂停执行程序调试<br>RUN :            运行程序进行调试<br>GE :              运行和通过例外<br>SI :              单步进入 Call 中<br>SO :             步过 Call<br>TI :              跟踪进入直到地址<br>TO :            跟踪步过直到地址<br>TC :            跟踪进入直到满足条件<br>TOC :          跟踪步过直到满足条件<br>TR :            运行直到返回<br>TU :            运行直到用户代码<br>LOG :          查看记录窗口<br>MOD :         查看模块窗口<br>MEM :          查看内存窗口<br>CPU :           查看 CPU 窗口<br>CS :            查看 Call 堆栈<br>BRK :           查看断点窗口<br>OPT :           打开选项设置窗口<br>EXIT :          退出 OllyDbg<br>QUIT :          退出 OllyDbg<br>OPEN :         打开一个可执行文件<br>CLOSE :       关闭可执行文件  </p>
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/01/12/OD-QuickKeyBoard/" data-id="ck5xilzk4001btkwj1pt4esjg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
 
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag">Android学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MFC/" rel="tag">MFC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag">Win32编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" rel="tag">内网入侵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" rel="tag">反汇编工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" rel="tag">嗅探劫持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag">脱壳篇</a></li></ul>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
+  <aside class="sidebar">
+    <div class="sidebar-inner">
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" style="font-size: 16.67px;">Android学习</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/MFC/" style="font-size: 10px;">MFC</a> <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" style="font-size: 16.67px;">Win32编程</a> <a href="/tags/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" style="font-size: 10px;">内网入侵</a> <a href="/tags/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" style="font-size: 13.33px;">反汇编工具</a> <a href="/tags/%E5%97%85%E6%8E%A2%E5%8A%AB%E6%8C%81/" style="font-size: 10px;">嗅探劫持</a> <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" style="font-size: 20px;">脱壳篇</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/01/28/Intent%E5%AE%9E%E7%8E%B0%E6%8B%A8%E5%8F%B7/">Intent实现拨号</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">PE文件判定</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">Android Anr异常</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">Android横竖屏设置</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/26/File-operate2/">File operate2</a>
-          </li>
-        
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
       </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Wker<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
     </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
   </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
   </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
