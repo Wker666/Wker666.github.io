@@ -169,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/28/Intent%E5%AE%9E%E7%8E%B0%E6%8B%A8%E5%8F%B7/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/28/MFC-CFile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +183,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/28/Intent%E5%AE%9E%E7%8E%B0%E6%8B%A8%E5%8F%B7/" class="post-title-link" itemprop="url">Intent实现拨号</a>
+            <a href="/2020/01/28/MFC-CFile/" class="post-title-link" itemprop="url">MFC-CFile</a>
         </h1>
 
         <div class="post-meta">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-01-28 10:11:44 / Modified: 10:25:16" itemprop="dateCreated datePublished" datetime="2020-01-28T10:11:44+08:00">2020-01-28</time>
+              <time title="Created: 2020-01-28 16:00:35 / Modified: 17:37:07" itemprop="dateCreated datePublished" datetime="2020-01-28T16:00:35+08:00">2020-01-28</time>
             </span>
 
           
@@ -208,13 +208,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="实例：手机拨号"><a href="#实例：手机拨号" class="headerlink" title="实例：手机拨号"></a>实例：手机拨号</h2><p>这个东西其实就是打开一个Activity然后在打开的过程中传输我们我的手机号，思路就是获取Edittext输入的值，然后在我们是用隐式intent的传输我们的手机号给指定的Activity就可以进行实现手机拨号的功能，具体的实现代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.EditText;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">activity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Button btn01;</span><br><span class="line">	<span class="keyword">private</span> EditText edt01;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_01);</span><br><span class="line">		edt01 = (EditText)findViewById(R.id.editText1);</span><br><span class="line">		btn01 = (Button)findViewById(R.id.button1);</span><br><span class="line">		btn01.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">				String phoneNumber = edt01.getText().toString();</span><br><span class="line">				Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">				intent.setAction(<span class="string">"android.intent.action.CALL"</span>);</span><br><span class="line">				intent.addCategory(<span class="string">"android.intent.category.DEFAULT"</span>);</span><br><span class="line">				intent.setData(Uri.parse(<span class="string">"tel:"</span>+phoneNumber));</span><br><span class="line">				startActivity(intent);</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里要注意手机的是拨号的Intent-filter：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">intent.setAction(<span class="string">"android.intent.action.CALL"</span>);</span><br><span class="line">intent.addCategory(<span class="string">"android.intent.category.DEFAULT"</span>);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"tel:"</span>+phoneNumber));</span><br></pre></td></tr></table></figure>
-<p>tel协议后面要跟上我们的手机号。<br>但是这个时候并不能正常运行，因为我们没有这个权限，拨号算是手机的底层功能，所以需要特殊的一个权限，这个就是在安装的时候我们点击安装程序自动提示给我们是否允许这个功能（安装的时候都见到过），所以我们在AndroidManifest.xml中进行一个权限的请求：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CALL_PHONE"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这个就是请求拨号权限，这个之后我们的程序就能够正常的拨号了！</p>
+          <h2 id="CFile"><a href="#CFile" class="headerlink" title="CFile"></a>CFile</h2><p>MFC是出了名的方便，因为他和java一样封装了许许多多的类，方便了我们在程序编写的时候方便的进行调用。<br>这篇博客记录一下CFile类的一些使用方法，环境就是MFC的一个类库支持。<br>这个类库支持异常的一些处理：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CFile file;</span><br><span class="line">CFileException e;</span><br><span class="line"><span class="keyword">if</span> (file.Open(<span class="string">"File.txt"</span>,CFile::modeReadWrite,&amp;e))</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">	e.ReportError();<span class="comment">//打印一下异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然也是可以这个样子写的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CFile file;</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	file.Open(<span class="string">"File.txt"</span>,CFile::modeReadWrite);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (CFileException* e)</span><br><span class="line">&#123;</span><br><span class="line">	e-&gt;ReportError();<span class="comment">//打印一下异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很是方便，而且是通过信息框的方式进行打印。<br>方便的不仅如此，比如说我们没有这个txt的情况下进行写入，正常情况下我们需要判断是否有这个txt，然后没有的话呢就生成然后在写入，但是CFile这个类的话呢不需要，我们只需要写就好了，例如下面：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">CFile <span class="title">file</span><span class="params">(<span class="string">"ReadMe.txt"</span>,CFile::modeCreate | CFile::modeReadWrite | CFile::modeNoTruncate)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	这个位置操作文件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">file.Close();<span class="comment">//方便其他程序可以读取</span></span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是，我们指定了一个<code>CFile::modeNoTruncate</code>参数就是说如果我们的txt存在了，我们并不是截断他到0，而是继续写入，这个属性基本上用到Create基本上必须要用到！<br>如何进行读写呢，看下面示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buffer[<span class="number">1024</span>*<span class="number">4</span>];</span><br><span class="line"><span class="function">CFile <span class="title">file</span><span class="params">(<span class="string">"ReadMe.txt"</span>,CFile::modeCreate | CFile::modeReadWrite | CFile::modeNoTruncate)</span></span>;</span><br><span class="line">DWORD dwSize = file.GetLength();</span><br><span class="line">CString Context;</span><br><span class="line"><span class="keyword">while</span>(dwSize)</span><br><span class="line">&#123;</span><br><span class="line">	UINT real = file.Read(buffer,<span class="keyword">sizeof</span>(buffer));</span><br><span class="line">	Context += buffer;</span><br><span class="line">	dwSize -= real;</span><br><span class="line">&#125;</span><br><span class="line">MessageBox(Context);</span><br><span class="line">file.Close();<span class="comment">//方便其他程序可以读取</span></span><br></pre></td></tr></table></figure>
+<p>可以看到很是方便！</p>
 
       
     </div>
@@ -234,7 +236,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -300,7 +302,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
