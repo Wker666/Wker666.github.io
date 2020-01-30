@@ -46,30 +46,32 @@
   };
 </script>
 
-  <meta name="description" content="一个萌新">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wker">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="从Activity返回数据一开始我认为这个东西就和模态对话框差不多有返回值的，但再看一下由于安卓的限制，这个东西还是比那个强大一点的。这个东西即使比较广泛，获取的数据分为两种，请求码（requestCode）与结果码（resultCode），这两个东西我一开是有点混，主要是不知道请求码的意义，现在明白了，但还是不是很管用，那么现在就分析一下。 请求码这个东西主要使用来告诉安卓，我们是点击的哪个按钮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity返回数据">
+<meta property="og:url" content="http://yoursite.com/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="一个萌新">
+<meta property="og:description" content="从Activity返回数据一开始我认为这个东西就和模态对话框差不多有返回值的，但再看一下由于安卓的限制，这个东西还是比那个强大一点的。这个东西即使比较广泛，获取的数据分为两种，请求码（requestCode）与结果码（resultCode），这两个东西我一开是有点混，主要是不知道请求码的意义，现在明白了，但还是不是很管用，那么现在就分析一下。 请求码这个东西主要使用来告诉安卓，我们是点击的哪个按钮">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-30T02:20:53.000Z">
+<meta property="article:modified_time" content="2020-01-30T02:34:07.374Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="程序员">
+<meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>Wker</title>
+  <title>Activity返回数据 | Wker</title>
   
 
 
@@ -165,10 +167,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -182,8 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">Activity返回数据</a>
+          Activity返回数据
         </h1>
 
         <div class="post-meta">
@@ -208,7 +209,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="从Activity返回数据"><a href="#从Activity返回数据" class="headerlink" title="从Activity返回数据"></a>从Activity返回数据</h1><p>一开始我认为这个东西就和模态对话框差不多有返回值的，但再看一下由于安卓的限制，这个东西还是比那个强大一点的。<br>这个东西即使比较广泛，获取的数据分为两种，请求码（requestCode）与结果码（resultCode），这两个东西我一开是有点混，主要是不知道请求码的意义，现在明白了，但还是不是很管用，那么现在就分析一下。</p>
+        <h1 id="从Activity返回数据"><a href="#从Activity返回数据" class="headerlink" title="从Activity返回数据"></a>从Activity返回数据</h1><p>一开始我认为这个东西就和模态对话框差不多有返回值的，但再看一下由于安卓的限制，这个东西还是比那个强大一点的。<br>这个东西即使比较广泛，获取的数据分为两种，请求码（requestCode）与结果码（resultCode），这两个东西我一开是有点混，主要是不知道请求码的意义，现在明白了，但还是不是很管用，那么现在就分析一下。</p>
 <h2 id="请求码"><a href="#请求码" class="headerlink" title="请求码"></a>请求码</h2><p>这个东西主要使用来告诉安卓，我们是点击的哪个按钮来打开一个新的窗口的，就比如说有两个按钮，我们打开同一个Activity，返回来的时候我们想知道到底是哪个点开的哪个界面，这个时候我们就要在打开的时候传递一个特定的请求码，例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">startActivityForResult(intent, <span class="number">1</span>);<span class="comment">//requestCode是一个请求码</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">startActivityForResult(intent, <span class="number">2</span>);<span class="comment">//requestCode是一个请求码</span></span><br></pre></td></tr></table></figure>
@@ -224,27 +225,36 @@
 <p>这个Intent只是用来传输数据的！</p>
 <p>这个时候我们就能够进行数据返回的一个操作了，但是在这里有一点一定要注意，可能注意到我判断了一下data是否为null，因为在我们没有点击保存或者取消的时候我们之间点的是返回，所以我们并没有传输数据，这个时候很明显的就是会报一个空指针的错误，我们需要判断是不是空指针才能进行打印。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag"># Android学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/29/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B61/" rel="prev" title="内存映射文件1">
+      <i class="fa fa-chevron-left"></i> 内存映射文件1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
 
 
           </div>
@@ -295,6 +305,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从Activity返回数据"><span class="nav-number">1.</span> <span class="nav-text">从Activity返回数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求码"><span class="nav-number">1.1.</span> <span class="nav-text">请求码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果码"><span class="nav-number">1.2.</span> <span class="nav-text">结果码</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
