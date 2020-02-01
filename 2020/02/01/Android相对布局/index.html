@@ -48,30 +48,32 @@
   };
 </script>
 
-  <meta name="description" content="一个萌新">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wker">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="相对布局相对布局还是很好用的，其实就是一个组件相对于另外一个组件的一个位置，我们只需要定好一个位置我们就可以推出来其他的位置。但是有一点就是需要注意的，由于我们需要相对性，所以我们需要ID，因此XML解析是需要顺序的，就是说我们如果这个控件是相对于那个控件的，那个控件就需要在我这个控件之前进行定义！看一下示例代码： 12345678910111213141516171819202122232425">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android相对布局">
+<meta property="og:url" content="http://yoursite.com/2020/02/01/Android%E7%9B%B8%E5%AF%B9%E5%B8%83%E5%B1%80/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="一个萌新">
+<meta property="og:description" content="相对布局相对布局还是很好用的，其实就是一个组件相对于另外一个组件的一个位置，我们只需要定好一个位置我们就可以推出来其他的位置。但是有一点就是需要注意的，由于我们需要相对性，所以我们需要ID，因此XML解析是需要顺序的，就是说我们如果这个控件是相对于那个控件的，那个控件就需要在我这个控件之前进行定义！看一下示例代码： 12345678910111213141516171819202122232425">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-01T10:48:27.000Z">
+<meta property="article:modified_time" content="2020-02-01T10:51:16.203Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="程序员">
+<meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/02/01/Android%E7%9B%B8%E5%AF%B9%E5%B8%83%E5%B1%80/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>Wker</title>
+  <title>Android相对布局 | Wker</title>
   
 
 
@@ -202,10 +204,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/01/Android%E7%9B%B8%E5%AF%B9%E5%B8%83%E5%B1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -219,8 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/01/Android%E7%9B%B8%E5%AF%B9%E5%B8%83%E5%B1%80/" class="post-title-link" itemprop="url">Android相对布局</a>
+          Android相对布局
         </h1>
 
         <div class="post-meta">
@@ -256,31 +257,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="相对布局"><a href="#相对布局" class="headerlink" title="相对布局"></a>相对布局</h2><p>相对布局还是很好用的，其实就是一个组件相对于另外一个组件的一个位置，我们只需要定好一个位置我们就可以推出来其他的位置。但是有一点就是需要注意的，由于我们需要相对性，所以我们需要ID，因此XML解析是需要顺序的，就是说我们如果这个控件是相对于那个控件的，那个控件就需要在我这个控件之前进行定义！<br>看一下示例代码：</p>
+        <h2 id="相对布局"><a href="#相对布局" class="headerlink" title="相对布局"></a>相对布局</h2><p>相对布局还是很好用的，其实就是一个组件相对于另外一个组件的一个位置，我们只需要定好一个位置我们就可以推出来其他的位置。但是有一点就是需要注意的，由于我们需要相对性，所以我们需要ID，因此XML解析是需要顺序的，就是说我们如果这个控件是相对于那个控件的，那个控件就需要在我这个控件之前进行定义！<br>看一下示例代码：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> &gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">ImageView</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/iv_icon"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_width</span>=<span class="string">"70dp"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"70dp"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:src</span>=<span class="string">"@drawable/ic_launcher"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">EditText</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/et_account"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"180dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"请输入账号"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_toRightOf</span>=<span class="string">"@id/iv_icon"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">EditText</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/et_password"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"180dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"请输入密码"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@id/et_account"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_toRightOf</span>=<span class="string">"@id/iv_icon"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">TextView</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/register"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"注册账号"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/et_account"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_marginTop</span>=<span class="string">"15dip"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">TextView</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/returnPassword"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"找回密码"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/et_account"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_marginTop</span>=<span class="string">"45dip"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">CheckBox</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/remember"</span></span></span><br><span class="line"><span class="tag">   	    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"记住密码"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/iv_icon"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_below</span>=<span class="string">"@id/et_password"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">CheckBox</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/auto_Login"</span></span></span><br><span class="line"><span class="tag">   	    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"自动登录"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/remember"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_below</span>=<span class="string">"@id/et_password"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">Button</span> </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/Login"</span></span></span><br><span class="line"><span class="tag">    	<span class="attr">android:layout_width</span>=<span class="string">"300dip"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"登录"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_below</span>=<span class="string">"@id/auto_Login"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">	    /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>模仿QQ的一个登录界面</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag"># Android学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/01/Android%E8%A1%A8%E6%A0%BC%E5%B8%83%E5%B1%80%E5%92%8C%E7%BB%9D%E5%AF%B9%E5%B8%83%E5%B1%80/" rel="prev" title="Android表格布局和绝对布局">
+      <i class="fa fa-chevron-left"></i> Android表格布局和绝对布局
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
 
 
           </div>
@@ -331,6 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相对布局"><span class="nav-number">1.</span> <span class="nav-text">相对布局</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

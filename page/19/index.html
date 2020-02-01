@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/27/Android-Anr%E5%BC%82%E5%B8%B8/" class="post-title-link" itemprop="url">Android Anr异常</a>
+            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/" class="post-title-link" itemprop="url">PE文件判定</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-27 10:26:57" itemprop="dateCreated datePublished" datetime="2020-01-27T10:26:57+08:00">2020-01-27</time>
+              <time title="Created: 2020-01-27 17:28:28" itemprop="dateCreated datePublished" datetime="2020-01-27T17:28:28+08:00">2020-01-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:59:32" itemprop="dateModified" datetime="2020-02-01T12:59:32+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:59:09" itemprop="dateModified" datetime="2020-02-01T12:59:09+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">Android学习</span>
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
                   </a>
                 </span>
             </span>
@@ -262,9 +262,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="ANR异常"><a href="#ANR异常" class="headerlink" title="ANR异常"></a>ANR异常</h2><p>其实就是主线程卡死，然后无法响应，大于6秒，会出现如下的一个错误报告：<br><img src="img1.jpg" alt="ANR异常"><br>这个时候就是说我们卡死了，代码里如这个样子写：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	Thread.sleep(<span class="number">60000</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解决办法也很简单，就是放在子线程中写耗时的操作！</p>
+          <h2 id="PE文件有效性验证"><a href="#PE文件有效性验证" class="headerlink" title="PE文件有效性验证"></a>PE文件有效性验证</h2><p>之前自己写了一个自己读的PE区段的小程序（当时是模仿CE写的一个内存搜索工具），当时写的是真的按照微软给的格式（什么NT头什么DOS头乱七八糟的）一个字节一个字节找的，但是后来发现居然有一个结构体居然可以直接拿来用，哎，失算失算~</p>
+<h2 id="IMAGE-DOS-HEADER和IMAGE-NT-HEADERS"><a href="#IMAGE-DOS-HEADER和IMAGE-NT-HEADERS" class="headerlink" title="IMAGE_DOS_HEADER和IMAGE_NT_HEADERS"></a><code>IMAGE_DOS_HEADER</code>和<code>IMAGE_NT_HEADERS</code></h2><p>由于我的MSDN是2001年的，所以这个我是从IDE找到的，没有注释，但是大体的结构还是能看懂的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span></span><br><span class="line">      WORD e_magic;</span><br><span class="line">      WORD e_cblp;</span><br><span class="line">      WORD e_cp;</span><br><span class="line">      WORD e_crlc;</span><br><span class="line">      WORD e_cparhdr;</span><br><span class="line">      WORD e_minalloc;</span><br><span class="line">      WORD e_maxalloc;</span><br><span class="line">      WORD e_ss;</span><br><span class="line">      WORD e_sp;</span><br><span class="line">      WORD e_csum;</span><br><span class="line">      WORD e_ip;</span><br><span class="line">      WORD e_cs;</span><br><span class="line">      WORD e_lfarlc;</span><br><span class="line">      WORD e_ovno;</span><br><span class="line">      WORD e_res[<span class="number">4</span>];</span><br><span class="line">      WORD e_oemid;</span><br><span class="line">      WORD e_oeminfo;</span><br><span class="line">      WORD e_res2[<span class="number">10</span>];</span><br><span class="line">      LONG e_lfanew;</span><br><span class="line">    &#125; IMAGE_DOS_HEADER,*PIMAGE_DOS_HEADER;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">      DWORD Signature;</span><br><span class="line">      IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">      IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">    &#125; IMAGE_NT_HEADERS32,*PIMAGE_NT_HEADERS32;</span><br></pre></td></tr></table></figure>
+<p>这个就是微软定义的一个结构，我们用这个结构就能够轻松的读取了，思路就是先打开文件，后读取文件，判断DOS头，判断NT头。<br>实现的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	IMAGE_DOS_HEADER dosHeader;</span><br><span class="line">	IMAGE_NT_HEADERS ntHeaders;</span><br><span class="line">	<span class="keyword">char</span> * text = <span class="keyword">new</span> <span class="keyword">char</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"Please Input File Address:"</span>; </span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;text;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;text&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	HANDLE hFile = CreateFile(text,GENERIC_READ,FILE_SHARE_READ,<span class="literal">NULL</span>,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,<span class="literal">NULL</span>);<span class="comment">//常规的打开一个文件 </span></span><br><span class="line">	<span class="keyword">if</span>(hFile == INVALID_HANDLE_VALUE) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"error file!"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	ReadFile(hFile,&amp;dosHeader,<span class="keyword">sizeof</span>(dosHeader),&amp;dwRead,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(dwRead == <span class="keyword">sizeof</span>(dosHeader))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(dosHeader.e_magic == IMAGE_DOS_SIGNATURE)<span class="comment">//判断是不是MZ，就是你常见的那个</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(SetFilePointer(hFile,dosHeader.e_lfanew,<span class="literal">NULL</span>,FILE_BEGIN) != <span class="number">-1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				ReadFile(hFile,&amp;ntHeaders,<span class="keyword">sizeof</span>(ntHeaders),&amp;dwRead,<span class="literal">NULL</span>);</span><br><span class="line">				<span class="keyword">if</span>(dwRead == <span class="keyword">sizeof</span>(ntHeaders))</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(ntHeaders.Signature == IMAGE_NT_SIGNATURE)<span class="comment">//判断是不是那个PE</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">cout</span>&lt;&lt;<span class="string">"Congrate!This is PE File!"</span>;</span><br><span class="line">						<span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"sorry,This is not!"</span> ;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还是比较简单的，用这两个结构体，那么具体如何读取区段之后再说！</p>
 
       
     </div>
@@ -284,7 +287,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -351,7 +354,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
