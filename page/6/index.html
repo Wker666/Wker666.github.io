@@ -169,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B61/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +183,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B61/" class="post-title-link" itemprop="url">内存映射文件1</a>
+            <a href="/2020/01/30/Activity%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">Activity返回数据</a>
         </h1>
 
         <div class="post-meta">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-01-29 19:48:51 / Modified: 21:11:37" itemprop="dateCreated datePublished" datetime="2020-01-29T19:48:51+08:00">2020-01-29</time>
+              <time title="Created: 2020-01-30 10:20:53 / Modified: 10:34:07" itemprop="dateCreated datePublished" datetime="2020-01-30T10:20:53+08:00">2020-01-30</time>
             </span>
 
           
@@ -208,68 +208,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><p>这个可以是一个很厉害的技术，之前学过很多次相关的只是，但是都是有一些遗忘，这一次重新认真的学习一下。<br>与虚拟内存相比，内存映射提交到物理存储器的是来自于磁盘上的相应文件而不是系统页面文件，一旦被映射了就相当于整个文件被映射了过来，虚拟内存的页面文件我记得也就是页面大小的几倍（叫做什么粒度我也忘记了）</p>
-<h2 id="内存映射的目的"><a href="#内存映射的目的" class="headerlink" title="内存映射的目的"></a>内存映射的目的</h2><ol>
-<li>内存映射加载EXE和DLL，极大地缩短了启动的时间。</li>
-<li>访问磁盘上的数据，避免了执行I/O操作，也避免了文件的内容申请缓冲区</li>
-<li>内存之间的数据传输，像什么管道啊，油槽啊之类的各种东西好像都是基于内存映射的。</li>
-</ol>
-<ul>
-<li>CreateFileMapping  </li>
-<li>FlushViewOfFile  </li>
-<li>MapViewOfFile  </li>
-<li>MapViewOfFileEx  </li>
-<li>MapViewOfFileVlm  </li>
-<li>OpenFileMapping  </li>
-<li>UnmapViewOfFile   </li>
-<li>UnmapViewOfFileVlm  </li>
-</ul>
-<p>基本上就这么几个，我还是准备分几篇博客写这个东西</p>
-<h2 id="创建一个内存映射内核对象CreateFileMapping"><a href="#创建一个内存映射内核对象CreateFileMapping" class="headerlink" title="创建一个内存映射内核对象CreateFileMapping"></a>创建一个内存映射内核对象<code>CreateFileMapping</code></h2><p><code>CreateFileMapping</code>创建一个内核对象，函数的原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateFileMapping</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,              <span class="comment">// handle to file to map</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpFileMappingAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="comment">// optional security attributes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD flProtect,           <span class="comment">// protection for mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwMaximumSizeHigh,   <span class="comment">// high-order 32 bits of object size</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwMaximumSizeLow,    <span class="comment">// low-order 32 bits of object size</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpName             <span class="comment">// name of file-mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>hFile如果是传给他一个<code>CreateFile</code>的HANDLE对象的话呢，那将是打开这个文件，如果是-1的话呢，那将创建一个内存映射。</li>
-<li>第三个参数是内存映射文件的保护属性，主要是下面这三值：<code>PAGE_READONLY</code> <code>PAGE_READWRITE</code> <code>PAGE_WRITECOPY</code>看名字就知道了。</li>
-<li>三四个参数的话呢是大小，一半给他0，就是和文件一样大。</li>
-<li>最后一个是内存映射文件的名字</li>
-</ol>
-<h2 id="打开内存映射文件OpenFileMapping"><a href="#打开内存映射文件OpenFileMapping" class="headerlink" title="打开内存映射文件OpenFileMapping"></a>打开内存映射文件<code>OpenFileMapping</code></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">OpenFileMapping</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwDesiredAccess,  <span class="comment">// access mode</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bInheritHandle,    <span class="comment">// inherit flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpName          <span class="comment">// pointer to name of file-mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>第一个参数<code>dwDesiredAccess</code>就和那个打开文件感觉很像。</p>
-<ul>
-<li>FILE_MAP_WRITE Read-write access. The target file-mapping object must have been created with PAGE_READWRITE protection. A read-write view of the file is mapped. </li>
-<li>FILE_MAP_READ Read-only access. The target file-mapping object must have been created with PAGE_READWRITE or PAGE_READ protection. A read-only view of the file is mapped. </li>
-<li>FILE_MAP_ALL_ACCESS Same as FILE_MAP_WRITE. </li>
-<li>FILE_MAP_COPY Copy-on-write access. The target file-mapping object must have been created with PAGE_WRITECOPY protection. A copy-on-write view of the file is mapped. </li>
-</ul>
-</li>
-<li><p>第二个参数和之前那个一样就是询问一下可不可以继承</p>
-</li>
-<li><p>就是创建内核对象时候的名称</p>
-</li>
-</ol>
-<p>返回文件打开的一个句柄，失败返回NULL</p>
-<h2 id="分配内存地址MapViewOfFile"><a href="#分配内存地址MapViewOfFile" class="headerlink" title="分配内存地址MapViewOfFile"></a>分配内存地址<code>MapViewOfFile</code></h2><p>下一步就是为内存映射文件线性内存地址（其实就是给他一块内存），函数原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LPVOID <span class="title">MapViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFileMappingObject,  <span class="comment">// file-mapping object to map into </span></span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="comment">// address space</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwDesiredAccess,      <span class="comment">// access mode</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetHigh,     <span class="comment">// high-order 32 bits of file offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetLow,      <span class="comment">// low-order 32 bits of file offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNumberOfBytesToMap  <span class="comment">// number of bytes to map</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>第二个参数就是一个权限类型<ul>
-<li>FILE_MAP_READ</li>
-<li>FILE_MAP_WRITE</li>
-<li>FILE_MAP_ALL_ACCESS</li>
-<li>FILE_MAP_COPY</li>
-</ul>
-</li>
-<li>第三四个参数就是起始位置</li>
-<li>最后一个参数给0就是映射整个文件大小</li>
-</ol>
-<p>函数返回成功的话呢给的是我们一个内存地址，失败返回NULL</p>
-<h2 id="撤销映射UnmapViewOfFile"><a href="#撤销映射UnmapViewOfFile" class="headerlink" title="撤销映射UnmapViewOfFile"></a>撤销映射<code>UnmapViewOfFile</code></h2><p>函数原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">UnmapViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBaseAddress   <span class="comment">// address where mapped view begins</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>很简单就是内存地址<br>然后我们调用<code>CloseHandle</code>关闭句柄</p>
-<h2 id="立即刷新-FlushViewOfFile"><a href="#立即刷新-FlushViewOfFile" class="headerlink" title="立即刷新 FlushViewOfFile"></a>立即刷新 <code>FlushViewOfFile</code></h2><p>立即刷新，如果不是的话呢就和之前的文件操作一样，关闭的时候才会（删除对象的时候才会立即刷新）。<br>函数原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">FlushViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBaseAddress,       <span class="comment">// start address of byte range to flush</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNumberOfBytesToFlush <span class="comment">// number of bytes in range</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>最后一个参数还是0的话呢是全部。</p>
-<p>先介绍的这里，之后介绍实例。</p>
+          <h1 id="从Activity返回数据"><a href="#从Activity返回数据" class="headerlink" title="从Activity返回数据"></a>从Activity返回数据</h1><p>一开始我认为这个东西就和模态对话框差不多有返回值的，但再看一下由于安卓的限制，这个东西还是比那个强大一点的。<br>这个东西即使比较广泛，获取的数据分为两种，请求码（requestCode）与结果码（resultCode），这两个东西我一开是有点混，主要是不知道请求码的意义，现在明白了，但还是不是很管用，那么现在就分析一下。</p>
+<h2 id="请求码"><a href="#请求码" class="headerlink" title="请求码"></a>请求码</h2><p>这个东西主要使用来告诉安卓，我们是点击的哪个按钮来打开一个新的窗口的，就比如说有两个按钮，我们打开同一个Activity，返回来的时候我们想知道到底是哪个点开的哪个界面，这个时候我们就要在打开的时候传递一个特定的请求码，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">startActivityForResult(intent, <span class="number">1</span>);<span class="comment">//requestCode是一个请求码</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setClass(MainActivity.<span class="keyword">this</span>, activity<span class="class">.<span class="keyword">class</span>)</span>;<span class="comment">//packageContext上下文</span></span><br><span class="line">startActivityForResult(intent, <span class="number">2</span>);<span class="comment">//requestCode是一个请求码</span></span><br></pre></td></tr></table></figure>
+<p>我们用到了一个新的方法这个方法就是用来请求Activity的，并且我们要求又返回数据，当我们在新的Activity操作完毕之后，我们点击返回的时候我们就需要获取这个数据，我们需要重写<code>onActivityResult</code>方法，主要是用来获取数据的，具体写法看下面示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">	<span class="keyword">if</span> (data != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (requestCode) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			Bundle bundle = data.getExtras();</span><br><span class="line">			Log.d(<span class="string">"Q1"</span>, bundle.getString(<span class="string">"Name"</span>));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			Bundle bundle2 = data.getExtras();</span><br><span class="line">			Log.d(<span class="string">"Q2"</span>, bundle2.getString(<span class="string">"Name"</span>));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/*switch (resultCode) &#123;</span></span><br><span class="line"><span class="comment">		case 1:</span></span><br><span class="line"><span class="comment">			Bundle bundle = data.getExtras();</span></span><br><span class="line"><span class="comment">			Log.d("R1", bundle.getString("Name"));</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		case 2:</span></span><br><span class="line"><span class="comment">			Bundle bundle2 = data.getExtras();</span></span><br><span class="line"><span class="comment">			Log.d("R2", bundle2.getString("Name"));</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		default:</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		&#125;*/</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们在按钮点击事件的时候我们传入的请求码<strong>1和2</strong>我们这个响应中我们需要处理，然后做相关的操作。</p>
+<h2 id="结果码"><a href="#结果码" class="headerlink" title="结果码"></a>结果码</h2><p>这个主要是操作完毕进行处理的，操作完毕相应的时候我们获取的，我们设置一个button是用来返回的（例如保存），这个时候我们就可以进行判断（有两个按钮，一个保存一个取消这个样子的我们需要进行处理），我们的<code>onActivityResult</code>方法这么写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">	<span class="keyword">if</span> (data != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="comment">/*switch (requestCode) &#123;</span></span><br><span class="line"><span class="comment">		case 1:</span></span><br><span class="line"><span class="comment">			Bundle bundle = data.getExtras();</span></span><br><span class="line"><span class="comment">			Log.d("Q1", bundle.getString("Name"));</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		case 2:</span></span><br><span class="line"><span class="comment">			Bundle bundle2 = data.getExtras();</span></span><br><span class="line"><span class="comment">			Log.d("Q2", bundle2.getString("Name"));</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		default:</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		&#125;*/</span></span><br><span class="line">		<span class="keyword">switch</span> (resultCode) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			Bundle bundle = data.getExtras();</span><br><span class="line">			Log.d(<span class="string">"R1"</span>, bundle.getString(<span class="string">"Name"</span>));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			Bundle bundle2 = data.getExtras();</span><br><span class="line">			Log.d(<span class="string">"R2"</span>, bundle2.getString(<span class="string">"Name"</span>));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是相应，那么我们在点击保存的时候怎么写呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.putExtra(<span class="string">"Name"</span>, <span class="string">"Wker"</span>);</span><br><span class="line">setResult(<span class="number">1</span>,intent);</span><br><span class="line">finish();<span class="comment">//关闭当前的Activity，回到上一层</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.putExtra(<span class="string">"Name"</span>, <span class="string">"Wker"</span>);</span><br><span class="line">setResult(<span class="number">2</span>,intent);</span><br><span class="line">finish();<span class="comment">//关闭当前的Activity，回到上一层</span></span><br></pre></td></tr></table></figure>
+<p>这个Intent只是用来传输数据的！</p>
+<p>这个时候我们就能够进行数据返回的一个操作了，但是在这里有一点一定要注意，可能注意到我判断了一下data是否为null，因为在我们没有点击保存或者取消的时候我们之间点的是返回，所以我们并没有传输数据，这个时候很明显的就是会报一个空指针的错误，我们需要判断是不是空指针才能进行打印。</p>
 
       
     </div>
@@ -289,7 +242,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -355,7 +308,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
