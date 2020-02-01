@@ -54,7 +54,7 @@
 <meta property="og:description" content="共享内存Windows下进程的地址空间在逻辑上是相互隔离的，但在物理上却是重叠的，就是说一块内存，可以给好多进程用，比若说共享内存进行读取，有点像管道奥。今天还是照着书写的，可能在写这一张的人没怎么注意，还是有一个错误就是提前进行UnMap了。我们首先看一下这个共享内存的简单实现： 123456789101112131415161718192021222324252627#include &lt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-31T11:06:55.000Z">
-<meta property="article:modified_time" content="2020-01-31T12:42:38.781Z">
+<meta property="article:modified_time" content="2020-02-01T04:55:43.187Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="Win32编程">
 <meta name="twitter:card" content="summary">
@@ -193,9 +193,26 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-31 19:06:55 / Modified: 20:42:38" itemprop="dateCreated datePublished" datetime="2020-01-31T19:06:55+08:00">2020-01-31</time>
+              <time title="Created: 2020-01-31 19:06:55" itemprop="dateCreated datePublished" datetime="2020-01-31T19:06:55+08:00">2020-01-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-01 12:55:43" itemprop="dateModified" datetime="2020-02-01T12:55:43+08:00">2020-02-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -319,7 +336,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
