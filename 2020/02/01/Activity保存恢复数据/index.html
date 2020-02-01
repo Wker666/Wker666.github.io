@@ -46,27 +46,20 @@
   };
 </script>
 
-  <meta name="description" content="一个文件修复import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：这个时候我们dump出来，运行的时候发现：这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？ 跟踪出真正的函数地址我们首先搜索出函数的输入表（这里验证过了）：然后我们显示">
+  <meta name="description" content="Activity保存恢复数据有的时候我们在窗口转化的过程中，某些数据是不被保存的，例如在你旋转手的时候一些变量会不被保存，一些控件值不被保存，那该如何去做呢？ 控件数据丢失这个很简单，主要是由于你的控件没有给出相应的控件ID所导致的，我们只需要将我们的控件编辑上我们的ID就好了。 变量数据的丢失这个也不麻烦，但是需要的是保存我们重要的数据，我觉得用上一些Map集合是很方便的，例如在我们转换屏幕的方">
 <meta property="og:type" content="article">
-<meta property="og:title" content="track API">
-<meta property="og:url" content="http://yoursite.com/2020/01/16/track-API/index.html">
+<meta property="og:title" content="Activity保存恢复数据">
+<meta property="og:url" content="http://yoursite.com/2020/02/01/Activity%E4%BF%9D%E5%AD%98%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="一个文件修复import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：这个时候我们dump出来，运行的时候发现：这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？ 跟踪出真正的函数地址我们首先搜索出函数的输入表（这里验证过了）：然后我们显示">
+<meta property="og:description" content="Activity保存恢复数据有的时候我们在窗口转化的过程中，某些数据是不被保存的，例如在你旋转手的时候一些变量会不被保存，一些控件值不被保存，那该如何去做呢？ 控件数据丢失这个很简单，主要是由于你的控件没有给出相应的控件ID所导致的，我们只需要将我们的控件编辑上我们的ID就好了。 变量数据的丢失这个也不麻烦，但是需要的是保存我们重要的数据，我觉得用上一些Map集合是很方便的，例如在我们转换屏幕的方">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img1.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img4.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img5.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/01/16/track-API/img6.jpg">
-<meta property="article:published_time" content="2020-01-16T02:09:14.000Z">
-<meta property="article:modified_time" content="2020-01-16T02:54:40.796Z">
+<meta property="article:published_time" content="2020-01-31T23:55:37.000Z">
+<meta property="article:modified_time" content="2020-02-01T00:29:18.533Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="脱壳篇">
+<meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/16/track-API/img1.jpg">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/16/track-API/">
+<link rel="canonical" href="http://yoursite.com/2020/02/01/Activity%E4%BF%9D%E5%AD%98%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE/">
 
 
 <script id="page-configurations">
@@ -78,7 +71,7 @@
   };
 </script>
 
-  <title>track API | Wker</title>
+  <title>Activity保存恢复数据 | Wker</title>
   
 
 
@@ -178,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/track-API/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/01/Activity%E4%BF%9D%E5%AD%98%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -191,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          track API
+          Activity保存恢复数据
         </h1>
 
         <div class="post-meta">
@@ -202,7 +195,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-01-16 10:09:14 / Modified: 10:54:40" itemprop="dateCreated datePublished" datetime="2020-01-16T10:09:14+08:00">2020-01-16</time>
+              <time title="Created: 2020-02-01 07:55:37 / Modified: 08:29:18" itemprop="dateCreated datePublished" datetime="2020-02-01T07:55:37+08:00">2020-02-01</time>
             </span>
 
           
@@ -216,8 +209,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
-<h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
+        <h1 id="Activity保存恢复数据"><a href="#Activity保存恢复数据" class="headerlink" title="Activity保存恢复数据"></a>Activity保存恢复数据</h1><p>有的时候我们在窗口转化的过程中，某些数据是不被保存的，例如在你旋转手的时候一些变量会不被保存，一些控件值不被保存，那该如何去做呢？</p>
+<h2 id="控件数据丢失"><a href="#控件数据丢失" class="headerlink" title="控件数据丢失"></a>控件数据丢失</h2><p>这个很简单，主要是由于你的控件没有给出相应的控件ID所导致的，我们只需要将我们的控件编辑上我们的ID就好了。</p>
+<h2 id="变量数据的丢失"><a href="#变量数据的丢失" class="headerlink" title="变量数据的丢失"></a>变量数据的丢失</h2><p>这个也不麻烦，但是需要的是保存我们重要的数据，我觉得用上一些Map集合是很方便的，例如在我们转换屏幕的方向的时候，数据就会重新刷新。<br>那么如何保存呢？我们可以重写<code>onSaveInstanceState</code>方法<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	outState.putString(<span class="string">"a"</span>, a);</span><br><span class="line">	<span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候我是保存了a变量，保存在”a”这个键值下面。<br>那么如何回复呢？其实有两种方法，一种是<code>onCreate</code>方法中进行恢复，一种是<code>onRestoreInstanceState</code>方法中进行恢复，两种方法都是可以的，但是这种情况下我们一般建议使用<code>onRestoreInstanceState</code>这个方法，其实是一样的，在我们这个方法被Java虚拟机调用的时候我们会传进来一个Bundle类型的一个参数，这个东西就有点像集合，也是键对值的一个操作，具体操作如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	a = savedInstanceState.getString(<span class="string">"a"</span>);</span><br><span class="line">	<span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>onCreate</code>方法中也有那个Bundle参数，使用方法一样的。<br>记录一下这个Toast类，就是在窗口上提示一个小窗口：<br><code>Toast.makeText(getApplicationContext(),a+&quot;&quot;,Toast.LENGTH_SHORT).show();</code></p>
+<p>很方便的一个小东西，但是就是太快了是不行的！</p>
 
     </div>
 
@@ -227,7 +226,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E8%84%B1%E5%A3%B3%E7%AF%87/" rel="tag"># 脱壳篇</a>
+              <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag"># Android学习</a>
           </div>
 
         
@@ -236,13 +235,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/01/16/Rebuilt-input-list2/" rel="prev" title="Rebuilt input list2">
-      <i class="fa fa-chevron-left"></i> Rebuilt input list2
+    <a href="/2020/01/31/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84ShareMemory/" rel="prev" title="内存映射ShareMemory">
+      <i class="fa fa-chevron-left"></i> 内存映射ShareMemory
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/01/16/special-UnShell/" rel="next" title="special-UnShell">
-      special-UnShell <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -302,7 +298,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个文件修复"><span class="nav-number">1.</span> <span class="nav-text">一个文件修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跟踪出真正的函数地址"><span class="nav-number">2.</span> <span class="nav-text">跟踪出真正的函数地址</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity保存恢复数据"><span class="nav-number">1.</span> <span class="nav-text">Activity保存恢复数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#控件数据丢失"><span class="nav-number">1.1.</span> <span class="nav-text">控件数据丢失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量数据的丢失"><span class="nav-number">1.2.</span> <span class="nav-text">变量数据的丢失</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
