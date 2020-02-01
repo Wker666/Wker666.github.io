@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/18/adb-Common-method/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/18/adb-Common-method/" class="post-title-link" itemprop="url">adb-Common-method</a>
+            <a href="/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/" class="post-title-link" itemprop="url">通用对话框</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-18 21:29:47" itemprop="dateCreated datePublished" datetime="2020-01-18T21:29:47+08:00">2020-01-18</time>
+              <time title="Created: 2020-01-19 17:44:06" itemprop="dateCreated datePublished" datetime="2020-01-19T17:44:06+08:00">2020-01-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:02:55" itemprop="dateModified" datetime="2020-02-01T13:02:55+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:02:34" itemprop="dateModified" datetime="2020-02-01T13:02:34+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">Android学习</span>
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
                   </a>
                 </span>
             </span>
@@ -262,22 +262,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>初学Android</p>
-<h1 id="ADB常用命令"><a href="#ADB常用命令" class="headerlink" title="ADB常用命令"></a>ADB常用命令</h1><ul>
-<li>adb devices<br>这个用于查看当前连接的模拟器。<br><img src="img1.jpg" alt="查看当前连接对象"></li>
-<li>adb start-server <strong>开启调试器</strong></li>
-<li>adb kill-server  <strong>终止调试器</strong></li>
-<li>adb -s 参数 install 路径 <strong>安装一个apk文件</strong> 参数适用于指定安装的路径</li>
-<li>adb shell 获取Android的Shell <strong>这个命令有点类似于Linux的命令，且当前目录是我们的根目录</strong><br><img src="img2.jpg" alt="Shell权限"><blockquote>
-<p>在这里我刚了解到，原来Android的内核是基于Linux的。<br>exit 退出当前的Shell</p>
-</blockquote>
-</li>
-<li>adb push &lt;Windows的一个文件&gt;&lt;手机文件目录&gt; <strong>主要用来传给我们手机电脑上的一个文件</strong><br>但是如果你遇到：<em>Unable to chmod ***: Read-only file system</em><br>那么解决办法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">首先我们需要adb切换到root权限：adb remount</span><br><span class="line">然后我们重新挂载：mount -rw -o remount &#x2F;</span><br><span class="line"></span><br><span class="line">	注：</span><br><span class="line">  	mount 是挂载命令</span><br><span class="line">  	-rw  是说指定的挂载文件是可读&#x2F;写的</span><br><span class="line"> 	-o remount &#x2F; 是说重新挂载根</span><br><span class="line">然后我们chmod 777 文件夹</span><br><span class="line">777就是可读可写，具体忘记了，Linux的一些操作过短时间需要复习了看来。</span><br></pre></td></tr></table></figure>
-<img src="img3.jpg" alt="重新挂载"><br><img src="img4.jpg" alt="赋予权限"></li>
-<li>adb pull &lt;手机文件&gt;&lt;Windows文件路径&gt;</li>
-<li>Ctrl+F11横竖屏切换（现在貌似废弃了，在…中有）。</li>
+          <h1 id="通用对话框"><a href="#通用对话框" class="headerlink" title="通用对话框"></a>通用对话框</h1><p>通用对话框其实还是比较常用的，这里主要分为获取文件目录和获取文件夹目录两种对话框形式，并且获取文件目录的对话框还分为打开文件和写入文件两种对话框形式。</p>
+<h2 id="获取文件目录"><a href="#获取文件目录" class="headerlink" title="获取文件目录"></a>获取文件目录</h2><p>这个相对而言是比较简单的，主要的牵扯到GetOpenFileName()和GetSaveFileName()这两个函数，这两个函数需要一个同样的参数，这个参数也就是一个OPENFILENAME类型的指针，这个类型在MSDN中的定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tagOFN</span> &#123;</span> <span class="comment">// ofn </span></span><br><span class="line">    DWORD         lStructSize; </span><br><span class="line">    HWND          hwndOwner; </span><br><span class="line">    HINSTANCE     hInstance; </span><br><span class="line">    LPCTSTR       lpstrFilter; </span><br><span class="line">    LPTSTR        lpstrCustomFilter; </span><br><span class="line">    DWORD         nMaxCustFilter; </span><br><span class="line">    DWORD         nFilterIndex; </span><br><span class="line">    LPTSTR        lpstrFile; </span><br><span class="line">    DWORD         nMaxFile; </span><br><span class="line">    LPTSTR        lpstrFileTitle; </span><br><span class="line">    DWORD         nMaxFileTitle; </span><br><span class="line">    LPCTSTR       lpstrInitialDir; </span><br><span class="line">    LPCTSTR       lpstrTitle; </span><br><span class="line">    DWORD         Flags; </span><br><span class="line">    WORD          nFileOffset; </span><br><span class="line">    WORD          nFileExtension; </span><br><span class="line">    LPCTSTR       lpstrDefExt; </span><br><span class="line">    DWORD         lCustData; </span><br><span class="line">    LPOFNHOOKPROC lpfnHook; </span><br><span class="line">    LPCTSTR       lpTemplateName; </span><br><span class="line">&#125; OPENFILENAME;</span><br></pre></td></tr></table></figure>
+<p>这里面比较重要的也就是</p>
+<ul>
+<li>lpstrFile</li>
+<li>nMaxFile</li>
+<li>lpstrFilter</li>
+<li>nFilterIndex<br>这四个字段比较重要，第一个保存我们文件目录的一个char类型指针变量，NMaxFile应该是一个最大长度的限制，这里我们用MAX_PATH这个就可以了。lpstrFilter这个是过滤器的一个字符串，\0代表一个结束，支持正则，\0\0代表过滤器终止。nFilterIndex过滤器首选第几个。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例代码：</span></span><br><span class="line">	<span class="keyword">char</span> szFileName[MAX_PATH] = <span class="string">""</span>;</span><br><span class="line">	OPENFILENAME file = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	file.lStructSize = <span class="keyword">sizeof</span>(file);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//设置对话框的属性</span></span><br><span class="line">	file.lpstrFile = szFileName;</span><br><span class="line">	file.nMaxFile = MAX_PATH;</span><br><span class="line">	file.lpstrFilter = <span class="string">"Text Files(*.txt)\0*.txt\0All Files\0*.*\0\0"</span>;<span class="comment">//最后的兩個\0是代表結束</span></span><br><span class="line">	file.nFilterIndex = <span class="number">1</span>; <span class="comment">//這個應該是代表哪個過濾器顯示在第一個得把。</span></span><br><span class="line">	<span class="keyword">if</span> (GetOpenFileName(&amp;file))<span class="comment">//GetSaveFileName這個是用來保存文件的，參數一樣，返回值代表了我們點擊的是不是確定</span></span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="literal">NULL</span>,szFileName,<span class="string">"打開的文件"</span>,MB_OK);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+不要忘记导入Windows.h这个头文件，【GetSaveFileName类似】。<h2 id="获取文件夹目录"><a href="#获取文件夹目录" class="headerlink" title="获取文件夹目录"></a>获取文件夹目录</h2>这个就稍微有一点点麻烦，所以我们写一个类，支持我们以后进行编写：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __DIRDIALOG_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DIRDIALOG_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ShlObj.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CDirDialog</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	CDirDialog();</span><br><span class="line">	<span class="function">BOOL <span class="title">DoBrowse</span><span class="params">(HWND hWndParent,LPCTSTR pszTitle = <span class="literal">NULL</span>)</span></span>;</span><br><span class="line">	<span class="function">LPCTSTR <span class="title">GetDirPath</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> m_szPath;&#125;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	BROWSEINFOA m_bi;</span><br><span class="line">	<span class="comment">//用來接收用戶選擇目錄的緩衝區</span></span><br><span class="line">	<span class="keyword">char</span> m_szPath[MAX_PATH];</span><br><span class="line">	<span class="keyword">char</span> m_szDisplay[MAX_PATH];</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">&#125;;</span><br><span class="line">CDirDialog::CDirDialog()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">memset</span>(&amp;m_bi,<span class="number">0</span>,<span class="keyword">sizeof</span>(m_bi));<span class="comment">//先清空一下這個變量</span></span><br><span class="line">	m_bi.hwndOwner = <span class="literal">NULL</span>;<span class="comment">//對話框父窗口</span></span><br><span class="line">	m_bi.pidlRoot = <span class="literal">NULL</span>;<span class="comment">//用來接收起始目錄的那個結構</span></span><br><span class="line">	m_bi.pszDisplayName = m_szDisplay;<span class="comment">//接受緩衝區的</span></span><br><span class="line">	m_bi.lpszTitle = <span class="literal">NULL</span>;<span class="comment">//對話框中定義的文字</span></span><br><span class="line">	m_bi.ulFlags = BIF_RETURNONLYFSDIRS;<span class="comment">//我們只接受文件系統中的目錄</span></span><br><span class="line">	m_szPath[<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">&#125;</span><br><span class="line">BOOL CDirDialog::DoBrowse(HWND hWndParent,LPCTSTR pszTitle)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(pszTitle == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		m_bi.lpszTitle = <span class="string">"選擇目標文件夾"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_bi.lpszTitle = pszTitle;</span><br><span class="line">	&#125;</span><br><span class="line">	m_bi.hwndOwner = hWndParent;</span><br><span class="line">	LPITEMIDLIST pItem = SHBrowseForFolder(&amp;m_bi);</span><br><span class="line">	<span class="keyword">if</span> (pItem !=<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		SHGetPathFromIDList(pItem,m_szPath);</span><br><span class="line">		<span class="keyword">return</span> TRUE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//__DIRDIALOG_H__結束</span></span></span><br></pre></td></tr></table></figure>
+简单说明一下SHGetPathFromIDList这个函数，LPITEMIDLIST这个结构体比较复杂，但是我们通过这个函数我们就可以简单的获取到我们输入的内容。<br>如果我们要用的话呢我们只需要<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CDirDialog.h"</span></span></span><br><span class="line">CDirDialog dir;</span><br><span class="line"><span class="keyword">if</span>(dir.DoBrowse(<span class="literal">NULL</span>))</span><br><span class="line">&#123;</span><br><span class="line">	MessageBox(<span class="literal">NULL</span>,dir.GetDirPath(),<span class="string">"打開的文件"</span>,MB_OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这样就可以打开一个文件目录了。</li>
 </ul>
-<p>上述的许多命令用eclipse基本可以代替，所一这里不过多的赘述。</p>
 
       
     </div>
@@ -297,7 +294,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -364,7 +361,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
