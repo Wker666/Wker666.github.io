@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="文件切割系统通过这个程序的编写，是一个提升，这段代码提现了明显的Windows程序编写的优点，程序的编写我是参考书籍，虽然书籍有部分出错，但是大体的思想还是非常好的。 程序思想首先我们需要了解文件分割合并工具的一个操作流程，分割文件与合并文件其实就是对文件的一个操作（读取创建写入），我们完全可以通过MFC给我们的CFile类。程序流程：我们选择分割单选框的时候，我们供用户一个文件打开通用对话框，我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件切割系统">
+<meta property="og:url" content="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="文件切割系统通过这个程序的编写，是一个提升，这段代码提现了明显的Windows程序编写的优点，程序的编写我是参考书籍，虽然书籍有部分出错，但是大体的思想还是非常好的。 程序思想首先我们需要了解文件分割合并工具的一个操作流程，分割文件与合并文件其实就是对文件的一个操作（读取创建写入），我们完全可以通过MFC给我们的CFile类。程序流程：我们选择分割单选框的时候，我们供用户一个文件打开通用对话框，我">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/img3.jpg">
+<meta property="article:published_time" content="2020-02-03T00:47:09.000Z">
+<meta property="article:modified_time" content="2020-02-03T11:05:32.550Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="Win32编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>文件切割系统 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文件切割系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-03 08:47:09 / Modified: 19:05:32" itemprop="dateCreated datePublished" datetime="2020-02-03T08:47:09+08:00">2020-02-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="文件切割系统"><a href="#文件切割系统" class="headerlink" title="文件切割系统"></a>文件切割系统</h1><p>通过这个程序的编写，是一个提升，这段代码提现了明显的Windows程序编写的优点，程序的编写我是参考书籍，虽然书籍有部分出错，但是大体的思想还是非常好的。</p>
+<h2 id="程序思想"><a href="#程序思想" class="headerlink" title="程序思想"></a>程序思想</h2><p>首先我们需要了解文件分割合并工具的一个操作流程，分割文件与合并文件其实就是对文件的一个操作（读取创建写入），我们完全可以通过MFC给我们的CFile类。<br>程序流程：我们选择分割单选框的时候，我们供用户一个文件打开通用对话框，我们选择合并单选框的时候我们提供用户一个文件夹选择对话框，让给用户选择一个文件夹，然后合并里面的一些固定文件名称的文件（1__文件.*）。</p>
+<p>看下程序操作的一些截图：<br><img src="img1.jpg" alt="选择程序"><br><img src="img2.jpg" alt="分割的文件"><br><img src="img3.jpg" alt="程序运行成功"></p>
+<p>这个是简单的分割，其实原理不是太难，而且也是有一定的缺陷，但还是一个很典型的Win32程序。</p>
+<p>首先我们需要构造我们这个程序的编写思路，首先我们需要我们之前写好的那个CDirDialog类，传送门：<a href="https://wker666.github.io/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/" target="_blank" rel="noopener" title="通用对话框">https://wker666.github.io/2020/01/19/%E9%80%9A%E7%94%A8%E5%AF%B9%E8%AF%9D%E6%A1%86/</a><br>导入这个类之后，但是直接导入到MFC中是不行的，你会发现重定义，需要将我们的那个头文件和源文件分开写。<br>为了我们后期开发的一个可维护性很高的程序话呢，我感觉适当的“高内聚低耦合”是一个比较重要的一点，所以我们将我们的文件分割操作写到一个类中，正式这个类，完美的提现了Win32编程的巧妙与灵活性。</p>
+<h2 id="程序流程"><a href="#程序流程" class="headerlink" title="程序流程"></a>程序流程</h2><p>首先我们重要的CFileCutter类是需要提供一个完整的流程，就是从构造函数一被执行我们就需要开启一个线程，这个线程是类中的一个函数，但是类函数是不能作为线程函数的，这个时候就想到了一个很聪明的做法，那就是类的友元函数，虽然函数的格式固定了，但是友元函数的格式不是固定的，开启线程之后，我们设置一个事件对象，这个事件对象是用来控制线程是否继续的，还有有一点很重要就是我们需要一个关键代码段的对象，因为我们可能在多个地方调用成员变量，所以这个东西也是很关键的一点，并且我们使用<code>PostMessage</code>的方式进行传输我们的消息，这样使我们的接受信息变得不需要有回调函数，程序变得方便了许多。</p>
+<h2 id="头文件定义"><a href="#头文件定义" class="headerlink" title="头文件定义"></a>头文件定义</h2><p><code>CFileCutter.h</code>头文件的定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __FILECUTTER_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __FILECUTTER_H__</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WM_CUTTERSTART WM_USER+100   <span class="comment">//wParam = nTotalCount</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WM_CUTTERSTOP WM_USER+101    <span class="comment">//wParam = nExitCode ,lParam = nCompletedCount</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WM_CUTTERSTATUS WM_USER+102  <span class="comment">//lParam = nCompletedCount</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CFileCutter</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">enum</span> ExitCode</span><br><span class="line">	&#123;</span><br><span class="line">		exitSuccess,</span><br><span class="line">		exitUserForce,</span><br><span class="line">		exitSourceErr,</span><br><span class="line">		exitDestErr</span><br><span class="line">	&#125;;</span><br><span class="line">	CFileCutter(HWND hWndNotify);</span><br><span class="line">	<span class="function">BOOL <span class="title">StartSplit</span><span class="params">(LPCTSTR lpszDestDir,LPCTSTR lpszSourceFile,UINT nFileSize)</span></span>;</span><br><span class="line">	<span class="function">BOOL <span class="title">StartMerge</span><span class="params">(LPCTSTR lpszDestDir,LPCTSTR lpszSourceFile)</span></span>;</span><br><span class="line">	<span class="function">BOOL <span class="title">SuspendCutter</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">BOOL <span class="title">ResumeCutter</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">StopCutter</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">BOOL <span class="title">IsRunning</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> m_bRunning;&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	~CFileCutter();</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Reset</span><span class="params">()</span></span>;<span class="comment">//重置参数信息和状态标志</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoSplit</span><span class="params">()</span></span>;<span class="comment">//真正的分割</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DoMerge</span><span class="params">()</span></span>;<span class="comment">//真正的合并</span></span><br><span class="line">	UINT <span class="keyword">friend</span> _CutterEntry(LPVOID lpParam);<span class="comment">//工作线程</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//参数信息</span></span><br><span class="line">	CString m_strSource;</span><br><span class="line">	CString m_strDest;</span><br><span class="line">	UINT m_uFileSize;</span><br><span class="line">	BOOL m_bSplit;</span><br><span class="line">	<span class="comment">//状态信息</span></span><br><span class="line">	BOOL m_bContinue;</span><br><span class="line">	BOOL m_bRunning;</span><br><span class="line"></span><br><span class="line">	CRITICAL_SECTION m_cs;<span class="comment">//临界区的的一个参定值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	HWND m_hWndNotify;<span class="comment">//接受信息的窗口句柄</span></span><br><span class="line">	HANDLE m_hWorkEvent;<span class="comment">//通知信息的事件对象句柄</span></span><br><span class="line">	CWinThread * m_pThread;<span class="comment">//工作线程</span></span><br><span class="line">	BOOL m_bSuspend;<span class="comment">//暂停标志</span></span><br><span class="line">	BOOL m_bExitThread;<span class="comment">//退出标志</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span><span class="comment">//__FILECUTTER_H__</span></span></span><br></pre></td></tr></table></figure>
+<p>为了防止重定义我们的类，我们需要使用到一些预编译指令。</p>
+<ol>
+<li>四个参数信息，分别是：源文件，目标文件，是否是分割，每个分割文件的大小</li>
+<li>两个状态信息：是否继续，是否在运行</li>
+<li>一个参定值：关键代码段</li>
+<li>五个受保护的值：窗口句柄（用来接收消息投递的），事件对象，工作线程的一个句柄，是否暂停，是否停止</li>
+<li>一个枚举类型：包含了当前状态信息（操作成功，用户强行停止，源文件错误，目标文件错误）</li>
+<li>两个真正的操作函数</li>
+<li>一个友元线程</li>
+<li>一个重置状态信息的函数，用来清空我们的一些操作信息。</li>
+<li>两个间接启动的操作线程</li>
+<li>三个线程操作函数，分别是暂停，恢复，停止</li>
+<li>一个检验是不是在运行的函数</li>
+</ol>
+<p>看完这些之后，我们对我们的类函数有了一定的了解之后我们就要来编写成员函数了。</p>
+<h2 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h2><p>首先我们需要包含我们的头文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdafx.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CFileCutter.h"</span></span></span><br></pre></td></tr></table></figure>
+<p><code>stdafx.h</code>这个头文件是要包含的，因为MFC的东西都在里面。<br><code>_CutterEntry</code>这个使我们的线程函数，里面主要是控制着是否分割合并文件的，控制端就是我们的事件对象。具体实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">UINT _CutterEntry(LPVOID lParam)</span><br><span class="line">&#123;</span><br><span class="line">	CFileCutter * pCutter = (CFileCutter *)lParam;</span><br><span class="line">	<span class="keyword">while</span>(WaitForSingleObject(pCutter-&gt;m_hWorkEvent,INFINITE) == WAIT_OBJECT_0 &amp;&amp; !pCutter-&gt;m_bExitThread)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//设置状态标志</span></span><br><span class="line">		EnterCriticalSection(&amp;(pCutter-&gt;m_cs));</span><br><span class="line">		pCutter-&gt;m_bRunning = TRUE;</span><br><span class="line">		LeaveCriticalSection(&amp;(pCutter-&gt;m_cs));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(pCutter-&gt;m_bSplit)</span><br><span class="line">			pCutter-&gt;DoSplit();</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			pCutter-&gt;DoMerge();</span><br><span class="line">		pCutter-&gt;Reset();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们接受我们传过来的文件切割对象，强制转换一下，然后用<code>WaitForSingleObject</code>等待我们的事件对象响应，无线等待，并且我们的退出为假。当我们满足了这些要求之后，我们先进入临界区对象，将我们的正在运行设置为真，然后离开（这个真是太仔细了），然后判断是切割还是合并。</p>
+<p>然后我们要完成的是构造函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CFileCutter::CFileCutter(HWND hWndNotify)</span><br><span class="line">&#123;</span><br><span class="line">	m_hWndNotify = hWndNotify;</span><br><span class="line">	m_bExitThread = FALSE;</span><br><span class="line">	m_bSuspend  = FALSE;</span><br><span class="line">	m_hWorkEvent = CreateEvent(<span class="literal">NULL</span>,FALSE,FALSE,<span class="literal">NULL</span>);</span><br><span class="line">	m_pThread = ::AfxBeginThread(_CutterEntry,<span class="keyword">this</span>,THREAD_PRIORITY_NORMAL,<span class="number">0</span>,CREATE_SUSPENDED,<span class="literal">NULL</span>);</span><br><span class="line">	m_pThread-&gt;m_bAutoDelete = FALSE;</span><br><span class="line">	m_pThread-&gt;ResumeThread();</span><br><span class="line">	InitializeCriticalSection(&amp;m_cs);</span><br><span class="line">	Reset();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个构造函数是用来初始化我们我们状态信息和启动我们的线程，初始化关键代码段对象的。并且我们需要接受我传递过来的窗口句柄，并重新设置一些信息。<br>然后我们要看我们的<code>Reset()</code>这个可能常用，主要是用来刷新我们参数信息的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutter::Reset()</span><br><span class="line">&#123;</span><br><span class="line">	EnterCriticalSection(&amp;m_cs);</span><br><span class="line">	m_strSource.Empty();</span><br><span class="line">	m_strDest.Empty();</span><br><span class="line">	m_uFileSize = <span class="number">0</span>;</span><br><span class="line">	m_bSplit = TRUE;</span><br><span class="line">	<span class="comment">//重置状态</span></span><br><span class="line">	m_bContinue = TRUE;</span><br><span class="line">	m_bRunning = FALSE;</span><br><span class="line">	LeaveCriticalSection(&amp;m_cs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重置一些信息，注意还是要进入关键代码段与离开。</p>
+<p>在我们的析构函数中，我们需要清空信息，通知活动线程我们结束了，并且删除我们创建的这些对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CFileCutter::~CFileCutter()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//设置结束标志</span></span><br><span class="line">	m_bExitThread = TRUE;</span><br><span class="line">	EnterCriticalSection(&amp;m_cs);</span><br><span class="line">	m_bContinue = FALSE;</span><br><span class="line">	LeaveCriticalSection(&amp;m_cs);</span><br><span class="line">	SetEvent(m_hWorkEvent);<span class="comment">//防止限制线程等待m_hWorkEvent</span></span><br><span class="line">	WaitForSingleObject(m_pThread-&gt;m_hThread,INFINITE);<span class="comment">//保证线程已经完毕</span></span><br><span class="line">	CloseHandle(m_hWorkEvent);</span><br><span class="line">	DeleteCriticalSection(&amp;m_cs);</span><br><span class="line">	<span class="keyword">delete</span> m_pThread;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先还是先进入关键代码段，设置我们不运行了，要退出，然后告诉我们的线程函数，别等了，我们要结束了，然后等待线程的完毕，关闭事件对象，删除关键代码段，删除线程。</p>
+<p>间接切割合并文件的实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">BOOL CFileCutter::StartSplit(LPCTSTR lpszDestDir,LPCTSTR lpszSourceFile,UINT nFileSize)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(m_bRunning)</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	EnterCriticalSection(&amp;m_cs);</span><br><span class="line">	m_strSource = lpszSourceFile;</span><br><span class="line">	m_strDest = lpszDestDir;</span><br><span class="line">	m_uFileSize = nFileSize;</span><br><span class="line">	m_bSplit = TRUE;</span><br><span class="line">	LeaveCriticalSection(&amp;m_cs);</span><br><span class="line">	SetEvent(m_hWorkEvent);</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line">BOOL CFileCutter::StartMerge(LPCTSTR lpszDestDir,LPCTSTR lpszSourceFile)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(m_bRunning)</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	EnterCriticalSection(&amp;m_cs);</span><br><span class="line">	m_strSource = lpszSourceFile;</span><br><span class="line">	m_strDest = lpszDestDir;</span><br><span class="line">	m_bSplit = FALSE;</span><br><span class="line">	LeaveCriticalSection(&amp;m_cs);</span><br><span class="line">	SetEvent(m_hWorkEvent);</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是先判断是不是在运行，然后进关键代码段，然后设置一些信息，然后通知线程该工作了。</p>
+<p>再接下来就是我们的一些暂停恢复结束操作了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">BOOL CFileCutter::SuspendCutter()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(m_bRunning)</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	<span class="keyword">if</span>(!m_bSuspend)</span><br><span class="line">	&#123;</span><br><span class="line">		m_pThread-&gt;SuspendThread();</span><br><span class="line">		m_bSuspend = TRUE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line">BOOL CFileCutter::ResumeCutter()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(m_bRunning)</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	<span class="keyword">if</span>(!m_bSuspend)</span><br><span class="line">	&#123;</span><br><span class="line">		m_pThread-&gt;ResumeThread();</span><br><span class="line">		m_bSuspend = FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> CFileCutter::StopCutter()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//设置强制退出标志</span></span><br><span class="line">	EnterCriticalSection(&amp;m_cs);</span><br><span class="line">	m_bContinue = FALSE;</span><br><span class="line">	LeaveCriticalSection(&amp;m_cs);</span><br><span class="line">	ResumeCutter();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>暂停的话呢先判断是不是在运行，然后调用线程的暂停方法，设置成员变量，恢复也是。停止的话呢就是直接将继续这个变量给结束，然后恢复线程。</p>
+<p>下面这个是核心代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutter::DoSplit()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> nCompleted = <span class="number">0</span>;</span><br><span class="line">	CString strSourceFile = m_strSource;</span><br><span class="line">	CString strDestDir = m_strDest;</span><br><span class="line">	CFile sourceFile,destFile;</span><br><span class="line">	<span class="keyword">if</span> (!sourceFile.Open(strSourceFile,CFile::modeRead | CFile::shareDenyWrite | CFile::typeBinary))<span class="comment">//shareDenyWrite打开文件的时候禁止其他程序进行读写</span></span><br><span class="line">	&#123;</span><br><span class="line">		PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitSourceErr,nCompleted);</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//确保目录的存在，逐级创建文件目录</span></span><br><span class="line">	<span class="keyword">int</span> nPos = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> ((nPos = strDestDir.Find(<span class="string">"\\"</span>,nPos+<span class="number">1</span>)) != <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CString str = strDestDir.Left(nPos+<span class="number">1</span>);</span><br><span class="line">		CreateDirectory(str,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	CreateDirectory(strDestDir,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(strDestDir.Right(<span class="number">1</span>) != <span class="string">"\\"</span>)</span><br><span class="line">		strDestDir += <span class="string">"\\"</span>;</span><br><span class="line">	<span class="comment">//通知用户，开始创建文件</span></span><br><span class="line">	<span class="keyword">int</span> nTotalFiles = strSourceFile.GetLength()/m_uFileSize+<span class="number">1</span>;</span><br><span class="line">	PostMessage(m_hWndNotify,WM_CUTTERSTART,nTotalFiles,TRUE);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> c_page = <span class="number">4</span>*<span class="number">1024</span>;</span><br><span class="line">	<span class="keyword">char</span> Buffer[c_page];</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	CString sDestName;</span><br><span class="line">	<span class="keyword">int</span> nPreCount = <span class="number">1</span>;</span><br><span class="line">	UINT uWriteBytes;</span><br><span class="line">	<span class="keyword">do</span> </span><br><span class="line">	&#123;</span><br><span class="line">		sDestName.Format(<span class="string">"%d__"</span>,nPreCount);</span><br><span class="line">		sDestName += sourceFile.GetFileName();</span><br><span class="line">		<span class="keyword">if</span>(!destFile.Open(strDestDir+sDestName,CFile::modeCreate | CFile::modeWrite))</span><br><span class="line">		&#123;</span><br><span class="line">			PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitDestErr,nCompleted);</span><br><span class="line">			sourceFile.Close();</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		uWriteBytes = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">do</span> </span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (!m_bContinue)<span class="comment">//判断用户是不是强制结束</span></span><br><span class="line">			&#123;</span><br><span class="line">				destFile.Close();</span><br><span class="line">				sourceFile.Close();</span><br><span class="line">				<span class="keyword">if</span> (!m_bExitThread)</span><br><span class="line">				&#123;</span><br><span class="line">					PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitUserForce,nCompleted);</span><br><span class="line">					<span class="keyword">return</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//真正的进行读文件</span></span><br><span class="line">			dwRead = sourceFile.Read(Buffer,c_page);</span><br><span class="line">			destFile.Write(Buffer,dwRead);</span><br><span class="line">			uWriteBytes += dwRead;</span><br><span class="line">		&#125; <span class="keyword">while</span> (dwRead &gt; <span class="number">0</span> &amp;&amp; uWriteBytes &lt;m_uFileSize);</span><br><span class="line">		destFile.Close();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//通知用户写完一个了</span></span><br><span class="line"></span><br><span class="line">		nCompleted = nPreCount++;</span><br><span class="line">		PostMessage(m_hWndNotify,WM_CUTTERSTATUS,<span class="number">0</span>,nCompleted);</span><br><span class="line">	&#125; <span class="keyword">while</span> (dwRead &gt; <span class="number">0</span>);<span class="comment">//这一步判断个人感觉写的很是聪明，说明这个文件读取完毕了</span></span><br><span class="line">	<span class="comment">//关闭源文件</span></span><br><span class="line">	sourceFile.Close();</span><br><span class="line">	<span class="comment">//通知用户，工作完成</span></span><br><span class="line">	PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitSuccess,nCompleted);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CFileCutter::DoMerge()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> nCompleted = <span class="number">0</span>;</span><br><span class="line">	CString strSourceFile = m_strSource;</span><br><span class="line">	CString strDestDir = m_strDest;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (strSourceFile.Right(<span class="number">1</span>) != <span class="string">"\\"</span>)</span><br><span class="line">		strSourceFile += <span class="string">"\\"</span>;</span><br><span class="line">	<span class="keyword">if</span> (strDestDir.Right(<span class="number">1</span>) != <span class="string">"\\"</span>)</span><br><span class="line">		strDestDir += <span class="string">"\\"</span>;</span><br><span class="line">	<span class="comment">//取得文件的名称和数量</span></span><br><span class="line"></span><br><span class="line">	CString strFileName;</span><br><span class="line">	<span class="keyword">int</span> nTotalFiles = <span class="number">0</span>;</span><br><span class="line">	CFileFind find;</span><br><span class="line">	BOOL bRet;</span><br><span class="line">	<span class="keyword">if</span> (find.FindFile(strSourceFile+<span class="string">"*.*"</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">do</span> </span><br><span class="line">		&#123;</span><br><span class="line">			bRet = find.FindNextFile();</span><br><span class="line">			<span class="keyword">if</span> (find.IsDirectory() &amp;&amp; find.IsDots())<span class="comment">//有点异议，一等回头看一下</span></span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			<span class="keyword">if</span> (find.GetFileName().Find(<span class="string">"__"</span>,<span class="number">0</span>) != <span class="number">-1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				nTotalFiles++;</span><br><span class="line">				strFileName = find.GetFileName();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">while</span> (bRet);</span><br><span class="line">	&#125;<span class="comment">//if end</span></span><br><span class="line">	find.Close();</span><br><span class="line">	<span class="keyword">if</span> (nTotalFiles == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitSourceErr,nCompleted);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	strFileName = strFileName.Mid(strFileName.Find(<span class="string">"__"</span>)+<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//逐级创建目标目录</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> nPos = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> ((nPos = strDestDir.Find(<span class="string">"\\"</span>,nPos+<span class="number">1</span>)) != <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CreateDirectory(strDestDir.Left(nPos),<span class="literal">NULL</span>);<span class="comment">//有点问题一等看下</span></span><br><span class="line">	&#125;</span><br><span class="line">	CreateDirectory(strDestDir,<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建目标文件</span></span><br><span class="line">	CFile sourceFile,destFile;</span><br><span class="line">	strDestDir += strFileName;</span><br><span class="line">	<span class="keyword">if</span> (!destFile.Open(strDestDir,CFile::modeReadWrite | CFile::modeCreate))</span><br><span class="line">	&#123;</span><br><span class="line">		PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitDestErr,nCompleted);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//开始合并</span></span><br><span class="line">	PostMessage(m_hWndNotify,WM_CUTTERSTART,nTotalFiles,nCompleted);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> c_page = <span class="number">1024</span>*<span class="number">4</span>;</span><br><span class="line">	<span class="keyword">char</span> Buffer[c_page];</span><br><span class="line">	<span class="keyword">int</span> nPreCount = <span class="number">1</span>;</span><br><span class="line">	CString sSourceName;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	<span class="keyword">do</span> </span><br><span class="line">	&#123;</span><br><span class="line">		sSourceName.Format(<span class="string">"%d__"</span>,nPreCount);</span><br><span class="line">		sSourceName += strFileName;</span><br><span class="line">		<span class="keyword">if</span>(!sourceFile.Open(strSourceFile+sSourceName,CFile::modeRead | CFile::shareDenyWrite | CFile::typeBinary))<span class="comment">//打不开失败的时候说明就没有了，这里我感觉用for循环比较好，还能提供错误处理，之后改一下。//</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 写入文件</span></span><br><span class="line">		<span class="keyword">do</span> </span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (!m_bContinue)</span><br><span class="line">			&#123;</span><br><span class="line">				sourceFile.Close();</span><br><span class="line">				destFile.Close();</span><br><span class="line">				<span class="keyword">if</span> (!m_bExitThread)</span><br><span class="line">					PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitUserForce,nCompleted);</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			dwRead = sourceFile.Read(Buffer,c_page);</span><br><span class="line">			destFile.Write(Buffer,dwRead);</span><br><span class="line">		&#125; <span class="keyword">while</span> (dwRead &gt; <span class="number">0</span>);</span><br><span class="line">		sourceFile.Close();</span><br><span class="line">		nCompleted = nPreCount++;</span><br><span class="line">		PostMessage(m_hWndNotify,WM_CUTTERSTATUS,<span class="number">0</span>,nCompleted);</span><br><span class="line">	&#125; <span class="keyword">while</span> (TRUE);</span><br><span class="line">	destFile.Close();</span><br><span class="line">	<span class="comment">//通知用户，工作完成</span></span><br><span class="line">	PostMessage(m_hWndNotify,WM_CUTTERSTOP,exitSuccess,nCompleted);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是操作我们的文件，使用CFile这个类。<br>分割：先是打开源文件，失败的话呢投递消息，这里要POST而不是Send，然后我们再创建我们的目录，创建完毕目录之后纠正一下目标文件目录。然后我们获取一下文件理论上的道德个数，投递一个开始的消息。然后就是我们简单的初始化呢一下我们的各种信息，进入我们的循环，显示创建目标文件，创建写入的方法打开，出错的话呢就投递消息，然后在判断是不是强行终止了，强行终止的话呢我们就要关一些东西，然后投递我们的消息，然后再读源文件，在写源文件，每次读4KB，这个时候我们要读够用户传递给我们文件大小，关闭文件句柄，发送一个状态消息，一直循环，完毕之后关闭源文件，投递执行成功的消息。</p>
+<p>合并：基本和我们的分割一样，显示纠正一下我们的源和目标路径，然后再找一下符合规范的文件，<code>find.IsDirectory() &amp;&amp; find.IsDots()</code>这个其实我感觉有点异议但是没碰见出错。如果一个源文件都没有，肯定要投递错误源文件的错误，在创建目录，投递一下我们要开始了，给他目标文件的大小。再就是初始化变量，进入循环打开源文件，然后判断是不是要继续，然后读写再就是和我们的分割一样了。</p>
+<h2 id="类的实际调用"><a href="#类的实际调用" class="headerlink" title="类的实际调用"></a>类的实际调用</h2><p>既然我们的类写好了，实际编写的话呢无非就是类的一个调用罢了，首先我们需要配置一下我们的组件，这里就不提了，没啥太大必要，照葫芦画瓢就可以了。</p>
+<h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// FileCutterDlg.h : 头文件</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CFileCutter.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CDirDialog.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"afxcmn.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// CFileCutterDlg 对话框</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CFileCutterDlg</span> :</span> <span class="keyword">public</span> CDialogEx</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// 构造</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	CFileCutterDlg(CWnd* pParent = <span class="literal">NULL</span>);	<span class="comment">// 标准构造函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对话框数据</span></span><br><span class="line">	<span class="keyword">enum</span> &#123; IDD = IDD_FILECUTTER_DIALOG &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">protected</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">DoDataExchange</span><span class="params">(CDataExchange* pDX)</span></span>;	<span class="comment">// DDX/DDV 支持</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	HICON m_hIcon;</span><br><span class="line">	CFileCutter* m_pCutter;</span><br><span class="line">	CProgressCtrl m_Progress;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成的消息映射函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> BOOL <span class="title">OnInitDialog</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnPaint</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg HCURSOR <span class="title">OnQueryDragIcon</span><span class="params">()</span></span>;</span><br><span class="line">	DECLARE_MESSAGE_MAP()</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">UIControl</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedSelectsplit</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedSelectmergr</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedSourcebrowser</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedDestbrowser</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedStart</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedStop</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">afx_msg <span class="keyword">void</span> <span class="title">OnBnClickedCancel</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="function">afx_msg LRESULT <span class="title">OnCutterstart</span><span class="params">(WPARAM wParam, LPARAM lParam)</span></span>;</span><br><span class="line">	<span class="function">afx_msg LRESULT <span class="title">OnCutterstop</span><span class="params">(WPARAM wParam, LPARAM lParam)</span></span>;</span><br><span class="line">	<span class="function">afx_msg LRESULT <span class="title">OnCutterstatus</span><span class="params">(WPARAM wParam, LPARAM lParam)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>就是一个简单的引入，比较关键的就是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CFileCutter* m_pCutter;</span><br><span class="line">CProgressCtrl m_Progress;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UIControl</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这三个比较关键，最后一个就是用来调节UI的，其实就是判断你是不是在运行啊，是选了分割还是合并啊之类的。</p>
+<h3 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h3><p><code>CFileCutterDlg::OnInitDialog()</code>初始化</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">m_pCutter = <span class="keyword">new</span> CFileCutter(m_hWnd);</span><br><span class="line">((CButton*)GetDlgItem(IDC_SELECTSPLIT))-&gt;SetCheck(<span class="number">1</span>);</span><br><span class="line">((CComboBox*)GetDlgItem(IDC_UINT))-&gt;AddString(<span class="string">"1"</span>);</span><br><span class="line">((CComboBox*)GetDlgItem(IDC_UINT))-&gt;AddString(<span class="string">"30"</span>);</span><br><span class="line">((CComboBox*)GetDlgItem(IDC_UINT))-&gt;AddString(<span class="string">"60"</span>);</span><br><span class="line">((CComboBox*)GetDlgItem(IDC_UINT))-&gt;SetCurSel(<span class="number">0</span>);</span><br><span class="line"><span class="comment">//m_Progress.SubclassWindow(GetDlgItem(IDC_PROGRESS)-&gt;m_hWnd);</span></span><br><span class="line">UIControl();</span><br></pre></td></tr></table></figure>
+<p>这里之前用了子类化控件的一个方法，但我实在没看到用的必要我就给注释，（其实主要是我发现报错，哈哈）<br><code>UIControl</code>函数的实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutterDlg::UIControl(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	BOOL bIsWorking = m_pCutter-&gt;IsRunning();</span><br><span class="line">	GetDlgItem(IDC_SELECTSPLIT)-&gt;EnableWindow(!bIsWorking);</span><br><span class="line">	GetDlgItem(IDC_SELECTMERGR)-&gt;EnableWindow(!bIsWorking);</span><br><span class="line">	GetDlgItem(IDC_UINT)-&gt;EnableWindow(!bIsWorking);</span><br><span class="line"></span><br><span class="line">	GetDlgItem(IDC_START)-&gt;EnableWindow(!bIsWorking);</span><br><span class="line">	GetDlgItem(IDC_STOP)-&gt;EnableWindow(!bIsWorking);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (bIsWorking)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (((CButton*)GetDlgItem(IDC_SELECTSPLIT))-&gt;GetCheck())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//分割</span></span><br><span class="line">		GetDlgItem(IDC_START)-&gt;SetWindowText(<span class="string">"分割"</span>);</span><br><span class="line">		GetDlgItem(IDC_SOURCETITLE)-&gt;SetWindowText(<span class="string">"请选择要分割的文件："</span>);</span><br><span class="line">		GetDlgItem(IDC_DESTTITLE)-&gt;SetWindowText(<span class="string">"请选择分割后保存到的文件夹"</span>);</span><br><span class="line">		GetDlgItem(IDC_UINT)-&gt;EnableWindow(TRUE);</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//合并</span></span><br><span class="line">		GetDlgItem(IDC_START)-&gt;SetWindowText(<span class="string">"合并"</span>);</span><br><span class="line">		GetDlgItem(IDC_SOURCETITLE)-&gt;SetWindowText(<span class="string">"请选择要合并的文件夹："</span>);</span><br><span class="line">		GetDlgItem(IDC_DESTTITLE)-&gt;SetWindowText(<span class="string">"请选择合并后保存到的文件夹"</span>);</span><br><span class="line">		GetDlgItem(IDC_UINT)-&gt;EnableWindow(FALSE);</span><br><span class="line">	&#125;</span><br><span class="line">	GetDlgItem(IDC_STATUSTEXT)-&gt;SetWindowText(<span class="string">"状态显示"</span>);</span><br><span class="line">	m_Progress.SetPos(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个的话呢其实也看起来不是很难，就是通过我们的类成员函数判断是不是在运行，是选择的分割还是合并，然后初始化一些控件。</p>
+<p>单选框按钮被按下的时候：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedSelectsplit()</span><br><span class="line">&#123;</span><br><span class="line">	UIControl();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedSelectmergr()</span><br><span class="line">&#123;</span><br><span class="line">	UIControl();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是当按单选框按钮被按下的时候我们进行的操作，就是用来刷新一下我们的一些UI。</p>
+<p>当我们点击选择文件夹的时候：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedSourcebrowser()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (((CButton*)GetDlgItem(IDC_SELECTSPLIT))-&gt;GetCheck())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//分割</span></span><br><span class="line">		<span class="function">CFileDialog <span class="title">sourceFile</span><span class="params">(TRUE)</span></span>;</span><br><span class="line">		<span class="keyword">if</span> (sourceFile.DoModal() == IDOK)</span><br><span class="line">		&#123;</span><br><span class="line">			GetDlgItem(IDC_EDITSOURCE)-&gt;SetWindowText(sourceFile.GetPathName());</span><br><span class="line">			GetDlgItem(IDC_EDITDEST)-&gt;SetWindowText(sourceFile.GetPathName().Left(sourceFile.GetPathName().ReverseFind(<span class="string">'.'</span>)));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//合并</span></span><br><span class="line">		CDirDialog sourceFolder;</span><br><span class="line">		<span class="keyword">if</span> (sourceFolder.DoBrowse(*<span class="keyword">this</span>) == IDOK)</span><br><span class="line">		&#123;</span><br><span class="line">			GetDlgItem(IDC_EDITSOURCE)-&gt;SetWindowText(sourceFolder.GetDirPath());</span><br><span class="line">			CString strDef = sourceFolder.GetDirPath();</span><br><span class="line">			strDef.TrimRight(<span class="string">'\\'</span>);</span><br><span class="line">			strDef = strDef + <span class="string">"\\"</span> + strDef.Mid(strDef.ReverseFind(<span class="string">'\\'</span>)+<span class="number">1</span>);</span><br><span class="line">			strDef.TrimRight(<span class="string">":"</span>);<span class="comment">//防止选择根目录</span></span><br><span class="line">			GetDlgItem(IDC_EDITDEST)-&gt;SetWindowText(strDef);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedDestbrowser()</span><br><span class="line">&#123;</span><br><span class="line">	CDirDialog destFolder;</span><br><span class="line">	<span class="keyword">if</span> (destFolder.DoBrowse(*<span class="keyword">this</span>) == IDOK)</span><br><span class="line">	&#123;</span><br><span class="line">		GetDlgItem(IDC_EDITDEST)-&gt;SetWindowText(destFolder.GetDirPath());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个当我们点击源文件的时候我们就是先判断是风格还是合并，分割的话呢就是文件对话框，合并的话呢就是我们自己写的那个类，不要忘记导入就好了。然后比较聪明的就是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strDef = strDef + <span class="string">"\\"</span> + strDef.Mid(strDef.ReverseFind(<span class="string">'\\'</span>)+<span class="number">1</span>);</span><br><span class="line">strDef.TrimRight(<span class="string">":"</span>);<span class="comment">//防止选择根目录</span></span><br></pre></td></tr></table></figure>
+<p>这两句，就是生成一个与我们文件夹相同的子文件夹，然后防止了这个根目录（F:\）。</p>
+<p>再就是我们点击分割开始的按钮的时候：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedStart()</span><br><span class="line">&#123;</span><br><span class="line">	CString strSource,strDest;</span><br><span class="line">	GetDlgItem(IDC_EDITSOURCE)-&gt;GetWindowText(strSource);</span><br><span class="line">	GetDlgItem(IDC_EDITDEST)-&gt;GetWindowText(strDest);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (strSource.IsEmpty() || strDest.IsEmpty())</span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="string">"文件或者文件路径不能为空"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (((CButton*)GetDlgItem(IDC_SELECTSPLIT))-&gt;GetCheck())</span><br><span class="line">	&#123;</span><br><span class="line">		CString str;</span><br><span class="line">		GetDlgItem(IDC_UINT)-&gt;GetWindowText(str);</span><br><span class="line">		m_pCutter-&gt;StartSplit(strDest,strSource,atoi(str)*<span class="number">1024</span>*<span class="number">1024</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_pCutter-&gt;StartMerge(strDest,strSource);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CFileCutterDlg::OnBnClickedStop()</span><br><span class="line">&#123;</span><br><span class="line">	m_pCutter-&gt;SuspendCutter();</span><br><span class="line">	<span class="keyword">if</span> (MessageBox(<span class="string">"确定要终止么?"</span>,<span class="literal">NULL</span>,MB_YESNO) == IDYES)</span><br><span class="line">	&#123;</span><br><span class="line">		m_pCutter-&gt;StopCutter();</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_pCutter-&gt;ResumeCutter();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显示判断是否有填写源文件与目标文件夹，然后判断是分割还是合并，最后调用类的开始方法进行操作。</p>
+<p>最后就是我们的消息映射：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">afx_msg LRESULT CFileCutterDlg::OnCutterstart(WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//设置进度条范围</span></span><br><span class="line">	<span class="keyword">int</span> nTotalFiles = wParam;</span><br><span class="line">	m_Progress.SetRange32(<span class="number">0</span>,nTotalFiles);</span><br><span class="line">	UIControl();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">afx_msg LRESULT CFileCutterDlg::OnCutterstop(WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> nErrorCode = wParam;</span><br><span class="line">	<span class="keyword">switch</span>(nErrorCode)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> CFileCutter::exitSuccess:</span><br><span class="line">		MessageBox(<span class="string">"操作成功完成"</span>,<span class="string">"成功"</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> CFileCutter::exitSourceErr:</span><br><span class="line">		MessageBox(<span class="string">"源文件出错"</span>,<span class="string">"失败"</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> CFileCutter::exitDestErr:</span><br><span class="line">		MessageBox(<span class="string">"目标出错"</span>,<span class="string">"失败"</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> CFileCutter::exitUserForce:</span><br><span class="line">		MessageBox(<span class="string">"用户终止"</span>,<span class="string">"失败"</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	UIControl();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">afx_msg LRESULT CFileCutterDlg::OnCutterstatus(WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> nCompleted = <span class="keyword">int</span> (lParam);</span><br><span class="line">	m_Progress.SetPos(nCompleted);</span><br><span class="line">	CString s;</span><br><span class="line">	s.Format(<span class="string">"完成%d个文件"</span>,nCompleted);</span><br><span class="line">	GetDlgItem(IDC_STATUSTEXT)-&gt;SetWindowText(s);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效应映射需要我们在类向导中进行声明，不用类向导的话呢要自己写声明和消息映射。<br>接受到开始的时候，我们需要设置进度条，然后初始化UI，停止的话呢我们要进行停止原因的判断，状态的话呢无非就是完成个数的输出。</p>
+<h2 id="程序的不足"><a href="#程序的不足" class="headerlink" title="程序的不足"></a>程序的不足</h2><ol>
+<li>首先我们是在合并的时候我感觉用for循环更好一些</li>
+<li>这个要是能用文件映射的话呢应该可以处理更大的文件。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Win32%E7%BC%96%E7%A8%8B/" rel="tag"># Win32编程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/01/Android-TextView%E5%AE%9E%E7%8E%B0%E5%AF%8C%E6%96%87%E6%9C%AC/" rel="prev" title="Android TextView实现富文本">
+      <i class="fa fa-chevron-left"></i> Android TextView实现富文本
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件切割系统"><span class="nav-number">1.</span> <span class="nav-text">文件切割系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序思想"><span class="nav-number">1.1.</span> <span class="nav-text">程序思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序流程"><span class="nav-number">1.2.</span> <span class="nav-text">程序流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#头文件定义"><span class="nav-number">1.3.</span> <span class="nav-text">头文件定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的定义"><span class="nav-number">1.4.</span> <span class="nav-text">类的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的实际调用"><span class="nav-number">1.5.</span> <span class="nav-text">类的实际调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#头文件"><span class="nav-number">1.5.1.</span> <span class="nav-text">头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源文件"><span class="nav-number">1.5.2.</span> <span class="nav-text">源文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的不足"><span class="nav-number">1.6.</span> <span class="nav-text">程序的不足</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

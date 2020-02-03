@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/OD-QuickKeyBoard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/Common-Unshell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/12/OD-QuickKeyBoard/" class="post-title-link" itemprop="url">OD-QuickKeyBoard</a>
+            <a href="/2020/01/12/Common-Unshell/" class="post-title-link" itemprop="url">Common-Unshell</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-12 19:41:50" itemprop="dateCreated datePublished" datetime="2020-01-12T19:41:50+08:00">2020-01-12</time>
+              <time title="Created: 2020-01-12 19:46:40" itemprop="dateCreated datePublished" datetime="2020-01-12T19:46:40+08:00">2020-01-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:04:14" itemprop="dateModified" datetime="2020-02-01T13:04:14+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:04:02" itemprop="dateModified" datetime="2020-02-01T13:04:02+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8F%8D%E6%B1%87%E7%BC%96%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
-                    <span itemprop="name">反汇编工具</span>
+                  <a href="/categories/%E8%84%B1%E5%A3%B3%E7%AF%87/" itemprop="url" rel="index">
+                    <span itemprop="name">脱壳篇</span>
                   </a>
                 </span>
             </span>
@@ -262,7 +262,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>CALC :         判断表达式<br>WATCH :      添加监视表达式<br>AT :             在指定地址进行反汇编<br>FOLLOW :     跟随命令<br>ORIG :         反汇编于 EIP<br>DUMP           在指定地址进行转存<br>DA :            转存为反汇编代码<br>DB :            使用十六进制字节格式转存<br>DC :            使用 ASCII 格式转存<br>DD :            转存在堆栈格式<br>DU :            转存在 UNICODE 格式<br>DW :           使用十六进制字词格式转存<br>STK :          前往堆栈中的地址<br>AS  :          （AS + 地址 + 字符串） 在指定地址进行汇编<br>BP :             进行条件中断（有条件的断点）<br>BPX :           中断在全部调用 （Call）<br>BPD :           清除全部调用中的断点<br>BC :             清除断点<br>MR :             内存断点于访问时<br>MW :            内存断点于写入时<br>MD :             清除内存断点<br>HR :             访问时进行硬件中断<br>HW :            写入时进行硬件中断<br>HE :              执行时进行硬件中断<br>HD :              清除硬件断点<br>STOP :          停止运行程序调试<br>PAUSE :        暂停执行程序调试<br>RUN :            运行程序进行调试<br>GE :              运行和通过例外<br>SI :              单步进入 Call 中<br>SO :             步过 Call<br>TI :              跟踪进入直到地址<br>TO :            跟踪步过直到地址<br>TC :            跟踪进入直到满足条件<br>TOC :          跟踪步过直到满足条件<br>TR :            运行直到返回<br>TU :            运行直到用户代码<br>LOG :          查看记录窗口<br>MOD :         查看模块窗口<br>MEM :          查看内存窗口<br>CPU :           查看 CPU 窗口<br>CS :            查看 Call 堆栈<br>BRK :           查看断点窗口<br>OPT :           打开选项设置窗口<br>EXIT :          退出 OllyDbg<br>QUIT :          退出 OllyDbg<br>OPEN :         打开一个可执行文件<br>CLOSE :       关闭可执行文件  </p>
+          <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
+<h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RAV1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
+<h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>其实也就是ESP改变的时候我们下一个硬件断点，然后运行，ESP改变的时候程序暂停，我么单步跟下就可以了。<br><img src="img7.jpg" alt="HWESP"><br>然后我们运行（删除硬件断点不要忘记），会来到这个位置：<br><img src="img8.jpg" alt="OEPJmp"><br>可以看到确实快到了，我们但不跟踪几下就可以了。</p>
+<h2 id="关键搜索"><a href="#关键搜索" class="headerlink" title="关键搜索"></a>关键搜索</h2><p>其实也就是搜索popad，记住不要搜索整个快，因为太大了，我们Ctrl+F进行搜索，会看到如下的结果：<br><img src="img9.jpg" alt="区段"><br>我们Ctrl+L就可以搜索下一个，记住一般来说，附近都有大的跳转和返回，一般也就是跨区段的跳转。</p>
+<h2 id="二次镜像法"><a href="#二次镜像法" class="headerlink" title="二次镜像法"></a>二次镜像法</h2><p>首先我们对我们rsrc（资源）断下内存写入断点，这个就是进行解密，然后再对我们的code（代码）断进行下内存写入断点，这个样子就能到达我们的OEP了，具体操作如下：<br>点击M打开区段表。<br><img src="img10.jpg" alt="区段"><br>然后我们就会运行到这个位置：<br><img src="img11.jpg" alt="断下"><br>然后我们下我们code断点，然后运行。<br><img src="img12.jpg" alt="断下"><br>然后我们运行之后会运行到这个地方：<br><img src="img13.jpg" alt="OEPJmp"><br>然后就到我们熟悉的地方了。</p>
+<h2 id="EIP跟踪法"><a href="#EIP跟踪法" class="headerlink" title="EIP跟踪法"></a>EIP跟踪法</h2><p>这个方法之前就了解了，使用OD的TC指令进行表达式计算，主要是找到我们的壳的区间，然后使用tc eip&lt;xxxxxxx，进行下端，tc这类的指令大家可以去看我的：<br><a href="https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/" target="_blank" rel="noopener" title="OD快捷代码">https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/</a><br>其实也就是对制定跟踪直到eip的位置到达了：<br><img src="img14.jpg" alt="区段"><br>我们按下Enter，然后运行，他会很慢的运行。<br>（不总么会用，之后深究一下）</p>
+<h2 id="SFX跟踪法"><a href="#SFX跟踪法" class="headerlink" title="SFX跟踪法"></a>SFX跟踪法</h2><p>通过OD给我们的SFX（暂时还不知道这是个什么，应该是有点异常的意思，之后会出相关的知识学习）进行跟踪<br><img src="img15.jpg" alt="选项"><br>选择SFX，选择第二个选项（有点时候需要第三个，具体看情况）：<br><img src="img16.jpg" alt="选项"><br>然后重新启动程序，就会直接到达OEP，但记住要调回来哦。<br><img src="img17.jpg" alt="OEPJmp"></p>
+<p><strong><strong><em>这是比较常见的一些脱壳技巧，之后还会更新。</em></strong></strong></p>
 
       
     </div>
@@ -282,7 +289,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -349,7 +356,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
