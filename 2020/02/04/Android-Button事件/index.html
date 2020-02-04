@@ -48,30 +48,34 @@
   };
 </script>
 
-  <meta name="description" content="一个萌新">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Wker">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="按钮常用事件枚举其实这些都是比较基本的，和点击事件之类的很像，学会一个其实就可以举一反三了，而且按钮是继承于TextView的。 布局的一些操作123456789101112131415&lt;Button	    android:id&#x3D;&quot;@+id&#x2F;Button02&quot;	    android:layout_width&#x3D;&quot;wrap_content&quot;	    android:layout_height">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Button事件">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Wker">
-<meta property="og:description" content="一个萌新">
+<meta property="og:description" content="按钮常用事件枚举其实这些都是比较基本的，和点击事件之类的很像，学会一个其实就可以举一反三了，而且按钮是继承于TextView的。 布局的一些操作123456789101112131415&lt;Button	    android:id&#x3D;&quot;@+id&#x2F;Button02&quot;	    android:layout_width&#x3D;&quot;wrap_content&quot;	    android:layout_height">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/img1.gif">
+<meta property="article:published_time" content="2020-02-04T10:03:46.000Z">
+<meta property="article:modified_time" content="2020-02-04T11:01:41.064Z">
 <meta property="article:author" content="Wker">
-<meta property="article:tag" content="程序员">
+<meta property="article:tag" content="Android学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/img1.gif">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>Wker</title>
+  <title>Android Button事件 | Wker</title>
   
 
 
@@ -202,10 +206,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -219,8 +223,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/04/Android-Button%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">Android Button事件</a>
+          Android Button事件
         </h1>
 
         <div class="post-meta">
@@ -256,7 +259,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="按钮常用事件枚举"><a href="#按钮常用事件枚举" class="headerlink" title="按钮常用事件枚举"></a>按钮常用事件枚举</h1><p>其实这些都是比较基本的，和点击事件之类的很像，学会一个其实就可以举一反三了，而且按钮是继承于TextView的。</p>
+        <h1 id="按钮常用事件枚举"><a href="#按钮常用事件枚举" class="headerlink" title="按钮常用事件枚举"></a>按钮常用事件枚举</h1><p>其实这些都是比较基本的，和点击事件之类的很像，学会一个其实就可以举一反三了，而且按钮是继承于TextView的。</p>
 <h2 id="布局的一些操作"><a href="#布局的一些操作" class="headerlink" title="布局的一些操作"></a>布局的一些操作</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:id</span>=<span class="string">"@+id/Button02"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_alignTop</span>=<span class="string">"@+id/button1"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_marginLeft</span>=<span class="string">"24dp"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_marginTop</span>=<span class="string">"42dp"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/Button01"</span></span></span><br><span class="line"><span class="tag">	    </span></span><br><span class="line"><span class="tag">	    </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:drawableLeft</span>=<span class="string">"@drawable/ic_launcher"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:drawablePadding</span>=<span class="string">"30dip"</span></span></span><br><span class="line"><span class="tag">	    <span class="attr">android:drawableTop</span>=<span class="string">"@drawable/ic_launcher"</span></span></span><br><span class="line"><span class="tag">	    </span></span><br><span class="line"><span class="tag">	    <span class="attr">android:text</span>=<span class="string">"Button"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="这个drawableLeft就是左边图片的资源，drawablePadding这个是图片和文字的距离。"><a href="#这个drawableLeft就是左边图片的资源，drawablePadding这个是图片和文字的距离。" class="headerlink" title="这个drawableLeft就是左边图片的资源，drawablePadding这个是图片和文字的距离。"></a>这个<code>drawableLeft</code>就是左边图片的资源，<code>drawablePadding</code>这个是图片和文字的距离。</h2><p>下面java代码用到的布局：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/Button01"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/AtEdit1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_marginBottom</span>=<span class="string">"168dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"Button"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/button1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_above</span>=<span class="string">"@+id/Button01"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignRight</span>=<span class="string">"@+id/Button01"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_marginBottom</span>=<span class="string">"37dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@drawable/ic_launcher"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"Button"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
@@ -273,27 +276,36 @@
 <p>首先我们先new一个<code>SpannableString</code>的对象，然后new一个图片的span对象，资源使我们的图片，然后将其放入<code>SpannableString</code>中，然后最终实现其效果，这里需要注意的是：字符长度是Unicode编码，所以中文也是占一个字符的。</p>
 <p><img src="img1.gif" alt="实现效果"></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag"># Android学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/04/AutoCompleteTextView/" rel="prev" title="AutoCompleteTextView">
+      <i class="fa fa-chevron-left"></i> AutoCompleteTextView
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
 
 
           </div>
@@ -344,6 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#按钮常用事件枚举"><span class="nav-number">1.</span> <span class="nav-text">按钮常用事件枚举</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#布局的一些操作"><span class="nav-number">1.1.</span> <span class="nav-text">布局的一些操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个drawableLeft就是左边图片的资源，drawablePadding这个是图片和文字的距离。"><span class="nav-number">1.2.</span> <span class="nav-text">这个drawableLeft就是左边图片的资源，drawablePadding这个是图片和文字的距离。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点击事件"><span class="nav-number">1.3.</span> <span class="nav-text">点击事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触摸事件"><span class="nav-number">1.4.</span> <span class="nav-text">触摸事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#焦点事件"><span class="nav-number">1.5.</span> <span class="nav-text">焦点事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现图文混排"><span class="nav-number">1.6.</span> <span class="nav-text">代码实现图文混排</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
