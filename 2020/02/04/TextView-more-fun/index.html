@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="图文混排其实也就是HTML的操作，只不过有一点比较特殊，就是在使用img标签的时候我们需要提供一个接口对象，用来提供我们的图片资源ID，如果资源ID非常非常的多，我们用大量的if语句是非常的麻烦的，而且后期维护性非常的差，所以我们就用到反射的帮助，首先我们构建一个获取资源ID的函数： 123456789101112private int getDrawableResureID(String ima">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TextView more fun">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/TextView-more-fun/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="图文混排其实也就是HTML的操作，只不过有一点比较特殊，就是在使用img标签的时候我们需要提供一个接口对象，用来提供我们的图片资源ID，如果资源ID非常非常的多，我们用大量的if语句是非常的麻烦的，而且后期维护性非常的差，所以我们就用到反射的帮助，首先我们构建一个获取资源ID的函数： 123456789101112private int getDrawableResureID(String ima">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/TextView-more-fun/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/TextView-more-fun/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/TextView-more-fun/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/TextView-more-fun/img4.gif">
+<meta property="article:published_time" content="2020-02-04T00:51:35.000Z">
+<meta property="article:modified_time" content="2020-02-04T03:08:36.175Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="Android学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/TextView-more-fun/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/04/TextView-more-fun/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>TextView more fun | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/TextView-more-fun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TextView more fun
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-04 08:51:35 / Modified: 11:08:36" itemprop="dateCreated datePublished" datetime="2020-02-04T08:51:35+08:00">2020-02-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="图文混排"><a href="#图文混排" class="headerlink" title="图文混排"></a>图文混排</h2><p>其实也就是HTML的操作，只不过有一点比较特殊，就是在使用img标签的时候我们需要提供一个接口对象，用来提供我们的图片资源ID，如果资源ID非常非常的多，我们用大量的if语句是非常的麻烦的，而且后期维护性非常的差，所以我们就用到反射的帮助，首先我们构建一个获取资源ID的函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getDrawableResureID</span><span class="params">(String imageName)</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalArgumentException, IllegalAccessException</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Field field = R.drawable<span class="class">.<span class="keyword">class</span>.<span class="title">getField</span>(<span class="title">imageName</span>)</span>;</span><br><span class="line">			<span class="keyword">return</span> Integer.parseInt(field.get(<span class="keyword">null</span>).toString());</span><br><span class="line">		&#125; <span class="keyword">catch</span> (NoSuchFieldError e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数其实就是说提供一个String类型的值，我们通过反射获取类中对应的资源ID。</p>
+<p>既然可以这样我们就可以写代码实现img标签的功能了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Tv_One = (TextView) findViewById(R.id.Tv_One);</span><br><span class="line">		String text1 = <span class="string">"&lt;font color = 'blue'&gt;Hello Wker&lt;/font&gt;&lt;img src='ic_l1'/&gt;"</span>;</span><br><span class="line">		text1 += <span class="string">"&lt;font color = 'blue'&gt;Hello Wker1&lt;/font&gt;&lt;img src='ic_l2'/&gt;"</span>;</span><br><span class="line">		text1 += <span class="string">"&lt;font color = 'blue'&gt;Hello Wker2&lt;/font&gt;&lt;img src='ic_l3'/&gt;"</span>;</span><br><span class="line">		CharSequence text =  Html.fromHtml(text1, <span class="keyword">new</span> ImageGetter() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> Drawable <span class="title">getDrawable</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">				<span class="comment">//根据资源ID获取图片</span></span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					Drawable drawable = getResources().getDrawable(getDrawableResureID(source));</span><br><span class="line">					drawable.setBounds(<span class="number">0</span>, <span class="number">0</span>, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());</span><br><span class="line">					<span class="keyword">return</span> drawable;</span><br><span class="line">				&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">					<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, <span class="keyword">null</span>);</span><br><span class="line">		Tv_One.setText(text);</span><br></pre></td></tr></table></figure>
+<p>我们先配置一下HTML标签，居住我们的src要和我们文件的名称一样，因为我们是反射来获取的，R文件的资源就是这样的，获取滞后我们用fromHTML获取CharSequence对象，记得我们用Drawable的时候我哦们还需要设置Drawable的边界，否则会出错，我们可以调节Drawable的宽高实现缩放。<br><img src="img1.jpg" alt="图文混排"><br><img src="img2.jpg" alt="资源名称"></p>
+<h2 id="文本跳转"><a href="#文本跳转" class="headerlink" title="文本跳转"></a>文本跳转</h2><p>这个就是不需要HTML的标签我们自己写这个跳转，其实也不是跳转了，就是一个段文本的点击事件：<br>代码片段如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">String text = <span class="string">"OK点我打开"</span>;</span><br><span class="line">SpannableString span = <span class="keyword">new</span> SpannableString(text);</span><br><span class="line">span.setSpan(<span class="keyword">new</span> ClickableSpan() &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View widget)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		Intent in = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>,jmp_class<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		startActivity(in);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;, <span class="number">2</span>,text.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );<span class="comment">//SPAN_EXCLUSIVE_EXCLUSIVE这个是不包含前后</span></span><br><span class="line">Tv_One.setText(span);</span><br><span class="line">Tv_One.setMovementMethod(LinkMovementMethod.getInstance());<span class="comment">//响应点击</span></span><br></pre></td></tr></table></figure>
+<p>首先先是new一个<code>SpannableString</code>的对象，这个对象的构造方法就是一个文本，然后<code>setSapn</code>方法的第一个参数就是一个点击的对象，这个对象其实中的<code>onClick</code>方法就是当点击指定文本的时候我们响应的时间，这里我们是打开一个Activity，第二三个参数是起始位置和结束为止，在设置文本，然后在确定有响应点击。<br><img src="img3.jpg" alt="实现效果"></p>
+<h2 id="跑马灯效果"><a href="#跑马灯效果" class="headerlink" title="跑马灯效果"></a>跑马灯效果</h2><p>其实跑马灯这个效果就是之前写Win32说的那种KTV效果，就是一些字符在这跑动，在安卓中是比较简单的，首先我们添加一个TextView，如下配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/textView1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:singleLine</span>=<span class="string">"True"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:ellipsize</span>=<span class="string">"marquee"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:focusable</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:focusableInTouchMode</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"啊啊165461654986啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>android:singleLine=&quot;True&quot;</code>这个第意思是说TextView是单行的</li>
+<li><code>android:ellipsize=&quot;marquee&quot;</code>这个说名他是滚动的，可以设置为前面或者后面啥的三个点</li>
+<li><code>android:focusable=&quot;true&quot;</code>这个说明是可以获取焦点的，想一下其实TextView就是一个静态文本，Windows下这个东西是不能获得焦点的。</li>
+<li><code>android:focusableInTouchMode=&quot;true&quot;</code>这个说是支持触摸获得焦点的。</li>
+</ol>
+<p>效果点开就是发现他是跑马灯效果。但是我们知道，只要焦点一消失，我们就不会动了，比如说EditText输入东西我们就不能获取了，那么我们之后自己写一个TextView来让我们的焦点一直存在。</p>
+<p>增加两个组件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">EditText</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">com.example.android_stduy1.MyTextView</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:id</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:singleLine</span>=<span class="string">"True"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:ellipsize</span>=<span class="string">"marquee"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:text</span>=<span class="string">"啊啊165461654986啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个EditText是用来让第一个失去焦点的，下面这个由于我们是强制拥有假的焦点，那么第三四个就不要了，这个时候我们添加一个类：”MyTextView.java”，这个我们自己写一个TextView。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.android_stduy1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTextView</span> <span class="keyword">extends</span> <span class="title">TextView</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyTextView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context);</span><br><span class="line">		<span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyTextView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs);</span><br><span class="line">		<span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyTextView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyle)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context, attrs, defStyle);</span><br><span class="line">		<span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFocused</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重写这个类的时候有一点非常注意，我就在这里踩坑了，就是我们的构造函数要写三个，原因具体不清楚，可能是都有可能调用的原因吧，然后我们重写<code>isFocused</code>方法，让他一直都以为有焦点。这个样子我们就可以了，看下效果：<br><img src="img4.gif" alt="实现效果"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android%E5%AD%A6%E4%B9%A0/" rel="tag"># Android学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/03/%E6%96%87%E4%BB%B6%E5%88%87%E5%89%B2%E7%B3%BB%E7%BB%9F/" rel="prev" title="文件切割系统">
+      <i class="fa fa-chevron-left"></i> 文件切割系统
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图文混排"><span class="nav-number">1.</span> <span class="nav-text">图文混排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本跳转"><span class="nav-number">2.</span> <span class="nav-text">文本跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跑马灯效果"><span class="nav-number">3.</span> <span class="nav-text">跑马灯效果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
