@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AutoCompleteTextView</title>
+    <url>/2020/02/04/AutoCompleteTextView/</url>
+    <content><![CDATA[<h2 id="AutoCompleteTextView"><a href="#AutoCompleteTextView" class="headerlink" title="AutoCompleteTextView"></a>AutoCompleteTextView</h2><p>这个东西就是一个就是一个提示文本，但是不知道是什么原因，在我的模拟器上面就是不好用，点击也不响应，可能是模拟器的版本问题吧。<br>首先要先新建一个layout，代码下面：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">AutoCompleteTextView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">AutoCompleteTextView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在主layout中编写：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">AutoCompleteTextView</span> </span></span><br><span class="line"><span class="tag">		    <span class="attr">android:id</span>=<span class="string">"@+id/AtEdit1"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:completionThreshold</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:imeOptions</span>=<span class="string">"actionDone"</span></span></span><br><span class="line"><span class="tag">		    /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里面有一些参数<code>completionThreshold</code>，这个就是我们输入一个我们就可以弹出列表。<br>然后我们编写java代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> AutoCompleteTextView AtEt_1;</span><br><span class="line"><span class="comment">/*...*/</span></span><br><span class="line">		AtEt_1 = (AutoCompleteTextView) findViewById(R.id.AtEdit1);</span><br><span class="line">		String[] arr = &#123;<span class="string">"Wker"</span>,<span class="string">"Wker酷"</span>,<span class="string">"Wker帅"</span>&#125;;</span><br><span class="line">		ArrayAdapter&lt;String&gt;  adpter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>, R.layout.atctext, arr);</span><br><span class="line">		AtEt_1.setAdapter(adpter);</span><br></pre></td></tr></table></figure>
+<p>首先先是定义一个数组，里面有我们预先定义的数据，然后new一个ArrayAdapter的类，第一个参数是上下文，第二个参数是我们先前的资源布局，最后一个是我们的数据，最后在设置上。<br>实现效果：<br><img src="img1.jpg" alt="实现效果"><br>但是我这里会崩溃，不知道为什么。</p>
+]]></content>
+      <categories>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>Android学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android EditText</title>
     <url>/2020/02/04/Android-EditText/</url>
     <content><![CDATA[<h1 id="EditText"><a href="#EditText" class="headerlink" title="EditText"></a>EditText</h1><p>这个东西就是个编辑框，继承于TextView，对输入的东西可以进行验证与限制</p>
