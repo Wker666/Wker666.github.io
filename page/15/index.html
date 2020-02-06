@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/31/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84ShareMemory/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/01/Activity%E4%BF%9D%E5%AD%98%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/31/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84ShareMemory/" class="post-title-link" itemprop="url">内存映射ShareMemory</a>
+            <a href="/2020/02/01/Activity%E4%BF%9D%E5%AD%98%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">Activity保存恢复数据</a>
         </h1>
 
         <div class="post-meta">
@@ -229,24 +229,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-01-31 19:06:55" itemprop="dateCreated datePublished" datetime="2020-01-31T19:06:55+08:00">2020-01-31</time>
+              <time title="Created: 2020-02-01 07:55:37 / Modified: 12:55:35" itemprop="dateCreated datePublished" datetime="2020-02-01T07:55:37+08:00">2020-02-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:55:43" itemprop="dateModified" datetime="2020-02-01T12:55:43+08:00">2020-02-01</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Win32编程</span>
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
                   </a>
                 </span>
             </span>
@@ -262,12 +256,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h1><p>Windows下进程的地址空间在逻辑上是相互隔离的，但在物理上却是重叠的，就是说一块内存，可以给好多进程用，比若说共享内存进行读取，有点像管道奥。<br>今天还是照着书写的，可能在写这一张的人没怎么注意，还是有一个错误就是提前进行UnMap了。<br>我们首先看一下这个共享内存的简单实现：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> szName[] = <span class="string">"MemoryName"</span>;</span><br><span class="line">	<span class="keyword">char</span> szData[] = <span class="string">"123456789"</span>;</span><br><span class="line">	LPVOID  pBuffer;</span><br><span class="line">	HANDLE hMap = OpenFileMapping(FILE_MAP_ALL_ACCESS,<span class="number">0</span>,szName);</span><br><span class="line">	<span class="keyword">if</span>(hMap != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		pBuffer = MapViewOfFile(hMap,FILE_MAP_ALL_ACCESS,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="comment">//cout&lt;&lt;pBuffer&lt;&lt;endl;</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"读出数据%s"</span>,pBuffer);</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		hMap = CreateFileMapping(INVALID_HANDLE_VALUE,<span class="literal">NULL</span>,PAGE_READWRITE,<span class="number">0</span>,<span class="built_in">strlen</span>(szData)+<span class="number">1</span>,szName);</span><br><span class="line">		pBuffer = MapViewOfFile(hMap,FILE_MAP_ALL_ACCESS,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>((<span class="keyword">char</span> *)pBuffer,szData);</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"写入数据"</span>&lt;&lt;szData&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	getchar();</span><br><span class="line">	UnmapViewOfFile(pBuffer);</span><br><span class="line">	CloseHandle(hMap);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>首先我们现实定义了一个数据名称和数据值，然后尝试打开这个内存映射，如果打开失败的话呢就是没有创建这个内存映射然后我们就开始创建，现实创建一个内存映射，然后在用<code>MapViewOfFile</code>进行内存地址的分配，然后再用<code>strcpy</code>进行数据的copy，然后就在这个时候，书上写的是吧<code>getchar()</code>卸载<code>CloseHandle</code>后面，但是这个样子就没有意义了，那么我们就应该先让他卡住才行，如果打开这个内存映射成功的话呢我们就读取这个内存映射的地址，然后输出，在这里需要注意不能用C++的一个输入输出流，因为我们定义pBuffer的时候我们不是定义的char类型，而是一个通用的指针类型，这里需要注意。</p>
-<h2 id="CShareMemory类的封装"><a href="#CShareMemory类的封装" class="headerlink" title="CShareMemory类的封装"></a>CShareMemory类的封装</h2><p>在这里我们封装一下我们的内存共享类，方便之后的使用。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SHAREMEMORY_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __SHAREMEMORY_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CShareMemory</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	CShareMemory(<span class="keyword">const</span> <span class="keyword">char</span> *pszMapName,<span class="keyword">int</span> nFileSzie = <span class="number">0</span>,BOOL bSever = FALSE);</span><br><span class="line">	~CShareMemory();</span><br><span class="line">	<span class="function">LPVOID <span class="title">GetBuffer</span><span class="params">()</span><span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> m_pBuffer;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	LPVOID m_pBuffer;</span><br><span class="line">	HANDLE m_hFileMap;</span><br><span class="line">	BOOL m_bSever;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">inline</span> CShareMemory::CShareMemory(<span class="keyword">const</span> <span class="keyword">char</span> *pszMapName,<span class="keyword">int</span> nFileSzie,BOOL bSever):m_hFileMap(<span class="literal">NULL</span>),m_pBuffer(<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (bSever)</span><br><span class="line">	&#123;</span><br><span class="line">		m_hFileMap = CreateFileMapping(INVALID_HANDLE_VALUE,<span class="literal">NULL</span>,PAGE_READWRITE,<span class="number">0</span>,nFileSzie,pszMapName);</span><br><span class="line"></span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_hFileMap = OpenFileMapping(FILE_MAP_ALL_ACCESS,FALSE,pszMapName);</span><br><span class="line">	&#125;</span><br><span class="line">	m_pBuffer = (LPBYTE)MapViewOfFile(m_hFileMap,FILE_MAP_ALL_ACCESS,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">	m_bSever = bSever;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">inline</span> CShareMemory::~CShareMemory()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (m_bSever)</span><br><span class="line">	&#123;</span><br><span class="line">		UnmapViewOfFile(m_pBuffer);</span><br><span class="line">		CloseHandle(m_hFileMap);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span><span class="comment">//__SHAREMEMORY_H__</span></span></span><br></pre></td></tr></table></figure>
-<p>和之前一样还是判断是否是重定义了，然后就是一个服务端几个客户端的类型，这个地方书上写的不是很严谨，我不知道是他没注意还是他就是这个意思，读他的析构函数的时候我发现，他并没有判断这个是不是服务器端还是客户端就进行了映射的关闭，我怀疑他是这个地方有点误解。<br>在这里写的时候他用了一个内联函数的方法进行写的，析构函数这个可以，但是这个构造函数我感觉其实是没啥必要，都这么多行了，是不是内联的都无所谓了我感觉（内联函数就是编译器直接拷贝，不需要进行函数的构造这种的），然后在函数后面有个const意思就是说，我们这个函数是不会修改这个成员变量的值的，参数有const的话呢就是说我们不会修改这个参数的值的。还有就是函数后面跟上<code>：</code>其实就是将后面的变量进行初始化，如果构造函数后面有的话呢一般来说就是父类的一个初始化了，这里比较特殊。</p>
+          <h1 id="Activity保存恢复数据"><a href="#Activity保存恢复数据" class="headerlink" title="Activity保存恢复数据"></a>Activity保存恢复数据</h1><p>有的时候我们在窗口转化的过程中，某些数据是不被保存的，例如在你旋转手的时候一些变量会不被保存，一些控件值不被保存，那该如何去做呢？</p>
+<h2 id="控件数据丢失"><a href="#控件数据丢失" class="headerlink" title="控件数据丢失"></a>控件数据丢失</h2><p>这个很简单，主要是由于你的控件没有给出相应的控件ID所导致的，我们只需要将我们的控件编辑上我们的ID就好了。</p>
+<h2 id="变量数据的丢失"><a href="#变量数据的丢失" class="headerlink" title="变量数据的丢失"></a>变量数据的丢失</h2><p>这个也不麻烦，但是需要的是保存我们重要的数据，我觉得用上一些Map集合是很方便的，例如在我们转换屏幕的方向的时候，数据就会重新刷新。<br>那么如何保存呢？我们可以重写<code>onSaveInstanceState</code>方法<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	outState.putString(<span class="string">"a"</span>, a);</span><br><span class="line">	<span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候我是保存了a变量，保存在”a”这个键值下面。<br>那么如何回复呢？其实有两种方法，一种是<code>onCreate</code>方法中进行恢复，一种是<code>onRestoreInstanceState</code>方法中进行恢复，两种方法都是可以的，但是这种情况下我们一般建议使用<code>onRestoreInstanceState</code>这个方法，其实是一样的，在我们这个方法被Java虚拟机调用的时候我们会传进来一个Bundle类型的一个参数，这个东西就有点像集合，也是键对值的一个操作，具体操作如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	a = savedInstanceState.getString(<span class="string">"a"</span>);</span><br><span class="line">	<span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>onCreate</code>方法中也有那个Bundle参数，使用方法一样的。<br>记录一下这个Toast类，就是在窗口上提示一个小窗口：<br><code>Toast.makeText(getApplicationContext(),a+&quot;&quot;,Toast.LENGTH_SHORT).show();</code></p>
+<p>很方便的一个小东西，但是就是太快了是不行的！</p>
 
       
     </div>
@@ -287,7 +283,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -354,7 +350,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
