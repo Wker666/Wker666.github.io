@@ -69,6 +69,81 @@
       </tags>
   </entry>
   <entry>
+    <title>Android进度条和图像控件</title>
+    <url>/2020/02/06/Android%E8%BF%9B%E5%BA%A6%E6%9D%A1%E5%92%8C%E5%9B%BE%E5%83%8F%E6%8E%A7%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="进度条控件"><a href="#进度条控件" class="headerlink" title="进度条控件"></a>进度条控件</h2><p>这个相对比较简单，常用的就是开始拖动，停止拖动，进度改变这三个监听器。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;SeekBar</span><br><span class="line">    android:id=<span class="string">"@+id/seekBar1"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_alignParentTop=<span class="string">"true"</span></span><br><span class="line">    android:layout_centerHorizontal=<span class="string">"true"</span></span><br><span class="line">    android:layout_marginTop=<span class="string">"71dp"</span></span><br><span class="line">    android:progress=<span class="string">"60"</span></span><br><span class="line">    android:secondaryProgress=<span class="string">"80"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>progress是显示的进度</li>
+<li>secondaryProgress是二层显示的一个进度，颜色是虚的</li>
+</ol>
+<p>常用方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">	Sb_One.setOnSeekBarChangeListener(<span class="keyword">new</span> OnSeekBarChangeListener() &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//停止拖动</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			Log.d(<span class="string">"SeekBar_Stop"</span>, <span class="string">"Stop"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//开始拖动</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</span><br><span class="line">			Log.d(<span class="string">"SeekBar_Start"</span>, <span class="string">"Start"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//进度值改变</span></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> progress, <span class="keyword">boolean</span> fromUser)</span> </span>&#123;</span><br><span class="line">			Log.d(<span class="string">"SeekBar_Progress"</span>, progress+<span class="string">""</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图像控件"><a href="#图像控件" class="headerlink" title="图像控件"></a>图像控件</h2><p>就是显示图片的一个东西，但因为是显示图片，所以他的属性有点多，而且有点乱，感觉就是用到的时候在去查询就可以了。</p>
+<h3 id="常见属性"><a href="#常见属性" class="headerlink" title="常见属性"></a>常见属性</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/seekBar1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_below</span>=<span class="string">"@+id/seekBar1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_marginTop</span>=<span class="string">"29dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@android:color/darker_gray"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:maxHeight</span>=<span class="string">"300dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:maxWidth</span>=<span class="string">"300dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@drawable/ic_launcher"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:adjustViewBounds</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>adjustViewBounds：这个看名字就知道就是一个是否自动调整和图像一样，这个是和maxHeight与maxWidth一起才有效果的，也是必须和他们一起。</li>
+<li><code>android:scaleType=&quot;fitXY&quot;</code>这个上面XML没写，但是也是比较常用，有下面几个值可以供我们选择：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fitXY</td>
+<td>拉伸图片（不按比例）以填充View的宽高</td>
+</tr>
+<tr>
+<td>fitStart</td>
+<td>按比例拉伸图片，拉伸后图片的高度为View的高度，且显示在View的左边</td>
+</tr>
+<tr>
+<td>fitCenter</td>
+<td>按比例拉伸图片，拉伸后图片的高度为View的高度，且显示在View的中间</td>
+</tr>
+<tr>
+<td>fitEnd</td>
+<td>按比例拉伸图片，拉伸后图片的高度为View的高度，且显示在View的右边</td>
+</tr>
+<tr>
+<td>center</td>
+<td>按原图大小显示图片，但图片宽高大于View的宽高时，截图图片中间部分显示</td>
+</tr>
+<tr>
+<td>centerCrop</td>
+<td>按比例放大原图直至等于某边View的宽高显示。</td>
+</tr>
+<tr>
+<td>centerInside</td>
+<td>当原图宽高或等于View的宽高时，按原图大小居中显示；反之将原图缩放至View的宽高居中显示。</td>
+</tr>
+</tbody></table>
+<p>这个东西就是这么看看用到的时候进行选择就可以了。但是需要注意的是使用scaleType这个属性我们宽高不要设置为：wrap_content包裹内容，否则看不出效果。</p>
+<h3 id="缩放与旋转"><a href="#缩放与旋转" class="headerlink" title="缩放与旋转"></a>缩放与旋转</h3><p>我们通过进度条进行实现，这个东西用到了一个矩阵类，这个类呢，我也没怎么研究过，但是使用起来就是用到他一个设置轮值的方法，也就是旋转度的一个方法。<br>首先我们先配置XML：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">SeekBar</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/seekBar2"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_below</span>=<span class="string">"@+id/imageView1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:progress</span>=<span class="string">"60"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:secondaryProgress</span>=<span class="string">"80"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">SeekBar</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/seekBar1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_below</span>=<span class="string">"@+id/seekBar2"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:progress</span>=<span class="string">"60"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:secondaryProgress</span>=<span class="string">"80"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/imageView1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"300dip"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/seekBar2"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_marginTop</span>=<span class="string">"19dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scaleType</span>=<span class="string">"fitCenter"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@drawable/ic_launcher"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>（在写这个博客的时候解决了一个问题啊哈哈哈！本来还想之后再补上）</p>
+<p>先设置那个进度条的大小：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);<span class="comment">//获取屏幕属性</span></span><br><span class="line">Sb_One.setMax(dm.widthPixels);</span><br></pre></td></tr></table></figure>
+<p>设置完进度条之后，我么来编写放大缩小。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> progress, <span class="keyword">boolean</span> fromUser)</span> </span>&#123;</span><br><span class="line">	im_One.setLayoutParams(<span class="keyword">new</span> RelativeLayout.LayoutParams(progress,progress*<span class="number">3</span>/<span class="number">4</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一些累赘的代码我就没copy上去，单子啊这里需要注意要用到我们当前布局下面的LayoutParams生成的类才可以。<br>旋转的实现我们先new一个矩阵类：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">private Matrix ma;</span><br><span class="line">/*...*/</span><br><span class="line">ma = new Matrix();</span><br></pre></td></tr></table></figure>
+<p>之后我们再在第二个的拖动事件里面写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> progress, <span class="keyword">boolean</span> fromUser)</span> </span>&#123;</span><br><span class="line">	ma.setRotate(progress);	</span><br><span class="line">	Bitmap bit = ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap();</span><br><span class="line">	bit = Bitmap.createBitmap(bit,<span class="number">0</span>,<span class="number">0</span>,bit.getWidth(),bit.getHeight(),ma,<span class="keyword">true</span>);</span><br><span class="line">	im_One.setImageBitmap(bit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先显示设置轮值，然后再获取我们的Bitmap对象，然后创建一幅新的位图，矩阵信息用我们设置过轮值的，然后再设置图片就好了。<br><img src="img1.jpg" alt="效果图"></p>
+]]></content>
+      <categories>
+        <category>Android学习</category>
+      </categories>
+      <tags>
+        <tag>Android学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>导入表的获取</title>
     <url>/2020/02/06/%E5%AF%BC%E5%85%A5%E8%A1%A8%E7%9A%84%E8%8E%B7%E5%8F%96/</url>
     <content><![CDATA[<h1 id="导入表"><a href="#导入表" class="headerlink" title="导入表"></a>导入表</h1><p>百度百科：</p>
