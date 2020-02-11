@@ -57,7 +57,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/02/11/API%E7%9B%91%E8%A7%86/img1.jpg">
 <meta property="article:published_time" content="2020-02-10T23:58:26.000Z">
-<meta property="article:modified_time" content="2020-02-11T02:07:29.905Z">
+<meta property="article:modified_time" content="2020-02-11T02:14:53.600Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="Win32编程">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-02-11 07:58:26 / Modified: 10:07:29" itemprop="dateCreated datePublished" datetime="2020-02-11T07:58:26+08:00">2020-02-11</time>
+              <time title="Created: 2020-02-11 07:58:26 / Modified: 10:14:53" itemprop="dateCreated datePublished" datetime="2020-02-11T07:58:26+08:00">2020-02-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,6 +311,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CAPISpyEXEDlg::OnBnClickedOnstart()</span><br><span class="line">&#123;</span><br><span class="line">	CString strTargetApp;</span><br><span class="line">	GetDlgItem(IDC_TARGETAPP)-&gt;GetWindowText(strTargetApp);</span><br><span class="line">	<span class="keyword">if</span> (strTargetApp.IsEmpty())</span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="string">"请输入目标程序"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	CString strAPIName,strDllName;</span><br><span class="line">	GetDlgItem(IDC_APINAME)-&gt;GetWindowText(strAPIName);</span><br><span class="line">	GetDlgItem(IDC_DLLNAME)-&gt;GetWindowText(strDllName);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (strAPIName.IsEmpty() || strDllName.IsEmpty())</span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="string">"请输入要侦查的文件名"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	HMODULE hdll = ::LoadLibrary(strDllName);</span><br><span class="line">	<span class="keyword">if</span> (GetProcAddress(hdll,strAPIName) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="string">"这个API不在这个模块里啊"</span>);</span><br><span class="line">		<span class="keyword">if</span>(hdll != <span class="literal">NULL</span>)</span><br><span class="line">			FreeLibrary(hdll);</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	FreeLibrary(hdll);</span><br><span class="line"></span><br><span class="line">	m_pShareMem = <span class="keyword">new</span> CMyShareMem(TRUE);</span><br><span class="line">	m_pShareMem-&gt;GetData()-&gt;hWndCaller = m_hWnd;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">strncpy</span>(m_pShareMem-&gt;GetData()-&gt;szFuncName,strAPIName,<span class="number">56</span>);</span><br><span class="line">	<span class="built_in">strncpy</span>(m_pShareMem-&gt;GetData()-&gt;szModName,strDllName,<span class="number">56</span>);</span><br><span class="line"></span><br><span class="line">	STARTUPINFO si = &#123;<span class="keyword">sizeof</span>(si)&#125;;</span><br><span class="line">	PROCESS_INFORMATION pi;</span><br><span class="line">	BOOL bOk = CreateProcess(<span class="literal">NULL</span>,strTargetApp.GetBuffer(<span class="number">0</span>),<span class="literal">NULL</span>,<span class="literal">NULL</span>,FALSE,<span class="number">0</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,&amp;si,&amp;pi);</span><br><span class="line">	<span class="keyword">if</span> (bOk)</span><br><span class="line">	&#123;</span><br><span class="line">		bOk = m_pInjector-&gt;InjectModuleInto(pi.dwProcessId);</span><br><span class="line">		<span class="keyword">if</span>(!bOk)</span><br><span class="line">			MessageBox(<span class="string">"DLL注入失败"</span>);</span><br><span class="line">		CloseHandle(pi.hThread);		<span class="comment">//</span></span><br><span class="line">		CloseHandle(pi.hProcess);		<span class="comment">//这两个东西必须关掉，否则内核计数不会减为0的</span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(<span class="string">"启动目标进程失败"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!bOk)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">delete</span> m_pShareMem;</span><br><span class="line">		m_pShareMem = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先我们先检查是否有输入，然后判断是否在这个DLL中有指定的API，然后再释放。初始化我们的内存共享类，我们这边是发送端，所以我们要初始化我们的结构体信息，然后启动我们的指定用程序，启动成功之后我们就立马注入我们的DLL，然后关闭句柄简单的盘一下就好了。需要注意的是我们需要关掉我们启动时候的句柄，否则程序就算关闭也不会完全消失，因为内核对象还在内存中。</p>
 <p><img src="img1.jpg" alt="效果图"></p>
+<p>这里可以看到是我们的信息框先出来，我们关闭的时候才会弹出他的信息框，因为DLL那边在等我们的消息返回值。</p>
 
     </div>
 
@@ -332,7 +333,10 @@
     <a href="/2020/02/10/Android-ViewPager/" rel="prev" title="Android ViewPager">
       <i class="fa fa-chevron-left"></i> Android ViewPager
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/11/CULHook/" rel="next" title="CULHook">
+      CULHook <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -407,7 +411,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
