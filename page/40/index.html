@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/26/File-operate2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/26/File-operate2/" class="post-title-link" itemprop="url">File operate2</a>
+            <a href="/2020/01/27/Android%E6%A8%AA%E7%AB%96%E5%B1%8F%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">Android横竖屏设置</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-26 21:17:20" itemprop="dateCreated datePublished" datetime="2020-01-26T21:17:20+08:00">2020-01-26</time>
+              <time title="Created: 2020-01-27 10:13:04" itemprop="dateCreated datePublished" datetime="2020-01-27T10:13:04+08:00">2020-01-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:59:57" itemprop="dateModified" datetime="2020-02-01T12:59:57+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:59:47" itemprop="dateModified" datetime="2020-02-01T12:59:47+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Win32编程</span>
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
                   </a>
                 </span>
             </span>
@@ -262,76 +262,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="CopyFileEx文件拷贝"><a href="#CopyFileEx文件拷贝" class="headerlink" title="CopyFileEx文件拷贝"></a><code>CopyFileEx</code>文件拷贝</h2><p>一开始想用<code>CopyFile</code>,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CopyFileEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpExistingFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to name of an existing file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpNewFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to filename to copy to</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPPROGRESS_ROUTINE lpProgressRoutine,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData,    <span class="comment">// to be passed to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPBOOL pbCancel,  <span class="comment">// flag that can be used to cancel the operation</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCopyFlags <span class="comment">// flags that specify how the file is copied</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>前两个还是比较简单的，第三个参数是一个回调函数，定义如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD CALLBACK <span class="title">CopyProgressRoutine</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalFileSize,  <span class="comment">// total file size, in bytes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamSize,  <span class="comment">// total number of bytes for this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwStreamNumber,     <span class="comment">// the current stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCallbackReason,   <span class="comment">// reason for callback</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hSourceFile,       <span class="comment">// handle to the source file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hDestinationFile,  <span class="comment">// handle to the destination file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData             <span class="comment">// passed by CopyFileEx</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>第四个参数是要传递给回调函数的一个参数，可以为NULL，<br>第五个参数有点意思，就是为了防止文件过大，给了个可以强制结束的一个指针，BOOL类型的，如歌这个指针为TRUE的时候则会终止。<br>第六个参数是一个复制的类型，可以是下面这两个值：</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>COPY_FILE_FAIL_IF_EXISTS</td>
-<td>The copy operation fails immediately if the target file already exists.</td>
-</tr>
-<tr>
-<td>COPY_FILE_RESTARTABLE</td>
-<td>Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time by specifying the same values for lpExistingFileName and lpNewFileName as those used in the call that failed.</td>
-</tr>
-<tr>
-<td>看名字就明白了，失败退出，失败重新。</td>
-<td></td>
-</tr>
-<tr>
-<td>那我们就试一下怎么个回事。</td>
-<td></td>
-</tr>
-<tr>
-<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function">DWORD CALLBACK <span class="title">CopyProgressRoutine</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalFileSize,  <span class="comment">// total file size, in bytes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamSize,  <span class="comment">// total number of bytes for this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwStreamNumber,     <span class="comment">// the current stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCallbackReason,   <span class="comment">// reason for callback</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hSourceFile,       <span class="comment">// handle to the source file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hDestinationFile,  <span class="comment">// handle to the destination file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData             <span class="comment">// passed by CopyFileEx</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,TotalBytesTransferred.u.LowPart);</span><br><span class="line">	<span class="keyword">return</span> PROGRESS_CONTINUE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	CopyFileEx(<span class="string">"1.zip"</span>,<span class="string">"1\\3.zip"</span>,CopyProgressRoutine,<span class="literal">NULL</span>,<span class="literal">NULL</span>,COPY_FILE_RESTARTABLE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
-<td></td>
-</tr>
-<tr>
-<td>看了下，主要就是那个回调函数的返回值比较重要一些，要继续的话呢要返回一个<code>PROGRESS_CONTINUE</code>这个值，其他的都不是太重要，仔细看看参数就好了。</td>
-<td></td>
-</tr>
-<tr>
-<td>## 删除文件<code>DeleteFile</code></td>
-<td></td>
-</tr>
-<tr>
-<td>这个基本不用说，看下定义就知道了，就一个参数，删除的文件路径。</td>
-<td></td>
-</tr>
-<tr>
-<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">DeleteFile</span><span class="params">(  LPCTSTR lpFileName   <span class="comment">// pointer to name of file to delete</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure></td>
-<td></td>
-</tr>
-<tr>
-<td>但是在这里我还是要说一些比较关键的一些内容，删除不存在的文件的时候是会失败的，如果删除的文件是一个只读的属性，那么将会返回：ERROR_ACCESS_DENIED这个样子的一个值，这里我们写一个递归的函数（使用MFC的框架）实现递归删除。</td>
-<td></td>
-</tr>
-<tr>
-<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CStudy_HistoryDlg::OnBnClickedButton1()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加控件通知处理程序代码</span></span><br><span class="line">	CString Context ;EContext.GetWindowTextA(Context);</span><br><span class="line">	RecursiveDelete(Context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CStudy_HistoryDlg::RecursiveDelete(CString szPath)</span><br><span class="line">&#123;</span><br><span class="line">	CFileFind ff;</span><br><span class="line">	CString strPath = szPath;</span><br><span class="line">	<span class="keyword">if</span> (<span class="string">"\\"</span> != strPath.Right(<span class="number">1</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		strPath += <span class="string">"\\"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	strPath += <span class="string">"*.*"</span>;<span class="comment">//这个过滤器类型的东西貌似都是支持正则的。</span></span><br><span class="line">	BOOL bRet;<span class="comment">//用来标记是不是已经删除完毕。</span></span><br><span class="line">	<span class="keyword">if</span> (ff.FindFile(strPath))<span class="comment">//这个应该就是文件夹的第一个指针开始。</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">do</span> </span><br><span class="line">		&#123;</span><br><span class="line">			bRet = ff.FindNextFile();<span class="comment">//将内部的那个指针往下移动一下</span></span><br><span class="line">			<span class="keyword">if</span> (ff.IsDots())<span class="comment">//为.或..这种的上级目录</span></span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			strPath = ff.GetFilePath();</span><br><span class="line">			<span class="keyword">if</span> (!ff.IsDirectory())<span class="comment">//看看是不是一个目录</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//是一个文件</span></span><br><span class="line">				<span class="comment">//删除文件</span></span><br><span class="line">				::SetFileAttributes(strPath,FILE_ATTRIBUTE_NORMAL);<span class="comment">//先设置一下这个文件的属性，不要只读！！！</span></span><br><span class="line">				::DeleteFile(strPath);</span><br><span class="line"></span><br><span class="line">			&#125;<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				RecursiveDelete(strPath);<span class="comment">//经典的递归调用</span></span><br><span class="line">				::SetFileAttributes(strPath,FILE_ATTRIBUTE_NORMAL);<span class="comment">//和上面一样</span></span><br><span class="line">				::RemoveDirectory(strPath); <span class="comment">//移除掉这个文件夹</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">while</span> (bRet);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
-<td></td>
-</tr>
-<tr>
-<td>我都做了一定的注释，就是一个递归删除，使用了MFC的一个框架，说实话微软给的这个框架是真的好！</td>
-<td></td>
-</tr>
-<tr>
-<td>需要注意，我们使用<code>DeleteFile</code>这个函数的话呢，是不会进入回收站的！</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="移动文件MoveFileEx"><a href="#移动文件MoveFileEx" class="headerlink" title="移动文件MoveFileEx"></a>移动文件<code>MoveFileEx</code></h2><p>这次还是在用个Ex加强版本的吧，看一下Ex版本的MSDN定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">MoveFileEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpExistingFileName,  <span class="comment">// pointer to the name of the existing file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpNewFileName,       <span class="comment">// pointer to the new name for the file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFlags                <span class="comment">// flag that specifies how to move file</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>第三个的参数有点古怪：<br>比较有意思的一个值：“MOVEFILE_DELAY_UNTIL_REBOOT”，这个值的意思就是说重启才会移动，具体怎么用我也没有去深入研究，没啥意思我感觉，而且与其他的不能同时使用。<br>MOVEFILE_COPY_ALLOWED：这个就是说可以移动到别的盘符，还有就是好像指定了这个就是类似于先Copy再删除这个样子的操作。<br>MOVEFILE_REPLACE_EXISTING：替换掉存在的。<br>MOVEFILE_WRITE_THROUGH：这个就是说等待函数结束才会返回。<br>说了这么多就实验一下吧。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	MoveFileEx(<span class="string">"1.txt"</span>,<span class="string">"2.txt"</span>,MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>好吧也没啥可以验证的…</p>
+          <h2 id="横竖屏的设置"><a href="#横竖屏的设置" class="headerlink" title="横竖屏的设置"></a>横竖屏的设置</h2><p>在Android的生命周期中，如果我们横竖屏了，那么他将会默认执行销毁和重构Activity界面的一系列操作，这个样子给我们带来了很多麻烦。<br>同样的屏幕大小变换（低版本安卓不会），键盘出现都会出现这个问题，那如何解决：<br>我们在Activity设置中设置：<br><code>android:configChanges=&quot;keyboardHidden|orientation|screenSize&quot;</code><br>设置这么一条代码，就可以实现我们的效果了，这样的话呢我们将不会执行那一系列操作（相当于关程序重新打开程序的操作）了，它将会执行新的一个函数：<code>onConfigurationChanged</code>这个函数，我们只需要在这个地方写代码就好了。</p>
+<h2 id="如何知道是横竖屏？"><a href="#如何知道是横竖屏？" class="headerlink" title="如何知道是横竖屏？"></a>如何知道是横竖屏？</h2><p>其实也很简单，就是判断宽和高就可以了！<br>例如如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DisplayMetrics dm = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line"></span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">Log.d(<span class="string">"ttt"</span>, dm.heightPixels+<span class="string">""</span>+dm.widthPixels);</span><br></pre></td></tr></table></figure>
+<p>再就是判断宽和高大小就可以了！</p>
+<h2 id="设置一直是横竖屏"><a href="#设置一直是横竖屏" class="headerlink" title="设置一直是横竖屏"></a>设置一直是横竖屏</h2><p>其实也很简单，在Activity配置中配置如下项：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:screenOrientation="portrait"</span><br><span class="line">android:screenOrientation="landscape"</span><br></pre></td></tr></table></figure>
+<p>第一个设置竖屏，第二个设置横屏（只能设置一个！）。</p>
 
       
     </div>
@@ -351,7 +288,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/70/">70</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -418,7 +355,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
