@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/CRegKey/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Activity%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/CRegKey/" class="post-title-link" itemprop="url">CRegKey</a>
+            <a href="/2020/01/29/Activity%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92/" class="post-title-link" itemprop="url">Activity数据传递</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-29 08:46:32" itemprop="dateCreated datePublished" datetime="2020-01-29T08:46:32+08:00">2020-01-29</time>
+              <time title="Created: 2020-01-29 10:49:04" itemprop="dateCreated datePublished" datetime="2020-01-29T10:49:04+08:00">2020-01-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:57:39" itemprop="dateModified" datetime="2020-02-01T12:57:39+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:57:25" itemprop="dateModified" datetime="2020-02-01T12:57:25+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Win32编程</span>
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
                   </a>
                 </span>
             </span>
@@ -262,21 +262,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="CRegKey"><a href="#CRegKey" class="headerlink" title="CRegKey"></a><code>CRegKey</code></h2><p>之前说的这个忘记加上去了，补充一下，这个的话呢其实就是说方便我们的调用。<br>比较特殊的是这个类不是MFC的，而是<code>#include &lt;atlbase.h&gt;</code><br>而且类的函数比较简单，调用起来十分的方便。</p>
+          <h1 id="Activity之间的数据传递"><a href="#Activity之间的数据传递" class="headerlink" title="Activity之间的数据传递"></a>Activity之间的数据传递</h1><p>这个就比较典型，就和Windows下一样，但是比Windows下方便许多，只需要调用几个比较简单的方法就可以进行数据的传递。</p>
+<h2 id="基本数据类型的传递"><a href="#基本数据类型的传递" class="headerlink" title="基本数据类型的传递"></a>基本数据类型的传递</h2><p>基本数据类型的传递是最简单得了相比之下，我们只需要使用一个成员方法写入数据就可以了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intent.putExtra(<span class="string">"Data"</span>,test);</span><br></pre></td></tr></table></figure>
+<p>这个<code>putExtra</code>方法有许多重载，基本数据类型都包含了，在我们的接收端我们只需要调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Bundle bundle = getIntent().getExtras();</span><br><span class="line">bundle.getString(<span class="string">"Data"</span>);</span><br></pre></td></tr></table></figure>
+<p>这个样子我们就能成功进行数据之间的交互了。</p>
+<h2 id="类的传递"><a href="#类的传递" class="headerlink" title="类的传递"></a>类的传递</h2><p>类的传递分为两种方法，一种是Java自带的，另一种是Android提供给我们的，各有好处，下面进行介绍。</p>
+<h3 id="序列化传递"><a href="#序列化传递" class="headerlink" title="序列化传递"></a>序列化传递</h3><p>序列化的传递方法，就是将我们的类实现序列化，然后再传递的时候使用就好了，这个方法也是比较简单的，但是是有缺点的，因为序列化是持久化的一个操作，所以会在本地生成数据，具体的实现方法：</p>
+<ol>
+<li>传递类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">push</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String Name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetName</span> <span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		Name = name;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">GetName</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>发送端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push test = <span class="keyword">new</span> push();</span><br><span class="line">test.SetName(<span class="string">"iii"</span>);</span><br><span class="line">intent.putExtra(<span class="string">"Data"</span>,test);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>接收端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> EditText edt01;</span><br><span class="line">edt01 = (EditText)findViewById(R.id.editText1);</span><br><span class="line">edt01.setText(((push)bundle.get(<span class="string">"Data"</span>)).GetName());</span><br></pre></td></tr></table></figure>
+<p>这个样子就可以进行数据的交互了，多了一步序列化和强制转换，也是相对而言方便的。</p>
+<h3 id="Parcelable传递"><a href="#Parcelable传递" class="headerlink" title="Parcelable传递"></a>Parcelable传递</h3><p>这个方法有点繁琐，但是比较固定，就是说不是太需要理解为啥这样写，反正按模式进行些就好了，我们同样还是先写类：</p>
+<ol>
+<li>传递类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.location.Criteria;</span><br><span class="line"><span class="keyword">import</span> android.os.Parcel;</span><br><span class="line"><span class="keyword">import</span> android.os.Parcelable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">push</span> <span class="keyword">implements</span> <span class="title">Parcelable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String Name;</span><br><span class="line">	<span class="keyword">private</span> String Age;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetName</span> <span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		Name = name;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">GetName</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Parcelable.Creator&lt;push&gt; CREATOR = <span class="keyword">new</span> Creator&lt;push&gt;() &#123;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> push <span class="title">createFromParcel</span><span class="params">(Parcel source)</span> </span>&#123;</span><br><span class="line">			push test = <span class="keyword">new</span> push();</span><br><span class="line">			test.setAge(source.readString());</span><br><span class="line">			test.SetName(source.readString());</span><br><span class="line">			<span class="keyword">return</span> test;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="keyword">public</span> push[] newArray(<span class="keyword">int</span> size) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;;</span><br><span class="line">			</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">describeContents</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">		dest.writeString(Age);</span><br><span class="line">		dest.writeString(Name);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(String age)</span> </span>&#123;</span><br><span class="line">		Age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发送端接收端不变，和我们序列化的时候操作是一样的，这里稍微有一写要说的。</p>
 <ul>
-<li>Attach Attaches a registry key handle to the CRegKey object.  </li>
-<li>Close Releases m_hKey.  </li>
-<li>Create Creates or opens the specified key.  </li>
-<li>CRegKey Constructor.  </li>
-<li>DeleteSubKey Deletes the specified key.  </li>
-<li>DeleteValue Deletes a value field of the key identified by m_hKey.  </li>
-<li>Detach Detaches m_hKey from the CRegKey object.  </li>
-<li>Open Opens the specified key.  </li>
-<li>QueryValue Retrieves the data for a specified value field.  </li>
-<li>RecurseDeleteKey Deletes the specified key and explicitly deletes all subkeys.  </li>
-<li>SetKeyValue Stores data in a specified value field of a specified key.  </li>
-<li>SetValue Stores data in a specified value field.<br>但是有一点需要注意，如果想要立即写入的话呢要调用Flush方法，这个在我这个2001年的MSDN好像没有说明。</li>
+<li>必须要有个静态成员<code>public static Parcelable.Creator&lt;push&gt; CREATOR = new Creator&lt;push&gt;()</code>然后实现里面的两个方法</li>
+<li><code>writeToParcel</code>这个里面的顺序要和<code>createFromParcel</code>这个里面的顺序是一致的，否则应该会出现错误</li>
+<li><code>createFromParcel</code>这个方法最后需要返回我们new的那个对象。</li>
 </ul>
+<p>这个方法的好处其实就是不是本地写入，是在内存中进行读写，而且速度要快一些，但是就是有一点繁琐。</p>
 
       
     </div>
@@ -296,7 +315,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/75/">75</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -363,7 +382,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
