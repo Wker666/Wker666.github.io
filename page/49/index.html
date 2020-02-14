@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/24/File-Attribute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/24/Intent-%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-title-link" itemprop="url">Intent-过滤器</a>
+            <a href="/2020/01/24/File-Attribute/" class="post-title-link" itemprop="url">File Attribute</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-24 16:24:35" itemprop="dateCreated datePublished" datetime="2020-01-24T16:24:35+08:00">2020-01-24</time>
+              <time title="Created: 2020-01-24 17:39:30" itemprop="dateCreated datePublished" datetime="2020-01-24T17:39:30+08:00">2020-01-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:00:18" itemprop="dateModified" datetime="2020-02-01T13:00:18+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:00:07" itemprop="dateModified" datetime="2020-02-01T13:00:07+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">Android学习</span>
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
                   </a>
                 </span>
             </span>
@@ -262,70 +262,100 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Intent过滤器"><a href="#Intent过滤器" class="headerlink" title="Intent过滤器"></a>Intent过滤器</h1><p>这个东西就是一个过滤器，用于过滤intent发送给Activity信息的时候对发送对象的一个过滤，那么我们具体怎么使用呢？<br>首先我们需要用隐式Intent进行消息的发送，首先我们对我们的Activity进行过滤器的设置例如如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"com.wker.top"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>例如这个样子，我们需要设置intent的时候是这个样子的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.setAction(<span class="string">"com.wker.top"</span>);</span><br><span class="line">intent.addCategory(Intent.CATEGORY_DEFAULT);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http:"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
-<p>这个时候我们需要注意，我们设置的协议scheme的时候是http，但是我们要用Data数据的时候我们需要填写完整的‘http:’，这个使我们需要注意的，这个时候我们就能成功的打开我们的页面了，那么我们看到Data还有好多的属性，我们继续设置。主要看我们的Data数据设置和我们的URI的一个设置。<br><code>&lt;data android:scheme=&quot;http&quot; android:host=&quot;wker666.github.io&quot; android:port=&quot;80&quot; android:path=&quot;/Android&quot;/&gt;</code><br><code>intent.setData(Uri.parse(&quot;http://wker666.github.io:80/Android&quot;));</code><br>其实可以看到也就是按照一个URL类似的格式进行填写的。<br><strong>Intent过滤器中的category属性称之为类别判定，其实也很好理解，就是对于APP类型的一个判定（我猜的，因为我看到值有default和browser这类的值，所以我感觉应该就是），而且这里还需要注意，可以设置多个category是不会影响的，就是说一个正确了其他的不正确也不影响。</strong></p>
-<p>而且category这个节点的属性是必须存在的！！！</p>
-<p>下面说说Data这个节点的属性，有点繁杂，但是也是比较好用的，重点的上面提到了，主要说说那个mimeType：</p>
+          <h1 id="文件属性的读取"><a href="#文件属性的读取" class="headerlink" title="文件属性的读取"></a>文件属性的读取</h1><p>文件属性的一些读取，主要就是依靠。</p>
+<h2 id="GetFileType获取文件类型"><a href="#GetFileType获取文件类型" class="headerlink" title="GetFileType获取文件类型"></a><code>GetFileType</code>获取文件类型</h2><p>就一个参数，文件句柄，<code>CreateFile</code>获得的，返回值：</p>
 <table>
 <thead>
 <tr>
-<th>文件拓展名</th>
-<th>MIMEType</th>
+<th>Value</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>png</td>
-<td>image/png</td>
+<td>FILE_TYPE_UNKNOWN</td>
+<td>The type of the specified file is unknown.</td>
 </tr>
 <tr>
-<td>bmp\dib</td>
-<td>image/bmp</td>
+<td>FILE_TYPE_DISK</td>
+<td>The specified file is a disk file.</td>
 </tr>
 <tr>
-<td>jpg\jpeg\jpg</td>
-<td>image/ipeg</td>
+<td>FILE_TYPE_CHAR</td>
+<td>The specified file is a character file, typically an LPT device or a console.</td>
 </tr>
 <tr>
-<td>gif</td>
-<td>image/gif</td>
-</tr>
-<tr>
-<td>mp3</td>
-<td>audio/mpeg</td>
-</tr>
-<tr>
-<td>mp4\mpg4\m4v\mp4v</td>
-<td>video/mp4</td>
-</tr>
-<tr>
-<td>js</td>
-<td>application/javascript</td>
-</tr>
-<tr>
-<td>pdf</td>
-<td>application/pdf</td>
-</tr>
-<tr>
-<td>text\txt</td>
-<td>text/plan</td>
-</tr>
-<tr>
-<td>json</td>
-<td>application/json</td>
-</tr>
-<tr>
-<td>xml</td>
-<td>text/xml</td>
+<td>FILE_TYPE_PIPE</td>
+<td>The specified file is either a named or anonymous pipe.</td>
 </tr>
 </tbody></table>
-<p>这个就是从网上摘录的一部分，在网站上经常见到，就是来设定格式的，在渗透测试中需要注意就是只是单纯的过滤这个格式的话呢是存在漏洞的，之后再提这个，但是在Win32中这个东西简直是个噩梦，之后有机会再说。<br>这个东西有点两样，谷歌把他单纯的分离出来了，而且它的函数比较特殊，我们来看一下。<br><code>SetDate</code>：<em>This method automaticallyclears any type that was previously set by setType or setTypeAndNormalize. *<br>很怪，这东西的意思是说会清除我们之前设置的<code>setType</code>，然而我们我们的<code>setType</code>这个也是：</em>This method automatically clears any data that waspreviously set (for example by setData). *<br>就是一个矛盾的函数，那么我们怎么办？谷歌给我们了一个方法专门用来解决这个问题：<br><code>intent.setDataAndType(data, type)</code><br>这个方法就是可以解决的，我们的XML设置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span> <span class="attr">android:host</span>=<span class="string">"wker666.github.io"</span> <span class="attr">android:port</span>=<span class="string">"80"</span> <span class="attr">android:path</span>=<span class="string">"/Android"</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plan"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Intent设置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intent.setDataAndType(Uri.parse(<span class="string">"http://wker666.github.io:80/Android"</span>), <span class="string">"text/plan"</span>);</span><br></pre></td></tr></table></figure>
-<p>这个样子就是正常了的！</p>
+<h2 id="GetFileSize获取文件尺寸"><a href="#GetFileSize获取文件尺寸" class="headerlink" title="GetFileSize获取文件尺寸"></a><code>GetFileSize</code>获取文件尺寸</h2><p>这个函数用来获取文件的大小，在读取文件的时候很好用</p>
+<p><strong>如果函数成功，则返回的值是文件大小的低阶双字，如果lpFileSizeHigh是非null，则函数将文件大小的高阶双字放入该参数指向的变量中。<br>如果函数失败且lpFileSizeHigh为NULL，则返回值为0xFFFFFFFF。要获取扩展的错误信息，请调用GetLastError。<br>如果函数失败并且lpFileSizeHigh是非空的，则返回值为0xFFFFFFFF, GetLastError将返回一个NO_ERROR以外的值。</strong><br>返回值的一个判定，简单看看就好了。</p>
+<h2 id="GetFileAttributes获取文件属性"><a href="#GetFileAttributes获取文件属性" class="headerlink" title="GetFileAttributes获取文件属性"></a><code>GetFileAttributes</code>获取文件属性</h2><p>这个东西不复杂就是有点乱，参数就是一个字符串，不要忘记转义就好了。<br>看一下MSDN的一些说明。</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FILE_ATTRIBUTE_ARCHIVE</td>
+<td>The file or directory is an archive file or directory. Applications use this attribute to mark files for backup or removal.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_COMPRESSED</td>
+<td>The file or directory is compressed. For a file, this means that all of the data in the file is compressed. For a directory, this means that compression is the default for newly created files and subdirectories.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_DIRECTORY</td>
+<td>The handle identifies a directory.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_ENCRYPTED</td>
+<td>The file or directory is encrypted. For a file, this means that all data streams are encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_HIDDEN</td>
+<td>The file or directory is hidden. It is not included in an ordinary directory listing.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_NORMAL</td>
+<td>The file or directory has no other attributes set. This attribute is valid only if used alone.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_OFFLINE</td>
+<td>The data of the file is not immediately available. Indicates that the file data has been physically moved to offline storage.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_READONLY</td>
+<td>The file or directory is read-only. Applications can read the file but cannot write to it or delete it. In the case of a directory, applications cannot delete it.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_REPARSE_POINT</td>
+<td>The file has an associated reparse point.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_SPARSE_FILE</td>
+<td>The file is a sparse file.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_SYSTEM</td>
+<td>The file or directory is part of, or is used exclusively by, the operating system.</td>
+</tr>
+<tr>
+<td>FILE_ATTRIBUTE_TEMPORARY</td>
+<td>The file is being used for temporary storage. File systems attempt to keep all of the data in memory for quicker access rather than flushing the data back to mass storage. A temporary file should be deleted by the application as soon as it is no longer needed.</td>
+</tr>
+<tr>
+<td>（呼~，终于写完了，手都累酸了）</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>返回值就是这样子判断，这些东西对与目录一样也是适用的。<br>示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD dwAttributes = GetFileAttributes(<span class="string">"Wker.txt"</span>) ; </span><br><span class="line">	<span class="keyword">if</span>(dwAttributes == <span class="number">0XFFFFFFFF</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"这是个什么东西？"</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>((dwAttributes &amp; FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊！是个目录啊"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊!是个文件啊"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置文件属性：<code>SetFileAttributes</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetFileAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpFileName,  <span class="comment">// pointer to filename</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileAttributes   <span class="comment">// attributes to set</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数就不介绍了，很简单，第二个参数值太多，百度一下就可以了。</p>
 
       
     </div>
@@ -345,7 +375,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -412,7 +442,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
