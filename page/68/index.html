@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/OverLay-UnShell/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/LoseData-find/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/16/OverLay-UnShell/" class="post-title-link" itemprop="url">OverLay-UnShell</a>
+            <a href="/2020/01/17/LoseData-find/" class="post-title-link" itemprop="url">LoseData-find</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-16 20:40:41" itemprop="dateCreated datePublished" datetime="2020-01-16T20:40:41+08:00">2020-01-16</time>
+              <time title="Created: 2020-01-17 11:57:19" itemprop="dateCreated datePublished" datetime="2020-01-17T11:57:19+08:00">2020-01-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:03:20" itemprop="dateModified" datetime="2020-02-01T13:03:20+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:03:16" itemprop="dateModified" datetime="2020-02-01T13:03:16+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,11 +262,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>当我们在查壳的时候碰到覆盖（OverLay）的时候，我们就需要如下操作：<br><img src="img10.jpg" alt="查壳"></p>
-<h1 id="OverLay数据处理"><a href="#OverLay数据处理" class="headerlink" title="OverLay数据处理"></a>OverLay数据处理</h1><p>今天刚学习了这种数据处理的方法，具体原因之后深入分析，其实也就是区段数据的一个补充，首先需要找到我们的多余数据，分为两种简单方法：</p>
-<h2 id="数据查找法"><a href="#数据查找法" class="headerlink" title="数据查找法"></a>数据查找法</h2><p>这种方法比较简单也比较直接，我们从最底部自下往上寻找一大片00，用快捷键就可以了，记住是搜索没有脱壳的数据：<br><img src="img1.jpg" alt="查找方法"><br><img src="img2.jpg" alt="结果数据"><br>我们从00后面的数据复制，最好用shift范围性复制，复制到结尾。<br><img src="img3.jpg" alt="复制数据"></p>
-<h2 id="区段查找法"><a href="#区段查找法" class="headerlink" title="区段查找法"></a>区段查找法</h2><p>这个通过LoadPE查找最后的一个区段的范围，然后通过真实的RVA+Size计算出来我们要找的数据：<br><img src="img4.jpg" alt="PE计算"><br>8800+400=8C00，我们这里Ctrl+G进行转到，然后看到和我们刚才一样的地方，同样复制。<br><img src="img5.jpg" alt="地址转到"></p>
-<h1 id="修复数据"><a href="#修复数据" class="headerlink" title="修复数据"></a>修复数据</h1><p>复制完毕之后我们打开我们脱壳完毕的程序，然后拖到底部，然后将我们刚才的数据复制上去。<br><img src="img6.jpg" alt="粘贴数据"><br>粘贴上去会询问我们，我们点击确定就好了：<br><img src="img7.jpg" alt="确定"><br>之后我们就会看到数据变成这个样子的：<br><img src="img8.jpg" alt="修改的数据"><br>我们Ctrl+S保存，然后用PEid进行查壳：<br><img src="img9.jpg" alt="查壳"><br>我们发现我们的程序脱壳完毕，并且后面还有一个“[覆盖]”，运行也正常这个样子就算是可以了的。</p>
+          <h1 id="丢失的程序头部"><a href="#丢失的程序头部" class="headerlink" title="丢失的程序头部"></a>丢失的程序头部</h1><p>有的程序加壳之后将原本OEP的部分头部给去除掉了，放在了自身的壳里面，导致我们脱壳之后我们的程序可能入口会出错，这个时候我们就需要自己补充上去：</p>
+<h2 id="丢失数据的OEP"><a href="#丢失数据的OEP" class="headerlink" title="丢失数据的OEP"></a>丢失数据的OEP</h2><p>首先我们需要找到他给我们的OEP，这里ACProcet这个壳比较特殊，我们需要用插件HideOD进行隐藏，然后将我们的调试选项，取消勾选INT3的异常：<br><img src="img1.jpg" alt="调试设置"><br><img src="img2.jpg" alt="隐藏OD"><br>这个时候我们运行程序，使用最后一次异常，将我们的SE栈值下上硬件断点，这里为什么不下INT3断点呢，其实是这个壳有一定的保护系统，下上会出错（别人说的），然后我们的程序会进入下面这个地方：<br><img src="img3.jpg" alt="关键处"><br>这个时候我们看到RETN就到了我们的假的OEP，这个时候我们运行到RETN，然后对我们的code代码段进行下访问断点：<br><img src="img4.jpg" alt="返回处"><br><img src="img5.jpg" alt="访问中断"><br>这个时候运行程序，我们的程序就会到假的OEP：<br><img src="img6.jpg" alt="丢失数据的OEP"><br>这个时候我们知道之后，其实已经错过了找我们的丢失数据的机会，我们重新来过：<br>在我们下断在RETN的时候我们下12ffc0这个硬件访问断点，<br><img src="img7.jpg" alt="硬件断点"><br>然后他会带我们跳到：<br><img src="img8.jpg" alt="丢失的数据"><br>我们复制二进制数据，然后相同的方法到达我们刚才的OEP，把那一段给粘贴上去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">55 8B EC 6A FF</span><br></pre></td></tr></table></figure>
+<p>我们找到假的OEP其实有个坑，程序代码会混淆，这个时候我们Ctrl+A分析代码就好了，然后在上面5个字节粘贴我们的二进制：<br><img src="img9.jpg" alt="补充数据"><br>这个时候我们将我们当前的EIP进行转到我们的补充好的数据上面，然后进行脱壳：<br><img src="img10.jpg" alt="修改EIP"><br>这个时候我们打开LoadPE，修改我们的镜像，然后拖出来，之后的操作和我们之前的都是一样的（import REC需要修复数据），然后生成我们的脱壳程序。<br>但是我们发现我们的程序还是没办法运行起来。这里别人说应该是保护的一个机制：<br><img src="img11.jpg" alt="启动失败"><br>我们去到我们没有脱壳前程序的OEP，然后将我们的一些丢失数据放回去这个样子他就检测不出来了。<br><img src="img12.jpg" alt="原先OEP"><br>入口的OEP是AC000，我们跳过去，把我们的二进制数据粘贴上去，然后用jmp跳转跳转到我们的真正的OEP：<br><img src="img13.jpg" alt="假OEP"><br>修改完毕之后我们保存（OD自带的保存修改），但是这个时候还是不行，因为我们现在PE头部的OEP还是我们真正的OEP，我们用LoadPE指过去：<br><img src="img14.jpg" alt="修改入口点地址"><br>我们点击保存，确定就好了，但是我们发现我们PEid还是找不到壳子，这个就是后话了。</p>
 
       
     </div>
@@ -286,7 +285,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/67/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><span class="page-number current">68</span><a class="page-number" href="/page/69/">69</a><span class="space">&hellip;</span><a class="page-number" href="/page/82/">82</a><a class="extend next" rel="next" href="/page/69/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/67/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><span class="page-number current">68</span><a class="page-number" href="/page/69/">69</a><span class="space">&hellip;</span><a class="page-number" href="/page/83/">83</a><a class="extend next" rel="next" href="/page/69/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -353,7 +352,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
