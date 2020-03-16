@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="简单程序破解对于简单的字符串类型的校验，客户端的校验破解起来时比较简单的。java层代码： 1234567891011121314151617181920212223242526272829public class MainActivity extends Activity &amp;#123;	private Button btn_login;	private EditText username;	pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android破解检验">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/Android%E7%A0%B4%E8%A7%A3%E6%A3%80%E9%AA%8C/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="简单程序破解对于简单的字符串类型的校验，客户端的校验破解起来时比较简单的。java层代码： 1234567891011121314151617181920212223242526272829public class MainActivity extends Activity &amp;#123;	private Button btn_login;	private EditText username;	pr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/03/16/Android%E7%A0%B4%E8%A7%A3%E6%A3%80%E9%AA%8C/img1.jpg">
+<meta property="article:published_time" content="2020-03-16T11:49:35.000Z">
+<meta property="article:modified_time" content="2020-03-16T12:20:00.071Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="Android破解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/16/Android%E7%A0%B4%E8%A7%A3%E6%A3%80%E9%AA%8C/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/16/Android%E7%A0%B4%E8%A7%A3%E6%A3%80%E9%AA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Android破解检验 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/Android%E7%A0%B4%E8%A7%A3%E6%A3%80%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android破解检验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-16 19:49:35 / Modified: 20:20:00" itemprop="dateCreated datePublished" datetime="2020-03-16T19:49:35+08:00">2020-03-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android%E7%A0%B4%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">Android破解</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简单程序破解"><a href="#简单程序破解" class="headerlink" title="简单程序破解"></a>简单程序破解</h1><p>对于简单的字符串类型的校验，客户端的校验破解起来时比较简单的。<br>java层代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Button btn_login;</span><br><span class="line">	<span class="keyword">private</span> EditText username;</span><br><span class="line">	<span class="keyword">private</span> EditText password;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">		btn_login = (Button) findViewById(R.id.btn_Login);</span><br><span class="line">		username = (EditText) findViewById(R.id.username);</span><br><span class="line">		password = (EditText) findViewById(R.id.password);</span><br><span class="line">		btn_login.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">if</span>(username.getText().toString().equals(<span class="string">"wker"</span>) &amp;&amp; password.getText().toString().equals(<span class="string">"wfc"</span>))</span><br><span class="line">				&#123;</span><br><span class="line">					Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"success"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">				&#125;<span class="keyword">else</span></span><br><span class="line">				&#123;</span><br><span class="line">					Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"false"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没什么特别的只是单纯的进行了一个字符串的校验，校验完毕就弹出一个toast。</p>
+<h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><p>我们先用逆向的工具加载APK，Android Killer就够了，我们得到这个样子的一个文件视图：<br><img src="img1.jpg" alt="文件视图"><br>可以看到，在我们的MainActivity中分出了两个smali文件，一个是我们的内部类，其实我们也就知道了，也就是我们在点击响应事件中的那个内部类，所以我们就直接分析就好了。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">.class</span> <span class="class">Lcom/pj/crack_one/MainActivity$1;</span></span><br><span class="line"><span class="keyword">.super</span> <span class="class">Ljava/lang/Object;</span></span><br><span class="line"><span class="keyword">.source</span> <span class="string">"MainActivity.java"</span></span><br></pre></td></tr></table></figure>
+<p>这个就是简单的声明了一下类的一些信息，名称啊，父类啊之类的。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># interfaces</span></span><br><span class="line"><span class="keyword">.implements</span> <span class="class">Landroid/view/View$OnClickListener;</span></span><br></pre></td></tr></table></figure>
+<p>实现的接口。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># annotations</span></span><br><span class="line"><span class="keyword">.annotation</span><span class="keyword"> system</span> <span class="class">Ldalvik/annotation/EnclosingMethod;</span></span><br><span class="line">    value = <span class="class">Lcom/pj/crack_one/MainActivity;</span>-&gt;onCreate(<span class="class">Landroid/os/Bundle;</span>)V</span><br><span class="line"><span class="keyword">.end annotation</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">.annotation</span><span class="keyword"> system</span> <span class="class">Ldalvik/annotation/InnerClass;</span></span><br><span class="line">    accessFlags = 0x0</span><br><span class="line">    name = null</span><br><span class="line"><span class="keyword">.end annotation</span></span><br></pre></td></tr></table></figure>
+<p>这个貌似是一个注解，具体是什么意思暂时不了解，不影响。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># instance fields</span></span><br><span class="line"><span class="keyword">.field</span><span class="keyword"> final</span><span class="keyword"> synthetic</span> this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br></pre></td></tr></table></figure>
+<p>这个就是一个实例对象，也就是外部类自身。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># direct methods</span></span><br><span class="line"><span class="keyword">.method</span><span class="keyword"> constructor</span> &lt;init&gt;(<span class="class">Lcom/pj/crack_one/MainActivity;</span>)V</span><br><span class="line"><span class="keyword">    .locals</span> 0</span><br><span class="line"></span><br><span class="line"><span class="keyword">    .prologue</span></span><br><span class="line"><span class="keyword">    .line</span> 1</span><br><span class="line">   <span class="built_in"> iput-object </span>p1, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">    .line</span> 25</span><br><span class="line">   <span class="built_in"> invoke-direct </span>&#123;p0&#125;, <span class="class">Ljava/lang/Object;</span>-&gt;&lt;init&gt;()V</span><br><span class="line"></span><br><span class="line">    return-void</span><br><span class="line"><span class="keyword">.end method</span></span><br></pre></td></tr></table></figure>
+<p>这个就是构造方法，可以看到除了初始的那个无参构造方法，他在前面添加了一个赋值操作，将p1寄存器的值赋值为实例对象。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virtual methods</span></span><br><span class="line"><span class="keyword">.method</span><span class="keyword"> public</span> onClick(<span class="class">Landroid/view/View;</span>)V</span><br><span class="line"><span class="keyword">    .locals</span> 3</span><br><span class="line"><span class="keyword">    .param</span> p1, <span class="string">"v"</span>    <span class="comment"># Landroid/view/View;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">    .prologue</span></span><br><span class="line">   <span class="built_in"> const/4 </span>v2, 0x0</span><br><span class="line"></span><br><span class="line"><span class="keyword">    .line</span> 29</span><br><span class="line">   <span class="built_in"> iget-object </span>v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># getter for: Lcom/pj/crack_one/MainActivity;-&gt;username:Landroid/widget/EditText;</span></span><br><span class="line">   <span class="built_in"> invoke-static </span>&#123;v0&#125;, <span class="class">Lcom/pj/crack_one/MainActivity;</span>-&gt;access$0(<span class="class">Lcom/pj/crack_one/MainActivity;</span>)<span class="class">Landroid/widget/EditText;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="class">Landroid/widget/EditText;</span>-&gt;getText()<span class="class">Landroid/text/Editable;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-interface </span>&#123;v0&#125;, <span class="class">Landroid/text/Editable;</span>-&gt;toString()<span class="class">Ljava/lang/String;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> const-string </span>v1, <span class="string">"wker"</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="class">Ljava/lang/String;</span>-&gt;equals(<span class="class">Ljava/lang/Object;</span>)Z</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> if-eqz </span>v0,<span class="keyword"> :cond_0</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> iget-object </span>v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># getter for: Lcom/pj/crack_one/MainActivity;-&gt;password:Landroid/widget/EditText;</span></span><br><span class="line">   <span class="built_in"> invoke-static </span>&#123;v0&#125;, <span class="class">Lcom/pj/crack_one/MainActivity;</span>-&gt;access$1(<span class="class">Lcom/pj/crack_one/MainActivity;</span>)<span class="class">Landroid/widget/EditText;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="class">Landroid/widget/EditText;</span>-&gt;getText()<span class="class">Landroid/text/Editable;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-interface </span>&#123;v0&#125;, <span class="class">Landroid/text/Editable;</span>-&gt;toString()<span class="class">Ljava/lang/String;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> const-string </span>v1, <span class="string">"wfc"</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="class">Ljava/lang/String;</span>-&gt;equals(<span class="class">Ljava/lang/Object;</span>)Z</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> if-eqz </span>v0,<span class="keyword"> :cond_0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">    .line</span> 31</span><br><span class="line">   <span class="built_in"> iget-object </span>v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> const-string </span>v1, <span class="string">"success"</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-static </span>&#123;v0, v1, v2&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;makeText(<span class="class">Landroid/content/Context;</span><span class="class">Ljava/lang/CharSequence;</span>I)<span class="class">Landroid/widget/Toast;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;show()V</span><br><span class="line"></span><br><span class="line"><span class="keyword">    .line</span> 36</span><br><span class="line">   <span class="keyword"> :goto_0</span></span><br><span class="line">    return-void</span><br><span class="line"></span><br><span class="line"><span class="keyword">    .line</span> 34</span><br><span class="line">   <span class="keyword"> :cond_0</span></span><br><span class="line">   <span class="built_in"> iget-object </span>v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> const-string </span>v1, <span class="string">"false"</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-static </span>&#123;v0, v1, v2&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;makeText(<span class="class">Landroid/content/Context;</span><span class="class">Ljava/lang/CharSequence;</span>I)<span class="class">Landroid/widget/Toast;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> move-result-object </span>v0</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;show()V</span><br><span class="line"></span><br><span class="line">   <span class="built_in"> goto </span>:goto_0</span><br><span class="line"><span class="keyword">.end method</span></span><br></pre></td></tr></table></figure>
+<p>这个就是我们关注的重点。<br>首先我们用到了3个寄存器</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">.param</span> p1, <span class="string">"v"</span>    <span class="comment"># Landroid/view/View;</span></span><br></pre></td></tr></table></figure>
+<p>参数的一个名字，传进来一个View对象</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">.prologue</span></span><br><span class="line">const/4 v2, 0x0</span><br></pre></td></tr></table></figure>
+<p>代码开始，并且将v2寄存器赋值为0x0</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iget-object v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br></pre></td></tr></table></figure>
+<p>这个就是将v0赋值为我们p0指向的this，其实也就是外部类的对象。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">invoke-static &#123;v0&#125;, <span class="class">Lcom/pj/crack_one/MainActivity;</span>-&gt;access$0(<span class="class">Lcom/pj/crack_one/MainActivity;</span>)<span class="class">Landroid/widget/EditText;</span></span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br></pre></td></tr></table></figure>
+<p>这个用到了access这个方法，这个方法其实就是在内部类调用外部类私有成员的时候自动生成的。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">.method</span><span class="keyword"> static</span><span class="keyword"> synthetic</span> access$0(<span class="class">Lcom/pj/crack_one/MainActivity;</span>)<span class="class">Landroid/widget/EditText;</span></span><br><span class="line"><span class="keyword">    .locals</span> 1</span><br><span class="line"></span><br><span class="line"><span class="keyword">    .prologue</span></span><br><span class="line"><span class="keyword">    .line</span> 14</span><br><span class="line">   <span class="built_in"> iget-object </span>v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity;</span>-&gt;username:<span class="class">Landroid/widget/EditText;</span></span><br><span class="line"></span><br><span class="line">   <span class="built_in"> return-object </span>v0</span><br><span class="line"><span class="keyword">.end method</span></span><br></pre></td></tr></table></figure>
+<p>其实可以看出，也就是返回了username这个编辑框的对象。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">invoke-virtual &#123;v0&#125;, <span class="class">Landroid/widget/EditText;</span>-&gt;getText()<span class="class">Landroid/text/Editable;</span></span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-interface &#123;v0&#125;, <span class="class">Landroid/text/Editable;</span>-&gt;toString()<span class="class">Ljava/lang/String;</span></span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br></pre></td></tr></table></figure>
+<p>这个就是一样的东西，就是获取Text，然后给v0，然后获得toString，再给v0。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const-string v1, <span class="string">"wker"</span></span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0, v1&#125;, <span class="class">Ljava/lang/String;</span>-&gt;equals(<span class="class">Ljava/lang/Object;</span>)Z</span><br><span class="line"></span><br><span class="line">move-result v0</span><br></pre></td></tr></table></figure>
+<p>这个就是给v1赋值之后，将其与v0比较，然后将得到的结果给v0，也就是比较的返回值。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if-eqz v0,<span class="keyword"> :cond_0</span></span><br></pre></td></tr></table></figure>
+<p>这个就是判断如果是0的话呢就跳转，也就是打印错误的。<br>下面判断密码的代码是基本一样的。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">.line</span> 34</span><br><span class="line">:cond_0</span><br><span class="line">iget-object v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">const-string v1, <span class="string">"false"</span></span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0, v1, v2&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;makeText(<span class="class">Landroid/content/Context;</span><span class="class">Ljava/lang/CharSequence;</span>I)<span class="class">Landroid/widget/Toast;</span></span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;show()V</span><br><span class="line"></span><br><span class="line">goto<span class="keyword"> :goto_0</span></span><br></pre></td></tr></table></figure>
+<p>可以看到如果跳到cond_0的话呢就是打印错误，所以最简单的方法就是，将两个if语句干掉，就不会跳转，而是直接一直往下执行，执行到：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">.line</span> 31</span><br><span class="line">iget-object v0, p0, <span class="class">Lcom/pj/crack_one/MainActivity$1;</span>-&gt;this$0:<span class="class">Lcom/pj/crack_one/MainActivity;</span></span><br><span class="line"></span><br><span class="line">const-string v1, <span class="string">"success"</span></span><br><span class="line"></span><br><span class="line">invoke-static &#123;v0, v1, v2&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;makeText(<span class="class">Landroid/content/Context;</span><span class="class">Ljava/lang/CharSequence;</span>I)<span class="class">Landroid/widget/Toast;</span></span><br><span class="line"></span><br><span class="line">move-result-object v0</span><br><span class="line"></span><br><span class="line">invoke-virtual &#123;v0&#125;, <span class="class">Landroid/widget/Toast;</span>-&gt;show()V</span><br><span class="line"></span><br><span class="line"><span class="keyword">.line</span> 36</span><br><span class="line">:goto_0</span><br><span class="line">return-void</span><br></pre></td></tr></table></figure>
+<p>也就执行打印成功，最后返回了。<br>最后编译，结果和我们预想的是一样的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android%E7%A0%B4%E8%A7%A3/" rel="tag"># Android破解</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/16/FPS-3DHook/" rel="prev" title="FPS 3DHook">
+      <i class="fa fa-chevron-left"></i> FPS 3DHook
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单程序破解"><span class="nav-number">1.</span> <span class="nav-text">简单程序破解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逆向分析"><span class="nav-number">1.1.</span> <span class="nav-text">逆向分析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
