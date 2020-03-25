@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/LoadPE-and-importREC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/14/Rebuilt-input-list/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/13/LoadPE-and-importREC/" class="post-title-link" itemprop="url">LoadPE and importREC</a>
+            <a href="/2020/01/14/Rebuilt-input-list/" class="post-title-link" itemprop="url">Rebuilt input list</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-13 09:57:36" itemprop="dateCreated datePublished" datetime="2020-01-13T09:57:36+08:00">2020-01-13</time>
+              <time title="Created: 2020-01-14 17:18:45" itemprop="dateCreated datePublished" datetime="2020-01-14T17:18:45+08:00">2020-01-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:04:08" itemprop="dateModified" datetime="2020-02-01T13:04:08+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:03:58" itemprop="dateModified" datetime="2020-02-01T13:03:58+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
-<h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
+          <h1 id="找OEP的一个小技巧"><a href="#找OEP的一个小技巧" class="headerlink" title="找OEP的一个小技巧"></a>找OEP的一个小技巧</h1><p>我们载入程序，但在这里我发现了一个小问题，我用之前的一个OD载入之后我进入的却是系统的领空，而且一直进入不了用户组的代码，如下图所示：<br><img src="img1.jpg" alt="未进入程序领空"><br>但是我重换了一个比较基础的OD却发现是停留在程序的领空，如下图所示：<br><img src="img2.jpg" alt="程序领空"><br>这个时候我们先暂且不去深究这个的原因，之后再去研究具体的错误设置。<br>这个程序我们使用单步跟踪法来进行脱壳。<br>一步一步的往下跟踪，直到这个地方：<br><img src="img3.jpg" alt="程序OEP关键跳转"><br>我们可以看到这个时候的jnz是准备跳过去，但是我们发现塔下一个CALL却是call了一个[EBX+C]，这个地方就是比较关键的地方，因为一般壳为了保护自身，都会喜欢将地址转换到一些寄存在加偏移的一个相对基址寻址的地方，我们修改我们标志寄存器的值，让他不进行跳转，然后步入，我们会进入这个地方：<br><img src="img4.jpg" alt="程序OEP"><br>这里我们比较要注意的地方是，OD在这个地方我们一般要进行分析代码，也就是Ctrl+A，有的时候壳非常喜欢这个寄存器间接跳转，我们可以用回车键，或者Ctrl+G跳转到那个位置，看看像不像，然后选择步入。</p>
+<h1 id="重建输入表"><a href="#重建输入表" class="headerlink" title="重建输入表"></a>重建输入表</h1><p>接着上面的，我们用我们常用的方法，进行dump，这里不演示了，我就直接脱掉。<br>这个时候我们在使用import REC的时候我们发现，貌似所有的函数都是无效的，这个时候我们就需要进行手动修改了，这里我提供两种方法：</p>
+<h2 id="第一种：快速搜索法"><a href="#第一种：快速搜索法" class="headerlink" title="第一种：快速搜索法"></a>第一种：快速搜索法</h2><p>其实虽然import REC给我们的不是很正确，但是我们DD过去看一下：<br><img src="img5.jpg" alt="输入表附近"><br>这个时候我们自己定位一下，看一下上下方否是一片0的地方，从头拉到尾。<br><img src="img6.jpg" alt="输入表头部"><br><img src="img7.jpg" alt="输入表结尾"><br>这个时候就是可以了的，我们输入起始的RVA：2500，大小0x538,这个大小如果不是太确定，我们可以使用1000，但不是太建议，特殊情况下不要了，这个时候我们常规方法进行dump。</p>
+<h2 id="第二种：CALL地址搜索法"><a href="#第二种：CALL地址搜索法" class="headerlink" title="第二种：CALL地址搜索法"></a>第二种：CALL地址搜索法</h2><p>这个方法比较直接，我们可以直接看他OEP下方CALL的地址，例如：<br><img src="img8.jpg" alt="快速CALL定位输入表"><br>只要是下方的CALL地址就行，这个时候就到输入表的头部了，然后就可以了。</p>
 
       
     </div>
@@ -283,7 +285,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/89/">89</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,7 +352,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
