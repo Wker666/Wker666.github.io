@@ -465,10 +465,10 @@
 <p>具体的源代码和之前的那个反汇编工具的源代码，我都会在我的GitHub中进行分享，可以关注一下我的博客。</p>
 ]]></content>
       <categories>
-        <category>框架开发</category>
+        <category>爬虫</category>
       </categories>
       <tags>
-        <tag>框架开发</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -3268,10 +3268,10 @@
 <p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
 ]]></content>
       <categories>
-        <category>嗅探劫持</category>
+        <category>内网入侵</category>
       </categories>
       <tags>
-        <tag>嗅探劫持</tag>
+        <tag>内网入侵</tag>
       </tags>
   </entry>
   <entry>
