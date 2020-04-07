@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Android U3D修改</title>
+    <url>/2020/04/06/Android-U3D%E4%BF%AE%E6%94%B9/</url>
+    <content><![CDATA[<h1 id="U3D游戏"><a href="#U3D游戏" class="headerlink" title="U3D游戏"></a>U3D游戏</h1><p>首先我们判断这个游戏是否是U3D可以根据是否在lib\armxxx目录下存在：<code>libmain.so</code>,<code>libmono.so</code>,<code>libunity.so</code>。如果存在的话呢就八九不离十了，这个时候我们就可以来分析相关的DLL，如果有加密DLL，那么我们就在相关函数位置dump我们的DLL，然后替换成官网的mono，思路很多，网络上也是很多。</p>
+<h2 id="Assembly-CSharp-dll"><a href="#Assembly-CSharp-dll" class="headerlink" title="Assembly-CSharp.dll"></a>Assembly-CSharp.dll</h2><p>加解密就是对这个DLL进行操作。如果没有加密的话呢，那么我们就可以直接使用Reflector进行反编译修改，下面就尝试修改实现无敌：</p>
+<ol>
+<li><p>首先我们将我们的dll拖进去，然后点击搜索，搜索可能存在的字符，例如Dead，这个就是死亡，尝试寻找<br><img src="img2.jpg" alt="搜索"><br>这里需要注意我们点击的是第二个，因为第一个是搜索类，第二个才是搜索成员，搜索到一个函数之后，我们双机他，如果出现这个样子的一个对话框：<br><img src="img1.jpg" alt="加载DLL"><br>就是让你重新加载一下这个DLL，我们重新选择然后加载就好了</p>
+</li>
+<li><p>分析发现：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dead</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GameMangerInit.freeGifts(GameManager.getInstance().giftUses);</span><br><span class="line">    GameManager.getInstance().giftUses = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, GiftUse&gt;();</span><br><span class="line">    Object.Destroy(<span class="keyword">this</span>.skillAnim);</span><br><span class="line">    Object.Instantiate(Resources.Load(<span class="string">"Prefabs/Effect/explosion"</span>), base.get_transform().get_position(), Quaternion.get_identity());</span><br><span class="line">    base.get_gameObject().get_transform().set_position(<span class="keyword">new</span> Vector3(<span class="number">0f</span>, <span class="number">-12f</span>, <span class="number">0f</span>));</span><br><span class="line">    <span class="keyword">this</span>.isDead = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.skillAnim = null;</span><br><span class="line">    <span class="keyword">this</span>.isSkill = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.riseTime = <span class="number">0f</span>;</span><br><span class="line">    showRecharge = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现<code>this.isDead = true;</code>这个语句就很类似与我们的玩家死亡，而且将其改为了true，那么我们只要将其改为false那么我们应该就会不死。</p>
+</li>
+<li><p>Relfexil插件<br>使用这个插件我们可以我们可以修改，他在下方会显示IL代码<br><img src="img3.jpg" alt="插件"><br>然后我们找到相对应的位置：<br><img src="img4.jpg" alt="关键"><br>可以看到这个ldc.i4.1是false，那么我们改为ldc.i4.0将会一直是true，我们右键点击Edit…，然后修改数据：<br><img src="img5.jpg" alt="修改数据"><br>然后点击Update，之后我们选中我们添加的这个DLL，我们右键Relfexil插件，选项里有个Save-as我们另存为就可以了</p>
+</li>
+<li><p>替换DLL<br>最后我们替换我们的DLL，记住名称不要搞混忘记修改</p>
+</li>
+</ol>
+<p>然后有的时候需要重新签名也不要忘记，最终运行发现可以不死。</p>
+]]></content>
+      <categories>
+        <category>Android破解</category>
+      </categories>
+      <tags>
+        <tag>Android破解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android so 动态修改内存</title>
     <url>/2020/04/05/Android-so-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98/</url>
     <content><![CDATA[<h1 id="Android内存修改"><a href="#Android内存修改" class="headerlink" title="Android内存修改"></a>Android内存修改</h1><p>这个主要分为java层和so层的修改，java层基于反射，而so层的分类又分为两种，一种是不注入的修改，修改proc目录下的内容，而注入式就是我们的内存修改，也是比较常用。</p>
