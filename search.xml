@@ -20,10 +20,10 @@
 <p>然后有的时候需要重新签名也不要忘记，最终运行发现可以不死。</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -51,10 +51,10 @@
 <p>java层就是将这个变量弹出吐司。</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -125,10 +125,10 @@
 <p>这就是比较简单的Android HOOk操作，一些具体的等待分析！</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -164,10 +164,10 @@
 <p>并且其实在java层的修改其实也是可以实现我们的一个程序破解的！</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -189,10 +189,10 @@
 <p>运行这个脚本，会在D盘下生成一个dex文件。<br><img src="img6.jpg" alt="运行脚本"><br>然后我们将脱掉的dex反编译。<br><img src="img7.jpg" alt="反编译dex"><br>最后得到smali文件：<br><img src="img8.jpg" alt="生成文件"><br>然后我们将这两个文件拖进Android Killer的。<br><img src="img9.jpg" alt="复制"><br><img src="img10.jpg" alt="新文件"><br>然后我们将我们的入口APP类删除掉，最后就是剩下我们脱掉壳的程序了。<br><img src="img11.jpg" alt="删除入口类"><br>然后我们进行编译！最终就会生成脱壳之后的apk文件。<br>能够正常运行。<br><img src="img12.jpg" alt="脱壳成功"></p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -277,10 +277,10 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们需要巧用间接引用，在我们的加密过程中是很重要的。</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -328,10 +328,10 @@
 <p>这里我还想再问一下，之前论坛发帖，有谁能解决一下这个eclipse无法显示寄存的问题呢？‬</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -375,10 +375,10 @@
 <p>也就执行打印成功，最后返回了。<br>最后编译，结果和我们预想的是一样的。</p>
 ]]></content>
       <categories>
-        <category>Android破解</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>Android破解</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -1932,10 +1932,10 @@
 <p>不要忘记一点就好了要写在外面，判断不一定进去的，这样我们就写好了我们的BMP浏览。<br><code>BitBlt</code>就是一个数据拷贝的函数：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">BitBlt</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HDC hdcDest, <span class="comment">// handle to destination device context</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nXDest,  <span class="comment">// x-coordinate of destination rectangle's upper-left </span></span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="comment">// corner</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nYDest,  <span class="comment">// y-coordinate of destination rectangle's upper-left </span></span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="comment">// corner</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nWidth,  <span class="comment">// width of destination rectangle</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nHeight, <span class="comment">// height of destination rectangle</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HDC hdcSrc,  <span class="comment">// handle to source device context</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nXSrc,   <span class="comment">// x-coordinate of source rectangle's upper-left </span></span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="comment">// corner</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span> nYSrc,   <span class="comment">// y-coordinate of source rectangle's upper-left </span></span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="comment">// corner</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwRop  <span class="comment">// raster operation code</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>MFC</category>
+        <category>Win32编程</category>
       </categories>
       <tags>
-        <tag>MFC</tag>
+        <tag>Win32编程</tag>
       </tags>
   </entry>
   <entry>
@@ -2381,10 +2381,10 @@
 <p>可以看到很是方便！</p>
 ]]></content>
       <categories>
-        <category>MFC</category>
+        <category>Win32编程</category>
       </categories>
       <tags>
-        <tag>MFC</tag>
+        <tag>Win32编程</tag>
       </tags>
   </entry>
   <entry>
@@ -3088,10 +3088,10 @@
 <p>我们这个时候重建输入表，import REC我们填写我们的假OEP，然后查找：<br><img src="img12.jpg" alt="重建IAT"><br>我们用等级一修复，还剩下六个，我们用ASProcet的插件进行搜索，最后得到的结果：<br><img src="img13.jpg" alt="重建IAT"><br>我们全部都找到了。<br>我们修改我们的OEP，修改为我们的假OEP地址的相对地址：0x00CC696F-0x00400000=0x008C696F<br><img src="img14.jpg" alt="修改OEP"><br>然后抓取修复就可以了。<br><strong>PS：但在这个地方，我却没有成功，不知道为什么。但是操作确实是这个样子的，可能是OD的版本不同，或者我查看的这个程序是在是太老了的原因，这也算是给自己留下的一个疑惑吧，脱壳学习，先暂停一下，是时候复习一下Win32了！</strong></p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3103,10 +3103,10 @@
 <p>我们找到假的OEP其实有个坑，程序代码会混淆，这个时候我们Ctrl+A分析代码就好了，然后在上面5个字节粘贴我们的二进制：<br><img src="img9.jpg" alt="补充数据"><br>这个时候我们将我们当前的EIP进行转到我们的补充好的数据上面，然后进行脱壳：<br><img src="img10.jpg" alt="修改EIP"><br>这个时候我们打开LoadPE，修改我们的镜像，然后拖出来，之后的操作和我们之前的都是一样的（import REC需要修复数据），然后生成我们的脱壳程序。<br>但是我们发现我们的程序还是没办法运行起来。这里别人说应该是保护的一个机制：<br><img src="img11.jpg" alt="启动失败"><br>我们去到我们没有脱壳前程序的OEP，然后将我们的一些丢失数据放回去这个样子他就检测不出来了。<br><img src="img12.jpg" alt="原先OEP"><br>入口的OEP是AC000，我们跳过去，把我们的二进制数据粘贴上去，然后用jmp跳转跳转到我们的真正的OEP：<br><img src="img13.jpg" alt="假OEP"><br>修改完毕之后我们保存（OD自带的保存修改），但是这个时候还是不行，因为我们现在PE头部的OEP还是我们真正的OEP，我们用LoadPE指过去：<br><img src="img14.jpg" alt="修改入口点地址"><br>我们点击保存，确定就好了，但是我们发现我们PEid还是找不到壳子，这个就是后话了。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3119,10 +3119,10 @@
 <h1 id="修复数据"><a href="#修复数据" class="headerlink" title="修复数据"></a>修复数据</h1><p>复制完毕之后我们打开我们脱壳完毕的程序，然后拖到底部，然后将我们刚才的数据复制上去。<br><img src="img6.jpg" alt="粘贴数据"><br>粘贴上去会询问我们，我们点击确定就好了：<br><img src="img7.jpg" alt="确定"><br>之后我们就会看到数据变成这个样子的：<br><img src="img8.jpg" alt="修改的数据"><br>我们Ctrl+S保存，然后用PEid进行查壳：<br><img src="img9.jpg" alt="查壳"><br>我们发现我们的程序脱壳完毕，并且后面还有一个“[覆盖]”，运行也正常这个样子就算是可以了的。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3133,10 +3133,10 @@
 <p>我们可以看到，只有只有在我们的eax的值为0的时候我们的跳转才会实现，这个时候OD提供给了我们一个很强大的功能就是跳转断点，我们设置只有在eax==0的时候才会停下来就好了，具体操作如下：<br><img src="img3.jpg" alt="条件断点"><br>键入我们的条件：eax==0<br><img src="img4.jpg" alt="条件"><br>然后我们运行程序：<br><img src="img5.jpg" alt="断下"><br>这个时候我们跟过去就是我们的OEP了。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3145,10 +3145,10 @@
     <content><![CDATA[<h2 id="是否正在调试法"><a href="#是否正在调试法" class="headerlink" title="是否正在调试法"></a>是否正在调试法</h2><p>有的时候一些壳会有防止调试的检测，这个时候我们就可以下：IsDebuggerPresent这个断点，然后返回到用户组，下面应该就有OEP的一些运算了，手下我们先下断点：<br><img src="img1.jpg" alt="下断点"><br>然后我们执行到程序领空：<br>我们看到了下面这几句话：<br><img src="img2.jpg" alt="OEP计算"><br>这个时候我们执行完这两句，我们看edi的值：<br><img src="img3.jpg" alt="EDI"><br>这个时候我们转到EDI的这个地址：<br><img src="img4.jpg" alt="OEP"><br>这个时候F4运行到就好了！</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3158,10 +3158,10 @@
 <h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3173,10 +3173,10 @@
 <h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3191,10 +3191,10 @@
 <h2 id="at-GetVersion"><a href="#at-GetVersion" class="headerlink" title="at GetVersion"></a>at GetVersion</h2><p>程序就会运行到GetVersion，然后我们在段尾下端，然后返回去，发现你发现你现在就在OEP下方，嘻嘻。<br><img src="img7.jpg" alt="OEP附近"></p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3206,10 +3206,10 @@
 <h2 id="第二种：CALL地址搜索法"><a href="#第二种：CALL地址搜索法" class="headerlink" title="第二种：CALL地址搜索法"></a>第二种：CALL地址搜索法</h2><p>这个方法比较直接，我们可以直接看他OEP下方CALL的地址，例如：<br><img src="img8.jpg" alt="快速CALL定位输入表"><br>只要是下方的CALL地址就行，这个时候就到输入表的头部了，然后就可以了。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3219,10 +3219,10 @@
 <h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>反汇编工具</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3238,10 +3238,10 @@
 <p><strong><strong><em>这是比较常见的一些脱壳技巧，之后还会更新。</em></strong></strong></p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3270,10 +3270,10 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CBitmap bitmap;  &#x2F;&#x2F; CBitmap对象，用于加载位图   </span><br><span class="line">HBITMAP hBmp;    &#x2F;&#x2F; 保存CBitmap加载的位图的句柄   </span><br><span class="line">bitmap.LoadBitmap(IDB_BITMAP1);  &#x2F;&#x2F; 将位图IDB_BITMAP1加载到bitmap </span><br><span class="line">hBmp &#x3D; (HBITMAP)bitmap.GetSafeHandle();  &#x2F;&#x2F; 获取bitmap加载位图的句柄   </span><br><span class="line">m_jzmPicture.SetBitmap(hBmp);    &#x2F;&#x2F; 设置图片控件m_jzmPicture的位图图片为IDB_BITMAP1</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>MFC</category>
+        <category>Win32编程</category>
       </categories>
       <tags>
-        <tag>MFC</tag>
+        <tag>Win32编程</tag>
       </tags>
   </entry>
   <entry>
@@ -3338,10 +3338,10 @@
 <h1 id="Dump出脱壳文件"><a href="#Dump出脱壳文件" class="headerlink" title="Dump出脱壳文件"></a>Dump出脱壳文件</h1><p>这里可以简单的使用OD带的插件，如果不行的话呢用import REC，再不行我们就手动修改IAT使用loadPE，这里这个小程序我们使用OD的插件就可以了，具体操作如下：<br><img src="TK1/img4.jpg" alt="ESP断点"><br>这里注意，如果我们插件不行的话呢，我们需要取消勾选重建输入表，目的是为了我们能够在其他工具中重新建表，这样子生成的文件我们就能够方便调试了。</p>
 ]]></content>
       <categories>
-        <category>脱壳篇</category>
+        <category>脱壳分析</category>
       </categories>
       <tags>
-        <tag>脱壳篇</tag>
+        <tag>脱壳分析</tag>
       </tags>
   </entry>
   <entry>
