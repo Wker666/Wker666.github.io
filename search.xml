@@ -404,10 +404,10 @@
 <p>一个空函数，jmpto是在我们之前定义的，这里需要注意的是我们需要使用WINAPI表示我们这个函数是stdcall的调用约定，这里我踩坑了，否则我们在函数执行结束之后是不能进行自动清理堆栈的。<br>这里我们就是一个基本的D3D操作，意思就是说iStride深度缓存的值未16的时候我们就让他透视，其实这个16是我们需要调试寻找的，可以通过很多手段，例如共享内存操作之类的，也可以使用设置新的lang来实现，反正很多都是可以找到的，但是我们找到16之后并不是万事大吉，因为进入游戏发现地图也没有了，所以我们要判断NumVertices的值，这个是模型的顶点数，也是需要寻找的，但是却不是最好的方法，最好的方法是我们通过附加游戏找到调用<code>DrawIndexedPrimitive</code>这个函数的外层call找到有没有一个标识来代表是否可以表示人，我们再通过hook之类的判断来告诉我们是不是需要清除深度缓存。</p>
 ]]></content>
       <categories>
-        <category>外挂开发</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>外挂开发</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
@@ -3250,10 +3250,10 @@
     <content><![CDATA[<p>CALC :         判断表达式<br>WATCH :      添加监视表达式<br>AT :             在指定地址进行反汇编<br>FOLLOW :     跟随命令<br>ORIG :         反汇编于 EIP<br>DUMP           在指定地址进行转存<br>DA :            转存为反汇编代码<br>DB :            使用十六进制字节格式转存<br>DC :            使用 ASCII 格式转存<br>DD :            转存在堆栈格式<br>DU :            转存在 UNICODE 格式<br>DW :           使用十六进制字词格式转存<br>STK :          前往堆栈中的地址<br>AS  :          （AS + 地址 + 字符串） 在指定地址进行汇编<br>BP :             进行条件中断（有条件的断点）<br>BPX :           中断在全部调用 （Call）<br>BPD :           清除全部调用中的断点<br>BC :             清除断点<br>MR :             内存断点于访问时<br>MW :            内存断点于写入时<br>MD :             清除内存断点<br>HR :             访问时进行硬件中断<br>HW :            写入时进行硬件中断<br>HE :              执行时进行硬件中断<br>HD :              清除硬件断点<br>STOP :          停止运行程序调试<br>PAUSE :        暂停执行程序调试<br>RUN :            运行程序进行调试<br>GE :              运行和通过例外<br>SI :              单步进入 Call 中<br>SO :             步过 Call<br>TI :              跟踪进入直到地址<br>TO :            跟踪步过直到地址<br>TC :            跟踪进入直到满足条件<br>TOC :          跟踪步过直到满足条件<br>TR :            运行直到返回<br>TU :            运行直到用户代码<br>LOG :          查看记录窗口<br>MOD :         查看模块窗口<br>MEM :          查看内存窗口<br>CPU :           查看 CPU 窗口<br>CS :            查看 Call 堆栈<br>BRK :           查看断点窗口<br>OPT :           打开选项设置窗口<br>EXIT :          退出 OllyDbg<br>QUIT :          退出 OllyDbg<br>OPEN :         打开一个可执行文件<br>CLOSE :       关闭可执行文件  </p>
 ]]></content>
       <categories>
-        <category>反汇编工具</category>
+        <category>逆向分析</category>
       </categories>
       <tags>
-        <tag>反汇编工具</tag>
+        <tag>逆向分析</tag>
       </tags>
   </entry>
   <entry>
