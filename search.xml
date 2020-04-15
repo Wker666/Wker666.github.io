@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>被动信息收集1</title>
+    <url>/2020/04/10/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/</url>
+    <content><![CDATA[<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>用于解析域名的IP，分为A，C name，ptr，mx等记录，A为主机记录，就是可以直接查询到相对应的IP， C name 别名记录（返回下一个域名），ptr IP查域名，mx邮件记录。</p>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><p>kali中使用nslookup命令，进入之后，输入想要查询的域名：<br><img src="img1.jpg" alt="NSlookUP"><br>可以看到，<code>www.sina.com</code>一步步的指向真正的域名IP，那个Server使我们的域名服务器主机，我们可以使用：<code>set type=a</code>等记录设置我们想要查看的信息，默认只有a记录的。使用<code>set type=ptr</code>反向查询IP对应的域名，通过使用：<code>server xxx.xxx.xxx.xxx</code>来设置我们的域名服务器。<br>type与q相同。<br>q=any的话呢是将所有的记录全部查询出来。<br>text记录使用spf反垃圾的一个功能，也是反向解析，主要是判断是否是真正的邮件服务器发送来的。<br>nslookup也是可以再一条输入，就是在后面跟上。<br>例如：nslookup -q=any <a href="http://www.sina.com" target="_blank" rel="noopener">www.sina.com</a> XXX.XXX.XXX.XXX</p>
+<h2 id="智能DNS"><a href="#智能DNS" class="headerlink" title="智能DNS"></a>智能DNS</h2><p>主要是用户所处的位置不同，返回的IP也是不同的。</p>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><h3 id="DNS查询bind信息"><a href="#DNS查询bind信息" class="headerlink" title="DNS查询bind信息"></a>DNS查询bind信息</h3><p>查询DNS服务器使用的bind版本信息可以帮助我们获取DNS服务器的相对应的漏洞信息，寻找机会去得到DNS服务器中的数据，在dig中可以使用：<code>dig +noall +answer txt chaos VERSION.BIND @ns3.dnsv4.com</code>命令来查询bind的版本信息，但是不是所有的都可以：<br><img src="img2.jpg" alt="dig"><br>@后面的是我们需要查询的服务器，在查询域名ns记录的时候我们是可以获取到的。<br><img src="img3.jpg" alt="ns查询"></p>
+<h3 id="DNS追踪"><a href="#DNS追踪" class="headerlink" title="DNS追踪"></a>DNS追踪</h3><p>通过使用：<code>dig +trace www.sina.com</code>，就可以对其追踪DNS信息，访问的方式是先通过本地DNS获取root域的信息，返回root域的名称，再通过root域获取.com域的信息，在这期间虽然获得了.com的信息，但是还是再一次通过本地DNS进行一个验证，获取到了.com的域DNS服务器信息，再通过其获取sina.com域的域名服务器，再通过sina.com获取到了<a href="http://www.sina.com的具体IP地址。" target="_blank" rel="noopener">www.sina.com的具体IP地址。</a><br>在这期间需要注意的是，dig多次访问本地DNS以验证我们通过root和.com获取到的信息的正确性。<br><img src="img4.jpg" alt="DNS追踪"></p>
+<h3 id="DNS服务器区域传输"><a href="#DNS服务器区域传输" class="headerlink" title="DNS服务器区域传输"></a>DNS服务器区域传输</h3><p>使用afxr可以进行DNS服务器的区域性传输，有的时候服务器存在一定缺陷的时候我们是可以获取到相对应许多信息的，有时候会获取到域名下的许多不知道的域名：<br><img src="img5.jpg" alt="DNS域传输"><br>可以看到获取到了许多信息，使用的格式是：<code>dig @域名服务器 域名 afxr</code>这个样子就可以获取到传输的信息了。<br><code>host -T -l 域名 域名服务器</code>也是可以进行获取的（-T使用TCP方式）</p>
+<h2 id="DNS字典爆破"><a href="#DNS字典爆破" class="headerlink" title="DNS字典爆破"></a>DNS字典爆破</h2><p><code>fierce</code>命令在DNS信息收集的时候很好用，他会自动帮助我们查找ns记录，并且还会闲判断是否存在DNS服务器域传输的漏洞，最后再暴力破解是否存在字典中的子域：<code>fierce -dnsserver 8.8.8.8 -dns 域名 -wordlist /usr/share/fierce/hosts.txt</code>8.8.8.8是我们指定的域名服务器。<br><img src="img6.jpg" alt="爆破"><br>注意的是，我们不能带前面的子域名。<br><code>dnsenum -f 文件 -dnsserver 8.8.8.8 sina.com -o sina.xml</code>基本格式也是很类似的。<br>这个的功能很全面，支持域传输，版本信息，爆破，还支持导出文件：<br><img src="img7.jpg" alt="dnsenum"><br>还算比较好用，但是感觉慢了一点。</p>
+<h2 id="DNS注册信息"><a href="#DNS注册信息" class="headerlink" title="DNS注册信息"></a>DNS注册信息</h2><p>这个也是比较关键的一部分，使用whois命令可以轻松收集到许多信息：<code>whois xxx.com</code><br><img src="img8.jpg" alt="whois"><br>许多信息的都是已经收集到了。</p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android U3D修改</title>
     <url>/2020/04/06/Android-U3D%E4%BF%AE%E6%94%B9/</url>
     <content><![CDATA[<h1 id="U3D游戏"><a href="#U3D游戏" class="headerlink" title="U3D游戏"></a>U3D游戏</h1><p>首先我们判断这个游戏是否是U3D可以根据是否在lib\armxxx目录下存在：<code>libmain.so</code>,<code>libmono.so</code>,<code>libunity.so</code>。如果存在的话呢就八九不离十了，这个时候我们就可以来分析相关的DLL，如果有加密DLL，那么我们就在相关函数位置dump我们的DLL，然后替换成官网的mono，思路很多，网络上也是很多。</p>
@@ -179,7 +198,7 @@
 <p>使用调试模式打开APP，使用到的命令：<br>adb shell am start -D -n com.ali.tg.testapp/.MainActivity</p>
 <p><img src="img2.jpg" alt="调试模式"><br>等待我们的调试进程进行附加</p>
 <p>我们使用IDA附加进程。来到：/system/lib/libdvm.so 这个库文件中，在导出函数：dvmDexFileOpenPartial的开始位置下断：</p>
-<p><img src="imh3.jpg" alt="特定函数下断"></p>
+<p><img src="img3.jpg" alt="特定函数下断"></p>
 <p>下好断点之后，连接调试进程：jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</p>
 <p>输入这条命令之后，JDB就会在等待IDA运行，运行之后JDB就输出：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\a&gt;jdb -connect com.sun.jdi.SocketAttach:hostname&#x3D;localhost,port&#x3D;8700</span><br><span class="line">设置未捕获的java.lang.Throwable</span><br><span class="line">设置延迟的未捕获的java.lang.Throwable</span><br><span class="line">正在初始化jdb...</span><br></pre></td></tr></table></figure>
