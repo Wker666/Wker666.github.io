@@ -3935,10 +3935,10 @@
 <p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
 ]]></content>
       <categories>
-        <category>内网入侵</category>
+        <category>渗透测试</category>
       </categories>
       <tags>
-        <tag>内网入侵</tag>
+        <tag>渗透测试</tag>
       </tags>
   </entry>
   <entry>
@@ -3965,10 +3965,10 @@
 <p>查看我们的session，如果和效果图一样，那说明我们拿到权限了，然后使用sessions 1来执行我们的shell，这个1是根据上线的ID号，从1开始排序的。<br>然后简单执行以下dir：<br><img src="img7.jpg" alt="MSF执行"><br><img src="img8.jpg" alt="MSF执行"><br>这个时候发现已经可以了，这个时候其实我们就已经达到了拿取Shell的目的。<br>我们还是可以配合ettercap进行劫持提权，这个留给大家自己去思考，不知道的可以参考我的关于ettercap的文章。<br>其实写这篇文章的过程有很多坎坷，中途XP无数次蓝屏，原因我的Windbg给搞的，希望大家多多关注。</p>
 ]]></content>
       <categories>
-        <category>内网入侵</category>
+        <category>渗透测试</category>
       </categories>
       <tags>
-        <tag>内网入侵</tag>
+        <tag>渗透测试</tag>
       </tags>
   </entry>
   <entry>
