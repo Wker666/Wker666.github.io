@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/28/%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Activity%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/28/%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">注册表操作</a>
+            <a href="/2020/01/29/Activity%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">Activity全局对象传递数据</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-28 22:37:11" itemprop="dateCreated datePublished" datetime="2020-01-28T22:37:11+08:00">2020-01-28</time>
+              <time title="Created: 2020-01-29 17:19:40" itemprop="dateCreated datePublished" datetime="2020-01-29T17:19:40+08:00">2020-01-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:57:49" itemprop="dateModified" datetime="2020-02-01T12:57:49+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:57:07" itemprop="dateModified" datetime="2020-02-01T12:57:07+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Win32编程</span>
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
                   </a>
                 </span>
             </span>
@@ -262,103 +262,55 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="注册表介绍"><a href="#注册表介绍" class="headerlink" title="注册表介绍"></a>注册表介绍</h1><p>下面内容摘自网络：<a href="http://www.sohu.com/a/232058468_99914465" target="_blank" rel="noopener">http://www.sohu.com/a/232058468_99914465</a></p>
-<p>注册表的结构包括六大分支（有的是五大分支，如果是五大分支，就没有hkey-dyn-data这一结构），注册表编辑器与资源管理器的界面相似。</p>
-<p>注册表编辑器左窗格显示六大分支，右窗格是相应的键值项。我们编辑注册表，就是修改和增加相应的键值项。</p>
-<p>注册表的六大分支结构如下：</p>
-<p>hkey-classes-root该主关键字包含了有关的OLE信息，以便在系统工作过程中实现对各种文件和文档信息的访问。具体的内容有已经注册的文件扩展名、文件类型、文件图标等。</p>
-<p>hkey-current-user是一个指向HKEY_USERS结构中某个分支的指针，它包含当前用户的登录信息。实际上它就是HKEY_USERS＼Default下面的一部分内容，如果在HKEY_USERS＼Default下面没有用户登录的其它内容，那么这两个主关键字包含的内容是完全相同的。</p>
-<p>hkey-local-machine该关键字包含了本地计算机（相对网络环境而言）的硬件和软件的全部信息。当系统的配置和设置发生变化时，本关键字下面的登录项也将随之改变。</p>
-<p>hkey-users 所有登录用户的信息。</p>
-<p>hkey-current-config这个关键字实际上也是指向HKEY_LOCAL _MACHINE＼Config结构中的某个分支的指针。HKEY_CURRENT_CONFIG下面的子关键字及内容与HKEY_LOCAL _MACHINE＼Config＼0001分支下面的子关键字及内容是完全相同的。本关键字包含的主要内容是计算机的当前配置情况，如显示器、打印机等可选外部设备及其设置信息等，而且这个配置信息均将根据当前连接的网络类型、硬件配置以及应用软件的安装不同而有所变化。</p>
-<p>hkey-dyn-data 即插即用和系统性能的动态信息。</p>
-<p>对于 Windows98 来说包含了六个主键，而在 Windows 2003/2000/XP 中没有 HKEY_DYN_DATA 主键，所以对于 Windows 2003/2000/XP 来说只有五个主键。</p>
-<p>注册表中的键值项数据可分为如下三种类型：</p>
-<p>1.字符串值（S）</p>
-<p>在Windows98的注册表中，表示文件的描述、硬件的标识等等信息一般都用字符串值。字符串值由字母和数字组成，它的最大长度不能超过255个字符。通过键、键值就组成了一种键值项数据，这就相当于Win.ini、Ssytem.ini文件中每个小节下面的设置行一样的道理。</p>
-<p>2.二进制值（B）</p>
-<p>在Windows的注册表中，二进制值是没有长度限制的，可以是任意个字节长。在注册表编辑器中，二进制以十六进制的方式显示出来。</p>
-<p>3.DWORD值（D）</p>
-<p>在Windwos98的注册表中，DWORD值是一个32位（双字节长）长度的数值。在注册表编辑器中，系统以十六进制的方式显示DWORD值。</p>
-<p>主要是我不想敲键盘了哈哈哈。<br>那么我们看一下微软给我们编写他的一些操作函数吧。</p>
-<h2 id="打开关闭子键RegCreateKeyEx与RegCloseKey"><a href="#打开关闭子键RegCreateKeyEx与RegCloseKey" class="headerlink" title="打开关闭子键RegCreateKeyEx与RegCloseKey"></a>打开关闭子键<code>RegCreateKeyEx</code>与<code>RegCloseKey</code></h2><p>关闭打开是操作注册表最基本的一些操作了，首先是<code>RegCreateKeyEx</code>这个函数参数有点多，但是还是很好理解的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegCreateKeyEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey,                <span class="comment">// handle to an open key</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpSubKey,         <span class="comment">// address of subkey name</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD Reserved,           <span class="comment">// reserved</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpClass,           <span class="comment">// address of class string</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwOptions,          <span class="comment">// special options flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">  REGSAM samDesired,        <span class="comment">// desired security access</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpSecurityAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// address of key security structure</span></span></span></span><br><span class="line"><span class="function"><span class="params">  PHKEY phkResult,          <span class="comment">// address of buffer for opened handle</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpdwDisposition   <span class="comment">// address of disposition value buffer</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+          <h1 id="Activity全局对象传送数据"><a href="#Activity全局对象传送数据" class="headerlink" title="Activity全局对象传送数据"></a>Activity全局对象传送数据</h1><p>其实这个全局对象呢，我感觉这个名字听得总是怪怪的，确实没有Windows气的名字好听说实话的，在Windows下也称这个东西叫做实例对象，就是在winmain函数传递过来的那个instance，这里的话呢也是，这里也需要说一下这个安卓程序的一个入口点</p>
+<h2 id="安卓程序的入口点"><a href="#安卓程序的入口点" class="headerlink" title="安卓程序的入口点"></a>安卓程序的入口点</h2><p>安卓程序的入口点其实和MFC基本上是大同小异，学多了我感觉这两个没啥太大的区别，同样的MFC是有一个全局的APP变量，由于是一启动就初始化，所以在它里面写东西，就有点像初始化，在安卓中呢，是一个类继承了Application这个类，例如下面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppcationTest</span> <span class="keyword">extends</span> <span class="title">Application</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String Name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		Name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onCreate();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继承了Application，然后重写onCreate函数，这个函数应该是必须要的吧，然后在我们的Manifest中定义我们的实例对象：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:name=".AppcationTest"</span><br></pre></td></tr></table></figure>
+<p>这个样子我们就进行了定义，上面配置就是说我们的入口类是哪个（我那个单词拼写错了，我也就没改）<br>改完之后我们就可以在传输断这么写：</p>
 <ol>
-<li><code>hKey</code>：这个值其实是一个之前已经打开的键或者说是那六个根键</li>
+<li>输入端：</li>
 </ol>
-<ul>
-<li>HKEY_CLASSES_ROOT</li>
-<li>HKEY_CURRENT_CONFIG</li>
-<li>HKEY_CURRENT_USER</li>
-<li>HKEY_LOCAL_MACHINE</li>
-<li>HKEY_USERS</li>
-<li>Windows NT: HKEY_PERFORMANCE_DATA </li>
-<li>Windows 95 and Windows 98: HKEY_DYN_DATA </li>
-</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = (AppcationTest)getApplication();</span><br><span class="line">app.setName(<span class="string">"Test"</span>);</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
-<li><code>lpSubKey</code>：指向以null结尾的字符串的指针，该字符串指定此函数打开或创建的子键的名称。指定的子键必须是由hKey参数标识的键的子键。此子键不能以反斜杠字符(‘&#39;)开头。此参数不能为空。</li>
-<li><code>dwOptions</code>：指定键的特殊选项。此参数可以是以下值之一。</li>
+<li>在接收端这么写：</li>
 </ol>
-<ul>
-<li>REG_OPTION_NON_VOLATILE   重启不丢失</li>
-<li>REG_OPTION_VOLATILE       重启丢失</li>
-<li>REG_OPTION_BACKUP_RESTORE </li>
-</ul>
-<ol start="4">
-<li><code>samDesired</code>：可以是下面这几个值：</li>
-</ol>
-<ul>
-<li>KEY_ALL_ACCESS Combination of KEY_QUERY_VALUE, KEY_ENUMERATE_SUB_KEYS, KEY_NOTIFY, KEY_CREATE_SUB_KEY, KEY_CREATE_LINK, and KEY_SET_VALUE access. </li>
-<li>KEY_CREATE_LINK Permission to create a symbolic link. </li>
-<li>KEY_CREATE_SUB_KEY Permission to create subkeys. </li>
-<li>KEY_ENUMERATE_SUB_KEYS Permission to enumerate subkeys. </li>
-<li>KEY_EXECUTE Permission for read access. </li>
-<li>KEY_NOTIFY Permission for change notification. </li>
-<li>KEY_QUERY_VALUE Permission to query subkey data. </li>
-<li>KEY_READ Combination of KEY_QUERY_VALUE, KEY_ENUMERATE_SUB_KEYS, and KEY_NOTIFY access. </li>
-<li>KEY_SET_VALUE Permission to set subkey data. </li>
-<li>KEY_WRITE Combination of KEY_SET_VALUE and KEY_CREATE_SUB_KEY access. </li>
-</ul>
-<ol start="5">
-<li><code>phkResult</code>这个返回我们打开的一个句柄。</li>
-<li><code>lpdwDisposition</code>：下面这几个值：</li>
-</ol>
-<ul>
-<li>REG_CREATED_NEW_KEY The key did not exist and was created. </li>
-<li>REG_OPENED_EXISTING_KEY The key existed and was simply opened without being changed. </li>
-</ul>
-<p>还是比较好理解的，英语看不懂的稍微百度一下就好了，一般看名字就知道什么意思了。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegCloseKey</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey   <span class="comment">// handle to key to close</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个及时用来关闭的，就一个参数。</p>
-<h2 id="删除子键RegDeleteKey"><a href="#删除子键RegDeleteKey" class="headerlink" title="删除子键RegDeleteKey"></a>删除子键<code>RegDeleteKey</code></h2><p>删除一个子键用函数：<code>RegDeleteKey</code><br>参数很是简单：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegDeleteKey</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey,         <span class="comment">// handle to open key</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpSubKey   <span class="comment">// address of name of subkey to delete</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>但是在这里需要注意的是，只有所有有关这个子键的句柄都被关闭了之后才会删除完毕，而且好像在老板的电脑里面我们的这个函数是不支持递归删除的，现在好像已经支持了，再说了，在往前几年，都不用注册表，用个什么C盘里面的ini配置文件我记得，当时32位操作系统还没有很普及，这个应该是16位操作系统时候的了，具体的我也忘记了，反正是很老了。</p>
-<h2 id="键值操作"><a href="#键值操作" class="headerlink" title="键值操作"></a>键值操作</h2><p>首先是设置一个键值，我们用到的函数是：<code>RegSetValueEx</code>，函数的原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegSetValueEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey,           <span class="comment">// handle to key to set value for</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpValueName, <span class="comment">// name of the value to set</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD Reserved,      <span class="comment">// reserved</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwType,        <span class="comment">// flag for value type</span></span></span></span><br><span class="line"><span class="function"><span class="params">  CONST BYTE *lpData,  <span class="comment">// address of value data</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD cbData         <span class="comment">// size of value data</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = (AppcationTest)getApplication();</span><br><span class="line">Log.d(<span class="string">"ooo"</span>, app.getName());</span><br></pre></td></tr></table></figure>
+<p>这个样子我们就进行了数据传递。</p>
+<h2 id="程序的优化"><a href="#程序的优化" class="headerlink" title="程序的优化"></a>程序的优化</h2><p>我们可以观察到，我们有一个<code>getApplication</code>这个么一个方法，其实在MFC中这个函数是全局的（类似于AfxXXX），但是这个地方这个方法是来自于Activity这个类的，所以我们要想获得的话呢必须要继承Activity这个，这就很麻烦了，所以我们想到了可以使用静态的一个方法，具体实现方法如下：</p>
 <ol>
-<li><code>dwType</code>这个参数是用来设置一些flag的，具体的可以是下面几个值（比较常用的我复制的是）：</li>
+<li>全局对象</li>
 </ol>
-<ul>
-<li>REG_BINARY</li>
-<li>REG_DWORD</li>
-<li>REG_EXPAND_SZ</li>
-<li>REG_MULTI_SZ</li>
-<li>REG_SZ</li>
-</ul>
-<p>其他参数都是比较好理解的。</p>
-<p>读取键值：<code>RegQueryValueEx</code>，函数原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegQueryValueEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey,           <span class="comment">// handle to key to query</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpValueName,  <span class="comment">// address of name of value to query</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpReserved,  <span class="comment">// reserved</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpType,      <span class="comment">// address of buffer for value type</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPBYTE lpData,       <span class="comment">// address of data buffer</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpcbData     <span class="comment">// address of data buffer size</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个函数基本上没啥太大的难度，但是这种函数又是比较典型的二次函数（我自己起的名字），意思就是说这种函数我们在调用的过程中我们需要调用两次。<br>主要的特别之处在于我们的最后一个参数的长度是不确定的，所以我们在第一次调用这个函数的时候可以读取数据类型，如果类型符合我们就读取实际数据。<br>主要的特点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> AppcationTest instance = <span class="keyword">new</span> AppcationTest();</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppcationTest <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>输入端：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = AppcationTest.getInstance();</span><br><span class="line">app.setName(<span class="string">"Test"</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>接收端：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = AppcationTest.getInstance();</span><br><span class="line">Log.d(<span class="string">"ooo"</span>, app.getName());</span><br></pre></td></tr></table></figure>
+
+<p>这个样子我们就能很方便的进行数据的传输了。</p>
+<p>但是我们发现当我们的程序十分的大的时候我们的数据变量会是非常的多，因为我们的全局对象会有很多的变量，所以我们在这个时候我们就会想到Map集合，这个东西我也是刚了解没多久（我也是学习java没多久的时间）</p>
+<p>具体如何实现呢？看下面示例代码：</p>
 <ol>
-<li><code>lpData</code>这个参数设置为NULL的时候我们的<code>lpcbData</code>这个参数返回我们的真是数据长度</li>
-<li>上述两个参数如果都是NULL的话呢，我们的类型将会返回给我们</li>
+<li>全局对象：</li>
 </ol>
-<p>删除键值：<code>RegDeleteValue</code>，函数原型：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LONG <span class="title">RegDeleteValue</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HKEY hKey,            <span class="comment">// handle to key</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpValueName   <span class="comment">// address of value name</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个函数也是比较的简单，参数也是很明显的。</p>
-<h1 id="注册表实例-开机自动启动"><a href="#注册表实例-开机自动启动" class="headerlink" title="注册表实例-开机自动启动"></a>注册表实例-开机自动启动</h1><p>其实这类的东西做时间长了发现其实就是一个思路，就是写写注册表，基本上靠平常日无聊时候看看网站收集到的。<br><em>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run</em>这个注册表里面的东西就是开机自动启动项目，但是前提你的这个值类型为：REG_SZ。<br>示例代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HKEY hRoot = HKEY_LOCAL_MACHINE; </span><br><span class="line">	<span class="keyword">char</span> *szSubKey = <span class="string">"Software\\Microsoft\\Windows\\CurrentVersion\\Run"</span>;<span class="comment">//不要忘记转义了哦</span></span><br><span class="line">	HKEY hKey;</span><br><span class="line">	<span class="comment">//打开指定的子键</span></span><br><span class="line">	DWORD dwDis = REG_OPENED_EXISTING_KEY;<span class="comment">//没有的话呢也不创建</span></span><br><span class="line">	<span class="keyword">if</span>(RegCreateKeyEx(hRoot,szSubKey,<span class="number">0</span>,<span class="literal">NULL</span>,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,<span class="literal">NULL</span>,&amp;hKey,&amp;dwDis) != ERROR_SUCCESS)<span class="comment">//重启不丢失，然后多要点权限 ，不成功就返回 </span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> szModleFile[MAX_PATH];</span><br><span class="line">	GetModuleFileName(<span class="literal">NULL</span>,szModleFile,MAX_PATH);<span class="comment">//获取一下当前的文件名称</span></span><br><span class="line">	<span class="keyword">if</span>(RegSetValueEx(hKey,<span class="string">"Ceshi"</span>,<span class="number">0</span>,REG_SZ,(BYTE*)szModleFile,<span class="built_in">strlen</span>(szModleFile)) == ERROR_SUCCESS)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"success!"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"fail!"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	RegCloseKey(hKey);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有一点需要注意的是，我们在Win8或Win10之类的高版本平台上运行，我们需要给他管理员哦，否则也是不行的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> HashMap&lt;String, Object&gt; <span class="title">getMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>输入端：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = AppcationTest.getInstance();</span><br><span class="line">app.getMap().put(<span class="string">"Name"</span>, <span class="string">"Wker"</span>);</span><br><span class="line">app.getMap().put(<span class="string">"Age"</span>, <span class="number">19</span>);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>接收端：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AppcationTest app = AppcationTest.getInstance();</span><br><span class="line">Log.d(<span class="string">"ooo"</span>, (String) app.getMap().get(<span class="string">"Name"</span>));</span><br><span class="line">Log.d(<span class="string">"ooo"</span>, (Integer) app.getMap().get(<span class="string">"Age"</span>)+<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这个样子我们的代码就优化完毕了。</p>
 
       
     </div>
@@ -378,7 +330,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/63/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/101/">101</a><a class="extend next" rel="next" href="/page/65/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/63/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/105/">105</a><a class="extend next" rel="next" href="/page/65/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -445,7 +397,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

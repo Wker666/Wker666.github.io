@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/LoadPE-and-importREC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/track-API/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/13/LoadPE-and-importREC/" class="post-title-link" itemprop="url">LoadPE and importREC</a>
+            <a href="/2020/01/16/track-API/" class="post-title-link" itemprop="url">track API</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-13 09:57:36" itemprop="dateCreated datePublished" datetime="2020-01-13T09:57:36+08:00">2020-01-13</time>
+              <time title="Created: 2020-01-16 10:09:14" itemprop="dateCreated datePublished" datetime="2020-01-16T10:09:14+08:00">2020-01-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:47:22" itemprop="dateModified" datetime="2020-04-08T15:47:22+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-08 15:47:46" itemprop="dateModified" datetime="2020-04-08T15:47:46+08:00">2020-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
-<h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
+          <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
+<h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
 
       
     </div>
@@ -283,7 +283,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/93/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><span class="page-number current">94</span><a class="page-number" href="/page/95/">95</a><span class="space">&hellip;</span><a class="page-number" href="/page/101/">101</a><a class="extend next" rel="next" href="/page/95/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/93/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><span class="page-number current">94</span><a class="page-number" href="/page/95/">95</a><span class="space">&hellip;</span><a class="page-number" href="/page/105/">105</a><a class="extend next" rel="next" href="/page/95/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,7 +350,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

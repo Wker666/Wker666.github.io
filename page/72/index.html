@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/24/File-Attribute/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/24/File-Attribute/" class="post-title-link" itemprop="url">File Attribute</a>
+            <a href="/2020/01/27/PE%E6%96%87%E4%BB%B6%E5%88%A4%E5%AE%9A/" class="post-title-link" itemprop="url">PE文件判定</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-24 17:39:30" itemprop="dateCreated datePublished" datetime="2020-01-24T17:39:30+08:00">2020-01-24</time>
+              <time title="Created: 2020-01-27 17:28:28" itemprop="dateCreated datePublished" datetime="2020-01-27T17:28:28+08:00">2020-01-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:00:07" itemprop="dateModified" datetime="2020-02-01T13:00:07+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:59:09" itemprop="dateModified" datetime="2020-02-01T12:59:09+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,100 +262,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="文件属性的读取"><a href="#文件属性的读取" class="headerlink" title="文件属性的读取"></a>文件属性的读取</h1><p>文件属性的一些读取，主要就是依靠。</p>
-<h2 id="GetFileType获取文件类型"><a href="#GetFileType获取文件类型" class="headerlink" title="GetFileType获取文件类型"></a><code>GetFileType</code>获取文件类型</h2><p>就一个参数，文件句柄，<code>CreateFile</code>获得的，返回值：</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FILE_TYPE_UNKNOWN</td>
-<td>The type of the specified file is unknown.</td>
-</tr>
-<tr>
-<td>FILE_TYPE_DISK</td>
-<td>The specified file is a disk file.</td>
-</tr>
-<tr>
-<td>FILE_TYPE_CHAR</td>
-<td>The specified file is a character file, typically an LPT device or a console.</td>
-</tr>
-<tr>
-<td>FILE_TYPE_PIPE</td>
-<td>The specified file is either a named or anonymous pipe.</td>
-</tr>
-</tbody></table>
-<h2 id="GetFileSize获取文件尺寸"><a href="#GetFileSize获取文件尺寸" class="headerlink" title="GetFileSize获取文件尺寸"></a><code>GetFileSize</code>获取文件尺寸</h2><p>这个函数用来获取文件的大小，在读取文件的时候很好用</p>
-<p><strong>如果函数成功，则返回的值是文件大小的低阶双字，如果lpFileSizeHigh是非null，则函数将文件大小的高阶双字放入该参数指向的变量中。<br>如果函数失败且lpFileSizeHigh为NULL，则返回值为0xFFFFFFFF。要获取扩展的错误信息，请调用GetLastError。<br>如果函数失败并且lpFileSizeHigh是非空的，则返回值为0xFFFFFFFF, GetLastError将返回一个NO_ERROR以外的值。</strong><br>返回值的一个判定，简单看看就好了。</p>
-<h2 id="GetFileAttributes获取文件属性"><a href="#GetFileAttributes获取文件属性" class="headerlink" title="GetFileAttributes获取文件属性"></a><code>GetFileAttributes</code>获取文件属性</h2><p>这个东西不复杂就是有点乱，参数就是一个字符串，不要忘记转义就好了。<br>看一下MSDN的一些说明。</p>
-<table>
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FILE_ATTRIBUTE_ARCHIVE</td>
-<td>The file or directory is an archive file or directory. Applications use this attribute to mark files for backup or removal.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_COMPRESSED</td>
-<td>The file or directory is compressed. For a file, this means that all of the data in the file is compressed. For a directory, this means that compression is the default for newly created files and subdirectories.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_DIRECTORY</td>
-<td>The handle identifies a directory.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_ENCRYPTED</td>
-<td>The file or directory is encrypted. For a file, this means that all data streams are encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_HIDDEN</td>
-<td>The file or directory is hidden. It is not included in an ordinary directory listing.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_NORMAL</td>
-<td>The file or directory has no other attributes set. This attribute is valid only if used alone.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_OFFLINE</td>
-<td>The data of the file is not immediately available. Indicates that the file data has been physically moved to offline storage.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_READONLY</td>
-<td>The file or directory is read-only. Applications can read the file but cannot write to it or delete it. In the case of a directory, applications cannot delete it.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_REPARSE_POINT</td>
-<td>The file has an associated reparse point.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_SPARSE_FILE</td>
-<td>The file is a sparse file.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_SYSTEM</td>
-<td>The file or directory is part of, or is used exclusively by, the operating system.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_TEMPORARY</td>
-<td>The file is being used for temporary storage. File systems attempt to keep all of the data in memory for quicker access rather than flushing the data back to mass storage. A temporary file should be deleted by the application as soon as it is no longer needed.</td>
-</tr>
-<tr>
-<td>（呼~，终于写完了，手都累酸了）</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>返回值就是这样子判断，这些东西对与目录一样也是适用的。<br>示例代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD dwAttributes = GetFileAttributes(<span class="string">"Wker.txt"</span>) ; </span><br><span class="line">	<span class="keyword">if</span>(dwAttributes == <span class="number">0XFFFFFFFF</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"这是个什么东西？"</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>((dwAttributes &amp; FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊！是个目录啊"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊!是个文件啊"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>设置文件属性：<code>SetFileAttributes</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetFileAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpFileName,  <span class="comment">// pointer to filename</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileAttributes   <span class="comment">// attributes to set</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>参数就不介绍了，很简单，第二个参数值太多，百度一下就可以了。</p>
+          <h2 id="PE文件有效性验证"><a href="#PE文件有效性验证" class="headerlink" title="PE文件有效性验证"></a>PE文件有效性验证</h2><p>之前自己写了一个自己读的PE区段的小程序（当时是模仿CE写的一个内存搜索工具），当时写的是真的按照微软给的格式（什么NT头什么DOS头乱七八糟的）一个字节一个字节找的，但是后来发现居然有一个结构体居然可以直接拿来用，哎，失算失算~</p>
+<h2 id="IMAGE-DOS-HEADER和IMAGE-NT-HEADERS"><a href="#IMAGE-DOS-HEADER和IMAGE-NT-HEADERS" class="headerlink" title="IMAGE_DOS_HEADER和IMAGE_NT_HEADERS"></a><code>IMAGE_DOS_HEADER</code>和<code>IMAGE_NT_HEADERS</code></h2><p>由于我的MSDN是2001年的，所以这个我是从IDE找到的，没有注释，但是大体的结构还是能看懂的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span></span><br><span class="line">      WORD e_magic;</span><br><span class="line">      WORD e_cblp;</span><br><span class="line">      WORD e_cp;</span><br><span class="line">      WORD e_crlc;</span><br><span class="line">      WORD e_cparhdr;</span><br><span class="line">      WORD e_minalloc;</span><br><span class="line">      WORD e_maxalloc;</span><br><span class="line">      WORD e_ss;</span><br><span class="line">      WORD e_sp;</span><br><span class="line">      WORD e_csum;</span><br><span class="line">      WORD e_ip;</span><br><span class="line">      WORD e_cs;</span><br><span class="line">      WORD e_lfarlc;</span><br><span class="line">      WORD e_ovno;</span><br><span class="line">      WORD e_res[<span class="number">4</span>];</span><br><span class="line">      WORD e_oemid;</span><br><span class="line">      WORD e_oeminfo;</span><br><span class="line">      WORD e_res2[<span class="number">10</span>];</span><br><span class="line">      LONG e_lfanew;</span><br><span class="line">    &#125; IMAGE_DOS_HEADER,*PIMAGE_DOS_HEADER;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">      DWORD Signature;</span><br><span class="line">      IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">      IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">    &#125; IMAGE_NT_HEADERS32,*PIMAGE_NT_HEADERS32;</span><br></pre></td></tr></table></figure>
+<p>这个就是微软定义的一个结构，我们用这个结构就能够轻松的读取了，思路就是先打开文件，后读取文件，判断DOS头，判断NT头。<br>实现的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	IMAGE_DOS_HEADER dosHeader;</span><br><span class="line">	IMAGE_NT_HEADERS ntHeaders;</span><br><span class="line">	<span class="keyword">char</span> * text = <span class="keyword">new</span> <span class="keyword">char</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"Please Input File Address:"</span>; </span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;text;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;text&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	HANDLE hFile = CreateFile(text,GENERIC_READ,FILE_SHARE_READ,<span class="literal">NULL</span>,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,<span class="literal">NULL</span>);<span class="comment">//常规的打开一个文件 </span></span><br><span class="line">	<span class="keyword">if</span>(hFile == INVALID_HANDLE_VALUE) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"error file!"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	ReadFile(hFile,&amp;dosHeader,<span class="keyword">sizeof</span>(dosHeader),&amp;dwRead,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span>(dwRead == <span class="keyword">sizeof</span>(dosHeader))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(dosHeader.e_magic == IMAGE_DOS_SIGNATURE)<span class="comment">//判断是不是MZ，就是你常见的那个</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(SetFilePointer(hFile,dosHeader.e_lfanew,<span class="literal">NULL</span>,FILE_BEGIN) != <span class="number">-1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				ReadFile(hFile,&amp;ntHeaders,<span class="keyword">sizeof</span>(ntHeaders),&amp;dwRead,<span class="literal">NULL</span>);</span><br><span class="line">				<span class="keyword">if</span>(dwRead == <span class="keyword">sizeof</span>(ntHeaders))</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(ntHeaders.Signature == IMAGE_NT_SIGNATURE)<span class="comment">//判断是不是那个PE</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">cout</span>&lt;&lt;<span class="string">"Congrate!This is PE File!"</span>;</span><br><span class="line">						<span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"sorry,This is not!"</span> ;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还是比较简单的，用这两个结构体，那么具体如何读取区段之后再说！</p>
 
       
     </div>
@@ -375,7 +287,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/101/">101</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/105/">105</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -442,7 +354,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
