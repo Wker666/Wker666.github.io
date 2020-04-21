@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%86%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/20/%E5%BC%B1%E7%82%B9%E6%89%AB%E6%8F%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/19/%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%86%E5%88%AB/" class="post-title-link" itemprop="url">防火墙识别</a>
+            <a href="/2020/04/20/%E5%BC%B1%E7%82%B9%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">弱点扫描</a>
         </h1>
 
         <div class="post-meta">
@@ -229,10 +229,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-19 20:18:07 / Modified: 21:39:31" itemprop="dateCreated datePublished" datetime="2020-04-19T20:18:07+08:00">2020-04-19</time>
+              <time title="Created: 2020-04-20 07:35:18" itemprop="dateCreated datePublished" datetime="2020-04-20T07:35:18+08:00">2020-04-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-21 14:56:46" itemprop="dateModified" datetime="2020-04-21T14:56:46+08:00">2020-04-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -256,81 +262,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="防火墙的识别"><a href="#防火墙的识别" class="headerlink" title="防火墙的识别"></a>防火墙的识别</h1><p>通过发送一些数据包判断指定的端口是否开放，以下规则比较常见：<br><img src="img1.jpg" alt="防火墙"><br>用nmap的话呢使用-sA这个参数，来匹配一下返回的内容，看下防火墙的一些问题。</p>
-<h1 id="负载均衡的识别"><a href="#负载均衡的识别" class="headerlink" title="负载均衡的识别"></a>负载均衡的识别</h1><ul>
-<li>轮询：就是隔几秒换一个</li>
-<li>区域：每个地方访问的IP不一样</li>
-<li>智能：那个在这个时间段快用哪个</li>
-</ul>
-<p>使用lbd进行识别：<code>lbd www.baidu.com</code></p>
-<h1 id="WAF识别"><a href="#WAF识别" class="headerlink" title="WAF识别"></a>WAF识别</h1><p>使用wafw00f进行扫描：<code>wafw00f http://www.baidu.com</code><br>使用nmap进行扫描：<code>nmap www.baidu.com --script=http-waf-detect.nse</code></p>
-<h1 id="nmap常用参数"><a href="#nmap常用参数" class="headerlink" title="nmap常用参数"></a>nmap常用参数</h1><ul>
-<li>主机发现：<ul>
-<li>-iL参数是对文件中扫描</li>
-<li>-iR参数随机扫描，需要提供一个个数</li>
-<li>–exclude参数排除指定的IP范围</li>
-<li>-sL参数只是单纯的列出IP</li>
-<li>-sn参数只是检测存活不做端口扫描</li>
-<li>-Pn参数强制发送，彻底删，即使没有收到目标收到的信息nmap还是发送该发送的数据包（防火墙）</li>
-<li>-PS/PA/PU/PY参数其实就是进行SYN ACK UDP这些类型的端口扫描</li>
-<li>-PE/PP/PM查看输出，时间戳，子网掩码</li>
-<li>-PO参数是进行IP层的Ping发现</li>
-<li>-n不做域名解析，-R 做反向域名解析</li>
-<li>–dns-servers 指定dns服务器</li>
-<li>–tracerout参数进行域名跟踪</li>
-</ul>
+          <h1 id="弱点扫描"><a href="#弱点扫描" class="headerlink" title="弱点扫描"></a>弱点扫描</h1><p>就是扫漏洞，常见的漏洞查询网站：exploit-db，当然kali集成了searchsploit这个工具，它可以进行查询漏洞，后面跟上查询的内容就好。</p>
+<h2 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h2><p>nmap使用的脚本列表放在了/usr/share/nmap/scripts/script.db文件下面，直接查看就好了<br>可以直接进行调用，就是脚本检测，例如：<code>nmap -p445 --script=smb-enum-shares.nse 192.168.209.130</code></p>
+<h2 id="openvas"><a href="#openvas" class="headerlink" title="openvas"></a>openvas</h2><p>是Nessus之前免费版的一个分支，但是现在是开源的。<br>要先安装：<code>apt-get install openvas</code><br>然后配置安装:<code>openvas setup</code><br>然后我发现我的安装出错了，又用了i开头的那个初始化工具修复一下。<br>更新使用feed-up这个文件，但是在安装的时候最终我还是出错了，但是貌似我的那个错误只是不能被共享查看，单纯扫描检测的话呢是不影响的。<br>密码在安装完毕之后会出现，这个时候需要注意的是要保存，要不我们就要使用命令强行更改，最好我就是没改，然后我的火狐帮我记住了。<br>进来之后，扫描基本可以分为三个步骤（单纯一次的扫描，也是比较常规的）：</p>
+<ol>
+<li>添加一个扫描配置<ol>
+<li>选择Configuration菜单下面的Scan Configs</li>
+<li>点击左上方的一个星号（很小）</li>
+<li>然后根据自己对扫描对象的信息收集进行配置</li>
+<li>这个操作不是很难，根据选择就好</li>
+</ol>
 </li>
-<li>端口扫描：<ul>
-<li>-sS参数使用SYN扫描</li>
-<li>-sT全连接扫描</li>
-<li>-sA使用ACK的扫描</li>
-<li>-sW使用Windows窗口扫描</li>
-<li>-sM一个ACK+FIN的数据包</li>
-<li>-是sU使用UDP的扫描</li>
-<li>-sN参数就是什么都没有</li>
-<li>-sF参数就是发一个FIN包</li>
-<li>-sX参数就是发一个FIN+PSH+URG的包</li>
-<li>–scanflags 指定TCP的flags</li>
-<li>-sI参数是僵尸扫描</li>
-<li>sY/sZ参数是对SCTP参数扫描</li>
-<li>-sO是IP扫描</li>
-<li>-b对FTP中继扫描</li>
-<li>-p值参数指定端口</li>
-<li>U: T:后面跟着端口分别是UDP和TCP（-p U:20 T:21）</li>
-<li>-F使用快速扫描，扫的少的意思</li>
-<li>-r参数是连续扫描（默认是随机顺序扫描）</li>
-<li>-top-ports指定前面的多少个端口</li>
-<li>-sV进行服务识别</li>
-<li>–version-intensity指定服务扫描深度（0-9）</li>
-</ul>
+<li>添加一个（一些）目标<ol>
+<li>选择Configuration菜单下面的Targets</li>
+<li>然后同样的点击左上方的星号</li>
+<li>然后根据选择进行配置，选择一堆IP还是一个IP</li>
+<li>下面的话呢就是端口扫描的话呢根据需要</li>
+<li>存活判断的话呢一般选择Consider Alive</li>
+</ol>
 </li>
-<li>脚本扫描：<ul>
-<li>-sC指定脚本</li>
-<li>–script=指定运行到脚本</li>
-<li>–script-args=指定参数</li>
-<li>–script-updatedb更新脚本</li>
-<li>–script-help是查看脚本帮助信息</li>
-</ul>
+<li>增加扫描<ol>
+<li>选择Scans下面的Tasks</li>
+<li>星号添加</li>
+<li>配置的话呢也就是根据需求</li>
+<li>最下面两个是并发的封包数目和IP数目</li>
+<li>当然有一个Schedule的选项也就是日程，我们选择Once就好，当然你可以增加一个日程，不难也就是星号添加</li>
+</ol>
 </li>
-<li>操作系统检测<ul>
-<li>-O参数检测OS</li>
-<li>–min-xxxxx这个看文档吧，太多了，就是最少的并行数啊，最少响应时间之类的设置</li>
-<li>–scan-delay 10s 每次探测间隔的秒数</li>
-</ul>
+<li>开始扫描<ol>
+<li>添加完任务之后，我们选择要开始的任务，右边有个三角形的开始按钮，点击开始就可以了</li>
+<li>我们点击Status的进度状态，可以查看当前最新的检测情况</li>
+<li><img src="img1.jpg" alt="openvas"></li>
+<li>第一栏目是漏洞标题，第二个是个插件貌似，第三个是漏洞的危险程度（评分根据配置中的标准，我这里貌似是自带的CVSS），第三个是漏洞的可能性（并不会百分之百），最后一个是可以添加误判提示和警告note</li>
+<li>可以看到有个3389的蓝屏还有几个IIS和Tomcat的漏洞</li>
+</ol>
 </li>
-<li>防火墙绕过<ul>
-<li>-D参数伪造源地址，只是产生噪声IP，迷惑目标系统</li>
-<li>-S欺骗原地址一般和-e配合</li>
-<li>-e指定网卡接口</li>
-<li>-g指定的原端口（nmap使用的）</li>
-<li>–proxies使用代理服务器进行扫描</li>
-<li>–data=hex  指定我们发送扫描包的时候增加数据</li>
-<li>–ip-options设置IP字段</li>
-<li>–spoof-mac 欺骗mac地址</li>
-<li>–badsum参数发送错误的checksum字段以此来欺骗部分防火墙</li>
-</ul>
+<li>导出扫描<ol>
+<li>在左上方选择你要导出的类型，然后在点击右边的下载就可以了。</li>
+<li><img src="img2.jpg" alt="导出"></li>
+<li>PDF的话呢是下面这个样子：</li>
+<li><img src="img3.jpg" alt="PDF"></li>
+<li>还是蛮详细的</li>
+</ol>
 </li>
-</ul>
+</ol>
+<p>需要注意的是重启之后我们要重新开启服务的，可能有点慢，而且这个openvas更新速度蛮快的，所以经常更新，还有就是他启动会占用三个端口，需要注意，都是939X的。</p>
+<h2 id="nessus"><a href="#nessus" class="headerlink" title="nessus"></a>nessus</h2><p>这个是个神器，很好用，首先我需要下载他的框架程序，有专门的用于kali的deb包，使用<code>dpkg -i xxxx</code>这个命令将下载好的nessus进行安装，安装的也比较快，启动起来之后，我们就运行，在浏览器中运行<code>kali:8834</code>这个网址，然后店下一步之类的，还有个让我们输入账号密码的，这个输入的就是我们登陆用到的账号密码，然后还有让我们去输入一个Active code，这个去官网注册一个免费的就好了，然后接下来就是漫长的等待，真的很漫长不要以为是卡了，是真的慢，我安装了一下午。<br>当然在下次重新启动的时候我们需要运行nessus这个服务，他还会检查插件问题，就是貌似检查更新吧，但是时间不会太长了（十分钟左右）。<br>进入之后我们需要新建扫描的话呢就需要两到三步：</p>
+<ol>
+<li>新建扫描策略：<ol>
+<li>点击Policies然后创建一个新的模板</li>
+<li>然后下面有几个弄好了的模板，我们选择哪个高级的Advanced Scan</li>
+<li>第一页的话呢就根据选择建立就好了（就是一些主机发现啊，端口扫描，服务发现之类的配置，注意里面会默认扫描本机，如果网段有本机的话呢）</li>
+<li>第二页Credentials就是让我们输入已知的信息，比如一些账号密码（主要用来登陆检测）</li>
+<li>第三页是Plugins，我们点进去选择我们想要要的，不想要的直接Disable，他就会变灰</li>
+<li>最后保存即可</li>
+</ol>
+</li>
+<li>新建扫描任务<ol>
+<li>点击My Scans，然后新建扫描</li>
+<li>选择User Defined，选择刚才选中的模板</li>
+<li>然后第一页输入扫描名称和要扫描的IP段或IP</li>
+<li>后两页和openvas一样，一个是定时扫描，还有一个就是发邮件</li>
+<li>然后保存</li>
+</ol>
+</li>
+<li>开始扫描<ol>
+<li>在My Scans中，在要开始的项目点击那个开始的三角形就可以开始了</li>
+<li>我们可以点进去，他会实时更新检查情况</li>
+</ol>
+</li>
+</ol>
+<p><img src="img4.jpg" alt="nessus"><br>可以看到我们扫描出来了很多漏洞。<br><img src="img5.jpg" alt="result"><br>可以看到，特别多漏洞，而且点进去紫色的，你会发现更多MS的漏洞。<br><img src="img6.jpg" alt="into"><br>他的检测能力貌似是高于openvas不少，这是因为我在扫描策略的时候增加了用户的密码，而且点进去会看到许多详细信息。<br><img src="img7.jpg" alt="detail"><br>最后点击右上角的Report进行报告的导出。<br><img src="img8.jpg" alt="PDF"><br>可以看到这个就是漏洞报告，PDF的，很漂亮的其实，而且我们点击那个超链接还可以跳转到官网查看详细信息。</p>
 
       
     </div>
@@ -350,7 +352,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/105/">105</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/106/">106</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -417,7 +419,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
