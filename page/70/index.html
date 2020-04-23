@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/28/%E9%A9%B1%E5%8A%A8%E5%99%A8%E5%8D%B7%E6%A0%87-%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/CRegKey/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/28/%E9%A9%B1%E5%8A%A8%E5%99%A8%E5%8D%B7%E6%A0%87-%E6%96%87%E4%BB%B6%E5%A4%B9%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">驱动器卷标-文件夹操作</a>
+            <a href="/2020/01/29/CRegKey/" class="post-title-link" itemprop="url">CRegKey</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-28 17:50:19" itemprop="dateCreated datePublished" datetime="2020-01-28T17:50:19+08:00">2020-01-28</time>
+              <time title="Created: 2020-01-29 08:46:32" itemprop="dateCreated datePublished" datetime="2020-01-29T08:46:32+08:00">2020-01-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:58:35" itemprop="dateModified" datetime="2020-02-01T12:58:35+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:57:39" itemprop="dateModified" datetime="2020-02-01T12:57:39+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,35 +262,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="驱动器与文件夹"><a href="#驱动器与文件夹" class="headerlink" title="驱动器与文件夹"></a>驱动器与文件夹</h1><p>这两个东西在我们的日常操作电脑的过程中，经常用到，就是用来存储硬盘上的文件的。</p>
-<h2 id="卷标操作"><a href="#卷标操作" class="headerlink" title="卷标操作"></a>卷标操作</h2><p>由于不是很常用这些函数，我就贴一下函数定义就好了。<br><code>SetVolumeLabel</code>设置卷标名称。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetVolumeLabel</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpRootPathName,  <span class="comment">// pointer to name of root directory for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                           <span class="comment">// volume</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpVolumeName   <span class="comment">// name for the volume</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>第一个参数如果为NULL的话呢是操作当前的一个卷标，第二个参数就是卷标的名称，<strong>如果设置为NULL则是删除卷标</strong>。<br><code>GetVolumeInformation</code>获取卷标信息</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">GetVolumeInformation</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpRootPathName,        <span class="comment">// address of root directory of the </span></span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="comment">// file system</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpVolumeNameBuffer,     <span class="comment">// address of name of the volume</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nVolumeNameSize,         <span class="comment">// length of lpVolumeNameBuffer</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpVolumeSerialNumber,  <span class="comment">// address of volume serial number</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpMaximumComponentLength,</span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="comment">// address of system's maximum </span></span></span></span><br><span class="line"><span class="function"><span class="params">                                 <span class="comment">// filename length</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpFileSystemFlags,     <span class="comment">// address of file system flags</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpFileSystemNameBuffer, <span class="comment">// address of name of file system</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nFileSystemNameSize      <span class="comment">// length of lpFileSystemNameBuffer</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>逻辑驱动器的序列号是在格式化驱动器的时候，操作系统随机分配的一个GUID（全局标识符）。</p>
-<h2 id="检测逻辑驱动器"><a href="#检测逻辑驱动器" class="headerlink" title="检测逻辑驱动器"></a>检测逻辑驱动器</h2><p><code>DWORD GetLogicalDrives(VOID)</code>逻辑驱动器可用情况<br>这个函数没有参数，返回值是一个位掩码：<br><strong>如果函数成功，则返回一个位掩码，表示当前可用的磁盘驱动器。位位置0(最小有效位)是驱动器A，位位置1是驱动器B，位位置2是驱动器C，依此类推。</strong><br><code>GetLogicalDriveStrings</code>获取存在的卷标：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">GetLogicalDriveStrings</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD nBufferLength,  <span class="comment">// size of buffer</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpBuffer       <span class="comment">// pointer to buffer for drive strings</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个就是位了我们的方便进行设计的，缓冲区的内容格式就是：<br><code>c:\&lt;null&gt;d:\&lt;null&gt;&lt;null&gt;</code><br><code>GetDriveType</code>获取驱动器的类型<br>就是判断驱动器是个什么盘符，比如说网络的，U盘，硬盘之类的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">UINT <span class="title">GetDriveType</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpRootPathName   <span class="comment">// pointer to root path</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>返回值有如下几个：</p>
+          <h2 id="CRegKey"><a href="#CRegKey" class="headerlink" title="CRegKey"></a><code>CRegKey</code></h2><p>之前说的这个忘记加上去了，补充一下，这个的话呢其实就是说方便我们的调用。<br>比较特殊的是这个类不是MFC的，而是<code>#include &lt;atlbase.h&gt;</code><br>而且类的函数比较简单，调用起来十分的方便。</p>
 <ul>
-<li>DRIVE_UNKNOWN     The drive type cannot be determined. </li>
-<li>DRIVE_NO_ROOT_DIR The     root directory does not exist. </li>
-<li>DRIVE_REMOVABLE     The disk can be removed from the drive. </li>
-<li>DRIVE_FIXED     The disk cannot be removed from the drive. </li>
-<li>DRIVE_REMOTE     The drive is a remote (network) drive. </li>
-<li>DRIVE_CDROM     The drive is a CD-ROM drive. </li>
-<li>DRIVE_RAMDISK     The drive is a RAM disk. </li>
+<li>Attach Attaches a registry key handle to the CRegKey object.  </li>
+<li>Close Releases m_hKey.  </li>
+<li>Create Creates or opens the specified key.  </li>
+<li>CRegKey Constructor.  </li>
+<li>DeleteSubKey Deletes the specified key.  </li>
+<li>DeleteValue Deletes a value field of the key identified by m_hKey.  </li>
+<li>Detach Detaches m_hKey from the CRegKey object.  </li>
+<li>Open Opens the specified key.  </li>
+<li>QueryValue Retrieves the data for a specified value field.  </li>
+<li>RecurseDeleteKey Deletes the specified key and explicitly deletes all subkeys.  </li>
+<li>SetKeyValue Stores data in a specified value field of a specified key.  </li>
+<li>SetValue Stores data in a specified value field.<br>但是有一点需要注意，如果想要立即写入的话呢要调用Flush方法，这个在我这个2001年的MSDN好像没有说明。</li>
 </ul>
-<p><code>GetDiskFreeSpace</code>获取磁盘空间剩余的内容<br>有时候我们确实有这种需求，需要我们的磁盘剩余空间</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">GetDiskFreeSpace</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpRootPathName,    <span class="comment">// pointer to root path（要检测的磁盘）</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpSectorsPerCluster,  <span class="comment">// pointer to sectors per cluster（返回簇的扇区数）</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpBytesPerSector,  <span class="comment">// pointer to bytes per sector（每扇区的字节数）</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpNumberOfFreeClusters,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="comment">// pointer to number of free clusters（用于返回未使用的簇的数量）</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPDWORD lpTotalNumberOfClusters </span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="comment">// pointer to total number of clusters（驱动器簇的总量）</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>总容量的公式：簇总数 X 每簇扇区数 X 每扇区的字节数<br>剩余容量的计算公式： 未使用的簇 X 每簇扇区数 X 每扇区的字节数</p>
-<h2 id="格式化驱动器"><a href="#格式化驱动器" class="headerlink" title="格式化驱动器"></a>格式化驱动器</h2><p><code>SHFormatDriver</code>这个是个外壳函数，就是意思是打开一个对话框，让用户进行选择行操作，这个函数使用的情况很少，所以不介绍了。但值得一说的是需要：<code>#include &lt;shlobj.h&gt;</code>和导入shell32.dll。</p>
-<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><p><code>CreateDirectory</code>创建一个文件夹</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CreateDirectory</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpPathName,                         <span class="comment">// pointer to directory path string</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpSecurityAttributes  <span class="comment">// pointer to security descriptor</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>不能进行递归创建，我们自己写一个就好了</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BOOL CStudy_HistoryDlg::CreateDir(LPCTSTR lpszDir)</span><br><span class="line">&#123;</span><br><span class="line">	CString strDir = lpszDir;</span><br><span class="line">	<span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(pos = strDir.Find(<span class="string">"\\"</span>,pos+<span class="number">1</span>) != <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		CreateDirectory(strDir.Left(pos),<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> CreateDirectory(strDir,<span class="literal">NULL</span>);;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>RemoveDirectory</code>删除目录<br>这个只能删除空目录，无法递归删除，递归删除的话呢使用我们之前写好的那个文件删除的函数就可以了。</p>
 
       
     </div>
@@ -310,7 +296,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/69/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/69/">69</a><span class="page-number current">70</span><a class="page-number" href="/page/71/">71</a><span class="space">&hellip;</span><a class="page-number" href="/page/106/">106</a><a class="extend next" rel="next" href="/page/71/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/69/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/69/">69</a><span class="page-number current">70</span><a class="page-number" href="/page/71/">71</a><span class="space">&hellip;</span><a class="page-number" href="/page/108/">108</a><a class="extend next" rel="next" href="/page/71/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -377,7 +363,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
