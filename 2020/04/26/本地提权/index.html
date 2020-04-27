@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="kali安装VM_TOOLS最新版本需要执行：sudo apt-get install open-vm-tools-desktop才可以。 操作系统用户 Windows user：普通的用户 administrator：超级管理员 system：内核级管理员 administrator包含user功能，system包含administrator和user的大部分功能 Guest是最小的权限   L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本地提权">
+<meta property="og:url" content="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="kali安装VM_TOOLS最新版本需要执行：sudo apt-get install open-vm-tools-desktop才可以。 操作系统用户 Windows user：普通的用户 administrator：超级管理员 system：内核级管理员 administrator包含user功能，system包含administrator和user的大部分功能 Guest是最小的权限   L">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/img3.jpg">
+<meta property="article:published_time" content="2020-04-26T03:09:39.000Z">
+<meta property="article:modified_time" content="2020-04-27T11:29:25.772Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="渗透测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>本地提权 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          本地提权
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-26 11:09:39" itemprop="dateCreated datePublished" datetime="2020-04-26T11:09:39+08:00">2020-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-27 19:29:25" itemprop="dateModified" datetime="2020-04-27T19:29:25+08:00">2020-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="kali安装VM-TOOLS"><a href="#kali安装VM-TOOLS" class="headerlink" title="kali安装VM_TOOLS"></a>kali安装VM_TOOLS</h2><p>最新版本需要执行：<code>sudo apt-get install open-vm-tools-desktop</code>才可以。</p>
+<h1 id="操作系统用户"><a href="#操作系统用户" class="headerlink" title="操作系统用户"></a>操作系统用户</h1><ol>
+<li>Windows<ol>
+<li>user：普通的用户</li>
+<li>administrator：超级管理员</li>
+<li>system：内核级管理员</li>
+<li>administrator包含user功能，system包含administrator和user的大部分功能</li>
+<li>Guest是最小的权限</li>
+</ol>
+</li>
+<li>Linux<ol>
+<li>user：普通用户</li>
+<li>root：超级管理员</li>
+<li>root级别最大，可以掌控所有</li>
+</ol>
+</li>
+</ol>
+<h2 id="Windows下的administrator到system"><a href="#Windows下的administrator到system" class="headerlink" title="Windows下的administrator到system"></a>Windows下的administrator到system</h2><p>XP：使用命令：<code>at 11:24 /interactive cmd</code><br>意思就是在11:24分启动一个交互的cmd，权限是system，因为at命令是由system权限的。<br><img src="img1.jpg" alt="adtosys"><br>再次之后在这个cmd启动的都是system权限，然后使用taskmgr打开进程管理器，杀死explore进程，然后再用system启动explore进程，那么系统就会进入system权限了。</p>
+<p>win7/win8：at已经没了，sc命令：<br><code>sc Create syscmd binPath=&quot;cmd /K start&quot; type=own type=interactive</code><br><code>sc start syscmd</code><br>服务都是system进行启动。<br>第一句是创建一个名称为syscmd的服务，这个服务是启动一个可以交互的命令行。<br>第二条是启动这个服务。</p>
+<p>微软提供了些提权的套件。</p>
+<p>注入进程提权：就是注入已经启动了的System进程，然后获取CMD。<br>一般提供一个端口就是我们可以使用nc连接的。<br>优点是因为注入所以不会被管理员通过进程发现异常。</p>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ol>
+<li>通过数据包的抓取嗅探，可以获得更多账号的账号密码。</li>
+<li>通过键盘记录器。</li>
+<li>本地缓存密码（浏览器的密码记录，远程登陆凭证，无线wifi密码）</li>
+<li>PwDump(kali带着)，支持查看远程的加密密码，现在这些Windows的工具都存放在/usr/share/windows-binaries下面了</li>
+<li>Windows登录的密码是在C盘下的Windows下的system32下的config下的SAM文件，但是是加密的</li>
+<li>wce 在内存中读取登录的账号的sessions信息</li>
+<li><code>wce -lv</code>查看当前登录的sessions信息</li>
+<li><code>wce -d password</code>计算hash密码</li>
+<li><code>wce -w</code>读取一个存储的明文包密码，有可能能独处登录用户的密码，其实也就是Digest这个包中存在明文密码。</li>
+<li>wce可以执行的话呢必须要是管理员</li>
+<li><code>wce -i 0004BE06 -s xxx:xxxxxxxxxxxx:xxxxxxxxxx</code></li>
+<li>上面这句话的意思就是说，把那个0004BE06的账号改为后面的这个账号</li>
+<li>mimikatz使用先提权</li>
+<li><code>privilege::debug</code>提升权限</li>
+<li><code>sekurlsa::logonPasswords</code>可以查看太多的信息。</li>
+<li><code>ts::multirdp</code>允许多用户同时登陆</li>
+<li><code>event::clear</code>清除安全日志</li>
+<li><code>event::drop</code>不产生安全日志</li>
+<li>使用一定的漏洞进行提权，例如<code>MS-11-080，MS14-068</code></li>
+</ol>
+<h2 id="Linux提权"><a href="#Linux提权" class="headerlink" title="Linux提权"></a>Linux提权</h2><p>首先需要一台Linux内核小于2.6.39的一个系统（这里用的是bee的那个Ubuntu），我们现在是普通用户。<br><img src="img2.jpg" alt="normalusr"><br>然后我们在kali中编译这个版本的漏洞，搜索<code>2.6.39</code>，使用<code>18411.c</code>这个文件，Linux内核的一个漏洞<br><img src="img3.jpg" alt="gcc"><br>然后将生成的exp放在目标系统上。<br>但是生成的文件无法运行，需要将源码移植到Ubuntu上面，然后在上面运行gcc编译源码。<br>但是最终我还是没有能够进行提权，我觉得可能是我的版本太低了。</p>
+<h2 id="配置不当提权"><a href="#配置不当提权" class="headerlink" title="配置不当提权"></a>配置不当提权</h2><p>就是通过有些服务是system权限运行的，我们替换掉这个文件然后重启服务，我们修改的程序就有了system的权限。<br>当然我们需要有修改文件的权限（这一点需要管理员配置不当）。</p>
+<h3 id="Windows下查找"><a href="#Windows下查找" class="headerlink" title="Windows下查找"></a>Windows下查找</h3><p>使用icacls进行文件权限的查询。<br>常用命令：<code>icacls c:\windows\*.exe /save perm /T</code><br>这个是进行递归的一个查询Windows下面的程序的权限列举，生成一个perm文件进行保存。<br>最后搜索一个：<code>FA;;;BU</code>找到对应的程序，然后我们替换，就等着管理员重启机器。<br>替换的文件可以进行捆绑反弹shell。</p>
+<h3 id="Linux下查找"><a href="#Linux下查找" class="headerlink" title="Linux下查找"></a>Linux下查找</h3><p><code>find / -perm 777 -exec ls -l {} \;</code></p>
+<h2 id="查找隐私信息"><a href="#查找隐私信息" class="headerlink" title="查找隐私信息"></a>查找隐私信息</h2><p>Linux：</p>
+<ol>
+<li>/etc/resolv.conf</li>
+<li>/etc/passwd</li>
+<li>/etc/shadow</li>
+<li>whoami,who -a</li>
+<li>ifconfig -a ,iptables -L -n,netstat -rn</li>
+<li>uname -a.ps aux</li>
+<li>dpkg -l | head</li>
+</ol>
+<p>Windows：</p>
+<ol>
+<li>ipconfig /all ,ipconfig /displaydns,netstat -bnao,netstat -r</li>
+<li>new view,new view /domain</li>
+<li>new user /domain,net user %username% /domain</li>
+<li>net localgroup administrator username /add</li>
+<li>net group “Domain Controllers” /domain</li>
+<li>net share name$=C:/unlimited</li>
+<li>net user username /active:yes /domain</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag"># 渗透测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/" rel="prev" title="溢出思路">
+      <i class="fa fa-chevron-left"></i> 溢出思路
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#kali安装VM-TOOLS"><span class="nav-number">1.</span> <span class="nav-text">kali安装VM_TOOLS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统用户"><span class="nav-number"></span> <span class="nav-text">操作系统用户</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows下的administrator到system"><span class="nav-number">1.</span> <span class="nav-text">Windows下的administrator到system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用方法"><span class="nav-number">2.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux提权"><span class="nav-number">3.</span> <span class="nav-text">Linux提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置不当提权"><span class="nav-number">4.</span> <span class="nav-text">配置不当提权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows下查找"><span class="nav-number">4.1.</span> <span class="nav-text">Windows下查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux下查找"><span class="nav-number">4.2.</span> <span class="nav-text">Linux下查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找隐私信息"><span class="nav-number">5.</span> <span class="nav-text">查找隐私信息</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
