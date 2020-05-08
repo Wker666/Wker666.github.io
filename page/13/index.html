@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/RECON-NG/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/17/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/16/RECON-NG/" class="post-title-link" itemprop="url">RECON-NG</a>
+            <a href="/2020/04/17/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/" class="post-title-link" itemprop="url">主动信息收集1</a>
         </h1>
 
         <div class="post-meta">
@@ -229,10 +229,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-16 11:57:48 / Modified: 15:20:57" itemprop="dateCreated datePublished" datetime="2020-04-16T11:57:48+08:00">2020-04-16</time>
+              <time title="Created: 2020-04-17 08:42:41" itemprop="dateCreated datePublished" datetime="2020-04-17T08:42:41+08:00">2020-04-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-18 08:38:37" itemprop="dateModified" datetime="2020-04-18T08:38:37+08:00">2020-04-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -256,12 +262,140 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="RECON-NG"><a href="#RECON-NG" class="headerlink" title="RECON-NG"></a>RECON-NG</h1><p>首先我下载的kali自带的是5.0，不好用，需要更新一下：<code>apt-get install recon-ng</code>，更新完毕之后就要更新我们的模块：<code>marketplace refresh</code>，这个样子就好了。</p>
-<p>但是好像5.0之后他就大改动了，就不自带模块，模块需要跟着自己去下载。<br>搜索模块：<code>marketplace search google</code><br>搜索完毕之后我们就需要下载：<code>marketplace install google_site_web</code><br>下载的过程还是需要翻墙，下载完毕之后加载模块：<code>modules load google_site_web</code><br>通过<code>info</code>查询参数的信息，发现只有一个SOURCE参数，所以我们只需要设置我们的web站点就可以了。<br>设置参数的内容：<code>options set SOURCE sina.com</code><br>但是在使用之前在模块外面我们需要先设置上我们的代理，因为我们是要访问谷歌。<br>然后<code>run</code>就可以了，最后我们可以看到这个样子的一个结果：<br><img src="img1.jpg" alt="result"><br>使用<code>show hosts</code>可以查看保存的结果。</p>
-<p>还有一些模块类似于查询IP之类的，我们是需要通过在表中查询得到结果然后进行数据的获取的。<br>所以最好的使用方法就是提供一个数据库查询语句给模块，然后模块通过数据库查询得到想要查询的内容，最终写入数据库。<br>搜索<code>resolve</code>，可以查看到许多IP解析的模块，我们选择第一个安装使用。<br>设置参数这块比较关键，一个参数，可以是字符串，可以是路径，也可以是查询语句，个人感觉查询语句会好一些，但是在写的时候比较关键的是不要忘记在参数内容前面填写参数的类型，我们可以在info中查询到相关的信息，所以不难得到，我们想要使用查询语句的话呢我们是需要在前面添加：<code>query</code>的。<br>所以我们最后的填写方式：<code>options set SOURCE query select host from hosts</code>，当然查询语句我们是需要指定字段的，类似于*这样子的会导致出错。最终结果就会保存起来。</p>
-<p>报告模块也是比较好用的，搜索<code>report</code>就能得到相对应的模块，比较简单，一般第四个参数是一个bool，问你要不要把密码之类的用掩码进行保护起来。</p>
-<p>最终模板样式：<br><img src="img2.jpg" alt="模板"></p>
-<p>但是需要注意的是，可能会发现有多个重复的域名，这是因为我们之前解析IP的时候，有些域名对应着多个IP。</p>
+          <h1 id="主动信息收集"><a href="#主动信息收集" class="headerlink" title="主动信息收集"></a>主动信息收集</h1><p>在与目标主机发生直接关系的情况下，收集最新的信息已经最真实的信息，但是不可避免的是可能被网管发现，所以我们要尽可能的避免被发现，可以使用代理或者其他的机器，再或者发送垃圾信息淹没真实的需求。</p>
+<h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><p>通过各种协议进行主机的发现。</p>
+<h3 id="通过ARP-二层"><a href="#通过ARP-二层" class="headerlink" title="通过ARP(二层)"></a>通过ARP(二层)</h3><p>通过ARP进行主机的发现，速度快，并且很准确，但是缺点就是只能发现本网段的IP，极少数可能会发现其他网段的IP。</p>
+<ol>
+<li><p>arping 1.1.1.1 -c 1</p>
+<ol>
+<li>通过这个酒而已判断网段主机是否存活，-c代表发送一个数据包，存在的话呢有返回数据的。</li>
+<li>-d参数：判断有没有欺骗（大概就这个功能，其实实际上就是判断一个IP有几个MAC）</li>
+</ol>
+</li>
+<li><p>nmap 使用-sn参数进行主机存活发现（ARP方式）。</p>
+<ol>
+<li>可以探测出来机器的类型</li>
+<li>-il 文件路径 -sn（可以进行文件里面IP的检索）</li>
+<li>这个地方他并不是单纯的发送了arp数据包，还发送了DNS的反向域名解析。</li>
+</ol>
+</li>
+<li><p>Netdiscover</p>
+<ol>
+<li>专用ARP</li>
+<li>支持主动和被动</li>
+<li>被动的话呢是通过混杂模式（别人发广播包我能听到</li>
+<li>netdiscover -i eth0 -r 192.168.1.0/24</li>
+<li>netdiscover -p       （混杂模式，被动发现）</li>
+</ol>
+</li>
+<li><p>scapy是Python的一个模块，但是也可以单独拿出来用</p>
+<ol>
+<li>进入之后使用命令就可以进行数据包的定制</li>
+<li>例如使用：ARP().display()  就可以展示如何使用</li>
+<li>展示之后可以发现它里面的结构其实就和ARP数据包的结构一样，我们只需要根据我们的需要去改写就好了。</li>
+<li>arp=ARP()</li>
+<li>arp.pdst=”192.168.209.1”</li>
+<li>answer=sr1(arp)</li>
+<li>answer.display()</li>
+<li>第一句是来定义一个数据包结构，和ARP一样</li>
+<li>第二句使用设置变量属性</li>
+<li>第三个是发包，并将结果赋值给answer</li>
+<li>最后一个是展示数据</li>
+</ol>
+</li>
+</ol>
+<p><img src="img1.jpg" alt="响应数据"><br>前面的就是数据，后面的padding是因为arp数据包的长度不够，补零。<br>scapy如果目标不存在，他会一直在发包，所以我们可以给他指定一个timetout超时时间，verbose是报告错误信息。</p>
+<h3 id="通过ICMP-三层"><a href="#通过ICMP-三层" class="headerlink" title="通过ICMP(三层)"></a>通过ICMP(三层)</h3><p>第三层使用IP的协议，这个可以跨路由，并且速度快，但是缺点就是很大可能被防火墙拦截，出错率比较高。</p>
+<ol>
+<li><p>通过ping命令可以进行ICMP的检验，-c参数是个数，-R参数路由追踪（发现比较远的网口IP，而traceroute发现的是比较近的那个网口IP，这都是相对于一个设备，就是说每个经过的每个路由有较远和较近的端口路由）</p>
+</li>
+<li><p>traceroute是跟踪路由，原理是通过设置TTL从1递增，TTL减为0的时候，将会返回，所以我们可以一个一个追踪出来。</p>
+</li>
+<li><p>使用scapy进行数据的检验</p>
+<ol>
+<li>i=IP()</li>
+<li>p=ICMP()</li>
+<li>ping=(i/p)</li>
+<li>ping[ip].dst=”192.168.209.1”</li>
+<li>sr1(ping)</li>
+<li>第一句和第二句是进行数据的设置，第三个是将两个协议进行拼接（ICMP运行于IP协议之上），第三个是设置IP包头的目的地址</li>
+<li>sr1(IP(dst=”192.168.209.1”)/ICMP())</li>
+<li>上面的一行就等于上面的所有，ICMP是不需要配置的，自动帮我们配置好了就。</li>
+<li>最好还是添加上timeout=0.1这种的时间超时给sr1，这样子快，否则scapy会一直在等待直到主机上线。</li>
+</ol>
+</li>
+<li><p>namp</p>
+<ol>
+<li>-sn就是会去发送ICMP的数据包判断是否存在，当然在内网的时候会发送arp数据包，但是垮了好多路由的话呢他是会发送ICMP的数据包，也是会进行DNS的一个解析，他还会发送TCP的一个包（貌似是请求时间戳，但是一般不会得到响应）。</li>
+</ol>
+</li>
+<li><p>fping</p>
+<ol>
+<li>和ping的基本命令很像，但是回显的显示有点不一样</li>
+<li>使用-g参数支持对一个地址段进行ping</li>
+<li>-f参数对一个文件进行进行发包</li>
+</ol>
+</li>
+<li><p>hping</p>
+<ol>
+<li>–icmp 是发送ICMP数据包，-c数据个数</li>
+</ol>
+</li>
+</ol>
+<h3 id="TCP-UDP-四层"><a href="#TCP-UDP-四层" class="headerlink" title="TCP/UDP(四层)"></a>TCP/UDP(四层)</h3><p>就是通过TCP的端口打开进行一个探测，准确性高，并且三层如果没发现，四层也是可以发现的。<br>优点就是准确性很高，即使有防火墙也有可能发现，但是速度很慢。</p>
+<ol>
+<li><p>TCP扫描</p>
+<ul>
+<li>发送未经请求的ACK包，就是说本来要握手的，但是我只发送一个ACK包，服务器会响应一个RST包，我们可以基于这个特性进行一个TCP的扫描IP是否在线。当然也可以发送SYN包进行检测。</li>
+</ul>
+</li>
+<li><p>UDP扫描</p>
+<ul>
+<li>就是发送数据包，但是我们发送的数据一般不会得到响应（因为我们的数据不是服务器所期望的有效数据），只有当端口不存在的时候服务器才会给我们发送一个ICMP的端口不可达的数据包。</li>
+</ul>
+</li>
+<li><p>scapy</p>
+<ol>
+<li>i=IP()</li>
+<li>t=TCP()</li>
+<li>r=(i/t)</li>
+<li>r[IP].dst=”192.168.126.1”</li>
+<li>r[TCP].flags=”A”</li>
+<li>sr1(r)</li>
+<li>第五步是指定我们只是单纯的发送一个ACK包</li>
+<li><img src="img2.jpg" alt="响应"></li>
+<li>可以看到响应的是一个R（RST）的一个包</li>
+<li>如果不存在的话呢不能响应（个别会就算存在也不响应）</li>
+<li>上面的是TCP，下面说UDP</li>
+<li>i=IP()</li>
+<li>u=UDP()</li>
+<li>r=(i/u)</li>
+<li>r[IP].dst=”192.168.126.1”</li>
+<li>r[UDP].dport=12321</li>
+<li>a=sr1(r)</li>
+<li>这个就是要发送一个UDP不存在的端口，理论上会返回一个端口不存在的响应包，但是不知道为什么我的就是没有响应。</li>
+<li>当然其实有响应的话呢我们还是要判断一下IP包头中的protocol字段的值是否是1，是1的话呢是ICMP的包。</li>
+</ol>
+</li>
+<li><p>nmap</p>
+<ol>
+<li>使用命令：<code>nmap 192.168.209.0-200 -PA 5333 -sn</code></li>
+<li>这里从0开始是我抓包发现，他貌似第一个并不会跑，所以要跑.1的话呢就要从0开始</li>
+<li>上面的命令是说，使用TCP的ACK方式进行检测</li>
+<li>当然也可以使用-PU（UDP），-PO（使用三种数据包，ICMP，IPIP包头，IGMP）</li>
+</ol>
+</li>
+<li><p>hping3 </p>
+<ol>
+<li>使用命令：<code>hping3 --udp 192.168.209.1 -c 1</code> </li>
+<li>上述命令准确性不高，存活的话呢就会返回一个ICMP的端口不可达</li>
+<li>使用命令：<code>hping3 192.168.209.1 -c 1</code> </li>
+<li>上述是TCP的包</li>
+<li>但是他发送的flags=0，没有任何标志，返回的话呢是返回一个RST+ACK，获得的话呢就说明存活</li>
+<li>但是貌似我的网段不行</li>
+</ol>
+</li>
+</ol>
 
       
     </div>
@@ -281,7 +415,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/110/">110</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/111/">111</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -348,7 +482,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
