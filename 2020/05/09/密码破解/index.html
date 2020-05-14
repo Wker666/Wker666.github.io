@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="常用密码位置usr&#x2F;share&#x2F;wordlists这个下面有许多常用的密码字典文件。 密码字典生成工具普通密码字典生成：crunch：crunch 6 6 0123456789 -o START -d 2 -b 1mb &#x2F; -c 100  -b 分割文件的大小，这里是MB -c 每个字典的行数 -o START -d 同样的字符连贯出现数据（例如是2的话呢，不能连续三个字符一样） -f 字符集列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码破解">
+<meta property="og:url" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="常用密码位置usr&#x2F;share&#x2F;wordlists这个下面有许多常用的密码字典文件。 密码字典生成工具普通密码字典生成：crunch：crunch 6 6 0123456789 -o START -d 2 -b 1mb &#x2F; -c 100  -b 分割文件的大小，这里是MB -c 每个字典的行数 -o START -d 同样的字符连贯出现数据（例如是2的话呢，不能连续三个字符一样） -f 字符集列表">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img5.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img6.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img7.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img9.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img10.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img11.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img12.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img13.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img14.jpg">
+<meta property="article:published_time" content="2020-05-09T07:35:20.000Z">
+<meta property="article:modified_time" content="2020-05-14T05:21:57.247Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="渗透测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>密码破解 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          密码破解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-09 15:35:20" itemprop="dateCreated datePublished" datetime="2020-05-09T15:35:20+08:00">2020-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-14 13:21:57" itemprop="dateModified" datetime="2020-05-14T13:21:57+08:00">2020-05-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="常用密码位置"><a href="#常用密码位置" class="headerlink" title="常用密码位置"></a>常用密码位置</h2><p><code>usr/share/wordlists</code>这个下面有许多常用的密码字典文件。</p>
+<h2 id="密码字典生成工具"><a href="#密码字典生成工具" class="headerlink" title="密码字典生成工具"></a>密码字典生成工具</h2><p>普通密码字典生成：crunch：<br><code>crunch 6 6 0123456789 -o START -d 2 -b 1mb / -c 100</code></p>
+<ul>
+<li>-b 分割文件的大小，这里是MB</li>
+<li>-c 每个字典的行数</li>
+<li>-o START</li>
+<li>-d 同样的字符连贯出现数据（例如是2的话呢，不能连续三个字符一样）</li>
+<li>-f 字符集列表：<code>/usr/share/crunch/charset.lst lalpha-sv</code>(其实就是一堆字符集，然后挑选就好了)</li>
+<li><img src="img1.jpg" alt="crunch"></li>
+<li>前两个6是最大最小位数</li>
+<li>-p 指定字符的所有组合（最大最小字符失效）不加-p的话呢也是所有组合，但是有最小最大位数的区分</li>
+<li>任何不同于-p参数指定的值都是占位符</li>
+<li>-s 指定起始字符串</li>
+<li>-q 是将以全文字当作基本字符。-q char.txt</li>
+<li>-t 掩码<ul>
+<li>掩码类型</li>
+<li><img src="img2.jpg" alt="yanma"></li>
+</ul>
+</li>
+<li>-z 是压缩格式，最好是7z，压缩比例比较好</li>
+<li><ul>
+<li>占位符</li>
+</ul>
+</li>
+<li>\转义符(空格、符号)</li>
+</ul>
+<h2 id="信息集成生成工具"><a href="#信息集成生成工具" class="headerlink" title="信息集成生成工具"></a>信息集成生成工具</h2><ol>
+<li>cupp(主要用来破解个人账号)<ol>
+<li>使用的话呢先安装<code>git clone https://github.com/Mebus/cupp.git</code></li>
+<li>-i参数指定为交互的方式进行信息输入（一般就这个参数，其他的没啥用处）</li>
+<li>注意的是，自带的那个Python版本不太行我们需要使用<code>Python3 cupp.py -i</code></li>
+</ol>
+</li>
+<li>cewl 通过手机网站信息生成字典<ol>
+<li>-m 最小单词长度</li>
+<li>-d 爬网深度</li>
+<li>-e 收集email</li>
+<li>-c 每个单词出现的次数</li>
+<li>-w 输出文件</li>
+<li><code>cewl www.baidu.com -m 3 -d 3 -e -c -v -w cewlout.txt</code></li>
+</ol>
+</li>
+<li>John<ol>
+<li>首先在/etc/john/john.conf中配置自己所需的规则</li>
+<li><code>john --wordlist=p.lst --rules=guize --stdout &gt; m.txt</code></li>
+</ol>
+</li>
+<li>pw-inspector 筛选字典<ol>
+<li>-i 输入文件</li>
+<li>-o 输出文件</li>
+<li>-u 大写字母</li>
+<li>-l 小写字母</li>
+<li>-m 最小位数</li>
+<li>-M 最大位数</li>
+</ol>
+</li>
+</ol>
+<h2 id="爆破工具"><a href="#爆破工具" class="headerlink" title="爆破工具"></a>爆破工具</h2><ol>
+<li>hydra<ol>
+<li>-l 指定用户名（大写是文件）</li>
+<li>-P 指定密码文件</li>
+<li><code>hydra -l admin -P /usr/share/wordlists/dirb/small.txt ftp://192.168.126.1</code></li>
+<li><img src="img3.jpg" alt="ftp"></li>
+<li>-vV 详细信息</li>
+<li>-t 指定并发数</li>
+<li>-e nsr 检查空密码</li>
+<li>-s 检查账号密码相同</li>
+</ol>
+</li>
+<li>medusa<ol>
+<li>相对与hydra稳定性好一些，但支持的服务比较少</li>
+<li>-M 指定模块</li>
+<li>-d 查看支持的模块</li>
+<li>-e 和hydra一样</li>
+<li>-u 用户名</li>
+<li>-P 密码列表</li>
+<li><code>medusa -h 192.168.126.1 -F -e ns -u admin -P /usr/share/wordlists/dirb/small.txt -M ftp</code></li>
+<li>-n 非默认端口</li>
+<li>-T 并发主机数目</li>
+<li><code>-M ftp -q</code>查看ftp下面的小参数</li>
+</ol>
+</li>
+</ol>
+<h2 id="hash猜测"><a href="#hash猜测" class="headerlink" title="hash猜测"></a>hash猜测</h2><p>判断hash类型。</p>
+<ol>
+<li><code>hash-identifier</code><ol>
+<li>直接输入我们需要的hash值</li>
+</ol>
+</li>
+</ol>
+<h2 id="hash破解"><a href="#hash破解" class="headerlink" title="hash破解"></a>hash破解</h2><ol>
+<li><code>hashcat</code><ol>
+<li>-m Hash值的类型的编号</li>
+<li>指定破解的hash文件（里面存放着hash值）</li>
+<li>破解的密码本</li>
+<li>-a 六种模式<ol>
+<li>0 字典破解</li>
+<li>1 排列组合字典密码本破解</li>
+<li>2 尝试字典中的额所有大写小写的组合</li>
+<li>3 全字符集（比较傻逼）</li>
+<li>4 密码换位置破解</li>
+<li>5 自动生成掩码</li>
+</ol>
+</li>
+<li>-b 查看当前系统的强度（我的不知道为啥破解不出来）</li>
+<li>我这个不知道为啥不能用，提示我没内存…</li>
+</ol>
+</li>
+</ol>
+<h2 id="彩虹表生成"><a href="#彩虹表生成" class="headerlink" title="彩虹表生成"></a>彩虹表生成</h2><ol>
+<li><code>rtgen</code><ol>
+<li>生成彩虹表（没啥必要）</li>
+</ol>
+</li>
+<li><code>rtsort</code><ol>
+<li>跟随生成的彩虹表进行排序</li>
+</ol>
+</li>
+<li><code>rcrack</code><ol>
+<li><code>rcrack *.rt -h xxxxx</code></li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><code>Ophcrack</code><ul>
+<li>界面化的工具</li>
+</ul>
+</li>
+</ul>
+<h2 id="离线破解"><a href="#离线破解" class="headerlink" title="离线破解"></a>离线破解</h2><ol>
+<li>john<ol>
+<li>限制性single模式（通过账号信息）</li>
+<li>wordlist（通过字典）有默认的</li>
+<li>全部密码破解</li>
+<li>破解Linux系统账号</li>
+<li><code>unshadow /etc/passwd .etc/shadow &gt; pass.txt</code>（其实就是输出合并文件密码的那两个文件）</li>
+<li>会自动判断加密算法</li>
+<li>查看密码内容<code>john --show pass.txt</code></li>
+<li>结果日志之类的存放在john目录下的pot和log里面</li>
+<li>破解Windows下的密码：<code>john sam.dump --wordlist=password.lst --format=nt</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="在线密码"><a href="#在线密码" class="headerlink" title="在线密码"></a>在线密码</h2><p>cmd5挺好用的</p>
+<h2 id="手动进行ARP欺骗"><a href="#手动进行ARP欺骗" class="headerlink" title="手动进行ARP欺骗"></a>手动进行ARP欺骗</h2><p>首先我们需要让我们的虚拟机是桥接模式。<br>然后我们清空一下ARP的缓存。<br>用管理员方式打开CMD使用命令：<code>arp -d</code><br>然后我们需要先获取一下网关的MAC地址，ping一下网关的IP，然后再ping一下目标的IP。<br>最后使用<code>arp -a</code>查看网关和目标的MAC。<br><img src="img5.jpg" alt="mac"><br>获取到之后，我们使用OmniPeek抓取来自网关的ARP响应包数据。<br><img src="img6.jpg" alt="arp响应包"><br>然后我们选择发送栏目下的<code>发送选中的数据包</code>，然后点击编辑数据包。<br><img src="img7.jpg" alt="pack"><br>修改Destination和Source这两个mac，将目的改为目标的mac，来源来为我们的mac。<br>使用<code>ipconfig /all</code>查看我们的mac。<br>将Target Hardware Addr改为目标的mac，将Target Initernet Addr改为目标的IP。<br>上面那张图是我改完之后的。<br>我们点击发送。<br>然后调出发送窗口，然后开始发送，就会一直发送欺骗的ARP数据包。<br><img src="img8.jpg" alt="send"><br>然后我们在目标及其中观察。<br><img src="img9.jpg" alt="res"><br>发现目标网关的mac已经变成了我们的mac，目标ping一下网关。，我们抓包可以看到：<br><img src="img10.jpg" alt="ping"><br>可以看到我们已经成功欺骗了。超时是因为我们没有响应她。</p>
+<h2 id="工具ARP劫持"><a href="#工具ARP劫持" class="headerlink" title="工具ARP劫持"></a>工具ARP劫持</h2><ol>
+<li><code>arpspoof -t 192.168.209.130 -r 192.168.209</code>双向欺骗</li>
+<li><code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code>开启路由转发（默认是0）</li>
+<li>这样子就实现了完全的劫持，然后就直接使用抓包工具进行抓包就好了。</li>
+<li>抓取URL：<code>webspy -i eth0 192.168.209.130</code>或者<code>urlsnarf -i eth0</code></li>
+<li>嗅探密码：<code>dsniff -i eth0 -m</code></li>
+<li>dns欺骗：<code>dnsspoof -i eth0 -f /usr/share/dsniff/dnsspoof.hosts</code>（需要先修改里面的host，添加就好）</li>
+</ol>
+<h2 id="工具DNS欺骗"><a href="#工具DNS欺骗" class="headerlink" title="工具DNS欺骗"></a>工具DNS欺骗</h2><p>首先我们需要能够修改目标的DNS服务器，然后我们就可以劫持了。<br>使用命令：<code>dnschef --fakeip=127.0.0.1 --fakedomains=www.baidu.com,www.sina.com --interface 192.168.209.131 -q</code><br>第一个IP是指向的IP，第二个是网卡的IP。<br>修改host。<br><img src="img11.jpg" alt="DNS"></p>
+<p><img src="img12.jpg" alt="res"></p>
+<h2 id="ettercap"><a href="#ettercap" class="headerlink" title="ettercap"></a>ettercap</h2><p>欺骗方式：</p>
+<ol>
+<li>arp</li>
+<li>icmp</li>
+<li>dhcp</li>
+<li>静像端口转发</li>
+<li>IPV6</li>
+<li>request包投毒</li>
+<li>ICMP更新ARP</li>
+</ol>
+<p>可以将ettercap改为root下面运行在<code>etter.conf</code>中修改UID和GID为0（默认是nobody权限）</p>
+<p>修改<code>etc/ettercap/etter.conf</code><br><img src="img13.jpg" alt="ssl"><br>将#去掉可以捕获https。</p>
+<p>修改<code>etc/ettercap/etter.dns</code>实现dns欺骗</p>
+<p>编译筛选器<br><code>etterfilter etter.filter.ssh -o ssh.ef</code></p>
+<h2 id="passhash"><a href="#passhash" class="headerlink" title="passhash"></a>passhash</h2><p>就是通过加密的密码进行提交登录密码。</p>
+<p><img src="img14.jpg" alt="passhash"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag"># 渗透测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/28/WEB%E6%B8%97%E9%80%8F/" rel="prev" title="WEB渗透">
+      <i class="fa fa-chevron-left"></i> WEB渗透
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用密码位置"><span class="nav-number">1.</span> <span class="nav-text">常用密码位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密码字典生成工具"><span class="nav-number">2.</span> <span class="nav-text">密码字典生成工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息集成生成工具"><span class="nav-number">3.</span> <span class="nav-text">信息集成生成工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爆破工具"><span class="nav-number">4.</span> <span class="nav-text">爆破工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash猜测"><span class="nav-number">5.</span> <span class="nav-text">hash猜测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash破解"><span class="nav-number">6.</span> <span class="nav-text">hash破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#彩虹表生成"><span class="nav-number">7.</span> <span class="nav-text">彩虹表生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离线破解"><span class="nav-number">8.</span> <span class="nav-text">离线破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在线密码"><span class="nav-number">9.</span> <span class="nav-text">在线密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动进行ARP欺骗"><span class="nav-number">10.</span> <span class="nav-text">手动进行ARP欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具ARP劫持"><span class="nav-number">11.</span> <span class="nav-text">工具ARP劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具DNS欺骗"><span class="nav-number">12.</span> <span class="nav-text">工具DNS欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ettercap"><span class="nav-number">13.</span> <span class="nav-text">ettercap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#passhash"><span class="nav-number">14.</span> <span class="nav-text">passhash</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
