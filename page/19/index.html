@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/05/Android-so-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/10/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/05/Android-so-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">Android so 动态修改内存</a>
+            <a href="/2020/04/10/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/" class="post-title-link" itemprop="url">被动信息收集1</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-05 08:22:19" itemprop="dateCreated datePublished" datetime="2020-04-05T08:22:19+08:00">2020-04-05</time>
+              <time title="Created: 2020-04-10 17:23:18" itemprop="dateCreated datePublished" datetime="2020-04-10T17:23:18+08:00">2020-04-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:49:51" itemprop="dateModified" datetime="2020-04-08T15:49:51+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-15 11:29:20" itemprop="dateModified" datetime="2020-04-15T11:29:20+08:00">2020-04-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
-                    <span itemprop="name">逆向分析</span>
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
                   </a>
                 </span>
             </span>
@@ -262,26 +262,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Android内存修改"><a href="#Android内存修改" class="headerlink" title="Android内存修改"></a>Android内存修改</h1><p>这个主要分为java层和so层的修改，java层基于反射，而so层的分类又分为两种，一种是不注入的修改，修改proc目录下的内容，而注入式就是我们的内存修改，也是比较常用。</p>
-<h2 id="so层修改"><a href="#so层修改" class="headerlink" title="so层修改"></a>so层修改</h2><p>我们如果不修改代码段，仅仅是修改data段之类的是不需要修改属性页权限的。<br>实例代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">JNIEXPORT jint JNICALL Java_com_example_testjni_NativeClass_settotal</span><br><span class="line">  (JNIEnv *, jobject)</span><br><span class="line">&#123;</span><br><span class="line">	total++;</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>就是一个简单的数据累加，我们的目的就是可以随意修改静态变量。</p>
-<p>首先我们需要先找到这个变量的相对偏移，首先我们用IDA搜索这个导出函数：<br><img src="img1.jpg" alt="导出函数"><br>这个带符号的加1其实就是我们的静态变量加一，所以这个静态变量的地址放在了我们的R0寄存器，而R0的值就是来自于R3寄存器指向的地址的值，所以R3是我们需要分析的，R3的地址是之前的R3加上PC，IDA给我们计算出来其实实际上就是加上4004，而这个4004是如何计算出来的呢？<br>我们动态分析一下，动态调试转到之后看到这个代码：</p>
-<figure class="highlight arm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F88 Java_com_example_testjni_NativeClass_settotal</span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F88 <span class="keyword">LDR </span>            <span class="built_in">R3</span>, =(dword_4E25B004 - <span class="number">0x4E257F8E</span>)</span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F8A <span class="keyword">ADD </span>            <span class="built_in">R3</span>, <span class="built_in">PC</span>  <span class="comment">; dword_4E25B004</span></span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F8C <span class="keyword">LDR </span>            <span class="built_in">R0</span>, [<span class="built_in">R3</span>]</span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F8E <span class="keyword">ADDS </span>           <span class="built_in">R0</span>, <span class="number">#1</span></span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F90 <span class="keyword">STR </span>            <span class="built_in">R0</span>, [<span class="built_in">R3</span>]</span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F92 <span class="keyword">BX </span>             <span class="built_in">LR</span></span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F92 <span class="comment">; End of function Java_com_example_testjni_NativeClass_settotal</span></span><br><span class="line"><span class="symbol">libTestJNI.so</span>:<span class="number">4</span>E257F92</span><br></pre></td></tr></table></figure>
-<p>R3的值一开始是<code>4E25B004 - 0x4E257F8E</code>得到的，经计算是：0x3706<br><img src="img2.jpg" alt="R3"><br>确实是0x3706，我们增加的这个PC其实是IDA的PC往下指向的2两条指令，下面两条指令都是两个字节，所以是4个字节（thumb指令），而当前的指令（执行到ADD的时候）PC是我们当前查看的这个模块加上F8A：<br><img src="img3.jpg" alt="PC偏移"><br>所以我们应该使用基地址+0xF8A+0x4+0x3076=0x4004<br>所以我们静态变量的地址应该是这个so模块加上0x4004得到的地址。<br>最后我们可以看下R0的值：<br><img src="img4.jpg" alt="R0"><br>确实使我们的变量。<br>分析到这里就可以了，我们现在需要解决的就是我们如何修改这个内存单元的值，还是用注入实现吧，方便快捷。</p>
-<p>首先我们先要有这样一个函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">GetModuleBase</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> * ulModBase,<span class="keyword">pid_t</span> pid,<span class="keyword">const</span> <span class="keyword">char</span> * pszModName)</span></span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> bRet = <span class="literal">false</span>;</span><br><span class="line">        FILE * fp = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">char</span> szMapFilePath[<span class="number">32</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">char</span> szMapFileLine[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(pszModName == <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">return</span> bRet; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(pid &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">sprintf</span>(szMapFilePath,<span class="string">"/proc/self/maps"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">sprintf</span>(szMapFilePath,<span class="string">"/proc/%d/maps"</span>,pid);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fp = fopen(szMapFilePath,<span class="string">"r"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fp != <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">              <span class="keyword">while</span>(fgets(szMapFileLine,<span class="keyword">sizeof</span>(szMapFileLine),fp)!=<span class="literal">NULL</span>)</span><br><span class="line">              &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">strstr</span>(szMapFileLine,pszModName))</span><br><span class="line">                   &#123;</span><br><span class="line">                      <span class="keyword">char</span> * pszModAddrStart = strtok(szMapFileLine,<span class="string">"-"</span>);</span><br><span class="line">                      <span class="keyword">if</span>(pszModAddrStart)</span><br><span class="line">                      &#123;</span><br><span class="line">                          *ulModBase = strtoul(pszModAddrStart,<span class="literal">NULL</span>,<span class="number">16</span>);                     </span><br><span class="line"></span><br><span class="line">                          <span class="keyword">if</span>(*ulModBase == <span class="number">0x8000</span>)</span><br><span class="line">                            *ulModBase =<span class="number">0</span>;</span><br><span class="line">                bRet = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                       &#125;</span><br><span class="line"></span><br><span class="line">                   &#125; </span><br><span class="line">              &#125;</span><br><span class="line">           fclose(fp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bRet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个函数是用来获取我们模块基地址的：</p>
-<ol>
-<li>第一个参数由于我们用的是c语言，所以不能用引用，只能指针传入，并且，c语言要用bool这个命名，我们需要引入：<code>#include &lt;stdbool.h&gt;</code>。</li>
-<li>第二个参数是我们要查询的进程PID</li>
-<li>第三个参数是我们要查询的模块名称</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> address;</span><br><span class="line">GetModuleBase(&amp;address,getpid(),<span class="string">"libTestJNI.so"</span>);</span><br></pre></td></tr></table></figure>
-<p>这个样子address这个变量里面存储的就是我们的模块基地址，既然得到了变量基地址，那么我们就可以用内存拷贝去修改我们的值：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> tmp=<span class="number">100</span>;</span><br><span class="line"><span class="built_in">memcpy</span>((<span class="keyword">void</span>*)(address+<span class="number">0x4004</span>),(<span class="keyword">void</span>*)&amp;tmp,<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
-<p>这个样子就可以了，还是之前我们用到的ADBI框架。<br><code>./hijack -d -p 1935 -l /data/local/tmp/libexample.so</code><br>1935是我们进程的PID。<br><img src="img5.jpg" alt="修改成功"></p>
-<p>java层就是将这个变量弹出吐司。</p>
+          <h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>用于解析域名的IP，分为A，C name，ptr，mx等记录，A为主机记录，就是可以直接查询到相对应的IP， C name 别名记录（返回下一个域名），ptr IP查域名，mx邮件记录。</p>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><p>kali中使用nslookup命令，进入之后，输入想要查询的域名：<br><img src="img1.jpg" alt="NSlookUP"><br>可以看到，<code>www.sina.com</code>一步步的指向真正的域名IP，那个Server使我们的域名服务器主机，我们可以使用：<code>set type=a</code>等记录设置我们想要查看的信息，默认只有a记录的。使用<code>set type=ptr</code>反向查询IP对应的域名，通过使用：<code>server xxx.xxx.xxx.xxx</code>来设置我们的域名服务器。<br>type与q相同。<br>q=any的话呢是将所有的记录全部查询出来。<br>text记录使用spf反垃圾的一个功能，也是反向解析，主要是判断是否是真正的邮件服务器发送来的。<br>nslookup也是可以再一条输入，就是在后面跟上。<br>例如：nslookup -q=any <a href="http://www.sina.com" target="_blank" rel="noopener">www.sina.com</a> XXX.XXX.XXX.XXX</p>
+<h2 id="智能DNS"><a href="#智能DNS" class="headerlink" title="智能DNS"></a>智能DNS</h2><p>主要是用户所处的位置不同，返回的IP也是不同的。</p>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><h3 id="DNS查询bind信息"><a href="#DNS查询bind信息" class="headerlink" title="DNS查询bind信息"></a>DNS查询bind信息</h3><p>查询DNS服务器使用的bind版本信息可以帮助我们获取DNS服务器的相对应的漏洞信息，寻找机会去得到DNS服务器中的数据，在dig中可以使用：<code>dig +noall +answer txt chaos VERSION.BIND @ns3.dnsv4.com</code>命令来查询bind的版本信息，但是不是所有的都可以：<br><img src="img2.jpg" alt="dig"><br>@后面的是我们需要查询的服务器，在查询域名ns记录的时候我们是可以获取到的。<br><img src="img3.jpg" alt="ns查询"></p>
+<h3 id="DNS追踪"><a href="#DNS追踪" class="headerlink" title="DNS追踪"></a>DNS追踪</h3><p>通过使用：<code>dig +trace www.sina.com</code>，就可以对其追踪DNS信息，访问的方式是先通过本地DNS获取root域的信息，返回root域的名称，再通过root域获取.com域的信息，在这期间虽然获得了.com的信息，但是还是再一次通过本地DNS进行一个验证，获取到了.com的域DNS服务器信息，再通过其获取sina.com域的域名服务器，再通过sina.com获取到了<a href="http://www.sina.com的具体IP地址。" target="_blank" rel="noopener">www.sina.com的具体IP地址。</a><br>在这期间需要注意的是，dig多次访问本地DNS以验证我们通过root和.com获取到的信息的正确性。<br><img src="img4.jpg" alt="DNS追踪"></p>
+<h3 id="DNS服务器区域传输"><a href="#DNS服务器区域传输" class="headerlink" title="DNS服务器区域传输"></a>DNS服务器区域传输</h3><p>使用afxr可以进行DNS服务器的区域性传输，有的时候服务器存在一定缺陷的时候我们是可以获取到相对应许多信息的，有时候会获取到域名下的许多不知道的域名：<br><img src="img5.jpg" alt="DNS域传输"><br>可以看到获取到了许多信息，使用的格式是：<code>dig @域名服务器 域名 afxr</code>这个样子就可以获取到传输的信息了。<br><code>host -T -l 域名 域名服务器</code>也是可以进行获取的（-T使用TCP方式）</p>
+<h2 id="DNS字典爆破"><a href="#DNS字典爆破" class="headerlink" title="DNS字典爆破"></a>DNS字典爆破</h2><p><code>fierce</code>命令在DNS信息收集的时候很好用，他会自动帮助我们查找ns记录，并且还会闲判断是否存在DNS服务器域传输的漏洞，最后再暴力破解是否存在字典中的子域：<code>fierce -dnsserver 8.8.8.8 -dns 域名 -wordlist /usr/share/fierce/hosts.txt</code>8.8.8.8是我们指定的域名服务器。<br><img src="img6.jpg" alt="爆破"><br>注意的是，我们不能带前面的子域名。<br><code>dnsenum -f 文件 -dnsserver 8.8.8.8 sina.com -o sina.xml</code>基本格式也是很类似的。<br>这个的功能很全面，支持域传输，版本信息，爆破，还支持导出文件：<br><img src="img7.jpg" alt="dnsenum"><br>还算比较好用，但是感觉慢了一点。</p>
+<h2 id="DNS注册信息"><a href="#DNS注册信息" class="headerlink" title="DNS注册信息"></a>DNS注册信息</h2><p>这个也是比较关键的一部分，使用whois命令可以轻松收集到许多信息：<code>whois xxx.com</code><br><img src="img8.jpg" alt="whois"><br>许多信息的都是已经收集到了。</p>
 
       
     </div>
@@ -301,7 +289,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/112/">112</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/114/">114</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -368,7 +356,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
