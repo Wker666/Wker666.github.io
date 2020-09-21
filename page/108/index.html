@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/Rebuilt-input-list2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/track-API/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/16/Rebuilt-input-list2/" class="post-title-link" itemprop="url">Rebuilt input list2</a>
+            <a href="/2020/01/16/track-API/" class="post-title-link" itemprop="url">track API</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-16 08:04:44" itemprop="dateCreated datePublished" datetime="2020-01-16T08:04:44+08:00">2020-01-16</time>
+              <time title="Created: 2020-01-16 10:09:14" itemprop="dateCreated datePublished" datetime="2020-01-16T10:09:14+08:00">2020-01-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:47:49" itemprop="dateModified" datetime="2020-04-08T15:47:49+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-08 15:47:46" itemprop="dateModified" datetime="2020-04-08T15:47:46+08:00">2020-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,10 +262,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今天记录一下，再重新构建PE表的时候出现问题实时的解决办法，这是一个EZIP的壳，我们很简单的就到了我们的OEP：<br><img src="img1.jpg" alt="OEP"><br>然后我们进行dump文件，首先我们用OD自带的插件进行dump。<br>然后运行dump出来的文件，会出现出错的问题：<br><img src="img2.jpg" alt="错误"><br>解决办法如下：</p>
-<h2 id="LoadPE纠正镜像"><a href="#LoadPE纠正镜像" class="headerlink" title="LoadPE纠正镜像"></a>LoadPE纠正镜像</h2><p><img src="img3.jpg" alt="纠正镜像"></p>
-<h2 id="import-REC修复转储文件"><a href="#import-REC修复转储文件" class="headerlink" title="import REC修复转储文件"></a>import REC修复转储文件</h2><p>我们可以看到import REC已经正确的查找到了我们需要的东西<br><img src="img4.jpg" alt="修复转储文件"><br>我们接下来获取输入表，剪切输入表dump出来就好了。<br>但是我们发现我们又一次的出现之前的错误！<br><img src="img5.jpg" alt="再次出现错误"></p>
-<h2 id="LoadPE重构PE结构"><a href="#LoadPE重构PE结构" class="headerlink" title="LoadPE重构PE结构"></a>LoadPE重构PE结构</h2><p>我们用LoadPE重新构建一下PE的结构，<br><img src="img6.jpg" alt="选择重建PE"><br>然后我们点击打开，会出现这样子的一个窗口：<br><img src="img7.jpg" alt="查看成功"><br>这个时候我们的程序就正常运行起来了。<br>并且壳子也就没有了，其实我们一开始不用OD自带的插件脱壳，用LoadPE去拖这个壳子，import REC去修复是遇不到这个问题的。</p>
+          <h2 id="一个文件修复"><a href="#一个文件修复" class="headerlink" title="一个文件修复"></a>一个文件修复</h2><p>import REC跟踪无效的函数，这样我们才能够准确无误的删除一些真正无效的函数，我们首先先找到程序的OEP，这里最后一次异常法就可以到达：<br><img src="img1.jpg" alt="OEP"><br>这个时候我们dump出来，运行的时候发现：<br><img src="img2.jpg" alt="错误"><br>这个时候我们用import REC进行修复，常规操作，我们转储的文件中，但是我们发现还是会出来相同的问题，那么我们该如何办呢？</p>
+<h2 id="跟踪出真正的函数地址"><a href="#跟踪出真正的函数地址" class="headerlink" title="跟踪出真正的函数地址"></a>跟踪出真正的函数地址</h2><p>我们首先搜索出函数的输入表（这里验证过了）：<br>然后我们显示出无效的函数：<br><img src="img3.jpg" alt="无效函数"><br>这个时候我们不要急着去删除他，我们先右键跟踪这几个函数地址，看看能不能跟踪出真正的函数地址：<br><img src="img4.jpg" alt="跟踪函数"><br>然后挨个尝试，发现第一二个都是无法看到的，但是我们用到第三个的时候，我们发现import REC卡死了，这个时候，我们就需要打开新的需要脱壳的程序，然后重新加载，然后我们跟踪函数，和上面的操作一样，这个时候import REC会给我们一个结果：<br><img src="img5.jpg" alt="跟踪结果"><br>我们可以看到import REC给了我们结果，不仅给了我们地址，还给了我们的函数名，但是不知道是不是bug，我在跟踪的时候待脱壳程序自动关闭了，但是这个不影响，然后我们发现还有5个无法修复，那么没办法我们尝试着去删除他们（在这里有个坑，不知道是不是这个程序的bug，我们点击删除不行，只能点击那个剪切），完事之后我们修复抓取文件，导出就会发现程序脱壳完毕了：<br><img src="img6.jpg" alt="脱壳完毕"></p>
 
       
     </div>
@@ -285,7 +283,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/107/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/107/">107</a><span class="page-number current">108</span><a class="page-number" href="/page/109/">109</a><span class="space">&hellip;</span><a class="page-number" href="/page/118/">118</a><a class="extend next" rel="next" href="/page/109/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/107/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/107/">107</a><span class="page-number current">108</span><a class="page-number" href="/page/109/">109</a><span class="space">&hellip;</span><a class="page-number" href="/page/119/">119</a><a class="extend next" rel="next" href="/page/109/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -352,7 +350,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-count">119</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
