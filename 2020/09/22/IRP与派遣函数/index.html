@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="与用户程序进行交互编写一个用户程序能够使用CreateFile进行交互的驱动。首先我们的设备的符号连接名称是：&quot;\\\\.\\HelloDDK&quot;，由于取消转义，所以\比较多。用户层程序： 123456789101112int _tmain(int argc, _TCHAR* argv[])&amp;#123;	HANDLE hDevcie &#x3D; CreateFile(&quot;\\\\.\\He">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IRP与派遣函数">
+<meta property="og:url" content="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="与用户程序进行交互编写一个用户程序能够使用CreateFile进行交互的驱动。首先我们的设备的符号连接名称是：&quot;\\\\.\\HelloDDK&quot;，由于取消转义，所以\比较多。用户层程序： 123456789101112int _tmain(int argc, _TCHAR* argv[])&amp;#123;	HANDLE hDevcie &#x3D; CreateFile(&quot;\\\\.\\He">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/img2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/img3.jpg">
+<meta property="article:published_time" content="2020-09-22T09:12:09.000Z">
+<meta property="article:modified_time" content="2020-09-23T05:22:31.333Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="驱动开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>IRP与派遣函数 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/22/IRP%E4%B8%8E%E6%B4%BE%E9%81%A3%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          IRP与派遣函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-22 17:12:09" itemprop="dateCreated datePublished" datetime="2020-09-22T17:12:09+08:00">2020-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-09-23 13:22:31" itemprop="dateModified" datetime="2020-09-23T13:22:31+08:00">2020-09-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">驱动开发</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="与用户程序进行交互"><a href="#与用户程序进行交互" class="headerlink" title="与用户程序进行交互"></a>与用户程序进行交互</h1><p>编写一个用户程序能够使用CreateFile进行交互的驱动。<br>首先我们的设备的符号连接名称是：<code>&quot;\\\\.\\HelloDDK&quot;</code>，由于取消转义，所以\比较多。<br>用户层程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	HANDLE hDevcie = CreateFile(<span class="string">"\\\\.\\HelloDDK"</span>,GENERIC_READ|GENERIC_WRITE,<span class="number">0</span>,<span class="literal">NULL</span>,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (hDevcie == INVALID_HANDLE_VALUE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"error"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	CloseHandle(hDevcie);</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就是一个简单的CreateFile得到句柄的程序，最后在退出的时候关闭句柄。</p>
+<p>在驱动层首先我们要先创建一个设备，并且将设备关联上符号连接名，我们创建一个常用的CreateDevice函数，用来创建我们的设备，并且关联连接名。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span>  INITCODE</span></span><br><span class="line"><span class="function">NTSTATUS <span class="title">CreateDevice</span><span class="params">(IN PDRIVER_OBJECT pDriverObject)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	NTSTATUS status;</span><br><span class="line">	PDEVICE_OBJECT pDevObj;</span><br><span class="line">	PDEVICE_EXTENSION pDevExt;</span><br><span class="line">	UNICODE_STRING devName;</span><br><span class="line">	RtlInitUnicodeString(&amp;devName, <span class="string">L"\\Device\\WkerDDKDevice"</span>);</span><br><span class="line">	status = IoCreateDevice(pDriverObject, <span class="keyword">sizeof</span>(DEVICE_EXTENSION), &amp;devName, FILE_DEVICE_UNKNOWN, <span class="number">0</span>, TRUE, &amp;pDevObj);</span><br><span class="line">	<span class="keyword">if</span> (!NT_SUCCESS(status))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> status;</span><br><span class="line">	&#125;</span><br><span class="line">	pDevObj-&gt;Flags |= DO_BUFFERED_IO;</span><br><span class="line">	pDevExt = (PDEVICE_EXTENSION)pDevObj-&gt;DeviceExtension;</span><br><span class="line">	pDevExt-&gt;pDevice = pDevObj;</span><br><span class="line">	pDevExt-&gt;ustrDeviceName = devName;</span><br><span class="line">	<span class="comment">//创建符号连接</span></span><br><span class="line">	UNICODE_STRING symLinkName;</span><br><span class="line">	RtlInitUnicodeString(&amp;symLinkName, <span class="string">L"\\??\\HelloDDK"</span>);</span><br><span class="line">	pDevExt-&gt;ustrSymLinkName = symLinkName;</span><br><span class="line">	status = IoCreateSymbolicLink(&amp;symLinkName, &amp;devName);</span><br><span class="line">	<span class="keyword">if</span> (!NT_SUCCESS(status))</span><br><span class="line">	&#123;</span><br><span class="line">		IoDeleteDevice(pDevObj);</span><br><span class="line">		<span class="keyword">return</span> status;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> STATUS_SUCCESS;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于这个函数是我们在进入驱动使用的，所以我们最好也加上INITCODE，节省一部分的内存，我们首先先是创建一个名字为WkerDDKDevice的设备程序，这个名称是我们不可见的。参数也比较简单，在此之前我们 还需要定义一个设备扩展对象的结构体：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">DEVICE_EXTENSION</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	PDEVICE_OBJECT pDevice;</span><br><span class="line">	UNICODE_STRING ustrDeviceName;<span class="comment">//设备名称</span></span><br><span class="line">	UNICODE_STRING ustrSymLinkName;<span class="comment">//符号连接名称</span></span><br><span class="line">&#125;DEVICE_EXTENSION, *PDEVICE_EXTENSION;</span><br></pre></td></tr></table></figure>
+<p>我们创建完设备对象之后，我们将我们的设备对象相关的属性进行晚上，首先是我们需要支持缓冲区类型的读写，然后我们晚上设备扩展对象，这个东西比我们的全局变量是好用许多的，添加我们需要常用的字段信息，然后初始化我们的符号名，最后将设备名称和符号链接名进行连接，这样我们简单的设备就创建完毕了。</p>
+<p>在DriverEntry中我们这样子写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">DriverEntry</span><span class="params">(IN PDRIVER_OBJECT pDriverObject,</span></span></span><br><span class="line"><span class="function"><span class="params">	IN PUNICODE_STRING pRegistryPath)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pDriverObject-&gt;DriverUnload = Unload;</span><br><span class="line">	NTSTATUS status;</span><br><span class="line">	pDriverObject-&gt;MajorFunction[IRP_MJ_CREATE] = HelloDDKDispatchRoutin;</span><br><span class="line">	pDriverObject-&gt;MajorFunction[IRP_MJ_CLOSE] = HelloDDKDispatchRoutin;</span><br><span class="line">	pDriverObject-&gt;MajorFunction[IRP_MJ_CLEANUP] = HelloDDKDispatchRoutin;</span><br><span class="line">	status = CreateDevice(pDriverObject);</span><br><span class="line">	<span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将我们的Create、close、cleanup的irp派遣函数设置成一个。<br>我们接下来继续写我们的派遣函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKDispatchRoutin</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"进入IRP\n"</span>));</span><br><span class="line">	PIO_STACK_LOCATION <span class="built_in">stack</span> = IoGetCurrentIrpStackLocation(pirp);</span><br><span class="line">	</span><br><span class="line">	KdPrint((<span class="string">"%d"</span>, <span class="built_in">stack</span>-&gt;MajorFunction));</span><br><span class="line"></span><br><span class="line">	NTSTATUS status = STATUS_SUCCESS;</span><br><span class="line">	pirp-&gt;IoStatus.Status = status;</span><br><span class="line">	pirp-&gt;IoStatus.Information = <span class="number">0</span>;</span><br><span class="line">	IoCompleteRequest(pirp, IO_NO_INCREMENT);</span><br><span class="line"></span><br><span class="line">	KdPrint((<span class="string">"离开IRP\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数的话呢是DDK给我们定义的，我们首先获取当前设备栈的stack对象，这个对象里面保存了我们当前级别的信息，里面有一个MajorFunction是定义到底是什么类型的操作调用了这个派遣函数（这个我不是用char定义了，有点麻烦），得到之后我门将返回值设为真，并且将设备栈的状态也设置为真，information为我们操作的字节数，这里给0吧，然后使用<code>IoCompleteRequest</code>函数返回我们的应用程序。</p>
+<p>最终的效果：<br><img src="img1.jpg" alt="con"><br>其实我们也可以发现，close其实就是先调用了cleanup，然后调用了close。</p>
+<h2 id="模拟读写操作（缓冲区）"><a href="#模拟读写操作（缓冲区）" class="headerlink" title="模拟读写操作（缓冲区）"></a>模拟读写操作（缓冲区）</h2><p>在应用程序使用ReadFile类型的函数的时候都是使用的CreateFile得到的handle，在驱动中都有相对的IRP处理。<br>例如我们使用ReadFile的时候相对应的驱动会调用<code>IRP_MJ_READ</code>的派遣函数。<br>我们只需在这个IRP中处理我们想要处理的内容就可以了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKDispatchRoutin</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"进入IRP\n"</span>));</span><br><span class="line">	PIO_STACK_LOCATION <span class="built_in">stack</span> = IoGetCurrentIrpStackLocation(pirp);</span><br><span class="line"></span><br><span class="line">	KdPrint((<span class="string">"%d"</span>, <span class="built_in">stack</span>-&gt;MajorFunction));</span><br><span class="line"></span><br><span class="line">	NTSTATUS status = STATUS_SUCCESS;</span><br><span class="line">	pirp-&gt;IoStatus.Status = status;</span><br><span class="line">	pirp-&gt;IoStatus.Information = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">stack</span>-&gt;MajorFunction == <span class="number">3</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ULONG ulReadLength = <span class="built_in">stack</span>-&gt;Parameters.Read.Length;</span><br><span class="line">		pirp-&gt;IoStatus.Information = ulReadLength; <span class="comment">// 设置实际读取的字节数</span></span><br><span class="line">		<span class="built_in">memset</span>(pirp-&gt;AssociatedIrp.SystemBuffer, <span class="number">0xAA</span>, ulReadLength); <span class="comment">//给缓冲区复制内存</span></span><br><span class="line">	&#125;</span><br><span class="line">	IoCompleteRequest(pirp, IO_NO_INCREMENT);</span><br><span class="line"></span><br><span class="line">	KdPrint((<span class="string">"离开IRP\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了方便起见我还是将Read的派遣函数放在了这个通用的函数里面，但是我会判断设备栈的类型，如果是3也就是ReadFile的话呢我就做ReadFile的操作，首先我先获取他要获取的字节数，这个在<code>stack-&gt;Parameters.Read.Length</code>这个域里面保存着，我们只需要获取出来就可以了，然后热值IRP的操作字节数（其实也就是我们ReadFile里面真实读取个数的OUT参数），然后我们将缓冲区使用memset拷贝是个0xAA进去。<br>这样就完成了模拟一个读驱动，那么我们只需要在应用程序中执行：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模拟读取操作</span></span><br><span class="line">	UCHAR buffer[<span class="number">10</span>];</span><br><span class="line">	ULONG ulRead;</span><br><span class="line">	<span class="keyword">bool</span> bRet = ReadFile(hDevcie,buffer,<span class="number">10</span>,&amp;ulRead,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"共读取字节数：%d\n"</span>,ulRead);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(<span class="keyword">int</span>)ulRead;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%02X"</span>,buffer[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"读取数据出错"</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>打印出来是个0xAA。</p>
+<p>写的话呢类似，只是我们写到的其实是我们设备扩展属性的一个buffer里面，需要注意的是不要超出界限，否则你懂的。</p>
+<p>再写一个获取文件长度的函数吧。<br>首先我们先设置IRP：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pDriverObject-&gt;MajorFunction[IRP_MJ_QUERY_INFORMATION] = HelloDDKQueryInformation;</span><br></pre></td></tr></table></figure>
+<p>然后编写派遣函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKQueryInformation</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"进入IRP查询文件长度\n"</span>));</span><br><span class="line">	PIO_STACK_LOCATION <span class="built_in">stack</span> = IoGetCurrentIrpStackLocation(pirp);</span><br><span class="line">	FILE_INFORMATION_CLASS info = <span class="built_in">stack</span>-&gt;Parameters.QueryFile.FileInformationClass;</span><br><span class="line">	<span class="keyword">if</span> (info == FileStandardInformation)</span><br><span class="line">	&#123;</span><br><span class="line">		PFILE_STANDARD_INFORMATION file_info = (PFILE_STANDARD_INFORMATION)pirp-&gt;AssociatedIrp.SystemBuffer;</span><br><span class="line">		file_info-&gt;EndOfFile = RtlConvertLongToLargeInteger(<span class="number">1314</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	NTSTATUS status = STATUS_SUCCESS;</span><br><span class="line">	pirp-&gt;IoStatus.Status = status;</span><br><span class="line">	pirp-&gt;IoStatus.Information = <span class="built_in">stack</span>-&gt;Parameters.QueryFile.Length;</span><br><span class="line">	IoCompleteRequest(pirp, IO_NO_INCREMENT);</span><br><span class="line"></span><br><span class="line">	KdPrint((<span class="string">"离开IRP查询文件长度\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实还是比较简单的，首先我们先获取设备栈，然后获取查询文件的类型，如果是标准的文件属性查询的话呢我们就获取IRP的系统buffer，这个字段有一个属性就是EndOfFile，表明读取的长度，是一个大整数，这里其实应该读取扩展设备的字段的，但是为了简单我就直接写了一个1314，然后下面的操作就是常规的操作，在最后的时候我们需要注意的是要将操作的字节数设置类设备战中查询文件的长度。<br>我们在应用程序中写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DWORD fileSize;</span><br><span class="line">DWORD low = GetFileSize(hDevcie,&amp;fileSize);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"\n文件长度%d\n"</span>,low);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"文件长度%d\n"</span>,fileSize);</span><br></pre></td></tr></table></figure>
+<p>最后程序的运行效果：<br><img src="img2.jpg" alt="bf"><br>需要注意的是这个大小返回给应用程序的时候是有低32和高32的区别的。</p>
+<p>！！！这里有一点需要注意。我搞了一个小时才搞明白的一个东西，就是运行驱动的时候突然提示文件找不到了，这个解释我一直不知道，但是直到我想到我的设备对象没有销毁的时候我才知道为啥，我们一定要在Unload的时候将我们的设备对象进行销毁。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span>  PAGECODE</span></span><br><span class="line"><span class="function">VOID <span class="title">Unload</span><span class="params">(IN PDRIVER_OBJECT pDriverObject)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"Unload"</span>));</span><br><span class="line">	PDEVICE_OBJECT pNextObj;</span><br><span class="line">	pNextObj = pDriverObject-&gt;DeviceObject;</span><br><span class="line">	<span class="keyword">while</span> (pNextObj != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PDEVICE_EXTENSION pDevExt = (PDEVICE_EXTENSION)pNextObj-&gt;DeviceExtension;</span><br><span class="line">		UNICODE_STRING pLinkName = pDevExt-&gt;ustrSymLinkName;</span><br><span class="line">		IoDeleteSymbolicLink(&amp;pLinkName);</span><br><span class="line">		pNextObj = pNextObj-&gt;NextDevice;</span><br><span class="line">		IoDeleteDevice(pDevExt-&gt;pDevice);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>删除设备和设备对象，并且是整个链表都删除！</p>
+<p>而且需要注意的额是，我们在设置设备对象的Flags属性的时候我们要加上DO_BUFFER_IO属性。</p>
+<h2 id="直接读取设备"><a href="#直接读取设备" class="headerlink" title="直接读取设备"></a>直接读取设备</h2><p>原理也是比较简单的，就是找到用户给的缓冲区的真是物理地址，然后映射到内核模式下的内存里面，这样子内核模式操作的内存其实也就是缓冲区真是的内存，如果不这样直接操作缓冲去的话呢很有可能导致蓝屏。<br>我们直接读取设备得到的真是内存的方法是MsGetSystemAddressPorMdlSage这个函数，参数有两个，第一个是我们的pIrp的MdlAddress结构，这个结构主要记录了用户缓冲区的信息，第二个参数是内存也得信息，一般是：<code>NormalPagePriority</code>，同样的我们需要知道操作的大小，其实在MDLAddress结构体里面都有存储，但是DDK给了我们一个宏，方便操作，都是MmGetMdlXXX开头的，又回去长度，首地址，偏移量。其他的操作和缓冲区读写是一样的，这里不做记录了。</p>
+<h2 id="其他IO操作"><a href="#其他IO操作" class="headerlink" title="其他IO操作"></a>其他IO操作</h2><p>其他的话呢就只有一个完全读写，就是那种不安全的，我们要放在try_except中，并且使用ProbeForWrite这类的函数去检查他的可读写程度。</p>
+<h2 id="DeviceControl"><a href="#DeviceControl" class="headerlink" title="DeviceControl"></a>DeviceControl</h2><p>IRP是：IRP MJ_DEVICE_CONTROL<br>这个是其他操作方式，其实这里相对于读写操作来说的话呢就是多了一个IOCTL的判断，这个就是一个用CTL_CODE宏生成的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CTL_CODE：用于创建一个唯一的<span class="number">32</span>位系统I/O控制代码，这个控制代码包括<span class="number">4</span>部分组成：</span><br><span class="line"></span><br><span class="line">DeviceType（设备类型，高<span class="number">16</span>位（<span class="number">16</span><span class="number">-31</span>位）），</span><br><span class="line"></span><br><span class="line">Function（功能<span class="number">2</span><span class="number">-13</span> 位），</span><br><span class="line"></span><br><span class="line">Method（I/O访问内存使用方式）,</span><br><span class="line"></span><br><span class="line">Access（访问限制，<span class="number">14</span><span class="number">-15</span>位）。</span><br></pre></td></tr></table></figure>
+<p>第一个是设备类型，第三个是操作模式（缓冲区，直接），第四个是访问权限。<br>第二个的话呢是一个0X800-0XFFF的数值，0-0X07FFF是系统的，我们只能定义0X800到0XFFF的。<br>与read和write区别的就是，我们通过stack-&gt;Parameters.DeviceControl.xxx获取相关的信息：</p>
+<ol>
+<li>IoControlCode是IOCTL码</li>
+<li>OutBufferLegth是输出buffer的长度</li>
+<li>同样的，操作的数据还是在pIrp-&gt;AssociatedIrp.SystemBuffer里面</li>
+<li>直接读数据和缓冲区设备读取的却别就在于设置FLAG和DeviceType，并且是否要用MnGetSystemAddressForMdlSafe函数获得真正的物理地址映射的内核模式地址<br><img src="img3.jpg" alt="直接操作"></li>
+</ol>
+<p>看看这个就想起来了，缓冲区的话呢是不用使用内核地址的。</p>
+<p>其他操作方式访问的话呢去直接和缓冲区的区别就在于要检查内存的可用性和获取输入输出地址的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对于 DeviceIOControl提供的输入缓冲区的地址，派遣函数可以通过LO堆栈(IO_</span><br><span class="line">STACK_LOCATION）的stack-&gt;Parameters.DeviceloControl.Type3InputBuffer得到。同时，</span><br><span class="line">DeviceIOControl提供的输出缓冲区的地址，派遣函数可以由IRP的pIrp-&gt;UserBuffer得到。</span><br></pre></td></tr></table></figure>
+
+<p>一般我们是通过switch语句来判断IoControlCode码进行case操作。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag"># 驱动开发</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/21/%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="驱动的文件操作">
+      <i class="fa fa-chevron-left"></i> 驱动的文件操作
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#与用户程序进行交互"><span class="nav-number">1.</span> <span class="nav-text">与用户程序进行交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟读写操作（缓冲区）"><span class="nav-number">1.1.</span> <span class="nav-text">模拟读写操作（缓冲区）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接读取设备"><span class="nav-number">1.2.</span> <span class="nav-text">直接读取设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他IO操作"><span class="nav-number">1.3.</span> <span class="nav-text">其他IO操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DeviceControl"><span class="nav-number">1.4.</span> <span class="nav-text">DeviceControl</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
