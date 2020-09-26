@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>驱动定时器</title>
+    <url>/2020/09/26/%E9%A9%B1%E5%8A%A8%E5%AE%9A%E6%97%B6%E5%99%A8/</url>
+    <content><![CDATA[<h2 id="IO定时器"><a href="#IO定时器" class="headerlink" title="IO定时器"></a>IO定时器</h2><p>就和应用程序的定时器差不多。<br>首先我们先初始化定时器，这个定时器需要一个函数例程，就是我们的定时函数，一般来说IoInitializeTimer函数是在DriverEntry函数中调用。<br>这个定时函数需要注意的是我们不能操作分页内存，因为他是在DISXXX级别上，并且我们开关定时器一般使用IOCTL进行控制。<br>开始计时器使用：<code>IoStartTimer</code><br>关闭计时器使用：<code>IoStopTimer</code><br>并且需要注意的是在定时器函数中我们最好使用互锁的函数，这样子稳定一些。</p>
+<h2 id="DPC定时器"><a href="#DPC定时器" class="headerlink" title="DPC定时器"></a>DPC定时器</h2><p>DPC定时器也是一个队列的操作形式，相对比较灵活一些。<br>使用之前要初始化DPC对象和定时器对象：<code>KeInitializeTimer</code>和<code>KeInitializeDpc</code><br>开启DPC定时器：<code>KeSetTimer</code>第一个是定时器指针，第二个是时间间隔，第三个是DPC对象。<br>关闭DPC定时器：<code>KeCancelTimer</code>参数及时Timer对象。<br><code>KeSetTimer</code>的第二个参数如果是正数的话呢就是绝对时间，是1601年到现在的绝对时间，如果是负数的话呢是间隔多长时间。<br>注意的是DPC例程只能触发一次，如果想周期性的触发那么需要在DPC中再次调用KeSetTimer。<br>DCP例程有一个DPC对象指针和三个PVOID的参数：<br>第一个是DPC对象，第二个是在我们<code>KeInitializeDpc</code>指定的参数是第一个，其余两个可能由别的发来的吧。</p>
+<p><strong>一般在驱动中使用时间都是用的负数，这样子才是相对的间隔时间</strong></p>
+<h2 id="等待函数"><a href="#等待函数" class="headerlink" title="等待函数"></a>等待函数</h2><ol>
+<li>KeWaitForSingleObject<ol>
+<li>这个和平常用的那个区别就在于第二三个参数，我们一般使用Executive和KernelMode</li>
+<li>时间的话呢我们一般要设置为负数</li>
+</ol>
+</li>
+<li>KeDelayExecutionThread<ol>
+<li>这个函数就是将当前线程睡眠一定的时间，然后转入运行状态</li>
+</ol>
+</li>
+<li>KeStallExecutionProcessor<ol>
+<li>这个函数比较耗CPU，他并不是休眠而是出于忙等待</li>
+</ol>
+</li>
+<li>KTimer也是一个内核对象，也有激发态和为激发态，当我们在KeSetTimer的时候不指定DPC例程的话呢，在指定的时间过去之后KeWaitForSingleObject就会不等待了（其实就是第一种的变样子使用，不用Event而是使用Ktimer对象）</li>
+</ol>
+<h2 id="时间操作的函数"><a href="#时间操作的函数" class="headerlink" title="时间操作的函数"></a>时间操作的函数</h2><ol>
+<li>KeQuerySystemTimer 参数就是OUT接受从1601.1.1到现在的时间，单位是100ns</li>
+<li>ExSystemToLocalTime将系统时间转换为当前时区对应的时间，当前时区可以通过控制面板进行设置。第一个参数是格林尼治时间，第二个是OUT接受当地时间。</li>
+<li>ExLocalTimeToSystemTime是讲当前时区的时间转换为格林尼治的时间。</li>
+<li>RtlTimeFieldsToTime是将当前的年月日得到系统时间，第一个参数是一个结构体，一看就知道了的。类似的还有RtlTimeToTimeFields</li>
+</ol>
+<h2 id="IRP的超时取消原理"><a href="#IRP的超时取消原理" class="headerlink" title="IRP的超时取消原理"></a>IRP的超时取消原理</h2><p>首先初始一个定时器对象和DPC对象，并将DPC例程和定时器对象进行关联。在每次对IRP操作前，开启定时器，并设置好一定的超时。如果在指定时间内对IRP的处理没有结束，那么操作系统就会就会进入 DPC例程。<br>在DPC例程中取消还在继续处理的IRP。如果驱动程序能在超时前结束IRP的操作，则应该取消定时器，从而保证不会再次取消IRP。</p>
+<p>DPC的最小时间间隔是ms，而IO的是s！</p>
+]]></content>
+      <categories>
+        <category>驱动开发</category>
+      </categories>
+      <tags>
+        <tag>驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>驱动同步处理</title>
     <url>/2020/09/23/%E9%A9%B1%E5%8A%A8%E5%90%8C%E6%AD%A5%E5%A4%84%E7%90%86/</url>
     <content><![CDATA[<h2 id="分页内存故障"><a href="#分页内存故障" class="headerlink" title="分页内存故障"></a>分页内存故障</h2><p>分页内存由于有可能将磁盘文件映射过来，但是当读取不是在物理内存的时候会产生一个异常，这个异常会执行异常处理函数，原本是正常的，但是如果出现DISPATCH_LEVEL级别的异常线程中的时候会导致系统的崩溃。<br>对于等于或者高于DISPATCH_LEVEL级别的程序不能使用分页内存。</p>

