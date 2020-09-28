@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/24/%C2%96Wker-SearchEngineScanVlun-FrameWork/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/20/%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">拒绝服务</a>
+            <a href="/2020/05/24/%C2%96Wker-SearchEngineScanVlun-FrameWork/" class="post-title-link" itemprop="url">Wker_SearchEngineScanVlun FrameWork</a>
         </h1>
 
         <div class="post-meta">
@@ -229,16 +229,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-05-20 09:48:35" itemprop="dateCreated datePublished" datetime="2020-05-20T09:48:35+08:00">2020-05-20</time>
+              <time title="Created: 2020-05-24 20:55:22 / Modified: 23:05:51" itemprop="dateCreated datePublished" datetime="2020-05-24T20:55:22+08:00">2020-05-24</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-21 12:51:21" itemprop="dateModified" datetime="2020-05-21T12:51:21+08:00">2020-05-21</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -262,8 +256,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="httpslow"><a href="#httpslow" class="headerlink" title="httpslow"></a>httpslow</h2><p>通过发送一个post之类的长数据，一次发送很少的字节，然后让服务器一直等待剩余数据，使得服务器的连接数暴增。<br><code>slowhttptest -c 1000 -H -g -o out.txt -i 10 -r 200 -t GET -u</code><br>需要通过<code>ulimit -n 70000</code>设置Linux最大连接数。<br><img src="img1.jpg" alt="参数"></p>
-<h2 id="land"><a href="#land" class="headerlink" title="land"></a>land</h2><p>就是通过伪造源地址为目标地址实现目标地址自己连接自己。</p>
+          <h1 id="工具信息"><a href="#工具信息" class="headerlink" title="工具信息"></a>工具信息</h1><p>工具名：<code>Wker_SearchEngineScanVlun FrameWork</code><br>运行平台：<code>Windows</code><br>开发时长：2天<br>当前版本：1.0<br>完成日期：2020年5月24日<br>插件数目：5个搜索引擎插件，3个漏洞检测插件<br>用途：用来统计搜索引擎对于某种漏洞的页面的持有数目。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>写这个小软件其实想了好多，一开始并不想去写，但是为了能够更好的提升Web安全的质量，所以编写了这款小工具。<br>工具的作用是对某个搜索引擎（例如百度谷歌）所爬取的链接进行漏洞的检测，以此提升整个web的安全质量。<br>在写这个程序之前我一开始装备使用B/S架构编写，也就是想beef，nessus这样的程序实现浏览器的UI交互方式，因为之前开发的B/S架构都是用的别的语言进行开发，C++开发这种的也写过，但是没写的很好，本想尝试一下，但是学校开学了（大二学生是真苦逼），所以只能重新改为C/S架构了。</p>
+<h1 id="工具框架"><a href="#工具框架" class="headerlink" title="工具框架"></a>工具框架</h1><p>既然称之为<code>FrameWork</code>，所以我起初编写的是一个框架，然后才写的插件，所以说自己也是可以编写属于自己插件的。<br>工具分为了两个框架，一个是搜索引擎的框架，另外一个是漏洞检测框架。</p>
+<ol>
+<li>搜索引擎框架是用来从搜索引擎中提取链接</li>
+<li>漏洞检测框架式用来检测链接是否存在漏洞</li>
+</ol>
+<p>我沿用了nessus的思想，实现从插件中提取，生成策略的方法。</p>
+<p>首先我们先下载程序，下载链接我会在文章底部进行提供的，下载完毕之后，是个zip，直接解压运行就好了。<br>里面的<code>Wker_SearchEngineScanVlun FrameWork.exe</code>就是框架程序了，运行之后，我们可以进行。<br>运行程序之后我们会看到AboutDialog，里面有一些说明信息。<br><img src="img1.jpg" alt="AboutDialog"><br>这里就是说明，如果通过本软件做任何违法的事情，所有的后果与作者无关。<br>还说了，如果想要获取更多的插件，我们需要到我的博客上进行下载。<br>如果同意上述的许可，就点击确定。</p>
+<p>在这之前我先要介绍一些工具的目录。<br><img src="img2.jpg" alt="Floder"></p>
+<ol>
+<li><code>Search_Engine</code>这个文件夹下面是存放搜索引擎插件的</li>
+<li><code>Vlun</code>这个文件夹是存在漏洞检测插件的</li>
+<li><code>txt</code>这个目录是我在编写插件的时候，用到的一些txt，点进去就能看明白了</li>
+<li><code>Ploic</code>这个文件夹是我们生成的策略文件</li>
+</ol>
+<p>了解这么多之后我们就可以来配置我们的策略了，进入程序之后我们就可以看到下面的界面。<br><img src="img3.jpg" alt="mainDialog"><br>可以看到左上角的策略菜单，我们点击，下面有个子菜单，我们点击新建策略。<br><img src="img4.jpg" alt="NewPloic"><br>可以看到左边是搜索引擎的插件，右边是漏洞扫描的插件。<br>当然这里需要注意的是Google插件是需要翻墙的，我没有提供代理，所以你只能使用全局代理（PAC的就可以），所以我这里拿百度的插件进行演示。<br>把百度的钩给勾选上，然后双击百度那一行，然后会弹出一个对话框，我们输入我们想要使用的搜索语句，例如：<code>inurl:asp?id=33</code>这类的语句。然后点击确定就好了。然后起始页和结束页自己选择就好了，然后选择漏洞扫描插件，这里我只写了三个，SQL注入，XPATH注入，XSS注入的。使用的前后缀在txt目录下你们可以看到。<br>我们生成一个策略之后，我们就可以使用我们生成的策略。<br><img src="img5.jpg" alt="result"><br>可以观察到，有点慢，因为我们在txt中的前后缀很多，所以我建议大家可以自己去修改。</p>
+<h1 id="开发插件"><a href="#开发插件" class="headerlink" title="开发插件"></a>开发插件</h1><ol>
+<li>搜索引擎插件</li>
+</ol>
+<p>使用MFC的DLL去编写插件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">BOOL <span class="title">GetLink</span><span class="params">(CString SearchValue,<span class="keyword">int</span> page,CStringArray *ResultLink)</span></span></span><br></pre></td></tr></table></figure>
+<p>在你的DLL中导出一个这个名字的函数，第一个参数，是搜索的内容，第二个参数是搜索的页数，第三个参数是返回的数组。</p>
+<ol start="2">
+<li>漏洞检测插件</li>
+</ol>
+<p>首先我们需要定义一个结构体：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">URLStruct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	DWORD HTTPFlag;</span><br><span class="line">	CString Domain;</span><br><span class="line">	CString path;</span><br><span class="line">	CMap&lt;CString,LPCTSTR,CString,LPCTSTR&gt; arg;</span><br><span class="line">	INTERNET_PORT PORT;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>导入一个头文件：<br><code>#include &lt;afxinet.h&gt;</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">BOOL <span class="title">ScanVlun</span><span class="params">(URLStruct* Link,CString *Detail)</span></span></span><br></pre></td></tr></table></figure>
+<p>在你的DLL中导出一个这个名字的函数，第一个参数就是哪个结构体了，第二参数是详细信息，返回值是是否存在漏洞。</p>
+<ol>
+<li>HTTPFlag这个是网站链接的类型</li>
+<li>Domain是域</li>
+<li>path是路径</li>
+<li>arg是参数的键值对</li>
+<li>PORT是使用的端口</li>
+</ol>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>程序存在的缺陷：</p>
+<ol>
+<li>我没使用多线程（很快会更新）</li>
+<li>界面做的很随便</li>
+<li>插件没有超时，所以一个死链接可能会很久才回会过去（这个是检测漏洞的插件我写的时候我没注意）</li>
+</ol>
+<p>插件我会经常更新（两三天有空就写一个），我会在我的博客进行发布的：<code>https://wker666.github.io/</code><br>这里我需要强调的是：绝对不能做违法的事情，就和条约上写的一样。</p>
+<p>下载地址：<br>链接：<code>https://pan.baidu.com/s/1FTZWIMUfkvxtC0dJihvXjw</code><br>提取码：<code>nqnj</code></p>
+<p>我为什么不写fofa，shodan，钟馗插件，是因为我怕有人会恶意替换这个插件。</p>
 
       
     </div>
@@ -283,7 +322,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/123/">123</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/124/">124</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,7 +389,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
