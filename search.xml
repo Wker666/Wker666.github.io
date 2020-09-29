@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>驱动I/O操作</title>
+    <url>/2020/09/29/%E9%A9%B1%E5%8A%A8I-O%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h2 id="IO操作"><a href="#IO操作" class="headerlink" title="IO操作"></a>IO操作</h2><p>在DOS的时候，确实可以直接使用IN和OUT这两个汇编指令的，但是到了现在只有在内核层才能直接使用汇编指令了。<br>8位的IO输出指令：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">UCHAR <span class="title">IN_8</span> <span class="params">(PUCHAR Port)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	UCHAR Value;</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov edx,Port</span><br><span class="line">		in al,dx</span><br><span class="line">		mov Value,al</span><br><span class="line"></span><br><span class="line">		nop</span><br><span class="line">		nop</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(Value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Out_32</span><span class="params">(PULONG Port,ULONG Value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov edx,Port</span><br><span class="line">		mov eax,Value</span><br><span class="line">		out dx,eax</span><br><span class="line">		nop</span><br><span class="line">		nop</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很简单的操作，注意位数就好，并且用户层不能用。</p>
+<h2 id="DDK的IO函数"><a href="#DDK的IO函数" class="headerlink" title="DDK的IO函数"></a>DDK的IO函数</h2><p><img src="img1.jpg" alt="DDK_IO函数"></p>
+<p>需要引入<code>HAL.lib</code><br><code>UCHAR Ret8 = READ_PORT_UCHAR((PUCHAROx379)</code></p>
+<p>WINIO的函数库，给的是用户层用，但是需要管理员权限，简单的使用：<br><img src="img2.jpg" alt="winio"></p>
+<h2 id="DDK操作IO"><a href="#DDK操作IO" class="headerlink" title="DDK操作IO"></a>DDK操作IO</h2><p><img src="img3.jpg" alt="READ"><br>就截图了关键代码段，首先我们获取输入输出的缓冲区，这块可能有点看不懂，但是解释一下就好，我们是规定了他的输入格式的，端口号是一个ULONG类型在最前面（这里需要注意的是InputBuffer++，我觉得是加一，端口号为啥要用四字节的，其实只是为了获取低位罢了，在下面的READ操作中，可以看到我们又强制转换成了其他的，但还是有ULONG类型的），然后就是输出的字节位数，供我们进行判断。<br>其实类似的写入的话呢基本相同，也就是在这个数据格式里面加了一个数据，其实我感觉引入一个结构体会更好一些，不知道作者这么写的目的是什么。</p>
+<h2 id="将用户模式下的函数提升到内核模式下"><a href="#将用户模式下的函数提升到内核模式下" class="headerlink" title="将用户模式下的函数提升到内核模式下"></a>将用户模式下的函数提升到内核模式下</h2><p>其实也是很简单的，比较直接的说就是将我们的用户层的函数地址传递给内核层的驱动，然后让驱动执行这个函数，我感觉很实用，想写个类似的工具！放在后面说。</p>
+<p>其实还有一个方法在用户层读取IO的方法，就是使用为文档化的Ke386SetIoAccessMap函数，这个函数还需要我们进行声明，这个函数就是设置我们的EFLAGS寄存器的IOPL位，这里不做记录了，貌似现在用不了了。</p>
+]]></content>
+      <categories>
+        <category>驱动开发</category>
+      </categories>
+      <tags>
+        <tag>驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>驱动的挂载</title>
     <url>/2020/09/28/%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%8C%82%E8%BD%BD/</url>
     <content><![CDATA[<h2 id="驱动的挂载"><a href="#驱动的挂载" class="headerlink" title="驱动的挂载"></a>驱动的挂载</h2><p>这个给我的感觉就有点像钩子链一样，一环接一环的。<br>上层设备可以对传过来的数据进行一层过滤，这一点又像hook技术。</p>
