@@ -61,7 +61,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/10/01/Hook-SSDT/img4.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/10/01/Hook-SSDT/img5.jpg">
 <meta property="article:published_time" content="2020-10-01T02:09:33.000Z">
-<meta property="article:modified_time" content="2020-10-01T03:07:31.456Z">
+<meta property="article:modified_time" content="2020-10-01T03:52:42.674Z">
 <meta property="article:author" content="Wker">
 <meta property="article:tag" content="驱动开发">
 <meta name="twitter:card" content="summary">
@@ -238,7 +238,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-10-01 10:09:33 / Modified: 11:07:31" itemprop="dateCreated datePublished" datetime="2020-10-01T10:09:33+08:00">2020-10-01</time>
+              <time title="Created: 2020-10-01 10:09:33 / Modified: 11:52:42" itemprop="dateCreated datePublished" datetime="2020-10-01T10:09:33+08:00">2020-10-01</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -315,6 +315,7 @@
 <p>留一个问题，希望读者可以通过思考得出如何过掉他的第二种保护手法。</p>
 <p>那种内联的hook方法我就不讲了，这个的话呢还要牵扯到一些比较底层的东西，牵扯到CR0的一些问题，给大家一段代码，从网上摘录的，其实也比较简单，就是对CR0的位进行了修改：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//禁用写保护,wp=0</span></span><br><span class="line"><span class="function">VOID <span class="title">PROTECT</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		cli ;</span><br><span class="line">		mov eax, cr0</span><br><span class="line">		<span class="keyword">and</span>  eax, ~<span class="number">0x10000</span></span><br><span class="line">		mov cr0, eax</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//启用写保护,wp=1</span></span><br><span class="line"><span class="function">VOID <span class="title">UN_PROTECT</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		mov  eax, cr0</span><br><span class="line">		<span class="keyword">or</span>     eax, <span class="number">0x10000</span></span><br><span class="line">		mov  cr0, eax</span><br><span class="line">		sti ;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
