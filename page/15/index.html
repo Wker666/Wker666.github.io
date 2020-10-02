@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/24/%C2%96Wker-SearchEngineScanVlun-FrameWork/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/09/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3/" class="post-title-link" itemprop="url">密码破解</a>
+            <a href="/2020/05/24/%C2%96Wker-SearchEngineScanVlun-FrameWork/" class="post-title-link" itemprop="url">Wker_SearchEngineScanVlun FrameWork</a>
         </h1>
 
         <div class="post-meta">
@@ -229,16 +229,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-05-09 15:35:20" itemprop="dateCreated datePublished" datetime="2020-05-09T15:35:20+08:00">2020-05-09</time>
+              <time title="Created: 2020-05-24 20:55:22 / Modified: 23:05:51" itemprop="dateCreated datePublished" datetime="2020-05-24T20:55:22+08:00">2020-05-24</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-14 13:21:57" itemprop="dateModified" datetime="2020-05-14T13:21:57+08:00">2020-05-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -262,177 +256,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="常用密码位置"><a href="#常用密码位置" class="headerlink" title="常用密码位置"></a>常用密码位置</h2><p><code>usr/share/wordlists</code>这个下面有许多常用的密码字典文件。</p>
-<h2 id="密码字典生成工具"><a href="#密码字典生成工具" class="headerlink" title="密码字典生成工具"></a>密码字典生成工具</h2><p>普通密码字典生成：crunch：<br><code>crunch 6 6 0123456789 -o START -d 2 -b 1mb / -c 100</code></p>
-<ul>
-<li>-b 分割文件的大小，这里是MB</li>
-<li>-c 每个字典的行数</li>
-<li>-o START</li>
-<li>-d 同样的字符连贯出现数据（例如是2的话呢，不能连续三个字符一样）</li>
-<li>-f 字符集列表：<code>/usr/share/crunch/charset.lst lalpha-sv</code>(其实就是一堆字符集，然后挑选就好了)</li>
-<li><img src="img1.jpg" alt="crunch"></li>
-<li>前两个6是最大最小位数</li>
-<li>-p 指定字符的所有组合（最大最小字符失效）不加-p的话呢也是所有组合，但是有最小最大位数的区分</li>
-<li>任何不同于-p参数指定的值都是占位符</li>
-<li>-s 指定起始字符串</li>
-<li>-q 是将以全文字当作基本字符。-q char.txt</li>
-<li>-t 掩码<ul>
-<li>掩码类型</li>
-<li><img src="img2.jpg" alt="yanma"></li>
-</ul>
-</li>
-<li>-z 是压缩格式，最好是7z，压缩比例比较好</li>
-<li><ul>
-<li>占位符</li>
-</ul>
-</li>
-<li>\转义符(空格、符号)</li>
-</ul>
-<h2 id="信息集成生成工具"><a href="#信息集成生成工具" class="headerlink" title="信息集成生成工具"></a>信息集成生成工具</h2><ol>
-<li>cupp(主要用来破解个人账号)<ol>
-<li>使用的话呢先安装<code>git clone https://github.com/Mebus/cupp.git</code></li>
-<li>-i参数指定为交互的方式进行信息输入（一般就这个参数，其他的没啥用处）</li>
-<li>注意的是，自带的那个Python版本不太行我们需要使用<code>Python3 cupp.py -i</code></li>
-</ol>
-</li>
-<li>cewl 通过手机网站信息生成字典<ol>
-<li>-m 最小单词长度</li>
-<li>-d 爬网深度</li>
-<li>-e 收集email</li>
-<li>-c 每个单词出现的次数</li>
-<li>-w 输出文件</li>
-<li><code>cewl www.baidu.com -m 3 -d 3 -e -c -v -w cewlout.txt</code></li>
-</ol>
-</li>
-<li>John<ol>
-<li>首先在/etc/john/john.conf中配置自己所需的规则</li>
-<li><code>john --wordlist=p.lst --rules=guize --stdout &gt; m.txt</code></li>
-</ol>
-</li>
-<li>pw-inspector 筛选字典<ol>
-<li>-i 输入文件</li>
-<li>-o 输出文件</li>
-<li>-u 大写字母</li>
-<li>-l 小写字母</li>
-<li>-m 最小位数</li>
-<li>-M 最大位数</li>
-</ol>
-</li>
-</ol>
-<h2 id="爆破工具"><a href="#爆破工具" class="headerlink" title="爆破工具"></a>爆破工具</h2><ol>
-<li>hydra<ol>
-<li>-l 指定用户名（大写是文件）</li>
-<li>-P 指定密码文件</li>
-<li><code>hydra -l admin -P /usr/share/wordlists/dirb/small.txt ftp://192.168.126.1</code></li>
-<li><img src="img3.jpg" alt="ftp"></li>
-<li>-vV 详细信息</li>
-<li>-t 指定并发数</li>
-<li>-e nsr 检查空密码</li>
-<li>-s 检查账号密码相同</li>
-</ol>
-</li>
-<li>medusa<ol>
-<li>相对与hydra稳定性好一些，但支持的服务比较少</li>
-<li>-M 指定模块</li>
-<li>-d 查看支持的模块</li>
-<li>-e 和hydra一样</li>
-<li>-u 用户名</li>
-<li>-P 密码列表</li>
-<li><code>medusa -h 192.168.126.1 -F -e ns -u admin -P /usr/share/wordlists/dirb/small.txt -M ftp</code></li>
-<li>-n 非默认端口</li>
-<li>-T 并发主机数目</li>
-<li><code>-M ftp -q</code>查看ftp下面的小参数</li>
-</ol>
-</li>
-</ol>
-<h2 id="hash猜测"><a href="#hash猜测" class="headerlink" title="hash猜测"></a>hash猜测</h2><p>判断hash类型。</p>
+          <h1 id="工具信息"><a href="#工具信息" class="headerlink" title="工具信息"></a>工具信息</h1><p>工具名：<code>Wker_SearchEngineScanVlun FrameWork</code><br>运行平台：<code>Windows</code><br>开发时长：2天<br>当前版本：1.0<br>完成日期：2020年5月24日<br>插件数目：5个搜索引擎插件，3个漏洞检测插件<br>用途：用来统计搜索引擎对于某种漏洞的页面的持有数目。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>写这个小软件其实想了好多，一开始并不想去写，但是为了能够更好的提升Web安全的质量，所以编写了这款小工具。<br>工具的作用是对某个搜索引擎（例如百度谷歌）所爬取的链接进行漏洞的检测，以此提升整个web的安全质量。<br>在写这个程序之前我一开始装备使用B/S架构编写，也就是想beef，nessus这样的程序实现浏览器的UI交互方式，因为之前开发的B/S架构都是用的别的语言进行开发，C++开发这种的也写过，但是没写的很好，本想尝试一下，但是学校开学了（大二学生是真苦逼），所以只能重新改为C/S架构了。</p>
+<h1 id="工具框架"><a href="#工具框架" class="headerlink" title="工具框架"></a>工具框架</h1><p>既然称之为<code>FrameWork</code>，所以我起初编写的是一个框架，然后才写的插件，所以说自己也是可以编写属于自己插件的。<br>工具分为了两个框架，一个是搜索引擎的框架，另外一个是漏洞检测框架。</p>
 <ol>
-<li><code>hash-identifier</code><ol>
-<li>直接输入我们需要的hash值</li>
+<li>搜索引擎框架是用来从搜索引擎中提取链接</li>
+<li>漏洞检测框架式用来检测链接是否存在漏洞</li>
 </ol>
-</li>
-</ol>
-<h2 id="hash破解"><a href="#hash破解" class="headerlink" title="hash破解"></a>hash破解</h2><ol>
-<li><code>hashcat</code><ol>
-<li>-m Hash值的类型的编号</li>
-<li>指定破解的hash文件（里面存放着hash值）</li>
-<li>破解的密码本</li>
-<li>-a 六种模式<ol>
-<li>0 字典破解</li>
-<li>1 排列组合字典密码本破解</li>
-<li>2 尝试字典中的额所有大写小写的组合</li>
-<li>3 全字符集（比较傻逼）</li>
-<li>4 密码换位置破解</li>
-<li>5 自动生成掩码</li>
-</ol>
-</li>
-<li>-b 查看当前系统的强度（我的不知道为啥破解不出来）</li>
-<li>我这个不知道为啥不能用，提示我没内存…</li>
-</ol>
-</li>
-</ol>
-<h2 id="彩虹表生成"><a href="#彩虹表生成" class="headerlink" title="彩虹表生成"></a>彩虹表生成</h2><ol>
-<li><code>rtgen</code><ol>
-<li>生成彩虹表（没啥必要）</li>
-</ol>
-</li>
-<li><code>rtsort</code><ol>
-<li>跟随生成的彩虹表进行排序</li>
-</ol>
-</li>
-<li><code>rcrack</code><ol>
-<li><code>rcrack *.rt -h xxxxx</code></li>
-</ol>
-</li>
-</ol>
-<ul>
-<li><code>Ophcrack</code><ul>
-<li>界面化的工具</li>
-</ul>
-</li>
-</ul>
-<h2 id="离线破解"><a href="#离线破解" class="headerlink" title="离线破解"></a>离线破解</h2><ol>
-<li>john<ol>
-<li>限制性single模式（通过账号信息）</li>
-<li>wordlist（通过字典）有默认的</li>
-<li>全部密码破解</li>
-<li>破解Linux系统账号</li>
-<li><code>unshadow /etc/passwd .etc/shadow &gt; pass.txt</code>（其实就是输出合并文件密码的那两个文件）</li>
-<li>会自动判断加密算法</li>
-<li>查看密码内容<code>john --show pass.txt</code></li>
-<li>结果日志之类的存放在john目录下的pot和log里面</li>
-<li>破解Windows下的密码：<code>john sam.dump --wordlist=password.lst --format=nt</code></li>
-</ol>
-</li>
-</ol>
-<h2 id="在线密码"><a href="#在线密码" class="headerlink" title="在线密码"></a>在线密码</h2><p>cmd5挺好用的</p>
-<h2 id="手动进行ARP欺骗"><a href="#手动进行ARP欺骗" class="headerlink" title="手动进行ARP欺骗"></a>手动进行ARP欺骗</h2><p>首先我们需要让我们的虚拟机是桥接模式。<br>然后我们清空一下ARP的缓存。<br>用管理员方式打开CMD使用命令：<code>arp -d</code><br>然后我们需要先获取一下网关的MAC地址，ping一下网关的IP，然后再ping一下目标的IP。<br>最后使用<code>arp -a</code>查看网关和目标的MAC。<br><img src="img5.jpg" alt="mac"><br>获取到之后，我们使用OmniPeek抓取来自网关的ARP响应包数据。<br><img src="img6.jpg" alt="arp响应包"><br>然后我们选择发送栏目下的<code>发送选中的数据包</code>，然后点击编辑数据包。<br><img src="img7.jpg" alt="pack"><br>修改Destination和Source这两个mac，将目的改为目标的mac，来源来为我们的mac。<br>使用<code>ipconfig /all</code>查看我们的mac。<br>将Target Hardware Addr改为目标的mac，将Target Initernet Addr改为目标的IP。<br>上面那张图是我改完之后的。<br>我们点击发送。<br>然后调出发送窗口，然后开始发送，就会一直发送欺骗的ARP数据包。<br><img src="img8.jpg" alt="send"><br>然后我们在目标及其中观察。<br><img src="img9.jpg" alt="res"><br>发现目标网关的mac已经变成了我们的mac，目标ping一下网关。，我们抓包可以看到：<br><img src="img10.jpg" alt="ping"><br>可以看到我们已经成功欺骗了。超时是因为我们没有响应她。</p>
-<h2 id="工具ARP劫持"><a href="#工具ARP劫持" class="headerlink" title="工具ARP劫持"></a>工具ARP劫持</h2><ol>
-<li><code>arpspoof -t 192.168.209.130 -r 192.168.209</code>双向欺骗</li>
-<li><code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code>开启路由转发（默认是0）</li>
-<li>这样子就实现了完全的劫持，然后就直接使用抓包工具进行抓包就好了。</li>
-<li>抓取URL：<code>webspy -i eth0 192.168.209.130</code>或者<code>urlsnarf -i eth0</code></li>
-<li>嗅探密码：<code>dsniff -i eth0 -m</code></li>
-<li>dns欺骗：<code>dnsspoof -i eth0 -f /usr/share/dsniff/dnsspoof.hosts</code>（需要先修改里面的host，添加就好）</li>
-</ol>
-<h2 id="工具DNS欺骗"><a href="#工具DNS欺骗" class="headerlink" title="工具DNS欺骗"></a>工具DNS欺骗</h2><p>首先我们需要能够修改目标的DNS服务器，然后我们就可以劫持了。<br>使用命令：<code>dnschef --fakeip=127.0.0.1 --fakedomains=www.baidu.com,www.sina.com --interface 192.168.209.131 -q</code><br>第一个IP是指向的IP，第二个是网卡的IP。<br>修改host。<br><img src="img11.jpg" alt="DNS"></p>
-<p><img src="img12.jpg" alt="res"></p>
-<h2 id="ettercap"><a href="#ettercap" class="headerlink" title="ettercap"></a>ettercap</h2><p>欺骗方式：</p>
+<p>我沿用了nessus的思想，实现从插件中提取，生成策略的方法。</p>
+<p>首先我们先下载程序，下载链接我会在文章底部进行提供的，下载完毕之后，是个zip，直接解压运行就好了。<br>里面的<code>Wker_SearchEngineScanVlun FrameWork.exe</code>就是框架程序了，运行之后，我们可以进行。<br>运行程序之后我们会看到AboutDialog，里面有一些说明信息。<br><img src="img1.jpg" alt="AboutDialog"><br>这里就是说明，如果通过本软件做任何违法的事情，所有的后果与作者无关。<br>还说了，如果想要获取更多的插件，我们需要到我的博客上进行下载。<br>如果同意上述的许可，就点击确定。</p>
+<p>在这之前我先要介绍一些工具的目录。<br><img src="img2.jpg" alt="Floder"></p>
 <ol>
-<li>arp</li>
-<li>icmp</li>
-<li>dhcp</li>
-<li>静像端口转发</li>
-<li>IPV6</li>
-<li>request包投毒</li>
-<li>ICMP更新ARP</li>
+<li><code>Search_Engine</code>这个文件夹下面是存放搜索引擎插件的</li>
+<li><code>Vlun</code>这个文件夹是存在漏洞检测插件的</li>
+<li><code>txt</code>这个目录是我在编写插件的时候，用到的一些txt，点进去就能看明白了</li>
+<li><code>Ploic</code>这个文件夹是我们生成的策略文件</li>
 </ol>
-<p>可以将ettercap改为root下面运行在<code>etter.conf</code>中修改UID和GID为0（默认是nobody权限）</p>
-<p>修改<code>etc/ettercap/etter.conf</code><br><img src="img13.jpg" alt="ssl"><br>将#去掉可以捕获https。</p>
-<p>修改<code>etc/ettercap/etter.dns</code>实现dns欺骗</p>
-<p>编译筛选器<br><code>etterfilter etter.filter.ssh -o ssh.ef</code></p>
-<h2 id="passhash"><a href="#passhash" class="headerlink" title="passhash"></a>passhash</h2><p>就是通过加密的密码进行提交登录密码。</p>
-<p><img src="img14.jpg" alt="passhash"></p>
+<p>了解这么多之后我们就可以来配置我们的策略了，进入程序之后我们就可以看到下面的界面。<br><img src="img3.jpg" alt="mainDialog"><br>可以看到左上角的策略菜单，我们点击，下面有个子菜单，我们点击新建策略。<br><img src="img4.jpg" alt="NewPloic"><br>可以看到左边是搜索引擎的插件，右边是漏洞扫描的插件。<br>当然这里需要注意的是Google插件是需要翻墙的，我没有提供代理，所以你只能使用全局代理（PAC的就可以），所以我这里拿百度的插件进行演示。<br>把百度的钩给勾选上，然后双击百度那一行，然后会弹出一个对话框，我们输入我们想要使用的搜索语句，例如：<code>inurl:asp?id=33</code>这类的语句。然后点击确定就好了。然后起始页和结束页自己选择就好了，然后选择漏洞扫描插件，这里我只写了三个，SQL注入，XPATH注入，XSS注入的。使用的前后缀在txt目录下你们可以看到。<br>我们生成一个策略之后，我们就可以使用我们生成的策略。<br><img src="img5.jpg" alt="result"><br>可以观察到，有点慢，因为我们在txt中的前后缀很多，所以我建议大家可以自己去修改。</p>
+<h1 id="开发插件"><a href="#开发插件" class="headerlink" title="开发插件"></a>开发插件</h1><ol>
+<li>搜索引擎插件</li>
+</ol>
+<p>使用MFC的DLL去编写插件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">BOOL <span class="title">GetLink</span><span class="params">(CString SearchValue,<span class="keyword">int</span> page,CStringArray *ResultLink)</span></span></span><br></pre></td></tr></table></figure>
+<p>在你的DLL中导出一个这个名字的函数，第一个参数，是搜索的内容，第二个参数是搜索的页数，第三个参数是返回的数组。</p>
+<ol start="2">
+<li>漏洞检测插件</li>
+</ol>
+<p>首先我们需要定义一个结构体：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">URLStruct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	DWORD HTTPFlag;</span><br><span class="line">	CString Domain;</span><br><span class="line">	CString path;</span><br><span class="line">	CMap&lt;CString,LPCTSTR,CString,LPCTSTR&gt; arg;</span><br><span class="line">	INTERNET_PORT PORT;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>导入一个头文件：<br><code>#include &lt;afxinet.h&gt;</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">BOOL <span class="title">ScanVlun</span><span class="params">(URLStruct* Link,CString *Detail)</span></span></span><br></pre></td></tr></table></figure>
+<p>在你的DLL中导出一个这个名字的函数，第一个参数就是哪个结构体了，第二参数是详细信息，返回值是是否存在漏洞。</p>
+<ol>
+<li>HTTPFlag这个是网站链接的类型</li>
+<li>Domain是域</li>
+<li>path是路径</li>
+<li>arg是参数的键值对</li>
+<li>PORT是使用的端口</li>
+</ol>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>程序存在的缺陷：</p>
+<ol>
+<li>我没使用多线程（很快会更新）</li>
+<li>界面做的很随便</li>
+<li>插件没有超时，所以一个死链接可能会很久才回会过去（这个是检测漏洞的插件我写的时候我没注意）</li>
+</ol>
+<p>插件我会经常更新（两三天有空就写一个），我会在我的博客进行发布的：<code>https://wker666.github.io/</code><br>这里我需要强调的是：绝对不能做违法的事情，就和条约上写的一样。</p>
+<p>下载地址：<br>链接：<code>https://pan.baidu.com/s/1FTZWIMUfkvxtC0dJihvXjw</code><br>提取码：<code>nqnj</code></p>
+<p>我为什么不写fofa，shodan，钟馗插件，是因为我怕有人会恶意替换这个插件。</p>
 
       
     </div>
@@ -452,7 +322,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/126/">126</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -519,7 +389,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

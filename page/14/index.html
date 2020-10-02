@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/31/%E5%85%8D%E6%9D%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/20/%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">拒绝服务</a>
+            <a href="/2020/05/31/%E5%85%8D%E6%9D%80/" class="post-title-link" itemprop="url">免杀</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-20 09:48:35" itemprop="dateCreated datePublished" datetime="2020-05-20T09:48:35+08:00">2020-05-20</time>
+              <time title="Created: 2020-05-31 16:39:29" itemprop="dateCreated datePublished" datetime="2020-05-31T16:39:29+08:00">2020-05-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-21 12:51:21" itemprop="dateModified" datetime="2020-05-21T12:51:21+08:00">2020-05-21</time>
+                <time title="Modified: 2020-06-02 14:38:47" itemprop="dateModified" datetime="2020-06-02T14:38:47+08:00">2020-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="httpslow"><a href="#httpslow" class="headerlink" title="httpslow"></a>httpslow</h2><p>通过发送一个post之类的长数据，一次发送很少的字节，然后让服务器一直等待剩余数据，使得服务器的连接数暴增。<br><code>slowhttptest -c 1000 -H -g -o out.txt -i 10 -r 200 -t GET -u</code><br>需要通过<code>ulimit -n 70000</code>设置Linux最大连接数。<br><img src="img1.jpg" alt="参数"></p>
-<h2 id="land"><a href="#land" class="headerlink" title="land"></a>land</h2><p>就是通过伪造源地址为目标地址实现目标地址自己连接自己。</p>
+          <h1 id="msfvenom加密生成"><a href="#msfvenom加密生成" class="headerlink" title="msfvenom加密生成"></a>msfvenom加密生成</h1><p><code>strings *.exe</code>查看exe中的字符串<br><code>md5sum *.exe</code>查看md5值<br>生成加密的exe:<br><img src="img1.jpg" alt="new_exe"></p>
+<p>-x 参数指定模板<br>-e 指定加密模块<br>-i 指定加密的次数</p>
+<h1 id="内存执行"><a href="#内存执行" class="headerlink" title="内存执行"></a>内存执行</h1><p>通过在内存中直接执行，并不需要向硬盘上写入文件。<br>典型的案例是smb的写入payload，当然需要有目标系统的账号密码。</p>
+<h1 id="shift后门"><a href="#shift后门" class="headerlink" title="shift后门"></a>shift后门</h1><p>Veil实际上还是将后门放在内存</p>
+<h1 id="shellter"><a href="#shellter" class="headerlink" title="shellter"></a>shellter</h1><p>实现代码混淆，使正常的exe的作为模板，将木马帮顶进去，但是shellter会导致源文件失效，并且只支持Win32，<br>选择A方式是选择项比较少。<br>然后接下来的操作比较少。</p>
+<h1 id="backdoor-factory"><a href="#backdoor-factory" class="headerlink" title="backdoor-factory"></a>backdoor-factory</h1><ol>
+<li>CTP方式是增加新的代码段。</li>
+<li>代码缝隙添加shellcode（代码洞越小越好，其实就是连续的0x00）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp &#96;which cat&#96; .</span><br><span class="line">拷贝cat 命令到当前目录</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>支持分阶段的代码片段跳转。</p>
+<p>-f 指定被附加的文件（都要指定）<br>-S 加测是否支持注入<br><code>-s show</code> 展示当前可以的payload,-s 指定shellcode<br>-H 反弹的目标<br>-P 指定端口<br>-J 使用多代码洞跳转<br>-a 在后面加代码段，然后附加shellcode</p>
+<p>与veil可以结合。</p>
+<h1 id="Bdfproxy"><a href="#Bdfproxy" class="headerlink" title="Bdfproxy"></a>Bdfproxy</h1><p>劫持流量，将传输的EXE中注入shellcode。</p>
+<p><code>apt-get install kali-linux-all</code>安装所有的kali包。</p>
+<p><img src="img2.jpg" alt="bdfproxy"><br>修改IP往下拉，会有几个系统版本的。</p>
 
       
     </div>
@@ -283,7 +298,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/126/">126</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,7 +365,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

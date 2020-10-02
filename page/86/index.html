@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/Activity%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%922/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B61/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/29/Activity%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%922/" class="post-title-link" itemprop="url">Activity数据传递2</a>
+            <a href="/2020/01/29/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B61/" class="post-title-link" itemprop="url">内存映射文件1</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-29 14:28:52" itemprop="dateCreated datePublished" datetime="2020-01-29T14:28:52+08:00">2020-01-29</time>
+              <time title="Created: 2020-01-29 19:48:51" itemprop="dateCreated datePublished" datetime="2020-01-29T19:48:51+08:00">2020-01-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 12:57:17" itemprop="dateModified" datetime="2020-02-01T12:57:17+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:56:57" itemprop="dateModified" datetime="2020-02-01T12:56:57+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">Android学习</span>
+                  <a href="/categories/Win32%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Win32编程</span>
                   </a>
                 </span>
             </span>
@@ -262,25 +262,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Activity数据传递通过静态变量"><a href="#Activity数据传递通过静态变量" class="headerlink" title="Activity数据传递通过静态变量"></a>Activity数据传递通过静态变量</h2><p>之前说可以通过一些方法进行数据的传递，其实仔细想一下，我们无非就是在类中进行数据集的交互罢了，所以我们可以是用静态变量这种方法进行数据的传递。</p>
+          <h1 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h1><p>这个可以是一个很厉害的技术，之前学过很多次相关的只是，但是都是有一些遗忘，这一次重新认真的学习一下。<br>与虚拟内存相比，内存映射提交到物理存储器的是来自于磁盘上的相应文件而不是系统页面文件，一旦被映射了就相当于整个文件被映射了过来，虚拟内存的页面文件我记得也就是页面大小的几倍（叫做什么粒度我也忘记了）</p>
+<h2 id="内存映射的目的"><a href="#内存映射的目的" class="headerlink" title="内存映射的目的"></a>内存映射的目的</h2><ol>
+<li>内存映射加载EXE和DLL，极大地缩短了启动的时间。</li>
+<li>访问磁盘上的数据，避免了执行I/O操作，也避免了文件的内容申请缓冲区</li>
+<li>内存之间的数据传输，像什么管道啊，油槽啊之类的各种东西好像都是基于内存映射的。</li>
+</ol>
+<ul>
+<li>CreateFileMapping  </li>
+<li>FlushViewOfFile  </li>
+<li>MapViewOfFile  </li>
+<li>MapViewOfFileEx  </li>
+<li>MapViewOfFileVlm  </li>
+<li>OpenFileMapping  </li>
+<li>UnmapViewOfFile   </li>
+<li>UnmapViewOfFileVlm  </li>
+</ul>
+<p>基本上就这么几个，我还是准备分几篇博客写这个东西</p>
+<h2 id="创建一个内存映射内核对象CreateFileMapping"><a href="#创建一个内存映射内核对象CreateFileMapping" class="headerlink" title="创建一个内存映射内核对象CreateFileMapping"></a>创建一个内存映射内核对象<code>CreateFileMapping</code></h2><p><code>CreateFileMapping</code>创建一个内核对象，函数的原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateFileMapping</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFile,              <span class="comment">// handle to file to map</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpFileMappingAttributes,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="comment">// optional security attributes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD flProtect,           <span class="comment">// protection for mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwMaximumSizeHigh,   <span class="comment">// high-order 32 bits of object size</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwMaximumSizeLow,    <span class="comment">// low-order 32 bits of object size</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpName             <span class="comment">// name of file-mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
 <ol>
-<li>传递类</li>
+<li>hFile如果是传给他一个<code>CreateFile</code>的HANDLE对象的话呢，那将是打开这个文件，如果是-1的话呢，那将创建一个内存映射。</li>
+<li>第三个参数是内存映射文件的保护属性，主要是下面这三值：<code>PAGE_READONLY</code> <code>PAGE_READWRITE</code> <code>PAGE_WRITECOPY</code>看名字就知道了。</li>
+<li>三四个参数的话呢是大小，一半给他0，就是和文件一样大。</li>
+<li>最后一个是内存映射文件的名字</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">push2</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String Name;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		Name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>输入端</li>
+<h2 id="打开内存映射文件OpenFileMapping"><a href="#打开内存映射文件OpenFileMapping" class="headerlink" title="打开内存映射文件OpenFileMapping"></a>打开内存映射文件<code>OpenFileMapping</code></h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">OpenFileMapping</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwDesiredAccess,  <span class="comment">// access mode</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bInheritHandle,    <span class="comment">// inherit flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpName          <span class="comment">// pointer to name of file-mapping object</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>第一个参数<code>dwDesiredAccess</code>就和那个打开文件感觉很像。</p>
+<ul>
+<li>FILE_MAP_WRITE Read-write access. The target file-mapping object must have been created with PAGE_READWRITE protection. A read-write view of the file is mapped. </li>
+<li>FILE_MAP_READ Read-only access. The target file-mapping object must have been created with PAGE_READWRITE or PAGE_READ protection. A read-only view of the file is mapped. </li>
+<li>FILE_MAP_ALL_ACCESS Same as FILE_MAP_WRITE. </li>
+<li>FILE_MAP_COPY Copy-on-write access. The target file-mapping object must have been created with PAGE_WRITECOPY protection. A copy-on-write view of the file is mapped. </li>
+</ul>
+</li>
+<li><p>第二个参数和之前那个一样就是询问一下可不可以继承</p>
+</li>
+<li><p>就是创建内核对象时候的名称</p>
+</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> push2 cs = <span class="keyword">new</span> push2();</span><br><span class="line">cs.setName(<span class="string">"aaa"</span>);</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>接收端</li>
+<p>返回文件打开的一个句柄，失败返回NULL</p>
+<h2 id="分配内存地址MapViewOfFile"><a href="#分配内存地址MapViewOfFile" class="headerlink" title="分配内存地址MapViewOfFile"></a>分配内存地址<code>MapViewOfFile</code></h2><p>下一步就是为内存映射文件线性内存地址（其实就是给他一块内存），函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LPVOID <span class="title">MapViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hFileMappingObject,  <span class="comment">// file-mapping object to map into </span></span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="comment">// address space</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwDesiredAccess,      <span class="comment">// access mode</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetHigh,     <span class="comment">// high-order 32 bits of file offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileOffsetLow,      <span class="comment">// low-order 32 bits of file offset</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNumberOfBytesToMap  <span class="comment">// number of bytes to map</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第二个参数就是一个权限类型<ul>
+<li>FILE_MAP_READ</li>
+<li>FILE_MAP_WRITE</li>
+<li>FILE_MAP_ALL_ACCESS</li>
+<li>FILE_MAP_COPY</li>
+</ul>
+</li>
+<li>第三四个参数就是起始位置</li>
+<li>最后一个参数给0就是映射整个文件大小</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> push2 obj = <span class="keyword">new</span> push2();</span><br><span class="line">obj = MainActivity.cs;</span><br><span class="line">Log.d(<span class="string">"test"</span>, obj.getName());</span><br></pre></td></tr></table></figure>
-
-<p>这个样子我们就实现了类中的数据传递，<br>还有一种方法就是在<br>但是有一点我们需要注意就是在窗口返回和销毁的时候我们需要将我们的这个成员变量进行销毁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onDestroy();</span><br><span class="line">	obj = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个样子就可以进行数据传递了</p>
+<p>函数返回成功的话呢给的是我们一个内存地址，失败返回NULL</p>
+<h2 id="撤销映射UnmapViewOfFile"><a href="#撤销映射UnmapViewOfFile" class="headerlink" title="撤销映射UnmapViewOfFile"></a>撤销映射<code>UnmapViewOfFile</code></h2><p>函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">UnmapViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBaseAddress   <span class="comment">// address where mapped view begins</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>很简单就是内存地址<br>然后我们调用<code>CloseHandle</code>关闭句柄</p>
+<h2 id="立即刷新-FlushViewOfFile"><a href="#立即刷新-FlushViewOfFile" class="headerlink" title="立即刷新 FlushViewOfFile"></a>立即刷新 <code>FlushViewOfFile</code></h2><p>立即刷新，如果不是的话呢就和之前的文件操作一样，关闭的时候才会（删除对象的时候才会立即刷新）。<br>函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">FlushViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCVOID lpBaseAddress,       <span class="comment">// start address of byte range to flush</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNumberOfBytesToFlush <span class="comment">// number of bytes in range</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>最后一个参数还是0的话呢是全部。</p>
+<p>先介绍的这里，之后介绍实例。</p>
 
       
     </div>
@@ -300,7 +343,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/85/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><span class="page-number current">86</span><a class="page-number" href="/page/87/">87</a><span class="space">&hellip;</span><a class="page-number" href="/page/126/">126</a><a class="extend next" rel="next" href="/page/87/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/85/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><span class="page-number current">86</span><a class="page-number" href="/page/87/">87</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/87/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -367,7 +410,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>IDT</title>
+    <url>/2020/10/02/IDT/</url>
+    <content><![CDATA[<h2 id="IDT表"><a href="#IDT表" class="headerlink" title="IDT表"></a>IDT表</h2><p>这个就是中断服务表，例如我们使用int 3软终端，我们就会跳到3这个表指向的内存地址去执行代码：<br><img src="img1.jpg" alt="IDT3"><br>这个中段描述表如果要返回的话呢，我们需要用iretd函数进行返回，这样子就不会处理中断，但是程序却会崩溃。这样子可以避免断点。<br>一般对这个地址进行inline hook。<br>可以起到烦cc断点的效果。</p>
+<p>可以使用汇编指令：<code>_asm sidt idtr;</code>将idtr这个变量进行赋值，这个变量是一个结构体对象。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(push, 1)</span></span><br><span class="line"><span class="comment">//从sidt指令获得一个如下的结构，从这里可以得到IDT的开始地址</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">P2C_IDTR_</span> &#123;</span></span><br><span class="line">    P2C_U16        limit; <span class="comment">// 范围</span></span><br><span class="line">    P2C_U32        base; <span class="comment">//基地址</span></span><br><span class="line">&#125;P2C_IDTR, *PP2C_IDTR;</span><br></pre></td></tr></table></figure>
+<p>这个base其实是一个结构体的指针：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(push, 1)</span></span><br><span class="line"><span class="comment">//IDT的内存空间是一个数组。每个元素都有如下的结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">P2C_IDT_ENTRY_</span> &#123;</span></span><br><span class="line">    P2C_U16        offset_low;</span><br><span class="line">    P2C_U16        selector;</span><br><span class="line">    P2C_U8        reserved;</span><br><span class="line">    P2C_U8        type:<span class="number">4</span>;</span><br><span class="line">    P2C_U8        always0:<span class="number">1</span>;</span><br><span class="line">    P2C_U8        dpl:<span class="number">2</span>;</span><br><span class="line">    P2C_U8        present:<span class="number">1</span>;</span><br><span class="line">    P2C_U16        offset_high;</span><br><span class="line">&#125;P2C_IDTENTRY, *PP2C_IDTENTRY;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(pop)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>#pragma pack(push, 1)</code><br>这个的意思就是说压入对齐方式一个字节<br><code>#pragma pack(pop)</code><br>这个意思弹出之前压入的对齐方式</p>
+<p>结构体后面的冒号代表占几位，这四个加起来才8位一个字节。</p>
+<p>中断和陷阱的区别就是一个是主动的，类似于int，另一个是异常的。</p>
+<p>因为我们每个CPU有一个IDT表，所以我们需要修改每一个CPU的IDT表，比较麻烦，我们最好是使用inline hook的方法比较好。</p>
+<p>在内联hook的时候最好是用pushad，pushf保存寄存器，最后popf，popad弹出来。</p>
+]]></content>
+      <categories>
+        <category>驱动开发</category>
+      </categories>
+      <tags>
+        <tag>驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hook_ShadowSSDT</title>
+    <url>/2020/10/02/Hook-ShadowSSDT/</url>
+    <content><![CDATA[<h2 id="ShadowSSDT"><a href="#ShadowSSDT" class="headerlink" title="ShadowSSDT"></a>ShadowSSDT</h2><p>首先使用windbg进行调试，但是我的符号表并没有<code>KeServiceDescriptorTableShadow</code>这个符号，但是我误打误撞发现win7下面的+0x40正好是shadow，哈哈。<br>但是我们发现跟不进去他的基地址，原因是必须要在GDI下面进去，所以我们要下一个内核的消息循环断点，但是我的符号表还是没有NtUserXXX的。<br>我们在读取ShadowSSDT表的时候，不可以在入口函数入口函数读取，因为他并不在GDI中，我们需要在有GDI的程序的线程中进行读取，这个一般是应用程序的IOCL命令下进行读取。<br>hook的话呢和之前一样，或者是直接修改ShadowSSDT数据，不要忘记修改页面保护。</p>
+<h2 id="C硬编码"><a href="#C硬编码" class="headerlink" title="C硬编码"></a>C硬编码</h2><p>我们在使用asm内联汇编的时候，如果遇到不识别的汇编指令，我们可以使用<code>_emit 0xf</code>类型设置硬编码，用OD可以看到。</p>
+]]></content>
+      <categories>
+        <category>驱动开发</category>
+      </categories>
+      <tags>
+        <tag>驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hook_SSDT</title>
     <url>/2020/10/01/Hook-SSDT/</url>
     <content><![CDATA[<h2 id="驱动的hook"><a href="#驱动的hook" class="headerlink" title="驱动的hook"></a>驱动的hook</h2><p>相比Win32API的hook，这个貌似更加的流氓一些，其实原理是这样子的（下面的例子用OpenProcess举例），在我们调用OpenProcess函数的时候会调用ZwOpenProcess函数，还是通过汇编代码分析一下吧（随便找个程序进去就行），这样更清楚：</p>
@@ -11,8 +46,8 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">7707AB30 &gt;  B8 26000000     mov eax,0x26</span><br><span class="line">7707AB35    BA 60F10877     mov edx,ntdll.7708F160</span><br><span class="line">7707AB3A    FFD2            call edx                                 ; OpenProc.&lt;ModuleEntryPoint&gt;</span><br></pre></td></tr></table></figure>
 <p>可以看到，我们又call了一下edx，然后就返回了，这个edx是多少呢，是0x7708F160，我们继续看这个地址：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">7708F160  - FF25 28B21277   jmp dword ptr ds:[Wow64Transition]       ; wow64cpu.76FA7000</span><br></pre></td></tr></table></figure>
-<p>这是最深的一层了，没必要跟进了，其实这个函数通过汇编的分析，可以简单的得到一个结论，就是他需要一个eax的值，在我们调用OpenProcess的时候，这个eax的值是0x26，我截个图大家看看上一层：<br><img src="img1.jpg" alt="eax"><br>发现在上一层有好多类似的代码，都是赋值eax，然后跳到这个Wow64Transition函数中去，这里我讲解的是SSDT，也就是kernel的（不是GDI和user32的）<br>SSDT就是系统服务描述符表，主要作用就是将我们的用户层API与内核层的Nt函数进行一一的对应，里面会存放一个指向这个NT开头函数的地址：<br>说白了就是OpenProcess其实调用了ZwOpenProcess，然后通过eax的值在SSDT表中指向了NtOpenprocess函数，最终调用内核层的代码，Wow64Transition这个函数应该是从用户层跳转的一个函数，这里不做过多的分析。</p>
-<p>简单的分析到这里，我们可以画一张图来理顺一下思路（本人画图技术不精，PS一直都是很混）<br><img src="img2.jpg" alt="paint"><br>在之前我们知道用户层的hook分为两种方式，一种是修改PE导入表，另一种是inlinehook，那么这里也主要分为这两种：</p>
+<p>这是最深的一层了，没必要跟进了，其实这个函数通过汇编的分析，可以简单的得到一个结论，就是他需要一个eax的值，在我们调用OpenProcess的时候，这个eax的值是0x26，我截个图大家看看上一层：<br><img src="img6.jpg" alt="eax"><br>发现在上一层有好多类似的代码，都是赋值eax，然后跳到这个Wow64Transition函数中去，这里我讲解的是SSDT，也就是kernel的（不是GDI和user32的）<br>SSDT就是系统服务描述符表，主要作用就是将我们的用户层API与内核层的Nt函数进行一一的对应，里面会存放一个指向这个NT开头函数的地址：<br>说白了就是OpenProcess其实调用了ZwOpenProcess，然后通过eax的值在SSDT表中指向了NtOpenprocess函数，最终调用内核层的代码，Wow64Transition这个函数应该是从用户层跳转的一个函数，这里不做过多的分析。</p>
+<p>简单的分析到这里，我们可以画一张图来理顺一下思路（本人画图技术不精，PS一直都是很混）<br><img src="img7.jpg" alt="paint"><br>在之前我们知道用户层的hook分为两种方式，一种是修改PE导入表，另一种是inlinehook，那么这里也主要分为这两种：</p>
 <ol>
 <li>修改SSDT表的OpenProcess函数的地址，指向我们hook的地址</li>
 <li>修改函数的跳转</li>
@@ -43,7 +78,7 @@
 <p>驱动卸载函数：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> PAGECODE</span></span><br><span class="line"><span class="function">VOID <span class="title">DriverUnLoad</span><span class="params">(IN PDRIVER_OBJECT pDriverObject)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HookSSDTFunction(MyNtOpenProcess, OldNtOpenProcess);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>也是，卸载的话呢设备对象也不管了，直接取消hook就可以了。</p>
-<p>代码其实比较的简单，关键的也就没几行。<br>看一下在32位上实际的操作是什么样子的：<br><img src="img3.jpg" alt="hook"><br>可以看到XT已经检测出来hook了，并且我们现在如果要用管理员方式运行任何东西，都会提示这个样子的对话框：<br><img src="img4.jpg" alt="hook"><br>这个对话框是不是很熟悉，杀毒软件经常这么搞。<br><img src="img5.jpg" alt="unhook"><br>卸载之后XT也就给我们提示了，没有hook了。</p>
+<p>代码其实比较的简单，关键的也就没几行。<br>看一下在32位上实际的操作是什么样子的：<br><img src="img8.jpg" alt="hook"><br>可以看到XT已经检测出来hook了，并且我们现在如果要用管理员方式运行任何东西，都会提示这个样子的对话框：<br><img src="img9.jpg" alt="hook"><br>这个对话框是不是很熟悉，杀毒软件经常这么搞。<br><img src="img10.jpg" alt="unhook"><br>卸载之后XT也就给我们提示了，没有hook了。</p>
 <h2 id="过掉驱动"><a href="#过掉驱动" class="headerlink" title="过掉驱动"></a>过掉驱动</h2><p>我们知道原理之后，我们只需要写一个简单的驱动，通过MmGetSystemRoutineAddress函数修改回我们之前的OpenProcess地址就可以了，在这里Wker给大家一些问题以及思路：</p>
 <ol>
 <li>我们修改回来的话呢，驱动其实可以设置一个DPC的时钟，一直监视我们的NtOpenprocess的地址，如果发现被改回来的话呢还是可以进行设置回来的。<ol>
