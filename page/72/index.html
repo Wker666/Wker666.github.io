@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/Android-EditText/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/AutoCompleteTextView/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/04/Android-EditText/" class="post-title-link" itemprop="url">Android EditText</a>
+            <a href="/2020/02/04/AutoCompleteTextView/" class="post-title-link" itemprop="url">AutoCompleteTextView</a>
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-02-04 13:06:52 / Modified: 13:33:12" itemprop="dateCreated datePublished" datetime="2020-02-04T13:06:52+08:00">2020-02-04</time>
+              <time title="Created: 2020-02-04 14:14:21 / Modified: 14:55:36" itemprop="dateCreated datePublished" datetime="2020-02-04T14:14:21+08:00">2020-02-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,15 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="EditText"><a href="#EditText" class="headerlink" title="EditText"></a>EditText</h1><p>这个东西就是个编辑框，继承于TextView，对输入的东西可以进行验证与限制</p>
-<h2 id="输入图片"><a href="#输入图片" class="headerlink" title="输入图片"></a>输入图片</h2><p>就有点像输入一个小表情差不多，不是很难实现，因为集成TextView所以我们一样可以使用<code>SpannableString</code>这个类，基本的实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Button btn_1;</span><br><span class="line">	<span class="keyword">private</span> EditText Et_1;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.jmp_activity);</span><br><span class="line">		btn_1 = (Button) findViewById(R.id.button1);</span><br><span class="line">		Et_1 = (EditText) findViewById(R.id.Edit1);</span><br><span class="line">		btn_1.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">			</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">				SpannableString span = <span class="keyword">new</span> SpannableString(<span class="string">"Test"</span>);</span><br><span class="line">				ImageSpan imageSpan = <span class="keyword">new</span> ImageSpan(BitmapFactory.decodeResource(getResources(), R.drawable.ic_l1));</span><br><span class="line">				span.setSpan(imageSpan, <span class="number">0</span>, <span class="number">4</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">				Et_1.append(span);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>首先我们点击按钮的时候，new一个<code>SpannableString</code>然后我们在new一个<code>ImageSpan</code>，在这个构造函数中需要一个Bitmap对象（老版本需要传一个上下文，现在过时了不需要了），我们用<code>BitmapFactory.decodeResource</code>这个进行获取，这个有两个参数：一个资源，另一个是ID，我们设置完成之后，我们就将这个图片span传递给文本span，然后再追加到我哦们的EditText中就可以了。<br><img src="img1.jpg" alt="输入图片"><br>需要注意的是我们<code>SpannableString</code>构造方法中传入的String是代表了我们这个图片，你选中图片之后输入文本就会选中一个Test。</p>
-<h2 id="输入内容的限制与校验"><a href="#输入内容的限制与校验" class="headerlink" title="输入内容的限制与校验"></a>输入内容的限制与校验</h2><p>限制：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">EditText</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/Edit1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:digits</span>=<span class="string">"abc"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">EditText</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/Edit2"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:inputType</span>=<span class="string">"number"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>android:digits=&quot;abc&quot;</code>这个的意思就是说我们只能输入abc，<code>android:inputType=&quot;number&quot;</code>这个的意思就是说我们只能输入数字。<br><img src="img2.jpg" alt="只能输入数字"><br>校验：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CharSequence t = Et_1.getText().toString();</span><br><span class="line"><span class="keyword">if</span>(TextUtils.isEmpty(t))</span><br><span class="line">&#123;</span><br><span class="line">	Et_1.setError(<span class="string">"你怎么写了个空啊"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="img3.jpg" alt="错误提示"></p>
+          <h2 id="AutoCompleteTextView"><a href="#AutoCompleteTextView" class="headerlink" title="AutoCompleteTextView"></a>AutoCompleteTextView</h2><p>这个东西就是一个就是一个提示文本，但是不知道是什么原因，在我的模拟器上面就是不好用，点击也不响应，可能是模拟器的版本问题吧。<br>首先要先新建一个layout，代码下面：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">AutoCompleteTextView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">AutoCompleteTextView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在主layout中编写：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">AutoCompleteTextView</span> </span></span><br><span class="line"><span class="tag">		    <span class="attr">android:id</span>=<span class="string">"@+id/AtEdit1"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:completionThreshold</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">		    <span class="attr">android:imeOptions</span>=<span class="string">"actionDone"</span></span></span><br><span class="line"><span class="tag">		    /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里面有一些参数<code>completionThreshold</code>，这个就是我们输入一个我们就可以弹出列表。<br>然后我们编写java代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> AutoCompleteTextView AtEt_1;</span><br><span class="line"><span class="comment">/*...*/</span></span><br><span class="line">		AtEt_1 = (AutoCompleteTextView) findViewById(R.id.AtEdit1);</span><br><span class="line">		String[] arr = &#123;<span class="string">"Wker"</span>,<span class="string">"Wker酷"</span>,<span class="string">"Wker帅"</span>&#125;;</span><br><span class="line">		ArrayAdapter&lt;String&gt;  adpter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>, R.layout.atctext, arr);</span><br><span class="line">		AtEt_1.setAdapter(adpter);</span><br></pre></td></tr></table></figure>
+<p>首先先是定义一个数组，里面有我们预先定义的数据，然后new一个ArrayAdapter的类，第一个参数是上下文，第二个参数是我们先前的资源布局，最后一个是我们的数据，最后在设置上。<br>实现效果：<br><img src="img1.jpg" alt="实现效果"><br>但是我这里会崩溃，不知道为什么。</p>
 
       
     </div>
@@ -284,7 +282,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/129/">129</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -351,7 +349,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

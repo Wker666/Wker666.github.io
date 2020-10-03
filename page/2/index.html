@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/02/Hook-ShadowSSDT/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/02/IDT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/02/Hook-ShadowSSDT/" class="post-title-link" itemprop="url">Hook_ShadowSSDT</a>
+            <a href="/2020/10/02/IDT/" class="post-title-link" itemprop="url">IDT</a>
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-10-02 11:59:32 / Modified: 21:20:48" itemprop="dateCreated datePublished" datetime="2020-10-02T11:59:32+08:00">2020-10-02</time>
+              <time title="Created: 2020-10-02 18:35:25 / Modified: 20:49:16" itemprop="dateCreated datePublished" datetime="2020-10-02T18:35:25+08:00">2020-10-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,8 +256,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="ShadowSSDT"><a href="#ShadowSSDT" class="headerlink" title="ShadowSSDT"></a>ShadowSSDT</h2><p>首先使用windbg进行调试，但是我的符号表并没有<code>KeServiceDescriptorTableShadow</code>这个符号，但是我误打误撞发现win7下面的+0x40正好是shadow，哈哈。<br>但是我们发现跟不进去他的基地址，原因是必须要在GDI下面进去，所以我们要下一个内核的消息循环断点，但是我的符号表还是没有NtUserXXX的。<br>我们在读取ShadowSSDT表的时候，不可以在入口函数入口函数读取，因为他并不在GDI中，我们需要在有GDI的程序的线程中进行读取，这个一般是应用程序的IOCL命令下进行读取。<br>hook的话呢和之前一样，或者是直接修改ShadowSSDT数据，不要忘记修改页面保护。</p>
-<h2 id="C硬编码"><a href="#C硬编码" class="headerlink" title="C硬编码"></a>C硬编码</h2><p>我们在使用asm内联汇编的时候，如果遇到不识别的汇编指令，我们可以使用<code>_emit 0xf</code>类型设置硬编码，用OD可以看到。</p>
+          <h2 id="IDT表"><a href="#IDT表" class="headerlink" title="IDT表"></a>IDT表</h2><p>这个就是中断服务表，例如我们使用int 3软终端，我们就会跳到3这个表指向的内存地址去执行代码：<br><img src="img1.jpg" alt="IDT3"><br>这个中段描述表如果要返回的话呢，我们需要用iretd函数进行返回，这样子就不会处理中断，但是程序却会崩溃。这样子可以避免断点。<br>一般对这个地址进行inline hook。<br>可以起到烦cc断点的效果。</p>
+<p>可以使用汇编指令：<code>_asm sidt idtr;</code>将idtr这个变量进行赋值，这个变量是一个结构体对象。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(push, 1)</span></span><br><span class="line"><span class="comment">//从sidt指令获得一个如下的结构，从这里可以得到IDT的开始地址</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">P2C_IDTR_</span> &#123;</span></span><br><span class="line">    P2C_U16        limit; <span class="comment">// 范围</span></span><br><span class="line">    P2C_U32        base; <span class="comment">//基地址</span></span><br><span class="line">&#125;P2C_IDTR, *PP2C_IDTR;</span><br></pre></td></tr></table></figure>
+<p>这个base其实是一个结构体的指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(push, 1)</span></span><br><span class="line"><span class="comment">//IDT的内存空间是一个数组。每个元素都有如下的结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">P2C_IDT_ENTRY_</span> &#123;</span></span><br><span class="line">    P2C_U16        offset_low;</span><br><span class="line">    P2C_U16        selector;</span><br><span class="line">    P2C_U8        reserved;</span><br><span class="line">    P2C_U8        type:<span class="number">4</span>;</span><br><span class="line">    P2C_U8        always0:<span class="number">1</span>;</span><br><span class="line">    P2C_U8        dpl:<span class="number">2</span>;</span><br><span class="line">    P2C_U8        present:<span class="number">1</span>;</span><br><span class="line">    P2C_U16        offset_high;</span><br><span class="line">&#125;P2C_IDTENTRY, *PP2C_IDTENTRY;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(pop)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>#pragma pack(push, 1)</code><br>这个的意思就是说压入对齐方式一个字节<br><code>#pragma pack(pop)</code><br>这个意思弹出之前压入的对齐方式</p>
+<p>结构体后面的冒号代表占几位，这四个加起来才8位一个字节。</p>
+<p>中断和陷阱的区别就是一个是主动的，类似于int，另一个是异常的。</p>
+<p>因为我们每个CPU有一个IDT表，所以我们需要修改每一个CPU的IDT表，比较麻烦，我们最好是使用inline hook的方法比较好。</p>
+<p>在内联hook的时候最好是用pushad，pushf保存寄存器，最后popf，popad弹出来。</p>
 
       
     </div>
@@ -277,7 +286,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/129/">129</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -344,7 +353,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

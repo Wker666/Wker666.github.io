@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>sys过Hook保护</title>
+    <url>/2020/10/03/sys%E8%BF%87Hook%E4%BF%9D%E6%8A%A4/</url>
+    <content><![CDATA[<h2 id="过inline-HOOK技巧"><a href="#过inline-HOOK技巧" class="headerlink" title="过inline HOOK技巧"></a>过inline HOOK技巧</h2><ol>
+<li>可以通过对驱动加载前后Nt函数的内容对比，找出关键位置，文本对比工具很多</li>
+<li>注意一些不是Nt开头的函数，例如<code>keAttachProcess</code>函数（这个函数实际上是调用了<code>kiAttachProcess</code>函数，所以看看调用出是否挂钩），我们也许要hook还原。</li>
+<li><code>KeDebuggerEnable</code>这个和SSDT表一样也是导出的，是一个标志位，1的话呢是可以调试</li>
+<li>不要忘记对CR0操作</li>
+<li>工具不可完全相信，特别是inline hook</li>
+</ol>
+]]></content>
+      <categories>
+        <category>驱动开发</category>
+      </categories>
+      <tags>
+        <tag>驱动开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>IDT</title>
     <url>/2020/10/02/IDT/</url>
     <content><![CDATA[<h2 id="IDT表"><a href="#IDT表" class="headerlink" title="IDT表"></a>IDT表</h2><p>这个就是中断服务表，例如我们使用int 3软终端，我们就会跳到3这个表指向的内存地址去执行代码：<br><img src="img1.jpg" alt="IDT3"><br>这个中段描述表如果要返回的话呢，我们需要用iretd函数进行返回，这样子就不会处理中断，但是程序却会崩溃。这样子可以避免断点。<br>一般对这个地址进行inline hook。<br>可以起到烦cc断点的效果。</p>

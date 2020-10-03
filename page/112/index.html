@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/18/NewSectionFindLoseData/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/18/adb-Common-method/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/18/NewSectionFindLoseData/" class="post-title-link" itemprop="url">NewSectionFindLoseData</a>
+            <a href="/2020/01/18/adb-Common-method/" class="post-title-link" itemprop="url">adb-Common-method</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-18 16:51:35" itemprop="dateCreated datePublished" datetime="2020-01-18T16:51:35+08:00">2020-01-18</time>
+              <time title="Created: 2020-01-18 21:29:47" itemprop="dateCreated datePublished" datetime="2020-01-18T21:29:47+08:00">2020-01-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:47:28" itemprop="dateModified" datetime="2020-04-08T15:47:28+08:00">2020-04-08</time>
+                <time title="Modified: 2020-02-01 13:02:55" itemprop="dateModified" datetime="2020-02-01T13:02:55+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%84%B1%E5%A3%B3%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
-                    <span itemprop="name">脱壳分析</span>
+                  <a href="/categories/Android%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Android学习</span>
                   </a>
                 </span>
             </span>
@@ -262,13 +262,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="包含壳的脱壳"><a href="#包含壳的脱壳" class="headerlink" title="包含壳的脱壳"></a>包含壳的脱壳</h1><p>有的时候我们丢失的数据过多，如果我们要找到我们所有丢失的数据基本上是不是太可能的，这个时候我们将壳的一部分包含在程序当中，当不需要做太大的动作的时候，我们的这种做法还是可以的，具体操作如下：</p>
-<h2 id="AsProtect找丢失的数据区段"><a href="#AsProtect找丢失的数据区段" class="headerlink" title="AsProtect找丢失的数据区段"></a>AsProtect找丢失的数据区段</h2><p>首先我们先找到我们假的OEP，这个壳子我们还是用最后一次异常法：我们先隐藏OD，其实可以用OD插件的options设置开启自动隐藏（小技巧），这个时候我们设置我们的异常为：<br><img src="img1.jpg" alt="异常设置"><br>然后我们用最后一次异常法（shift+F9），这里一共是27次，在26次的时候我们我们调节我们的异常这个地方我不知道其他人为啥可以，但我就是不可以，我们这个时候将我们的异常调节为：<br><img src="img2.jpg" alt="异常设置"><br>然后我们在最近的一个retn下端，然后执行过去：<br><img src="img3.jpg" alt="retn处"><br>这个时候注意看我在堆栈处的箭头，在这个地方下硬件下硬件写入断点（具体原因只有当时研究的人知道），然后我们的程序会跑到一个jmp处，我们删除硬件写入断点，然后往下跟句，然后我们当前的位置：<br><img src="img4.jpg" alt="适合找数据的位置"><br>塑这个位置使我们比较合适的找数据的位置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00CC696F    BB A2000000     MOV EBX,0A2</span><br><span class="line">00CC6974    0BDB            OR EBX,EBX</span><br><span class="line">00CC6976    75 07           JNZ SHORT 00CC697F</span><br><span class="line">00CC6978    894424 1C       MOV DWORD PTR SS:[ESP+1C],EAX</span><br><span class="line">00CC697C    61              POPAD</span><br><span class="line">00CC697D    50              PUSH EAX</span><br><span class="line">00CC697E    C3              RETN</span><br><span class="line">00CC697F    E8 00000000     CALL 00CC6984</span><br><span class="line">00CC6984    5D              POP EBP</span><br></pre></td></tr></table></figure>
-<p>然后我们用我们的LoadPE进行脱壳：<br>在这里我们先纠正镜像大小，然后完全转存。<br>下面比较重要，注意看我们需要区域转存：<br><img src="img5.jpg" alt="区域转存"><br><img src="img6.jpg" alt="区域转存"><br>注意我们选择的区段要包含我们刚才停留的位置：这个时候我们使用LoadPE给我们的PE编辑器，打开文件，点击编辑区段：<br><img src="img7.jpg" alt="区段编辑"><br><img src="img8.jpg" alt="区段编辑"><br>导入我们刚才的区段。<br><img src="img9.jpg" alt="计算区段"><br>这里我们用我们当前的位置减去我们的基址（也就是400000），得到我们的虚拟地址，然后我们保存一下。<br>这个时候我们重建PE，但在重建之前我们需要设置：<br><img src="img10.jpg" alt="重建PE"><br>只留下验证PE就好了，我们重建确定。</p>
-<h2 id="AsProtect找假OEP"><a href="#AsProtect找假OEP" class="headerlink" title="AsProtect找假OEP"></a>AsProtect找假OEP</h2><p>然后我们找我们假的OEP，这个地方我们很简单，我们在我们的code断下内存访问中断，然后我们运行，运行到这个地方：<br><img src="img11.jpg" alt="假OEP"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">004F27CF    FF15 9CC25200   CALL DWORD PTR DS:[52C29C]</span><br><span class="line">004F27D5    33D2            XOR EDX,EDX</span><br><span class="line">004F27D7    8AD4            MOV DL,AH</span><br><span class="line">004F27D9    8915 34306900   MOV DWORD PTR DS:[693034],EDX</span><br><span class="line">004F27DF    8BC8            MOV ECX,EAX</span><br><span class="line">004F27E1    81E1 FF000000   AND ECX,0FF</span><br><span class="line">004F27E7    890D 30306900   MOV DWORD PTR DS:[693030],ECX</span><br><span class="line">004F27ED    C1E1 08         SHL ECX,8</span><br><span class="line">004F27F0    03CA            ADD ECX,EDX</span><br><span class="line">004F27F2    890D 2C306900   MOV DWORD PTR DS:[69302C],ECX</span><br></pre></td></tr></table></figure>
-<p>我们这个时候重建输入表，import REC我们填写我们的假OEP，然后查找：<br><img src="img12.jpg" alt="重建IAT"><br>我们用等级一修复，还剩下六个，我们用ASProcet的插件进行搜索，最后得到的结果：<br><img src="img13.jpg" alt="重建IAT"><br>我们全部都找到了。<br>我们修改我们的OEP，修改为我们的假OEP地址的相对地址：0x00CC696F-0x00400000=0x008C696F<br><img src="img14.jpg" alt="修改OEP"><br>然后抓取修复就可以了。<br><strong>PS：但在这个地方，我却没有成功，不知道为什么。但是操作确实是这个样子的，可能是OD的版本不同，或者我查看的这个程序是在是太老了的原因，这也算是给自己留下的一个疑惑吧，脱壳学习，先暂停一下，是时候复习一下Win32了！</strong></p>
+          <p>初学Android</p>
+<h1 id="ADB常用命令"><a href="#ADB常用命令" class="headerlink" title="ADB常用命令"></a>ADB常用命令</h1><ul>
+<li>adb devices<br>这个用于查看当前连接的模拟器。<br><img src="img1.jpg" alt="查看当前连接对象"></li>
+<li>adb start-server <strong>开启调试器</strong></li>
+<li>adb kill-server  <strong>终止调试器</strong></li>
+<li>adb -s 参数 install 路径 <strong>安装一个apk文件</strong> 参数适用于指定安装的路径</li>
+<li>adb shell 获取Android的Shell <strong>这个命令有点类似于Linux的命令，且当前目录是我们的根目录</strong><br><img src="img2.jpg" alt="Shell权限"><blockquote>
+<p>在这里我刚了解到，原来Android的内核是基于Linux的。<br>exit 退出当前的Shell</p>
+</blockquote>
+</li>
+<li>adb push &lt;Windows的一个文件&gt;&lt;手机文件目录&gt; <strong>主要用来传给我们手机电脑上的一个文件</strong><br>但是如果你遇到：<em>Unable to chmod ***: Read-only file system</em><br>那么解决办法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">首先我们需要adb切换到root权限：adb remount</span><br><span class="line">然后我们重新挂载：mount -rw -o remount &#x2F;</span><br><span class="line"></span><br><span class="line">	注：</span><br><span class="line">  	mount 是挂载命令</span><br><span class="line">  	-rw  是说指定的挂载文件是可读&#x2F;写的</span><br><span class="line"> 	-o remount &#x2F; 是说重新挂载根</span><br><span class="line">然后我们chmod 777 文件夹</span><br><span class="line">777就是可读可写，具体忘记了，Linux的一些操作过短时间需要复习了看来。</span><br></pre></td></tr></table></figure>
+<img src="img3.jpg" alt="重新挂载"><br><img src="img4.jpg" alt="赋予权限"></li>
+<li>adb pull &lt;手机文件&gt;&lt;Windows文件路径&gt;</li>
+<li>Ctrl+F11横竖屏切换（现在貌似废弃了，在…中有）。</li>
+</ul>
+<p>上述的许多命令用eclipse基本可以代替，所一这里不过多的赘述。</p>
 
       
     </div>
@@ -288,7 +297,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/111/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/111/">111</a><span class="page-number current">112</span><a class="page-number" href="/page/113/">113</a><span class="space">&hellip;</span><a class="page-number" href="/page/128/">128</a><a class="extend next" rel="next" href="/page/113/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/111/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/111/">111</a><span class="page-number current">112</span><a class="page-number" href="/page/113/">113</a><span class="space">&hellip;</span><a class="page-number" href="/page/129/">129</a><a class="extend next" rel="next" href="/page/113/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -355,7 +364,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
