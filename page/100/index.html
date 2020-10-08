@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/24/File-Attribute/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/26/File-operate2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/24/File-Attribute/" class="post-title-link" itemprop="url">File Attribute</a>
+            <a href="/2020/01/26/File-operate2/" class="post-title-link" itemprop="url">File operate2</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-24 17:39:30" itemprop="dateCreated datePublished" datetime="2020-01-24T17:39:30+08:00">2020-01-24</time>
+              <time title="Created: 2020-01-26 21:17:20" itemprop="dateCreated datePublished" datetime="2020-01-26T21:17:20+08:00">2020-01-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:00:07" itemprop="dateModified" datetime="2020-02-01T13:00:07+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 12:59:57" itemprop="dateModified" datetime="2020-02-01T12:59:57+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="文件属性的读取"><a href="#文件属性的读取" class="headerlink" title="文件属性的读取"></a>文件属性的读取</h1><p>文件属性的一些读取，主要就是依靠。</p>
-<h2 id="GetFileType获取文件类型"><a href="#GetFileType获取文件类型" class="headerlink" title="GetFileType获取文件类型"></a><code>GetFileType</code>获取文件类型</h2><p>就一个参数，文件句柄，<code>CreateFile</code>获得的，返回值：</p>
+          <h2 id="CopyFileEx文件拷贝"><a href="#CopyFileEx文件拷贝" class="headerlink" title="CopyFileEx文件拷贝"></a><code>CopyFileEx</code>文件拷贝</h2><p>一开始想用<code>CopyFile</code>,后来看到了这个，那就快用这个吧，还支持回调函数，看一下MSDN的一个定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CopyFileEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpExistingFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to name of an existing file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCWSTR lpNewFileName,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to filename to copy to</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPPROGRESS_ROUTINE lpProgressRoutine,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">// pointer to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData,    <span class="comment">// to be passed to the callback function</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPBOOL pbCancel,  <span class="comment">// flag that can be used to cancel the operation</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCopyFlags <span class="comment">// flags that specify how the file is copied</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>前两个还是比较简单的，第三个参数是一个回调函数，定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD CALLBACK <span class="title">CopyProgressRoutine</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalFileSize,  <span class="comment">// total file size, in bytes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamSize,  <span class="comment">// total number of bytes for this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwStreamNumber,     <span class="comment">// the current stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCallbackReason,   <span class="comment">// reason for callback</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hSourceFile,       <span class="comment">// handle to the source file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hDestinationFile,  <span class="comment">// handle to the destination file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData             <span class="comment">// passed by CopyFileEx</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>第四个参数是要传递给回调函数的一个参数，可以为NULL，<br>第五个参数有点意思，就是为了防止文件过大，给了个可以强制结束的一个指针，BOOL类型的，如歌这个指针为TRUE的时候则会终止。<br>第六个参数是一个复制的类型，可以是下面这两个值：</p>
 <table>
 <thead>
 <tr>
@@ -272,90 +275,63 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>FILE_TYPE_UNKNOWN</td>
-<td>The type of the specified file is unknown.</td>
+<td>COPY_FILE_FAIL_IF_EXISTS</td>
+<td>The copy operation fails immediately if the target file already exists.</td>
 </tr>
 <tr>
-<td>FILE_TYPE_DISK</td>
-<td>The specified file is a disk file.</td>
+<td>COPY_FILE_RESTARTABLE</td>
+<td>Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time by specifying the same values for lpExistingFileName and lpNewFileName as those used in the call that failed.</td>
 </tr>
 <tr>
-<td>FILE_TYPE_CHAR</td>
-<td>The specified file is a character file, typically an LPT device or a console.</td>
+<td>看名字就明白了，失败退出，失败重新。</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_TYPE_PIPE</td>
-<td>The specified file is either a named or anonymous pipe.</td>
-</tr>
-</tbody></table>
-<h2 id="GetFileSize获取文件尺寸"><a href="#GetFileSize获取文件尺寸" class="headerlink" title="GetFileSize获取文件尺寸"></a><code>GetFileSize</code>获取文件尺寸</h2><p>这个函数用来获取文件的大小，在读取文件的时候很好用</p>
-<p><strong>如果函数成功，则返回的值是文件大小的低阶双字，如果lpFileSizeHigh是非null，则函数将文件大小的高阶双字放入该参数指向的变量中。<br>如果函数失败且lpFileSizeHigh为NULL，则返回值为0xFFFFFFFF。要获取扩展的错误信息，请调用GetLastError。<br>如果函数失败并且lpFileSizeHigh是非空的，则返回值为0xFFFFFFFF, GetLastError将返回一个NO_ERROR以外的值。</strong><br>返回值的一个判定，简单看看就好了。</p>
-<h2 id="GetFileAttributes获取文件属性"><a href="#GetFileAttributes获取文件属性" class="headerlink" title="GetFileAttributes获取文件属性"></a><code>GetFileAttributes</code>获取文件属性</h2><p>这个东西不复杂就是有点乱，参数就是一个字符串，不要忘记转义就好了。<br>看一下MSDN的一些说明。</p>
-<table>
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FILE_ATTRIBUTE_ARCHIVE</td>
-<td>The file or directory is an archive file or directory. Applications use this attribute to mark files for backup or removal.</td>
+<td>那我们就试一下怎么个回事。</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_COMPRESSED</td>
-<td>The file or directory is compressed. For a file, this means that all of the data in the file is compressed. For a directory, this means that compression is the default for newly created files and subdirectories.</td>
+<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function">DWORD CALLBACK <span class="title">CopyProgressRoutine</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalFileSize,  <span class="comment">// total file size, in bytes</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER TotalBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamSize,  <span class="comment">// total number of bytes for this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LARGE_INTEGER StreamBytesTransferred,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// total number of bytes transferred for </span></span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="comment">// this stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwStreamNumber,     <span class="comment">// the current stream</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCallbackReason,   <span class="comment">// reason for callback</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hSourceFile,       <span class="comment">// handle to the source file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLE hDestinationFile,  <span class="comment">// handle to the destination file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpData             <span class="comment">// passed by CopyFileEx</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,TotalBytesTransferred.u.LowPart);</span><br><span class="line">	<span class="keyword">return</span> PROGRESS_CONTINUE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	CopyFileEx(<span class="string">"1.zip"</span>,<span class="string">"1\\3.zip"</span>,CopyProgressRoutine,<span class="literal">NULL</span>,<span class="literal">NULL</span>,COPY_FILE_RESTARTABLE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_DIRECTORY</td>
-<td>The handle identifies a directory.</td>
+<td>看了下，主要就是那个回调函数的返回值比较重要一些，要继续的话呢要返回一个<code>PROGRESS_CONTINUE</code>这个值，其他的都不是太重要，仔细看看参数就好了。</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_ENCRYPTED</td>
-<td>The file or directory is encrypted. For a file, this means that all data streams are encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</td>
+<td>## 删除文件<code>DeleteFile</code></td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_HIDDEN</td>
-<td>The file or directory is hidden. It is not included in an ordinary directory listing.</td>
+<td>这个基本不用说，看下定义就知道了，就一个参数，删除的文件路径。</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_NORMAL</td>
-<td>The file or directory has no other attributes set. This attribute is valid only if used alone.</td>
+<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">DeleteFile</span><span class="params">(  LPCTSTR lpFileName   <span class="comment">// pointer to name of file to delete</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure></td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_OFFLINE</td>
-<td>The data of the file is not immediately available. Indicates that the file data has been physically moved to offline storage.</td>
+<td>但是在这里我还是要说一些比较关键的一些内容，删除不存在的文件的时候是会失败的，如果删除的文件是一个只读的属性，那么将会返回：ERROR_ACCESS_DENIED这个样子的一个值，这里我们写一个递归的函数（使用MFC的框架）实现递归删除。</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_READONLY</td>
-<td>The file or directory is read-only. Applications can read the file but cannot write to it or delete it. In the case of a directory, applications cannot delete it.</td>
+<td><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> CStudy_HistoryDlg::OnBnClickedButton1()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加控件通知处理程序代码</span></span><br><span class="line">	CString Context ;EContext.GetWindowTextA(Context);</span><br><span class="line">	RecursiveDelete(Context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> CStudy_HistoryDlg::RecursiveDelete(CString szPath)</span><br><span class="line">&#123;</span><br><span class="line">	CFileFind ff;</span><br><span class="line">	CString strPath = szPath;</span><br><span class="line">	<span class="keyword">if</span> (<span class="string">"\\"</span> != strPath.Right(<span class="number">1</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		strPath += <span class="string">"\\"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	strPath += <span class="string">"*.*"</span>;<span class="comment">//这个过滤器类型的东西貌似都是支持正则的。</span></span><br><span class="line">	BOOL bRet;<span class="comment">//用来标记是不是已经删除完毕。</span></span><br><span class="line">	<span class="keyword">if</span> (ff.FindFile(strPath))<span class="comment">//这个应该就是文件夹的第一个指针开始。</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">do</span> </span><br><span class="line">		&#123;</span><br><span class="line">			bRet = ff.FindNextFile();<span class="comment">//将内部的那个指针往下移动一下</span></span><br><span class="line">			<span class="keyword">if</span> (ff.IsDots())<span class="comment">//为.或..这种的上级目录</span></span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			strPath = ff.GetFilePath();</span><br><span class="line">			<span class="keyword">if</span> (!ff.IsDirectory())<span class="comment">//看看是不是一个目录</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//是一个文件</span></span><br><span class="line">				<span class="comment">//删除文件</span></span><br><span class="line">				::SetFileAttributes(strPath,FILE_ATTRIBUTE_NORMAL);<span class="comment">//先设置一下这个文件的属性，不要只读！！！</span></span><br><span class="line">				::DeleteFile(strPath);</span><br><span class="line"></span><br><span class="line">			&#125;<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				RecursiveDelete(strPath);<span class="comment">//经典的递归调用</span></span><br><span class="line">				::SetFileAttributes(strPath,FILE_ATTRIBUTE_NORMAL);<span class="comment">//和上面一样</span></span><br><span class="line">				::RemoveDirectory(strPath); <span class="comment">//移除掉这个文件夹</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">while</span> (bRet);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_REPARSE_POINT</td>
-<td>The file has an associated reparse point.</td>
+<td>我都做了一定的注释，就是一个递归删除，使用了MFC的一个框架，说实话微软给的这个框架是真的好！</td>
+<td></td>
 </tr>
 <tr>
-<td>FILE_ATTRIBUTE_SPARSE_FILE</td>
-<td>The file is a sparse file.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_SYSTEM</td>
-<td>The file or directory is part of, or is used exclusively by, the operating system.</td>
-</tr>
-<tr>
-<td>FILE_ATTRIBUTE_TEMPORARY</td>
-<td>The file is being used for temporary storage. File systems attempt to keep all of the data in memory for quicker access rather than flushing the data back to mass storage. A temporary file should be deleted by the application as soon as it is no longer needed.</td>
-</tr>
-<tr>
-<td>（呼~，终于写完了，手都累酸了）</td>
+<td>需要注意，我们使用<code>DeleteFile</code>这个函数的话呢，是不会进入回收站的！</td>
 <td></td>
 </tr>
 </tbody></table>
-<p>返回值就是这样子判断，这些东西对与目录一样也是适用的。<br>示例代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD dwAttributes = GetFileAttributes(<span class="string">"Wker.txt"</span>) ; </span><br><span class="line">	<span class="keyword">if</span>(dwAttributes == <span class="number">0XFFFFFFFF</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"这是个什么东西？"</span>; </span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>((dwAttributes &amp; FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊！是个目录啊"</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"啊!是个文件啊"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>设置文件属性：<code>SetFileAttributes</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetFileAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpFileName,  <span class="comment">// pointer to filename</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFileAttributes   <span class="comment">// attributes to set</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>参数就不介绍了，很简单，第二个参数值太多，百度一下就可以了。</p>
+<h2 id="移动文件MoveFileEx"><a href="#移动文件MoveFileEx" class="headerlink" title="移动文件MoveFileEx"></a>移动文件<code>MoveFileEx</code></h2><p>这次还是在用个Ex加强版本的吧，看一下Ex版本的MSDN定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">MoveFileEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpExistingFileName,  <span class="comment">// pointer to the name of the existing file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpNewFileName,       <span class="comment">// pointer to the new name for the file</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwFlags                <span class="comment">// flag that specifies how to move file</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>第三个的参数有点古怪：<br>比较有意思的一个值：“MOVEFILE_DELAY_UNTIL_REBOOT”，这个值的意思就是说重启才会移动，具体怎么用我也没有去深入研究，没啥意思我感觉，而且与其他的不能同时使用。<br>MOVEFILE_COPY_ALLOWED：这个就是说可以移动到别的盘符，还有就是好像指定了这个就是类似于先Copy再删除这个样子的操作。<br>MOVEFILE_REPLACE_EXISTING：替换掉存在的。<br>MOVEFILE_WRITE_THROUGH：这个就是说等待函数结束才会返回。<br>说了这么多就实验一下吧。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	MoveFileEx(<span class="string">"1.txt"</span>,<span class="string">"2.txt"</span>,MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好吧也没啥可以验证的…</p>
 
       
     </div>
@@ -375,7 +351,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/99/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><span class="page-number current">100</span><a class="page-number" href="/page/101/">101</a><span class="space">&hellip;</span><a class="page-number" href="/page/129/">129</a><a class="extend next" rel="next" href="/page/101/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/99/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><span class="page-number current">100</span><a class="page-number" href="/page/101/">101</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/101/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -442,18 +418,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
