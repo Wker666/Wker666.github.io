@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/06/Android-U3D%E4%BF%AE%E6%94%B9/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/10/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/06/Android-U3D%E4%BF%AE%E6%94%B9/" class="post-title-link" itemprop="url">Android U3D修改</a>
+            <a href="/2020/04/10/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%861/" class="post-title-link" itemprop="url">被动信息收集1</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-06 12:05:14" itemprop="dateCreated datePublished" datetime="2020-04-06T12:05:14+08:00">2020-04-06</time>
+              <time title="Created: 2020-04-10 17:23:18" itemprop="dateCreated datePublished" datetime="2020-04-10T17:23:18+08:00">2020-04-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:49:35" itemprop="dateModified" datetime="2020-04-08T15:49:35+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-15 11:29:20" itemprop="dateModified" datetime="2020-04-15T11:29:20+08:00">2020-04-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,8 +245,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
-                    <span itemprop="name">逆向分析</span>
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
                   </a>
                 </span>
             </span>
@@ -262,21 +262,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="U3D游戏"><a href="#U3D游戏" class="headerlink" title="U3D游戏"></a>U3D游戏</h1><p>首先我们判断这个游戏是否是U3D可以根据是否在lib\armxxx目录下存在：<code>libmain.so</code>,<code>libmono.so</code>,<code>libunity.so</code>。如果存在的话呢就八九不离十了，这个时候我们就可以来分析相关的DLL，如果有加密DLL，那么我们就在相关函数位置dump我们的DLL，然后替换成官网的mono，思路很多，网络上也是很多。</p>
-<h2 id="Assembly-CSharp-dll"><a href="#Assembly-CSharp-dll" class="headerlink" title="Assembly-CSharp.dll"></a>Assembly-CSharp.dll</h2><p>加解密就是对这个DLL进行操作。如果没有加密的话呢，那么我们就可以直接使用Reflector进行反编译修改，下面就尝试修改实现无敌：</p>
-<ol>
-<li><p>首先我们将我们的dll拖进去，然后点击搜索，搜索可能存在的字符，例如Dead，这个就是死亡，尝试寻找<br><img src="img2.jpg" alt="搜索"><br>这里需要注意我们点击的是第二个，因为第一个是搜索类，第二个才是搜索成员，搜索到一个函数之后，我们双机他，如果出现这个样子的一个对话框：<br><img src="img1.jpg" alt="加载DLL"><br>就是让你重新加载一下这个DLL，我们重新选择然后加载就好了</p>
-</li>
-<li><p>分析发现：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dead</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GameMangerInit.freeGifts(GameManager.getInstance().giftUses);</span><br><span class="line">    GameManager.getInstance().giftUses = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, GiftUse&gt;();</span><br><span class="line">    Object.Destroy(<span class="keyword">this</span>.skillAnim);</span><br><span class="line">    Object.Instantiate(Resources.Load(<span class="string">"Prefabs/Effect/explosion"</span>), base.get_transform().get_position(), Quaternion.get_identity());</span><br><span class="line">    base.get_gameObject().get_transform().set_position(<span class="keyword">new</span> Vector3(<span class="number">0f</span>, <span class="number">-12f</span>, <span class="number">0f</span>));</span><br><span class="line">    <span class="keyword">this</span>.isDead = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.skillAnim = null;</span><br><span class="line">    <span class="keyword">this</span>.isSkill = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.riseTime = <span class="number">0f</span>;</span><br><span class="line">    showRecharge = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发现<code>this.isDead = true;</code>这个语句就很类似与我们的玩家死亡，而且将其改为了true，那么我们只要将其改为false那么我们应该就会不死。</p>
-</li>
-<li><p>Relfexil插件<br>使用这个插件我们可以我们可以修改，他在下方会显示IL代码<br><img src="img3.jpg" alt="插件"><br>然后我们找到相对应的位置：<br><img src="img4.jpg" alt="关键"><br>可以看到这个ldc.i4.1是false，那么我们改为ldc.i4.0将会一直是true，我们右键点击Edit…，然后修改数据：<br><img src="img5.jpg" alt="修改数据"><br>然后点击Update，之后我们选中我们添加的这个DLL，我们右键Relfexil插件，选项里有个Save-as我们另存为就可以了</p>
-</li>
-<li><p>替换DLL<br>最后我们替换我们的DLL，记住名称不要搞混忘记修改</p>
-</li>
-</ol>
-<p>然后有的时候需要重新签名也不要忘记，最终运行发现可以不死。</p>
+          <h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>用于解析域名的IP，分为A，C name，ptr，mx等记录，A为主机记录，就是可以直接查询到相对应的IP， C name 别名记录（返回下一个域名），ptr IP查域名，mx邮件记录。</p>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><p>kali中使用nslookup命令，进入之后，输入想要查询的域名：<br><img src="img1.jpg" alt="NSlookUP"><br>可以看到，<code>www.sina.com</code>一步步的指向真正的域名IP，那个Server使我们的域名服务器主机，我们可以使用：<code>set type=a</code>等记录设置我们想要查看的信息，默认只有a记录的。使用<code>set type=ptr</code>反向查询IP对应的域名，通过使用：<code>server xxx.xxx.xxx.xxx</code>来设置我们的域名服务器。<br>type与q相同。<br>q=any的话呢是将所有的记录全部查询出来。<br>text记录使用spf反垃圾的一个功能，也是反向解析，主要是判断是否是真正的邮件服务器发送来的。<br>nslookup也是可以再一条输入，就是在后面跟上。<br>例如：nslookup -q=any <a href="http://www.sina.com" target="_blank" rel="noopener">www.sina.com</a> XXX.XXX.XXX.XXX</p>
+<h2 id="智能DNS"><a href="#智能DNS" class="headerlink" title="智能DNS"></a>智能DNS</h2><p>主要是用户所处的位置不同，返回的IP也是不同的。</p>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><h3 id="DNS查询bind信息"><a href="#DNS查询bind信息" class="headerlink" title="DNS查询bind信息"></a>DNS查询bind信息</h3><p>查询DNS服务器使用的bind版本信息可以帮助我们获取DNS服务器的相对应的漏洞信息，寻找机会去得到DNS服务器中的数据，在dig中可以使用：<code>dig +noall +answer txt chaos VERSION.BIND @ns3.dnsv4.com</code>命令来查询bind的版本信息，但是不是所有的都可以：<br><img src="img2.jpg" alt="dig"><br>@后面的是我们需要查询的服务器，在查询域名ns记录的时候我们是可以获取到的。<br><img src="img3.jpg" alt="ns查询"></p>
+<h3 id="DNS追踪"><a href="#DNS追踪" class="headerlink" title="DNS追踪"></a>DNS追踪</h3><p>通过使用：<code>dig +trace www.sina.com</code>，就可以对其追踪DNS信息，访问的方式是先通过本地DNS获取root域的信息，返回root域的名称，再通过root域获取.com域的信息，在这期间虽然获得了.com的信息，但是还是再一次通过本地DNS进行一个验证，获取到了.com的域DNS服务器信息，再通过其获取sina.com域的域名服务器，再通过sina.com获取到了<a href="http://www.sina.com的具体IP地址。" target="_blank" rel="noopener">www.sina.com的具体IP地址。</a><br>在这期间需要注意的是，dig多次访问本地DNS以验证我们通过root和.com获取到的信息的正确性。<br><img src="img4.jpg" alt="DNS追踪"></p>
+<h3 id="DNS服务器区域传输"><a href="#DNS服务器区域传输" class="headerlink" title="DNS服务器区域传输"></a>DNS服务器区域传输</h3><p>使用afxr可以进行DNS服务器的区域性传输，有的时候服务器存在一定缺陷的时候我们是可以获取到相对应许多信息的，有时候会获取到域名下的许多不知道的域名：<br><img src="img5.jpg" alt="DNS域传输"><br>可以看到获取到了许多信息，使用的格式是：<code>dig @域名服务器 域名 afxr</code>这个样子就可以获取到传输的信息了。<br><code>host -T -l 域名 域名服务器</code>也是可以进行获取的（-T使用TCP方式）</p>
+<h2 id="DNS字典爆破"><a href="#DNS字典爆破" class="headerlink" title="DNS字典爆破"></a>DNS字典爆破</h2><p><code>fierce</code>命令在DNS信息收集的时候很好用，他会自动帮助我们查找ns记录，并且还会闲判断是否存在DNS服务器域传输的漏洞，最后再暴力破解是否存在字典中的子域：<code>fierce -dnsserver 8.8.8.8 -dns 域名 -wordlist /usr/share/fierce/hosts.txt</code>8.8.8.8是我们指定的域名服务器。<br><img src="img6.jpg" alt="爆破"><br>注意的是，我们不能带前面的子域名。<br><code>dnsenum -f 文件 -dnsserver 8.8.8.8 sina.com -o sina.xml</code>基本格式也是很类似的。<br>这个的功能很全面，支持域传输，版本信息，爆破，还支持导出文件：<br><img src="img7.jpg" alt="dnsenum"><br>还算比较好用，但是感觉慢了一点。</p>
+<h2 id="DNS注册信息"><a href="#DNS注册信息" class="headerlink" title="DNS注册信息"></a>DNS注册信息</h2><p>这个也是比较关键的一部分，使用whois命令可以轻松收集到许多信息：<code>whois xxx.com</code><br><img src="img8.jpg" alt="whois"><br>许多信息的都是已经收集到了。</p>
 
       
     </div>
@@ -296,7 +289,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -363,7 +356,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
