@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/08/%E6%9D%8E%E6%99%B6%E6%99%B6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/03/sys%E8%BF%87Hook%E4%BF%9D%E6%8A%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/08/%E6%9D%8E%E6%99%B6%E6%99%B6/" class="post-title-link" itemprop="url">李晶晶</a>
+            <a href="/2020/10/03/sys%E8%BF%87Hook%E4%BF%9D%E6%8A%A4/" class="post-title-link" itemprop="url">sys过Hook保护</a>
         </h1>
 
         <div class="post-meta">
@@ -229,24 +229,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-10-08 22:58:43" itemprop="dateCreated datePublished" datetime="2020-10-08T22:58:43+08:00">2020-10-08</time>
+              <time title="Created: 2020-10-03 13:13:16 / Modified: 13:20:57" itemprop="dateCreated datePublished" datetime="2020-10-03T13:13:16+08:00">2020-10-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-09 20:14:19" itemprop="dateModified" datetime="2020-10-09T20:14:19+08:00">2020-10-09</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BE%8E%E5%A5%B3/" itemprop="url" rel="index">
-                    <span itemprop="name">美女</span>
+                  <a href="/categories/%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">驱动开发</span>
                   </a>
                 </span>
             </span>
@@ -262,8 +256,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="李晶晶"><a href="#李晶晶" class="headerlink" title="李晶晶"></a>李晶晶</h1><p>李晶晶：<br>喜欢吃的东西：胡萝卜<br>喜欢玩的游戏：王者荣耀<br>喜欢的宠物：猫和狗，尤其喜欢白色的猫以及柯基狗</p>
-<p><strong>美女</strong><br>翩若惊鸿，婉若游龙。荣曜秋菊，华茂春松。<br>这句话形容李晶晶是最不为过的。<br>两岑抱东壑,一嶂横西天。<br>李晶晶的身材虽说不是非常的苗条，实事求是的将：轻盈像惊飞的鸿雁，柔顺像游动的蛟龙这句诗形容美女李晶晶是最适合的了。<br>在我的心目中，李晶晶也算是认识最漂亮的女生了。<br>性格虽然是大大咧咧，让人有一种亲切感，一种莫名的吸引力。<br>人非常的友善，让人有种想要接近的感觉。</p>
+          <h2 id="过inline-HOOK技巧"><a href="#过inline-HOOK技巧" class="headerlink" title="过inline HOOK技巧"></a>过inline HOOK技巧</h2><ol>
+<li>可以通过对驱动加载前后Nt函数的内容对比，找出关键位置，文本对比工具很多</li>
+<li>注意一些不是Nt开头的函数，例如<code>keAttachProcess</code>函数（这个函数实际上是调用了<code>kiAttachProcess</code>函数，所以看看调用出是否挂钩），我们也许要hook还原。</li>
+<li><code>KeDebuggerEnable</code>这个和SSDT表一样也是导出的，是一个标志位，1的话呢是可以调试</li>
+<li>不要忘记对CR0操作</li>
+<li>工具不可完全相信，特别是inline hook</li>
+</ol>
 
       
     </div>
@@ -283,7 +282,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,18 +349,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

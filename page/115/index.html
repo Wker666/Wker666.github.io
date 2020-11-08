@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/18/NewSectionFindLoseData/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/LoseData-find/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/18/NewSectionFindLoseData/" class="post-title-link" itemprop="url">NewSectionFindLoseData</a>
+            <a href="/2020/01/17/LoseData-find/" class="post-title-link" itemprop="url">LoseData-find</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-18 16:51:35" itemprop="dateCreated datePublished" datetime="2020-01-18T16:51:35+08:00">2020-01-18</time>
+              <time title="Created: 2020-01-17 11:57:19" itemprop="dateCreated datePublished" datetime="2020-01-17T11:57:19+08:00">2020-01-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:47:28" itemprop="dateModified" datetime="2020-04-08T15:47:28+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-08 15:47:33" itemprop="dateModified" datetime="2020-04-08T15:47:33+08:00">2020-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,13 +262,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="包含壳的脱壳"><a href="#包含壳的脱壳" class="headerlink" title="包含壳的脱壳"></a>包含壳的脱壳</h1><p>有的时候我们丢失的数据过多，如果我们要找到我们所有丢失的数据基本上是不是太可能的，这个时候我们将壳的一部分包含在程序当中，当不需要做太大的动作的时候，我们的这种做法还是可以的，具体操作如下：</p>
-<h2 id="AsProtect找丢失的数据区段"><a href="#AsProtect找丢失的数据区段" class="headerlink" title="AsProtect找丢失的数据区段"></a>AsProtect找丢失的数据区段</h2><p>首先我们先找到我们假的OEP，这个壳子我们还是用最后一次异常法：我们先隐藏OD，其实可以用OD插件的options设置开启自动隐藏（小技巧），这个时候我们设置我们的异常为：<br><img src="img1.jpg" alt="异常设置"><br>然后我们用最后一次异常法（shift+F9），这里一共是27次，在26次的时候我们我们调节我们的异常这个地方我不知道其他人为啥可以，但我就是不可以，我们这个时候将我们的异常调节为：<br><img src="img2.jpg" alt="异常设置"><br>然后我们在最近的一个retn下端，然后执行过去：<br><img src="img3.jpg" alt="retn处"><br>这个时候注意看我在堆栈处的箭头，在这个地方下硬件下硬件写入断点（具体原因只有当时研究的人知道），然后我们的程序会跑到一个jmp处，我们删除硬件写入断点，然后往下跟句，然后我们当前的位置：<br><img src="img4.jpg" alt="适合找数据的位置"><br>塑这个位置使我们比较合适的找数据的位置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00CC696F    BB A2000000     MOV EBX,0A2</span><br><span class="line">00CC6974    0BDB            OR EBX,EBX</span><br><span class="line">00CC6976    75 07           JNZ SHORT 00CC697F</span><br><span class="line">00CC6978    894424 1C       MOV DWORD PTR SS:[ESP+1C],EAX</span><br><span class="line">00CC697C    61              POPAD</span><br><span class="line">00CC697D    50              PUSH EAX</span><br><span class="line">00CC697E    C3              RETN</span><br><span class="line">00CC697F    E8 00000000     CALL 00CC6984</span><br><span class="line">00CC6984    5D              POP EBP</span><br></pre></td></tr></table></figure>
-<p>然后我们用我们的LoadPE进行脱壳：<br>在这里我们先纠正镜像大小，然后完全转存。<br>下面比较重要，注意看我们需要区域转存：<br><img src="img5.jpg" alt="区域转存"><br><img src="img6.jpg" alt="区域转存"><br>注意我们选择的区段要包含我们刚才停留的位置：这个时候我们使用LoadPE给我们的PE编辑器，打开文件，点击编辑区段：<br><img src="img7.jpg" alt="区段编辑"><br><img src="img8.jpg" alt="区段编辑"><br>导入我们刚才的区段。<br><img src="img9.jpg" alt="计算区段"><br>这里我们用我们当前的位置减去我们的基址（也就是400000），得到我们的虚拟地址，然后我们保存一下。<br>这个时候我们重建PE，但在重建之前我们需要设置：<br><img src="img10.jpg" alt="重建PE"><br>只留下验证PE就好了，我们重建确定。</p>
-<h2 id="AsProtect找假OEP"><a href="#AsProtect找假OEP" class="headerlink" title="AsProtect找假OEP"></a>AsProtect找假OEP</h2><p>然后我们找我们假的OEP，这个地方我们很简单，我们在我们的code断下内存访问中断，然后我们运行，运行到这个地方：<br><img src="img11.jpg" alt="假OEP"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">004F27CF    FF15 9CC25200   CALL DWORD PTR DS:[52C29C]</span><br><span class="line">004F27D5    33D2            XOR EDX,EDX</span><br><span class="line">004F27D7    8AD4            MOV DL,AH</span><br><span class="line">004F27D9    8915 34306900   MOV DWORD PTR DS:[693034],EDX</span><br><span class="line">004F27DF    8BC8            MOV ECX,EAX</span><br><span class="line">004F27E1    81E1 FF000000   AND ECX,0FF</span><br><span class="line">004F27E7    890D 30306900   MOV DWORD PTR DS:[693030],ECX</span><br><span class="line">004F27ED    C1E1 08         SHL ECX,8</span><br><span class="line">004F27F0    03CA            ADD ECX,EDX</span><br><span class="line">004F27F2    890D 2C306900   MOV DWORD PTR DS:[69302C],ECX</span><br></pre></td></tr></table></figure>
-<p>我们这个时候重建输入表，import REC我们填写我们的假OEP，然后查找：<br><img src="img12.jpg" alt="重建IAT"><br>我们用等级一修复，还剩下六个，我们用ASProcet的插件进行搜索，最后得到的结果：<br><img src="img13.jpg" alt="重建IAT"><br>我们全部都找到了。<br>我们修改我们的OEP，修改为我们的假OEP地址的相对地址：0x00CC696F-0x00400000=0x008C696F<br><img src="img14.jpg" alt="修改OEP"><br>然后抓取修复就可以了。<br><strong>PS：但在这个地方，我却没有成功，不知道为什么。但是操作确实是这个样子的，可能是OD的版本不同，或者我查看的这个程序是在是太老了的原因，这也算是给自己留下的一个疑惑吧，脱壳学习，先暂停一下，是时候复习一下Win32了！</strong></p>
+          <h1 id="丢失的程序头部"><a href="#丢失的程序头部" class="headerlink" title="丢失的程序头部"></a>丢失的程序头部</h1><p>有的程序加壳之后将原本OEP的部分头部给去除掉了，放在了自身的壳里面，导致我们脱壳之后我们的程序可能入口会出错，这个时候我们就需要自己补充上去：</p>
+<h2 id="丢失数据的OEP"><a href="#丢失数据的OEP" class="headerlink" title="丢失数据的OEP"></a>丢失数据的OEP</h2><p>首先我们需要找到他给我们的OEP，这里ACProcet这个壳比较特殊，我们需要用插件HideOD进行隐藏，然后将我们的调试选项，取消勾选INT3的异常：<br><img src="img1.jpg" alt="调试设置"><br><img src="img2.jpg" alt="隐藏OD"><br>这个时候我们运行程序，使用最后一次异常，将我们的SE栈值下上硬件断点，这里为什么不下INT3断点呢，其实是这个壳有一定的保护系统，下上会出错（别人说的），然后我们的程序会进入下面这个地方：<br><img src="img3.jpg" alt="关键处"><br>这个时候我们看到RETN就到了我们的假的OEP，这个时候我们运行到RETN，然后对我们的code代码段进行下访问断点：<br><img src="img4.jpg" alt="返回处"><br><img src="img5.jpg" alt="访问中断"><br>这个时候运行程序，我们的程序就会到假的OEP：<br><img src="img6.jpg" alt="丢失数据的OEP"><br>这个时候我们知道之后，其实已经错过了找我们的丢失数据的机会，我们重新来过：<br>在我们下断在RETN的时候我们下12ffc0这个硬件访问断点，<br><img src="img7.jpg" alt="硬件断点"><br>然后他会带我们跳到：<br><img src="img8.jpg" alt="丢失的数据"><br>我们复制二进制数据，然后相同的方法到达我们刚才的OEP，把那一段给粘贴上去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">55 8B EC 6A FF</span><br></pre></td></tr></table></figure>
+<p>我们找到假的OEP其实有个坑，程序代码会混淆，这个时候我们Ctrl+A分析代码就好了，然后在上面5个字节粘贴我们的二进制：<br><img src="img9.jpg" alt="补充数据"><br>这个时候我们将我们当前的EIP进行转到我们的补充好的数据上面，然后进行脱壳：<br><img src="img10.jpg" alt="修改EIP"><br>这个时候我们打开LoadPE，修改我们的镜像，然后拖出来，之后的操作和我们之前的都是一样的（import REC需要修复数据），然后生成我们的脱壳程序。<br>但是我们发现我们的程序还是没办法运行起来。这里别人说应该是保护的一个机制：<br><img src="img11.jpg" alt="启动失败"><br>我们去到我们没有脱壳前程序的OEP，然后将我们的一些丢失数据放回去这个样子他就检测不出来了。<br><img src="img12.jpg" alt="原先OEP"><br>入口的OEP是AC000，我们跳过去，把我们的二进制数据粘贴上去，然后用jmp跳转跳转到我们的真正的OEP：<br><img src="img13.jpg" alt="假OEP"><br>修改完毕之后我们保存（OD自带的保存修改），但是这个时候还是不行，因为我们现在PE头部的OEP还是我们真正的OEP，我们用LoadPE指过去：<br><img src="img14.jpg" alt="修改入口点地址"><br>我们点击保存，确定就好了，但是我们发现我们PEid还是找不到壳子，这个就是后话了。</p>
 
       
     </div>
@@ -288,7 +285,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/114/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/114/">114</a><span class="page-number current">115</span><a class="page-number" href="/page/116/">116</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/116/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/114/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/114/">114</a><span class="page-number current">115</span><a class="page-number" href="/page/116/">116</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/116/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -355,18 +352,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

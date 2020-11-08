@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/SMTP%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/SMB%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/19/SMTP%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">SMTP服务扫描</a>
+            <a href="/2020/04/19/SMB%E6%9C%8D%E5%8A%A1%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">SMB服务扫描</a>
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-19 19:44:10 / Modified: 19:55:01" itemprop="dateCreated datePublished" datetime="2020-04-19T19:44:10+08:00">2020-04-19</time>
+              <time title="Created: 2020-04-19 18:25:55 / Modified: 19:40:09" itemprop="dateCreated datePublished" datetime="2020-04-19T18:25:55+08:00">2020-04-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h1><p>邮件服务，我们有时候可以扫描出来管理人的邮件，借此进行社会工程学的攻击。<br>使用nmap在确定开放25这个端口的条件下：<code>nmap smtp.163.com -p 25 -script=smtp-enum-users.nse --script-args=smtp-enum-users.methods={VRFY}</code><br>有VRFY也可以用RCPT<br>枚举邮件账号：<code>nmap smtp.163.com -p 25 --script=smtp-open-relay.nse</code><br>邮件中介，如果开放了，黑客可以通过你的邮件服务器发送给别人。</p>
+          <h1 id="SMB协议"><a href="#SMB协议" class="headerlink" title="SMB协议"></a>SMB协议</h1><p>文件共享的一个协议，但是漏洞比较的多。<br>使用nmap进行扫描：<code>nmap -v -p 139 445 192.168.126.1 --open</code><br>-v 是代表我们要查看详细信息，指定139和445端口，我们只查看–open的。<br>这种方式比较幼稚，我们可以使用：<code>nmap 192.168.126.1 -p 139,445 --script=smb-os-discovery.nse</code><br><img src="img1.jpg" alt="smb扫描"><br>这个是用来发现开放SMB主机的。</p>
+<p>-Pn参数是强制扫描，有防火墙的时候用到的。<br>我们使用命令：<code>nmap -v -p 139,445 --script=smb-vuln-ms17-010.nse 192.168.209.130</code><br>这条命令可以检测永恒之蓝，最终存在的话呢，会出现以下的显示：<br><img src="img2.jpg" alt="扫描结果"></p>
+<p>使用<code>nbtscan -r 192.168.209.0/24</code><br>这个东西有的时候可以支持跨网段的扫描MAC。<br><img src="img3.jpg" alt="nbtscan"></p>
+<p>我们使用<code>enum4linux -a 192.168.209.130</code>得到许多我们想要的结果：<br><img src="img4.jpg" alt="enum4linux"><br>可以看到有个Wokrstation Service（他可以去看别人的文件共享）File Server Service(他也开了文件共享)，并且我们还可以空连接进去。</p>
 
       
     </div>
@@ -276,7 +279,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -343,18 +346,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

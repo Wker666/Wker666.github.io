@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/13/LoadPE-and-importREC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/12/Common-Unshell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/13/LoadPE-and-importREC/" class="post-title-link" itemprop="url">LoadPE and importREC</a>
+            <a href="/2020/01/12/Common-Unshell/" class="post-title-link" itemprop="url">Common-Unshell</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-13 09:57:36" itemprop="dateCreated datePublished" datetime="2020-01-13T09:57:36+08:00">2020-01-13</time>
+              <time title="Created: 2020-01-12 19:46:40" itemprop="dateCreated datePublished" datetime="2020-01-12T19:46:40+08:00">2020-01-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-08 15:47:22" itemprop="dateModified" datetime="2020-04-08T15:47:22+08:00">2020-04-08</time>
+                <time title="Modified: 2020-04-08 15:47:04" itemprop="dateModified" datetime="2020-04-08T15:47:04+08:00">2020-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="LoadPE"><a href="#LoadPE" class="headerlink" title="LoadPE"></a>LoadPE</h2><p>这款工具还是比较有名的，在刚学PE结构之前，就对这个工具有所了解，主要是简单的介绍一下配合OD和importREC的使用，在之后深入了解。<br>首先我们先对找到OEP的工具加载。<br><img src="img1.jpg" alt="LoadPE"><br>在这个列表框中找到我们所在的进程<br><img src="img2.jpg" alt="纠正镜像大小"><br>纠正一下镜像文件的大小，然后点击完全脱壳，会生成一个dump的文件。<br><img src="img9.jpg" alt="完全脱壳"><br>这款工具比较强大的其实是他的PE编辑器，我们之后再去讨论。</p>
-<h2 id="import-REC"><a href="#import-REC" class="headerlink" title="import REC"></a>import REC</h2><p>这款工具是用来修复IAT的一些信息，由于这款工具可以自动找到我们的函数入口点之类的信息，所一比较方便，测试的软件加密的比较简单，所以不需要回OD进行查找，之后有机会和LoadPE一款演示。<br>言归正传，我们选择我们的进程。<br><img src="img3.jpg" alt="选择进程"><br>需要填写我哦们OEP的一个相对RAV，然后点击自动搜索IAT，获取输入表，再点击显示无效的函数，后对无效的函数进行cut掉就好了。<br><img src="img4.jpg" alt="获取IAT"><br>如果出现这个状况，我们一般通过OD进行确认一遍。<br>我们记住他返回给我们的RVA和size<br><img src="img5.jpg" alt="检查"><br>然后在OD中查看他的内容，dd就可以了，还可以看大一些提示信息。<br>import REC只是给我们以个大体的范围。<br>我们需要自己验证一下。<br><img src="img6.jpg" alt="验证"><br>我们，拖动字节为00的地方（一大片0的地方），然后看OD给我们指示的长度大小。<br><img src="img7.jpg" alt="验证"><br>与我们的import REC的结果相同，这个就很舒服了，嘻嘻。<br>回到我们的import REC，点击获取输入表。<br><img src="img8.jpg" alt="获取输入表"><br>这个时候就可以了，由于VB的程序比较特殊，输入表之类的都是自己搞的，和我们C++写的程序是有一些不同的。<br>我们点击修复抓取文件，选择哪个程序，他会生成一些  文件名_.exe的文件。<br><img src="img10.jpg" alt="修复完毕"><br>这个样子就脱壳完毕了。</p>
+          <h1 id="常见的脱壳方式"><a href="#常见的脱壳方式" class="headerlink" title="常见的脱壳方式"></a>常见的脱壳方式</h1><p>首先我们使用PEID进行查壳<br><img src="img1.jpg" alt="查壳"><br>发现是：ASPack 2.12 -&gt; Alexey Solodovnikov的壳，我们进行脱壳。</p>
+<h2 id="单步跟进"><a href="#单步跟进" class="headerlink" title="单步跟进"></a>单步跟进</h2><p>其实这个方法就是最直接的，我们直接单步跟踪，向上的跳转在下一步按F4，指导跟踪到大的jmp，这样的关键性标识也有popad，但是这个一般要在一开始的程序入口点是pushad这个寄存机，例如：<br><img src="img2.jpg" alt="pushad"><br>我们一直跟踪，跟到这个地方。<br>但是下面有个call，我们单步步过的话呢，发现程序运行起来了，我们需要跟进。<br><img src="img3.jpg" alt="popad"><br>我们可以看到，我们运行到了popad，下面紧跟着跳转和retn，这个就很像了，我们继续运行。<br><img src="img4.jpg" alt="OEP"><br>可以看到这个retn就跳转到了我们的OEP，但是要记住删除代码分析，这个是一个比较明显的VB程序，而且我们的代码段回到了RAV1000的位置，这个时候我们用插件Dump出来。<br><img src="img5.jpg" alt="查壳"><br>确实是一个VB的程序。</p>
+<h2 id="ESP定律"><a href="#ESP定律" class="headerlink" title="ESP定律"></a>ESP定律</h2><p>其实也就是ESP改变的时候我们下一个硬件断点，然后运行，ESP改变的时候程序暂停，我么单步跟下就可以了。<br><img src="img7.jpg" alt="HWESP"><br>然后我们运行（删除硬件断点不要忘记），会来到这个位置：<br><img src="img8.jpg" alt="OEPJmp"><br>可以看到确实快到了，我们但不跟踪几下就可以了。</p>
+<h2 id="关键搜索"><a href="#关键搜索" class="headerlink" title="关键搜索"></a>关键搜索</h2><p>其实也就是搜索popad，记住不要搜索整个快，因为太大了，我们Ctrl+F进行搜索，会看到如下的结果：<br><img src="img9.jpg" alt="区段"><br>我们Ctrl+L就可以搜索下一个，记住一般来说，附近都有大的跳转和返回，一般也就是跨区段的跳转。</p>
+<h2 id="二次镜像法"><a href="#二次镜像法" class="headerlink" title="二次镜像法"></a>二次镜像法</h2><p>首先我们对我们rsrc（资源）断下内存写入断点，这个就是进行解密，然后再对我们的code（代码）断进行下内存写入断点，这个样子就能到达我们的OEP了，具体操作如下：<br>点击M打开区段表。<br><img src="img10.jpg" alt="区段"><br>然后我们就会运行到这个位置：<br><img src="img11.jpg" alt="断下"><br>然后我们下我们code断点，然后运行。<br><img src="img12.jpg" alt="断下"><br>然后我们运行之后会运行到这个地方：<br><img src="img13.jpg" alt="OEPJmp"><br>然后就到我们熟悉的地方了。</p>
+<h2 id="EIP跟踪法"><a href="#EIP跟踪法" class="headerlink" title="EIP跟踪法"></a>EIP跟踪法</h2><p>这个方法之前就了解了，使用OD的TC指令进行表达式计算，主要是找到我们的壳的区间，然后使用tc eip&lt;xxxxxxx，进行下端，tc这类的指令大家可以去看我的：<br><a href="https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/" target="_blank" rel="noopener" title="OD快捷代码">https://wker666.github.io/2020/01/12/OD-QuickKeyBoard/</a><br>其实也就是对制定跟踪直到eip的位置到达了：<br><img src="img14.jpg" alt="区段"><br>我们按下Enter，然后运行，他会很慢的运行。<br>（不总么会用，之后深究一下）</p>
+<h2 id="SFX跟踪法"><a href="#SFX跟踪法" class="headerlink" title="SFX跟踪法"></a>SFX跟踪法</h2><p>通过OD给我们的SFX（暂时还不知道这是个什么，应该是有点异常的意思，之后会出相关的知识学习）进行跟踪<br><img src="img15.jpg" alt="选项"><br>选择SFX，选择第二个选项（有点时候需要第三个，具体看情况）：<br><img src="img16.jpg" alt="选项"><br>然后重新启动程序，就会直接到达OEP，但记住要调回来哦。<br><img src="img17.jpg" alt="OEPJmp"></p>
+<p><strong><strong><em>这是比较常见的一些脱壳技巧，之后还会更新。</em></strong></strong></p>
 
       
     </div>
@@ -283,7 +289,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/123/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/123/">123</a><span class="page-number current">124</span><a class="page-number" href="/page/125/">125</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/125/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/123/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/123/">123</a><span class="page-number current">124</span><a class="page-number" href="/page/125/">125</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/125/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -350,18 +356,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
