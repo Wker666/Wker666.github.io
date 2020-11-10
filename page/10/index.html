@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/23/%E9%A9%B1%E5%8A%A8%E5%90%8C%E6%AD%A5%E5%A4%84%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/26/%E9%A9%B1%E5%8A%A8%E5%AE%9A%E6%97%B6%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/23/%E9%A9%B1%E5%8A%A8%E5%90%8C%E6%AD%A5%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">驱动同步处理</a>
+            <a href="/2020/09/26/%E9%A9%B1%E5%8A%A8%E5%AE%9A%E6%97%B6%E5%99%A8/" class="post-title-link" itemprop="url">驱动定时器</a>
         </h1>
 
         <div class="post-meta">
@@ -229,16 +229,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-09-23 19:53:21" itemprop="dateCreated datePublished" datetime="2020-09-23T19:53:21+08:00">2020-09-23</time>
+              <time title="Created: 2020-09-26 15:47:12 / Modified: 16:48:33" itemprop="dateCreated datePublished" datetime="2020-09-26T15:47:12+08:00">2020-09-26</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-25 20:08:55" itemprop="dateModified" datetime="2020-09-25T20:08:55+08:00">2020-09-25</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -262,84 +256,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="分页内存故障"><a href="#分页内存故障" class="headerlink" title="分页内存故障"></a>分页内存故障</h2><p>分页内存由于有可能将磁盘文件映射过来，但是当读取不是在物理内存的时候会产生一个异常，这个异常会执行异常处理函数，原本是正常的，但是如果出现DISPATCH_LEVEL级别的异常线程中的时候会导致系统的崩溃。<br>对于等于或者高于DISPATCH_LEVEL级别的程序不能使用分页内存。</p>
-<h2 id="IRQL的升降"><a href="#IRQL的升降" class="headerlink" title="IRQL的升降"></a>IRQL的升降</h2><p>可以使用KeRaiseIrql和KeLowerIrql进行调节程序异常的级别。</p>
-<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><p>就是常规的资源站用锁，这种锁如果被占有，那么其他线程要用到的话呢会一直询问，所以时间不宜太长，并且不能在高于DISPATCH_LEVEL的线程上使用。<br>这个锁不适合用在全局变量，而适合放在设备扩展中，名称为KSPIN_LOCK。<br>如果线程优先级是DISPATCH_LEVEL的话呢我们可以直接使用KeAcquireSpinlockAtDpcLevel，而如果不是这个优先级的话呢要使用KeAcquireSpinlock这个函数，因为它可以自动帮你调整优先级，并在释放的时候调整回来。</p>
-<h2 id="内核模式下的同步对象"><a href="#内核模式下的同步对象" class="headerlink" title="内核模式下的同步对象"></a>内核模式下的同步对象</h2><p>用户操作的事件对象其实只是一个句柄，而在内核模式下操作的就是真正的指针</p>
-<h2 id="线程归属"><a href="#线程归属" class="headerlink" title="线程归属"></a>线程归属</h2><p>PsCreateSystemThread函数当我们使用用户线程创建线程的时候，创建的线程归属用户进程，而我们穿进去的是NULL（系统），那归属就是system。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VOID <span class="title">CreateThread_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE hSystemThread, hMyThread;</span><br><span class="line">	NTSTATUS status = PsCreateSystemThread(&amp;hSystemThread, <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, SystemThread, <span class="literal">NULL</span>);</span><br><span class="line">	status = PsCreateSystemThread(&amp;hMyThread, <span class="number">0</span>, <span class="literal">NULL</span>, NtCurrentProcess(), <span class="literal">NULL</span>, MyThread, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一个创建的就是系统进程，第二个就是调用这个IRP的进程。</p>
-<h2 id="内核等待时间"><a href="#内核等待时间" class="headerlink" title="内核等待时间"></a>内核等待时间</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VOID <span class="title">MyProcessThread</span><span class="params">(IN PVOID pContext)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	PKEVENT pEvent = (PKEVENT)pContext;</span><br><span class="line">	KdPrint((<span class="string">"enter MyThread"</span>));</span><br><span class="line">	KeSetEvent(pEvent, IO_NO_INCREMENT, FALSE);</span><br><span class="line">	KdPrint((<span class="string">"Leave Thread"</span>));</span><br><span class="line">	PsTerminateSystemThread(STATUS_SUCCESS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span>  PAGECODE</span></span><br><span class="line"><span class="function">VOID <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE hMyThread;</span><br><span class="line">	KEVENT kEvent;</span><br><span class="line">	KeInitializeEvent(&amp;kEvent, NotificationEvent, FALSE);</span><br><span class="line">	NTSTATUS status = PsCreateSystemThread(&amp;hMyThread, <span class="number">0</span>, <span class="literal">NULL</span>, NtCurrentProcess(), <span class="literal">NULL</span>, MyProcessThread, &amp;kEvent);</span><br><span class="line">	KeWaitForSingleObject(&amp;kEvent, Executive, KernelMode, FALSE, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用起来和用户模式下没啥太大的区别，就多了几个参数，<code>KeWaitForSingleObject</code>第二第三个一般就是这两个参数，这里需要注意的是，如果我们没有等待，那么kEvent被回收的话呢，线程将崩溃。</p>
-<h2 id="内核与应用程序的Event线程等待"><a href="#内核与应用程序的Event线程等待" class="headerlink" title="内核与应用程序的Event线程等待"></a>内核与应用程序的Event线程等待</h2><p>使用DeviceIOControl交互我们的Event实现用户线程和内核线程的同步（写这段代码的时候稍微不注意就会蓝屏，幸好没问题）</p>
-<p>IOControl驱动代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKDeviceControl</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	NTSTATUS status = STATUS_SUCCESS;</span><br><span class="line">	KdPrint((<span class="string">"Enter Control\n"</span>));</span><br><span class="line">	PIO_STACK_LOCATION <span class="built_in">stack</span> = IoGetCurrentIrpStackLocation(pirp);</span><br><span class="line">	ULONG cbin = <span class="built_in">stack</span>-&gt;Parameters.DeviceIoControl.InputBufferLength;</span><br><span class="line">	ULONG cbout = <span class="built_in">stack</span>-&gt;Parameters.DeviceIoControl.OutputBufferLength;</span><br><span class="line">	ULONG code = <span class="built_in">stack</span>-&gt;Parameters.DeviceIoControl.IoControlCode;</span><br><span class="line">	ULONG infor = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">switch</span> (code)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> IOCTL_TEST:</span><br><span class="line">	&#123;</span><br><span class="line">		KdPrint((<span class="string">"IOCTL_TEST\n"</span>));</span><br><span class="line">		HANDLE hUserEvent = *(HANDLE*)pirp-&gt;AssociatedIrp.SystemBuffer;</span><br><span class="line">		PKEVENT pEvent;</span><br><span class="line">		status = ObReferenceObjectByHandle(hUserEvent, EVENT_MODIFY_STATE, *ExEventObjectType, KernelMode, (PVOID*)&amp;pEvent, <span class="literal">NULL</span>);</span><br><span class="line">		KeSetEvent(pEvent, IO_NO_INCREMENT, FALSE);</span><br><span class="line">		ObDereferenceObject(pEvent);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		status = STATUS_FILE_INVALID;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	pirp-&gt;IoStatus.Status = status;</span><br><span class="line">	pirp-&gt;IoStatus.Information = infor;</span><br><span class="line">	IoCompleteRequest(pirp, IO_NO_INCREMENT);</span><br><span class="line">	KdPrint((<span class="string">"Leave DeviceControl\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> status;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是我们在通过ObReferenceObjectByHandle函数获得到句柄的真实对象的时候，内核计数将会加一，所以我们要在最后减一，ObDereferenceObject函数就可以实现，驱动端实现的就是释放这个时间，让等待的线程跑起来。<br>ObReferenceObjectByHandle参数有点多：</p>
-<ol>
-<li>事件句柄</li>
-<li>EVENT_MODIFY_STATE允许使用SetEvent,,ResetEvent和PulseEvent函数（网上找到的相关说明）</li>
-<li>ObjectType：<ol>
-<li><code>*ExEventObjectType, *ExSemaphoreObjectType, *IoFileObjectType, *PsProcessType, *PsThreadType, *SeTokenObjectType, *TmEnlistmentObjectType, *TmResourceManagerObjectType, *TmTransactionManagerObjectType, or *TmTransactionObjectType.</code></li>
+          <h2 id="IO定时器"><a href="#IO定时器" class="headerlink" title="IO定时器"></a>IO定时器</h2><p>就和应用程序的定时器差不多。<br>首先我们先初始化定时器，这个定时器需要一个函数例程，就是我们的定时函数，一般来说IoInitializeTimer函数是在DriverEntry函数中调用。<br>这个定时函数需要注意的是我们不能操作分页内存，因为他是在DISXXX级别上，并且我们开关定时器一般使用IOCTL进行控制。<br>开始计时器使用：<code>IoStartTimer</code><br>关闭计时器使用：<code>IoStopTimer</code><br>并且需要注意的是在定时器函数中我们最好使用互锁的函数，这样子稳定一些。</p>
+<h2 id="DPC定时器"><a href="#DPC定时器" class="headerlink" title="DPC定时器"></a>DPC定时器</h2><p>DPC定时器也是一个队列的操作形式，相对比较灵活一些。<br>使用之前要初始化DPC对象和定时器对象：<code>KeInitializeTimer</code>和<code>KeInitializeDpc</code><br>开启DPC定时器：<code>KeSetTimer</code>第一个是定时器指针，第二个是时间间隔，第三个是DPC对象。<br>关闭DPC定时器：<code>KeCancelTimer</code>参数及时Timer对象。<br><code>KeSetTimer</code>的第二个参数如果是正数的话呢就是绝对时间，是1601年到现在的绝对时间，如果是负数的话呢是间隔多长时间。<br>注意的是DPC例程只能触发一次，如果想周期性的触发那么需要在DPC中再次调用KeSetTimer。<br>DCP例程有一个DPC对象指针和三个PVOID的参数：<br>第一个是DPC对象，第二个是在我们<code>KeInitializeDpc</code>指定的参数是第一个，其余两个可能由别的发来的吧。</p>
+<p><strong>一般在驱动中使用时间都是用的负数，这样子才是相对的间隔时间</strong></p>
+<h2 id="等待函数"><a href="#等待函数" class="headerlink" title="等待函数"></a>等待函数</h2><ol>
+<li>KeWaitForSingleObject<ol>
+<li>这个和平常用的那个区别就在于第二三个参数，我们一般使用Executive和KernelMode</li>
+<li>时间的话呢我们一般要设置为负数</li>
 </ol>
 </li>
-<li>KernelMode内核模式下运行</li>
-<li>(PVOID*)&amp;pEvent这个东西我总觉得有问题，但是这样没错，这其实是个指针的指针</li>
-<li>最后一个必须为NULL</li>
-</ol>
-<p>用户层代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  IOCTL_TEST CTL_CODE(FILE_DEVICE_UNKNOWN,0x800,METHOD_BUFFERED,FILE_ANY_ACCESS)</span></span><br></pre></td></tr></table></figure>
-<p>现将我们的宏设置上去<br>写一个简单的线程：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UINT __<span class="function">stdcall <span class="title">testThread</span><span class="params">(LPVOID par)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE* hEvent = (HANDLE*) par;</span><br><span class="line">	WaitForSingleObject(*hEvent,INFINITE);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"jieshu\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>等待驱动给我们响应。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DWORD dwOutput;</span><br><span class="line">HANDLE hEvent = CreateEvent(<span class="literal">NULL</span>,FALSE,FALSE,<span class="literal">NULL</span>);</span><br><span class="line">HANDLE hThread = (HANDLE)_beginthreadex(<span class="literal">NULL</span>,<span class="number">0</span>,testThread,&amp;hEvent,<span class="number">0</span>,<span class="literal">NULL</span>);</span><br><span class="line">bRet = DeviceIoControl(hDevcie,IOCTL_TEST,&amp;hEvent,<span class="keyword">sizeof</span>(hEvent),<span class="literal">NULL</span>,<span class="number">0</span>,&amp;dwOutput,<span class="literal">NULL</span>);</span><br><span class="line">WaitForSingleObject(hThread,INFINITE);</span><br><span class="line">CloseHandle(hDevcie);</span><br><span class="line">CloseHandle(hThread);</span><br><span class="line">CloseHandle(hEvent);</span><br></pre></td></tr></table></figure>
-<p>创建事件对象，创建线程，发送控制信号，注意的是我们一定要等待线程运行完毕，否则我们在下面关掉了hEvent可能会出现问题！</p>
-<p>程序逻辑：</p>
-<ol>
-<li>用户层创建一个事件对象</li>
-<li>用户层创建一个线程</li>
-<li>用户层线程等待时间对象被激活</li>
-<li>驱动激活事件对象</li>
-<li>线程完毕</li>
-<li>用户层等待线程完毕退出主线程</li>
-</ol>
-<p>内核与内核的交互Event事件的时候我们是用的是名称搜索方法。</p>
-<p>这里需要注意的是内核线程必须要自己进行强制结束，系统不给回收。</p>
-<h2 id="自旋锁-1"><a href="#自旋锁-1" class="headerlink" title="自旋锁"></a>自旋锁</h2><p>和互斥体很像，但是等待的时候是通过CPU一直访问，所以消耗的比较多，并且还会改变IRQL的级别，所以需要注意操作的内存。<br>并且：<br>DDK提供了两类互锁操作来提供简单的同步处理，一类是 InterlockedXX 函数，另类是ExInterlockedXX 函数。其中，InterlockedXX系列的函数不通过自旋锁实现，而ExInterlockedXX 系列函数通过自旋锁实现。InterlockedXX 系列函数不需要程序员提供自旋锁，内部不会提升IRQL，因此InterlockedXX函数可以操作非分页的数据，也可以操作分页的数据。而ExInterlockedXX需要程序员提供一个自旋锁，内部依靠这个自旋锁实现<br>同步，所有ExInterlockedXX不能操作分页内存的数据。<br>下面是相关的函数：<br><img src="img1.jpg" alt="自旋锁函数"></p>
-<h2 id="驱动实现文件异步读取"><a href="#驱动实现文件异步读取" class="headerlink" title="驱动实现文件异步读取"></a>驱动实现文件异步读取</h2><p>写这个例程的时候，电脑蓝屏不下十次！！！<br>原因是书上写的少了一些内容和我抄错了一点，但是经过多次的测试终于找到了问题！<br>首先用户层要实现异步读取就要使用<code>FILE_FLAG_OVERLAPPED</code>标记，用户层代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HANDLE hDevcie = CreateFile(<span class="string">"\\\\.\\HelloDDK"</span>,GENERIC_READ|GENERIC_WRITE,<span class="number">0</span>,<span class="literal">NULL</span>,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,<span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (hDevcie == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"error"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>打开文件的话呢注意的是打开的标记要或上<code>FILE_FLAG_OVERLAPPED</code>标记：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">OVERLAPPED overlap1 = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">OVERLAPPED overlap2 = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">UCHAR buffer[<span class="number">10</span>];</span><br><span class="line">ULONG ulRead;</span><br><span class="line">BOOL bRead = ReadFile(hDevcie,buffer,<span class="number">10</span>,&amp;ulRead,&amp;overlap1);</span><br><span class="line"><span class="keyword">if</span> (!bRead &amp;&amp; GetLastError()==ERROR_IO_PENDING)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overlap1 is pending!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">bRead = ReadFile(hDevcie,buffer,<span class="number">10</span>,&amp;ulRead,&amp;overlap2);</span><br><span class="line"><span class="keyword">if</span> (!bRead &amp;&amp; GetLastError()==ERROR_IO_PENDING)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overlap2 is pending!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">system(<span class="string">"pause"</span>);</span><br><span class="line">CloseHandle(hDevcie);</span><br></pre></td></tr></table></figure>
-<p>我们县创建两个OVERLAPPED对象，其实这个对象里面应该填写我们的Event对象，但是我们这里不麻烦了，只是用异步的方式读取文件。</p>
-<p>用户层写完之后我们就要写内核层：<br>首先我们要在IRP的CREATE函数中附加上这个：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PDEVICE_EXTENSION pDevExt = (PDEVICE_EXTENSION)pDevObj-&gt;DeviceExtension;</span><br><span class="line">pDevExt-&gt;pIRPLinkListHead = (PLIST_ENTRY)ExAllocatePool(PagedPool, <span class="keyword">sizeof</span>(LIST_ENTRY));</span><br><span class="line">InitializeListHead(pDevExt-&gt;pIRPLinkListHead);</span><br><span class="line">KdPrint((<span class="string">"初始化irp_pending链表\n"</span>));</span><br></pre></td></tr></table></figure>
-<p>但是在学习的过程中，并没有这块内容。<br>作用就是初始化我们的链表对象，这个链表对象是记录我们还在pending（挂起）的IRP。<br>然后我们在READ函数中编写：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKDeviceRead</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"Enter HelloDDKRead\n"</span>));</span><br><span class="line">	PDEVICE_EXTENSION pDevExt = (PDEVICE_EXTENSION)pDevObj-&gt;DeviceExtension;</span><br><span class="line">	PMY_IRP_ENTRY pIrp_entery = (PMY_IRP_ENTRY)ExAllocatePool(PagedPool, <span class="keyword">sizeof</span>(MY_IRP_ENTRY));</span><br><span class="line">	pIrp_entery-&gt;pIrp = pirp;</span><br><span class="line">	InsertHeadList(pDevExt-&gt;pIRPLinkListHead, &amp;pIrp_entery-&gt;listEntry);</span><br><span class="line">	IoMarkIrpPending(pirp);<span class="comment">//set pending</span></span><br><span class="line">	KdPrint((<span class="string">"leave read!\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> STATUS_PENDING;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先是我们获取到设备扩展对象，然后申请一个自己的MYIRP结构体：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">MY_IRP_ENTRY</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	PIRP pIrp;</span><br><span class="line">	LIST_ENTRY listEntry;</span><br><span class="line">&#125;*PMY_IRP_ENTRY, MY_IRP_ENTRY;</span><br></pre></td></tr></table></figure>
-<p>然后加入我们的链表当中。</p>
-<p>这样子用户层使用ReadFile将会返回<code>ERROR_IO_PENDING</code>。<br>在用户层使用CloseHandle的时候会调用CLEANUP例程，我们编写这个例程：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">HelloDDKDeviceCleanUp</span><span class="params">(IN PDEVICE_OBJECT pDevObj, IN PIRP pirp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	KdPrint((<span class="string">"Enter CleanUp\n"</span>));</span><br><span class="line">	PDEVICE_EXTENSION pDevExt = (PDEVICE_EXTENSION)pDevObj-&gt;DeviceExtension;</span><br><span class="line">	</span><br><span class="line">	PMY_IRP_ENTRY my_irp_entry;</span><br><span class="line">	<span class="keyword">while</span> (!IsListEmpty(pDevExt-&gt;pIRPLinkListHead))</span><br><span class="line">	&#123;</span><br><span class="line">		PLIST_ENTRY pEntry = RemoveHeadList(pDevExt-&gt;pIRPLinkListHead);</span><br><span class="line"></span><br><span class="line">		my_irp_entry = CONTAINING_RECORD(pEntry, MY_IRP_ENTRY, listEntry);</span><br><span class="line">		my_irp_entry-&gt;pIrp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">		my_irp_entry-&gt;pIrp-&gt;IoStatus.Information = <span class="number">0</span>;</span><br><span class="line">		IoCompleteRequest(my_irp_entry-&gt;pIrp, IO_NO_INCREMENT);</span><br><span class="line">		ExFreePool(my_irp_entry);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	pirp-&gt;IoStatus.Status = STATUS_SUCCESS;</span><br><span class="line">	pirp-&gt;IoStatus.Information = <span class="number">0</span>;</span><br><span class="line">	IoCompleteRequest(pirp, IO_NO_INCREMENT);</span><br><span class="line">	KdPrint((<span class="string">"leave Clean Up\n"</span>));</span><br><span class="line">	<span class="keyword">return</span> STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>首先也是获得设备扩展对象，然后对链表进行一次遍历，将遍历得到的<code>PMY_IRP_ENTRY</code>结构体中的IRP进行操作完毕，然后响应这个ReadFile，再释放这块内存。<br>最后我们返回CLEANUP的这个STATUS。</p>
-<p>这里需要注意的是<code>IoMarkIrpPending</code>函数可以设置IRP为挂起状态。</p>
-<p>真是累，弄了一晚上才解决很多问题！！！</p>
-<h2 id="StartIO串行"><a href="#StartIO串行" class="headerlink" title="StartIO串行"></a>StartIO串行</h2><p>由于IRP支持异步的处理，所以我们最好也将IRP进行一个串行处理，这样子有助于我们驱动的稳定性，这里简单的记录一下，因为下面会有多串。<br>首先我们要先提供一个startIO的例程给设备。<br><code>pDriverObject-&gt;DriverStartIo=HelloDDKStartIO;</code><br>我们要编写<code>HelloDDKStartIO</code>函数，这个函数的话呢我们需要注意的是，他与普通的IRP唯一的区别就是没有返回值。<br>这个StartIO例程运行在DISPATCH_LEVEL级别，因此这个例程是不会被线程所打断的。在声明时要加上#pragma LOCKEDCODE修饰符。<br>派遣函数如果想把IRP串行化，只需要加入IoStartPacket函数首先判断当前设备是“忙”还是“空闲”。如果设备“空闲”，则提升当前IRQL到DISPATCH_LEVEL级别，并进入StartIO例程“串行处理该”IRP请求。如果设备“忙”，则将IRP插入队列后返回。<br>其实就是说我们的在写Read之类的IRP的时候我们可以直接使用pending，然后调用这个IoStartPacket函数，然后当轮到我们的IRP执行的时候就会调用我们自己写的StartIO例程了。<br>在StartIO例程中我们需要调用IoStartNextPacket函数执行下一个StartIO例程。<br>其实这个Next函数比没有Next的函数却别就是他会操作一下IRP队列（删除我们之前执行的IRP）。<br>在这里还需要注意的我们在调用IoStartPacket的时候我们还需要提供一个取消函数（CancelIO时候调用的）。<br>这个函数用来处理我们的IRP的，这里需要判断的是，如果这个IRP是我们当前执行的话呢我们需要执行IONextPacket函数（因为要跳过当前执行），并且降低IRQL。不是当前执行的函数的话呢我们需要溢出队列。<br>这里还需要注意的是我们需要释放IRP-&gt;CancelIrpl这个自旋锁，因为他在CancelIO函数有一个申请的自旋锁。<br>还有一个需要注意的是我们在编写StartIO例程的时候我们判断如果当前是空闲的话呢就直接处理，而不是空闲的话呢我们就直接返回（因为后面他会进来的）。</p>
-<h2 id="自定义StartIO"><a href="#自定义StartIO" class="headerlink" title="自定义StartIO"></a>自定义StartIO</h2><p>需要自己设置出队入队，并且在进入队列前，将当前的IRQL提升到  DISPATCH_LEVEL。然后在自己的StartIO例程中需要注意的是我们要自己处理队列中的IRP。<br>其实说白了自定义的StartIO其实就是处理队列的IRP，在Read这种的IRP中不作处理而是交由StartIO进行处理。<br>还有一点需要注意的是，我们插入队列的时候，如果KeInsertDeviceQueue函数返回的是假，说明队列之前没东西，我们要在调用一下自己的StartIO。</p>
-<h2 id="中断服务例程"><a href="#中断服务例程" class="headerlink" title="中断服务例程"></a>中断服务例程</h2><p>如果不希望自己线程被切换到其他的线程的时候，我们需要将PASSIVE_LEVE;提升到DISPATCH_LEVEL级别。<br>DDK中将硬件中断命名为DIRQL。<br>如果想在DDK中使用中断服务例程ISR我们需要鲜活的中断对象，是一个名为INTERRUPT的数据结构。<br>DDK提供IOConnectInterrupt函数将中断对象和ISR联系。<br>如果想让代码不被ISR打断的话呢我们需要将IRQL提升到DIRQL级别，我们需要用到KeSynchronizeExecution函数：</p>
-<ol>
-<li>第一个参数是中断对象指针，与ISR关联。</li>
-<li>第二个参数是我们要提供的不被打断的函数。</li>
-<li>第三个参数是这个不被打断的函数的参数。</li>
-</ol>
-<h2 id="DPC延迟过程调用例程"><a href="#DPC延迟过程调用例程" class="headerlink" title="DPC延迟过程调用例程"></a>DPC延迟过程调用例程</h2><p>简单的说就是除了ISR代码优先级最高的了，所以我们讲一些不太重要的处理异常的代码放在这里。</p>
-<ol>
-<li>使用DPC例程的时候我们要先初始化DPC对象，要使用内核函数KeInitializeDpc<ol>
-<li>第一个参数是DPC的指针</li>
-<li>第二个是DPC例程函数</li>
-<li>第三个是DPC例程函数的参数</li>
+<li>KeDelayExecutionThread<ol>
+<li>这个函数就是将当前线程睡眠一定的时间，然后转入运行状态</li>
 </ol>
 </li>
-<li>一般在DriverEntry中初始化DPC</li>
+<li>KeStallExecutionProcessor<ol>
+<li>这个函数比较耗CPU，他并不是休眠而是出于忙等待</li>
 </ol>
+</li>
+<li>KTimer也是一个内核对象，也有激发态和为激发态，当我们在KeSetTimer的时候不指定DPC例程的话呢，在指定的时间过去之后KeWaitForSingleObject就会不等待了（其实就是第一种的变样子使用，不用Event而是使用Ktimer对象）</li>
+</ol>
+<h2 id="时间操作的函数"><a href="#时间操作的函数" class="headerlink" title="时间操作的函数"></a>时间操作的函数</h2><ol>
+<li>KeQuerySystemTimer 参数就是OUT接受从1601.1.1到现在的时间，单位是100ns</li>
+<li>ExSystemToLocalTime将系统时间转换为当前时区对应的时间，当前时区可以通过控制面板进行设置。第一个参数是格林尼治时间，第二个是OUT接受当地时间。</li>
+<li>ExLocalTimeToSystemTime是讲当前时区的时间转换为格林尼治的时间。</li>
+<li>RtlTimeFieldsToTime是将当前的年月日得到系统时间，第一个参数是一个结构体，一看就知道了的。类似的还有RtlTimeToTimeFields</li>
+</ol>
+<h2 id="IRP的超时取消原理"><a href="#IRP的超时取消原理" class="headerlink" title="IRP的超时取消原理"></a>IRP的超时取消原理</h2><p>首先初始一个定时器对象和DPC对象，并将DPC例程和定时器对象进行关联。在每次对IRP操作前，开启定时器，并设置好一定的超时。如果在指定时间内对IRP的处理没有结束，那么操作系统就会就会进入 DPC例程。<br>在DPC例程中取消还在继续处理的IRP。如果驱动程序能在超时前结束IRP的操作，则应该取消定时器，从而保证不会再次取消IRP。</p>
+<p>DPC的最小时间间隔是ms，而IO的是s！</p>
 
       
     </div>
@@ -359,7 +302,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -426,7 +369,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

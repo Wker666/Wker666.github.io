@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/21/C-friend-fun/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/21/Dir-Monitor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/21/C-friend-fun/" class="post-title-link" itemprop="url">C++ friend fun</a>
+            <a href="/2020/01/21/Dir-Monitor/" class="post-title-link" itemprop="url">Dir Monitor</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-21 08:46:42" itemprop="dateCreated datePublished" datetime="2020-01-21T08:46:42+08:00">2020-01-21</time>
+              <time title="Created: 2020-01-21 12:42:05" itemprop="dateCreated datePublished" datetime="2020-01-21T12:42:05+08:00">2020-01-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-01 13:02:22" itemprop="dateModified" datetime="2020-02-01T13:02:22+08:00">2020-02-01</time>
+                <time title="Modified: 2020-02-01 13:01:53" itemprop="dateModified" datetime="2020-02-01T13:01:53+08:00">2020-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,8 +262,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h1><p>这种函数当时学的时候忘了，在这里重新回忆一下，这种函数的作用和他的名字一样，就是方便我们的使用，就是说你没有必要将这个函数放在你的类中，只需要在生命的时候给他前面加上一个friend，然后就在外部声明就好了，还有就是友元类，这个和友元函数类似。<br>简单的看下友元函数的写法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Geta</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> a;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">FGA</span><span class="params">(Test&amp; i)</span></span>;<span class="comment">//友元函数的定义</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FGA</span><span class="params">(Test&amp; i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	i.a = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Test *o = <span class="keyword">new</span> Test();</span><br><span class="line">	FGA(*o);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;o-&gt;Geta()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="目录监视功能"><a href="#目录监视功能" class="headerlink" title="目录监视功能"></a>目录监视功能</h1><p>这个实现的效果有很多办法，比如说Hook，但是这个的话呢相对而言有点小麻烦，但是灵活性比较好，但当我们要求比较低，只是想单纯的监视的时候（对更改的内容和文件名之类不感兴趣的时候），我们可以考虑<code>FindFirstChangeNotification</code>这个相关的函数。</p>
+<h2 id="FindFirstChangeNotification"><a href="#FindFirstChangeNotification" class="headerlink" title="FindFirstChangeNotification"></a><code>FindFirstChangeNotification</code></h2><p>这个函数是队目录监控的一个函数，具体微软怎么实现的不知道（感觉应该也跟钩子有关系），这个函数调用比较简单，共有下面三个参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">FindFirstChangeNotification</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpPathName,    <span class="comment">// pointer to name of directory to watch</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bWatchSubtree,    <span class="comment">// flag for monitoring directory or </span></span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="comment">// directory tree</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwNotifyFilter   <span class="comment">// filter conditions to watch for</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>lpPathName：监视的目录文件夹</li>
+<li>bWatchSubtree ：是否监视子目录</li>
+<li>dwNotifyFilter：监视的类型</li>
+</ol>
+<ul>
+<li>FILE_NOTIFY_CHANGE_FILE_NAME</li>
+<li>FILE_NOTIFY_CHANGE_DIR_NAME</li>
+<li>FILE_NOTIFY_CHANGE_ATTRIBUTES</li>
+<li>FILE_NOTIFY_CHANGE_SIZE</li>
+<li>FILE_NOTIFY_CHANGE_LAST_WRITE</li>
+<li>FILE_NOTIFY_CHANGE_SECURITY<br>看名字就能看明白了。<br>返回值是一个句柄，这个句柄可以通过等待进行相应，这也就是下面我将要说到的一个函数。和这个相关的是：<code>FindNextChangeNotification</code>, <code>FindCloseChangeNotification</code>这个在最后提。<h2 id="WaitForMultipleObjects"><a href="#WaitForMultipleObjects" class="headerlink" title="WaitForMultipleObjects"></a><code>WaitForMultipleObjects</code></h2>这个函数有点类似于：<code>WaitForSingleObject</code>，但是这个我们是支持单个对象的，但对于多对象的我们就需要用到<code>WaitForMultipleObjects</code>，看下MSDN给出的定义：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">WaitForMultipleObjects</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD nCount,             <span class="comment">// number of handles in the handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	CONST HANDLE *lpHandles,  <span class="comment">// pointer to the object-handle array</span></span></span></span><br><span class="line"><span class="function"><span class="params">	BOOL fWaitAll,            <span class="comment">// wait flag</span></span></span></span><br><span class="line"><span class="function"><span class="params">	DWORD dwMilliseconds      <span class="comment">// time-out interval in milliseconds);</span></span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li>nCount：等待的个数</li>
+<li>lpHandles：等待时间句柄的数组</li>
+<li>fWaitAll：是否等待所有时间都相应</li>
+<li>dwMilliseconds：等待的时间</li>
+</ol>
+<p>dwMilliseconds这个参数如果我们提供：INFINITE 这个的话呢将视为无线等待（一般就填写这个就比较好）。<br>返回值：<br>WAIT_OBJECT_0 to (WAIT_OBJECT_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled.<br>If bWaitAll is FALSE, the return value minus WAIT_OBJECT_0 indicates the lpHandles array index of the object that satisfied the wait. If more than one object became signalled during the call, this is the array index of the signalled object with the smallest index value of all the signalled objects.</p>
+<p>WAIT_ABANDONED_0 to (WAIT_ABANDONED_0 + nCount – 1)：If bWaitAll is TRUE, the return value indicates that the state of all specified objects is signaled and at least one of the objects is an abandoned mutex object.<br>If bWaitAll is FALSE, the return value minus WAIT_ABANDONED_0 indicates the lpHandles array index of an abandoned mutex object that satisfied the wait.</p>
+<p>WAIT_TIMEOUT：The time-out interval elapsed and the conditions specified by the bWaitAll parameter are not satisfied. </p>
+<p>是不是有点眼花缭乱，我翻译一下吧：</p>
+<p>如果bWaitAll为真，则返回值表示所有指定对象的状态都有信号。如果bWaitAll为FALSE，则返回值减去WAIT_OBJECT_0表示满足等待的对象的lpHandles数组索引。如果在调用期间有多个对象被标记，这是标记对象的数组索引，索引值是所有标记对象的最小值。如果bWaitAll为真，则返回值表明所有指定对象的状态都有信号，并且至少有一个对象是废弃的互斥对象。如果bWaitAll为FALSE，则返回值减去wait_oned_0表示满足等待的废弃互斥对象的lpHandles数组索引。超时时间间隔和bWaitAll参数指定的条件不满足。</p>
+<p>简单地说我们如果是无限等待返回给我们的值-WAIT_OBJECT_0就是我们提供的对象句柄的数组的下标值。</p>
+<h2 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HANDLE m_charnge[<span class="number">3</span>];</span><br><span class="line">	m_charnge[<span class="number">0</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_FILE_NAME);</span><br><span class="line">	m_charnge[<span class="number">1</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_DIR_NAME);</span><br><span class="line">	m_charnge[<span class="number">2</span>]=FindFirstChangeNotification(<span class="string">"E:\\"</span>,TRUE,FILE_NOTIFY_CHANGE_LAST_WRITE);	</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		DWORD Rv = WaitForMultipleObjects(<span class="number">3</span>,m_charnge,FALSE,INFINITE);</span><br><span class="line">		<span class="keyword">switch</span>(Rv-WAIT_OBJECT_0)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"文件名改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"目錄改變"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt;<span class="string">"內容改變"</span>&lt;&lt;<span class="built_in">endl</span>;			</span><br><span class="line">		&#125;</span><br><span class="line">		FindNextChangeNotification(m_charnge[Rv]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意的是在填写监视目录的时候别忘记转义，其他的都好说。</p>
+
       
     </div>
 
@@ -282,7 +311,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/109/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/109/">109</a><span class="page-number current">110</span><a class="page-number" href="/page/111/">111</a><span class="space">&hellip;</span><a class="page-number" href="/page/130/">130</a><a class="extend next" rel="next" href="/page/111/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/109/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/109/">109</a><span class="page-number current">110</span><a class="page-number" href="/page/111/">111</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/111/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -349,7 +378,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
