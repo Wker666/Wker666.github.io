@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/26/%E9%A9%B1%E5%8A%A8%E5%AE%9A%E6%97%B6%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/27/%E9%A9%B1%E5%8A%A8%E8%B0%83%E7%94%A8%E9%A9%B1%E5%8A%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Image.JPG">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/26/%E9%A9%B1%E5%8A%A8%E5%AE%9A%E6%97%B6%E5%99%A8/" class="post-title-link" itemprop="url">驱动定时器</a>
+            <a href="/2020/09/27/%E9%A9%B1%E5%8A%A8%E8%B0%83%E7%94%A8%E9%A9%B1%E5%8A%A8/" class="post-title-link" itemprop="url">驱动调用驱动</a>
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-09-26 15:47:12 / Modified: 16:48:33" itemprop="dateCreated datePublished" datetime="2020-09-26T15:47:12+08:00">2020-09-26</time>
+              <time title="Created: 2020-09-27 10:00:49 / Modified: 19:27:00" itemprop="dateCreated datePublished" datetime="2020-09-27T10:00:49+08:00">2020-09-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,33 +256,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="IO定时器"><a href="#IO定时器" class="headerlink" title="IO定时器"></a>IO定时器</h2><p>就和应用程序的定时器差不多。<br>首先我们先初始化定时器，这个定时器需要一个函数例程，就是我们的定时函数，一般来说IoInitializeTimer函数是在DriverEntry函数中调用。<br>这个定时函数需要注意的是我们不能操作分页内存，因为他是在DISXXX级别上，并且我们开关定时器一般使用IOCTL进行控制。<br>开始计时器使用：<code>IoStartTimer</code><br>关闭计时器使用：<code>IoStopTimer</code><br>并且需要注意的是在定时器函数中我们最好使用互锁的函数，这样子稳定一些。</p>
-<h2 id="DPC定时器"><a href="#DPC定时器" class="headerlink" title="DPC定时器"></a>DPC定时器</h2><p>DPC定时器也是一个队列的操作形式，相对比较灵活一些。<br>使用之前要初始化DPC对象和定时器对象：<code>KeInitializeTimer</code>和<code>KeInitializeDpc</code><br>开启DPC定时器：<code>KeSetTimer</code>第一个是定时器指针，第二个是时间间隔，第三个是DPC对象。<br>关闭DPC定时器：<code>KeCancelTimer</code>参数及时Timer对象。<br><code>KeSetTimer</code>的第二个参数如果是正数的话呢就是绝对时间，是1601年到现在的绝对时间，如果是负数的话呢是间隔多长时间。<br>注意的是DPC例程只能触发一次，如果想周期性的触发那么需要在DPC中再次调用KeSetTimer。<br>DCP例程有一个DPC对象指针和三个PVOID的参数：<br>第一个是DPC对象，第二个是在我们<code>KeInitializeDpc</code>指定的参数是第一个，其余两个可能由别的发来的吧。</p>
-<p><strong>一般在驱动中使用时间都是用的负数，这样子才是相对的间隔时间</strong></p>
-<h2 id="等待函数"><a href="#等待函数" class="headerlink" title="等待函数"></a>等待函数</h2><ol>
-<li>KeWaitForSingleObject<ol>
-<li>这个和平常用的那个区别就在于第二三个参数，我们一般使用Executive和KernelMode</li>
-<li>时间的话呢我们一般要设置为负数</li>
+          <h2 id="驱动调用驱动"><a href="#驱动调用驱动" class="headerlink" title="驱动调用驱动"></a>驱动调用驱动</h2><p>其实在之前的文章已经记录过了，调用驱动其实就和用户层差不多，使用CreateFile类型的函数进行调用，但是需要注意的是一下两点：</p>
+<ol>
+<li>同步设备的话呢：第二个DesireAccess参数需要设置为SYNCHRONIZE，如果不是的话呢要设置为0。</li>
+<li>同步设备的话呢：倒数第三个参数CreateOptions需要指定为FILE_SYNCHRONOUS_IO_NONALERT或者FILE_SYNCHRONOUS_IO_NALERT，异步设备的话呢不需要指定。</li>
+</ol>
+<p>同步调用的话呢没什么好说的，异步调用的话呢可以使用异步调用的回调函数，并且还可以使用返回的句柄转换为事件对象，用waitsingleforobject这个函数等待时间的完毕，但不要忘记将事件对象的计数减一。</p>
+<p><strong>通过符号链接打开设备</strong></p>
+<p>利用ZwOpenSymbolicLinkObject内核函数先得到符号连接的句柄，然后使用ZwQuerySymbolicLinkObject内核函数查找到设备名。<br>先初始化OBJECT_ATTRIBUTES对象，然后得到通过传递这个对象给ZwOpenSymbolicLinkObject函数得到符号链接句柄。通过设备链接句柄获得设备名称，然后通过这个设备名称初始化一个新的OBJECT_ATTRIBUTES对象，然后通过这个新的对象来CreateFile，下面的操作就一样了。</p>
+<h2 id="通过设备指针调用其他驱动程序"><a href="#通过设备指针调用其他驱动程序" class="headerlink" title="通过设备指针调用其他驱动程序"></a>通过设备指针调用其他驱动程序</h2><p>ZwCreateFile获得设备的设备句柄，而如果想获得涉设备的文件对象指针用到IoGetDeviceObjectPointer：</p>
+<ol>
+<li>设备名</li>
+<li>打开权限</li>
+<li>返回的设备相关的文件对象指针</li>
+<li>返回的设备对象指针</li>
+</ol>
+<p>这个函数会让设备对象加一，所以我们要在使用完之后调用ObDereferenceObject，如果我们不减一，那么在下一次调用IoGetDeviceObjectPointer的时候并不是真的生成一个新的对象，而是将之前的那个对象的内核计数加一返回给你。<br>内核计数加一的时候会调用IRP_MJ_CREATE，计数减到0会调用IRP_MJ_CLOSE，所以我们完全可以使用上面操作内核计数的函数代替Creat和close。</p>
+<p>可以通过loBuildSynchronousFsdRequest和loBuildAsynchronousFsdRcquest两个内核函数创建IRP，它们分别用来创建同步类型的IRP和创建异步类型的IRP。这两个内核函<br>数可以创建 IRP_MJ_PNP、 IRP_MJ_READ、 IRP_MJ_WRITE、 IRP_MJ_FLUSH BUFFERS和 IRP_MJ_SHUTDOWN类型的IRP。</p>
+<p>可以通过loBuildDeviceloControlRequest内核函数创建IRP_MJ_INTERNAL_DEVICE_CONTROL和IRP_MJ_DEVICE_CONTROL两个类型的IRP，这个内核函数只能创建同步类型的IRP。<br>另外，还可以使用 IoAllocatelrp内核函数，它可以创建任意类型的 IRP.<br>IoBuildSynchronousFsdRequest、IoBuildAsynchronousFsdRequest、IoBuildDeviceloControlRequest 这三个内核函数是属于靠近上层的内核函数。而IoAllocatelrp是比较底层的内核函数，以上三个内核函数都是通过调用 IoAllocateIrp实现的。</p>
+<p>创建完IRP之后还要构造IO堆栈，每个设备对象都要一个设备堆栈。<br>最后通过IoCallDriver内核函数调用响应的驱动，这个函数会根据IRP找到响应的派遣函数。</p>
+<p>loBuildSynchronousFsdRequest和loBuildAsynchronousFsdRcquest两个内核函数的最大区别就在于是否有时间等待。<br>loBuildSynchronousFsdRequest：</p>
+<ol>
+<li>IRP的类型</li>
+<li>设备对象指针</li>
+<li>输入输出缓冲区</li>
+<li>缓冲区大小</li>
+<li>偏移量</li>
+<li>【同步事件】</li>
+<li>操作状态</li>
+</ol>
+<h2 id="创建IRP"><a href="#创建IRP" class="headerlink" title="创建IRP"></a>创建IRP</h2><ol>
+<li><p>首先我们先通过IoGetDeviceObjectPointer函数获得设备对象，然后判断一下是否成功，不成功返回，然后初始化一个同步事件，设置一个偏移量，然后就是创建一个同步的IRP，参数就是之前写的，然后得到下一层的IO堆栈，通过IoGetNextIrpStackLocation函数得到，这个函数的唯一一个参数就是我们刚才创建好的IRP对象指针，然后我们将这个IO堆栈对象的FileObject属性设置为我们之前在IoGetDeviceObjectPointer函数中得到的文件对象指针。最后调用IoCallDriver来调用IRP的派遣函数。然后我们就等待这个IRP结束，如果是被挂起的话呢说明异步，我们需要等待在之前创建的同步事件对象，然后关闭设备（这个不要忘记）ObDereferenceObject，这个函数的参数是我们之前得到的与驱动相关的文件对象指针。</p>
+</li>
+<li><p>使用loBuildAsynchronousFsdRcquest的话呢与之前那个不同的主要一点是提供Event的位置，一个是在函数中提供Event对象，而这个函数的话呢是在使用IoCallDriver之前和创建IRP之后将创建的IRP的UserEvent指定为我们创建的一个Event，其他的操作都是一样的。</p>
+</li>
+<li><p>用IoAllocateIrp相对麻烦一些，因为需要自己制定IRP的属性，这个函数只有两个参数，第一个是IO堆栈大小，第二个是是否要分配磁盘配额。在创建IRP之前都是一样，但是在创建完IRP之后是由比较大的区别的：</p>
+<ol>
+<li>首先我们将我们的Event时间对象传给IRP：IRP-&gt;UserEvent = &amp;event</li>
+<li>将IO的状态指针传给他：IRP-&gt;UserIosb = &amp;status_block</li>
+<li>设置IRP的线程号：IRP-&gt;Tail.Overlay.Thread = PsGetCurrentThread()</li>
+<li>设置IRP的BUFFER：IRP.&gt;AssociatedIrp.SystemBuffer = NULL</li>
+<li>获得设备堆栈：PIO_STACK_LOCATION stack = IoGetNextIrpStackLocation(IRP)</li>
+<li>设置IRP的编号：stack-&gt;MajorFunction = IRP_MJ_READ</li>
+<li>设置IRP的子IRP号：stack-&gt;MinorFunction = IRP_MN_NORMAL;//0</li>
+<li>设置文件指针，这个指针是在我们得到设备指针的时候间接获得的：stack-&gt;FileObject = FileObject</li>
 </ol>
 </li>
-<li>KeDelayExecutionThread<ol>
-<li>这个函数就是将当前线程睡眠一定的时间，然后转入运行状态</li>
 </ol>
-</li>
-<li>KeStallExecutionProcessor<ol>
-<li>这个函数比较耗CPU，他并不是休眠而是出于忙等待</li>
+<h2 id="其他方法获得设备指针"><a href="#其他方法获得设备指针" class="headerlink" title="其他方法获得设备指针"></a>其他方法获得设备指针</h2><p>使用ObReferenceObjectByName获得设备指针，这个函数是DDK并没有公开的一个函数，但是在<code>ntoskrnl.exe</code>中存在，所以我们要指定原型：</p>
+<p><img src="img1.jpg" alt="1"><br><img src="img2.jpg" alt="2"></p>
+<ol>
+<li>是UNICODE的设备名</li>
+<li>属性一般是：OBJ_CASE_INSENSITIVE</li>
+<li>这个参数很少用到，用NULL</li>
+<li>这个是获得的权限，一般是FILE_ALL_ACCESS</li>
+<li>这个就是我们在商用extern设置的变量：IoDeviceObjectType</li>
+<li>访问模式，内核的话呢：KernelMode</li>
+<li>很少用到，一般是NULL</li>
+<li>返回的对象指针</li>
 </ol>
-</li>
-<li>KTimer也是一个内核对象，也有激发态和为激发态，当我们在KeSetTimer的时候不指定DPC例程的话呢，在指定的时间过去之后KeWaitForSingleObject就会不等待了（其实就是第一种的变样子使用，不用Event而是使用Ktimer对象）</li>
+<p>这个函数的功能强大，可以获取任何内核对象的指针，而我们之前的那个IoGetDeviceObjectPointer只能获得设备对象和文件的指针，因为这个函数也会使内核计数加一，所以最后还是要用到ObDereferenceObject使其减一。</p>
+<h2 id="IoGetDeviceObjectPointer的内部结构"><a href="#IoGetDeviceObjectPointer的内部结构" class="headerlink" title="IoGetDeviceObjectPointer的内部结构"></a>IoGetDeviceObjectPointer的内部结构</h2><ol>
+<li>用InitializeObjectAttributes函数构造OBJECT_ATTRIBUTES结构体</li>
+<li>用ZwOpenFile内核函数打开设备文件对象的句柄</li>
+<li>使用ObReferenceObjectByHandle函数获得这个文件对象的指针</li>
+<li>用IoGetBaseFileSystemDeviceObject函数从设备文件对象指针得到设备指针</li>
 </ol>
-<h2 id="时间操作的函数"><a href="#时间操作的函数" class="headerlink" title="时间操作的函数"></a>时间操作的函数</h2><ol>
-<li>KeQuerySystemTimer 参数就是OUT接受从1601.1.1到现在的时间，单位是100ns</li>
-<li>ExSystemToLocalTime将系统时间转换为当前时区对应的时间，当前时区可以通过控制面板进行设置。第一个参数是格林尼治时间，第二个是OUT接受当地时间。</li>
-<li>ExLocalTimeToSystemTime是讲当前时区的时间转换为格林尼治的时间。</li>
-<li>RtlTimeFieldsToTime是将当前的年月日得到系统时间，第一个参数是一个结构体，一看就知道了的。类似的还有RtlTimeToTimeFields</li>
-</ol>
-<h2 id="IRP的超时取消原理"><a href="#IRP的超时取消原理" class="headerlink" title="IRP的超时取消原理"></a>IRP的超时取消原理</h2><p>首先初始一个定时器对象和DPC对象，并将DPC例程和定时器对象进行关联。在每次对IRP操作前，开启定时器，并设置好一定的超时。如果在指定时间内对IRP的处理没有结束，那么操作系统就会就会进入 DPC例程。<br>在DPC例程中取消还在继续处理的IRP。如果驱动程序能在超时前结束IRP的操作，则应该取消定时器，从而保证不会再次取消IRP。</p>
-<p>DPC的最小时间间隔是ms，而IO的是s！</p>
+<p><img src="img3.jpg" alt="3"><br><img src="img4.jpg" alt="4"></p>
+<p>这里有个错误就是在他的注释上，我们得到的不是设备对象指针，而是设备的文件对象的指针！<br>代码上没啥问题。</p>
 
       
     </div>
@@ -302,7 +343,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/131/">131</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/132/">132</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -369,18 +410,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">132</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
