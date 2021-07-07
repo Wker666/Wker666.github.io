@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="CNN很久没更新博客了，前段时间面试上了字节，然后考了很多考试，所以一直没时间做自己的东西，现在终于放暑假了，更新下上个月的一些小成果吧。之前一直在寻找java的cnn框架，没找到，只找到了一个很老的深度学习框架，简单用了下，拟合个比较简单的东西还是比较方便的，但是貌似没有卷积池化这样的操作，所以不是特别适合做计算机视觉。其实实际上java确实不是特别适合做这方面的东西，也可能是我对java的GP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNN框架初探">
+<meta property="og:url" content="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="CNN很久没更新博客了，前段时间面试上了字节，然后考了很多考试，所以一直没时间做自己的东西，现在终于放暑假了，更新下上个月的一些小成果吧。之前一直在寻找java的cnn框架，没找到，只找到了一个很老的深度学习框架，简单用了下，拟合个比较简单的东西还是比较方便的，但是貌似没有卷积池化这样的操作，所以不是特别适合做计算机视觉。其实实际上java确实不是特别适合做这方面的东西，也可能是我对java的GP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/img1.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/img2.jpg">
+<meta property="article:published_time" content="2021-07-07T10:48:14.000Z">
+<meta property="article:modified_time" content="2021-07-07T11:36:33.006Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="人工智能">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/img1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>CNN框架初探 | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CNN框架初探
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-07 18:48:14 / Modified: 19:36:33" itemprop="dateCreated datePublished" datetime="2021-07-07T18:48:14+08:00">2021-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">人工智能</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2><p>很久没更新博客了，前段时间面试上了字节，然后考了很多考试，所以一直没时间做自己的东西，现在终于放暑假了，更新下上个月的一些小成果吧。<br>之前一直在寻找java的cnn框架，没找到，只找到了一个很老的深度学习框架，简单用了下，拟合个比较简单的东西还是比较方便的，但是貌似没有卷积池化这样的操作，所以不是特别适合做计算机视觉。<br>其实实际上java确实不是特别适合做这方面的东西，也可能是我对java的GPU操作不太熟悉，还没涉及到，但我又想快点写出来一个cnn，所以暂时只用到了CPU，在之后有机会的话呢我看看如果有对应的java操作GPU的文档和相对的分布式开发的话呢，我会认真更新下这个框架的。<br>目前我只支持了：</p>
+<ol>
+<li>卷积层</li>
+<li>池化层</li>
+<li>relu层</li>
+<li>dropout层</li>
+<li>全连接层</li>
+<li>softmax和SVM</li>
+</ol>
+<p>tanh和sigmod还没写，使用感觉上感觉没有relu好用，就暂时没写上去。</p>
+<h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>这是我先前写的一个框架，我当时写的时候没用到矩阵，而是真的用的是神经网络的思路，真的是神经元，线，层，网络作为java bean，然后生成，不详细介绍如何使用了，算是一个废稿。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Main;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> bean.Layer;</span><br><span class="line"><span class="keyword">import</span> bean.Net;</span><br><span class="line"><span class="keyword">import</span> utils.NetSave;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Start</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String FileName = <span class="string">"D:/dat.save"</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			creat();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"------------导入神经网络------------"</span>);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			input();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException | IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">input</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException, IOException </span>&#123;</span><br><span class="line">		Net n = NetSave.input(FileName);</span><br><span class="line">		<span class="keyword">double</span>[] a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1.0</span>,<span class="number">1.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:0\t 输出结果:"</span>+c);</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">0.0</span>,<span class="number">1.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:1\t 输出结果:"</span>+c);</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1.0</span>,<span class="number">0.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:1\t 输出结果:"</span>+c);</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">0.0</span>,<span class="number">0.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:0\t 输出结果:"</span>+c);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">creat</span><span class="params">()</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</span><br><span class="line">		Net n = <span class="keyword">new</span> Net();<span class="comment">//建立一个神经网络</span></span><br><span class="line">		n.AddLayer(<span class="keyword">new</span> Layer(<span class="number">2</span>));<span class="comment">//输入层</span></span><br><span class="line">		n.AddLayer(<span class="keyword">new</span> Layer(<span class="number">10</span>));<span class="comment">//隐藏层</span></span><br><span class="line">		n.AddLayer(<span class="keyword">new</span> Layer(<span class="number">20</span>));<span class="comment">//隐藏层</span></span><br><span class="line">		n.AddLayer(<span class="keyword">new</span> Layer(<span class="number">1</span>));<span class="comment">//输出层</span></span><br><span class="line">		n.connect();<span class="comment">//连接神经网络</span></span><br><span class="line">		<span class="comment">//没训练前的结果</span></span><br><span class="line">		<span class="keyword">double</span>[] a1 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1.0</span>,<span class="number">0.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a1)System.out.println(<span class="string">"没训练前的结果:"</span>+c);</span><br><span class="line">		<span class="comment">//训练输入数据</span></span><br><span class="line">		<span class="keyword">double</span>[] one = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">0.0</span>,<span class="number">0.0</span>&#125;;</span><br><span class="line">		<span class="keyword">double</span>[] two = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">1.0</span>,<span class="number">0.0</span>&#125;;</span><br><span class="line">		<span class="keyword">double</span>[] three = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">0.0</span>,<span class="number">1.0</span>&#125;;</span><br><span class="line">		<span class="keyword">double</span>[] four = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">1.0</span>,<span class="number">1.0</span>&#125;;</span><br><span class="line">		<span class="comment">//训练输出结果</span></span><br><span class="line">		<span class="keyword">double</span>[] res1 = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">0.0</span>&#125;;</span><br><span class="line">		<span class="keyword">double</span>[] res2 = <span class="keyword">new</span> <span class="keyword">double</span>[]&#123;<span class="number">1.0</span>&#125;;</span><br><span class="line">		System.out.println(<span class="string">"开始误差:"</span>+n.train(two, res2));</span><br><span class="line">		<span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">		<span class="comment">//开始训练</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">1000000</span>;i++) &#123;</span><br><span class="line">			n.train(one,res1);</span><br><span class="line">			n.train(two, res2);</span><br><span class="line">			n.train(three, res2);</span><br><span class="line">			n.train(four, res1);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"结束误差:"</span>+n.train(two, res2));</span><br><span class="line">		System.out.println(<span class="string">"训练所用时间:"</span>+(<span class="keyword">double</span>)(((System.currentTimeMillis()-startTime)/<span class="number">100</span>)%<span class="number">60</span>)/<span class="number">10</span>+<span class="string">"s"</span>);</span><br><span class="line">		 <span class="comment">//测试训练结果</span></span><br><span class="line">		<span class="keyword">double</span>[] a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1.0</span>,<span class="number">1.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:0\t 输出结果:"</span>+c);</span><br><span class="line">		</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">0.0</span>,<span class="number">1.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:1\t 输出结果:"</span>+c);</span><br><span class="line">		</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1.0</span>,<span class="number">0.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:1\t 输出结果:"</span>+c);</span><br><span class="line">		</span><br><span class="line">		a2 = n.test(<span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">0.0</span>,<span class="number">0.0</span>&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">double</span> c : a2)System.out.println(<span class="string">"预期结果:0\t 输出结果:"</span>+c);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//保存</span></span><br><span class="line">		NetSave.save(FileName, n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我测试的主要是对XOR这个模型的拟合，支持这个网络的导入导出，其实写的还是可以的，但是大网络肯定是有点困难的，这里给出输出的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">没训练前的结果:0.7155445521857534</span><br><span class="line">开始误差:0.04045745089560178</span><br><span class="line">结束误差:9.991615427844533E-6</span><br><span class="line">训练所用时间:1.5s</span><br><span class="line">预期结果:0	 输出结果:0.004821836413339121</span><br><span class="line">预期结果:1	 输出结果:0.9959640239707258</span><br><span class="line">预期结果:1	 输出结果:0.9955297659791846</span><br><span class="line">预期结果:0	 输出结果:0.003557716622898065</span><br><span class="line">------------导入神经网络------------</span><br><span class="line">预期结果:0	 输出结果:0.004821836413339121</span><br><span class="line">预期结果:1	 输出结果:0.9959640239707258</span><br><span class="line">预期结果:1	 输出结果:0.9955297659791846</span><br><span class="line">预期结果:0	 输出结果:0.003557716622898065</span><br></pre></td></tr></table></figure>
+<p>可以看到<br>一开始的误差是0.7，到最后能够到0.0000009，这个已经算是很好的了，用了1.5s，也算是比较快的了，而且到最后输出的结果和预期很接近了。<br>但是由于不太适合做一些大的网路，所以我就没有继续写这个框架了，转而编写了下面的这个卷积神经网络。</p>
+<h3 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h3><p>写完上面的那个简单的网络之后我就想着快点写一下这个卷积神经网络的框架，但是下手比较难，我就去学习了相关的课程之后写了一个C++版本的，后来才转到了java版本，沿用了caffe的思路，两天时间不到就把这个小框架写出来了，对于简单的网络来说拟合起来还是比较简单的，但是对于大型的网络，速度确实很欠缺而且震荡还是有一定的偏大，可能是我的模型不是很好的缘故，暂时先看我们最经典入门的手写数字集合的识别是如何实现的。<br>首先我们需要准备需要训练的模型以及数据。<br>数据集的话呢我使用的是mnist的手写训练集<br><img src="img1.jpg" alt="mnist"><br>然后我们准备一个模型填充我们的数据，首先需要明确一点就是我们需要填充的是一个四个维度的矩阵，四个维度分别是：</p>
+<ol>
+<li>训练数据的个数</li>
+<li>训练数据的通道</li>
+<li>训练数据的高</li>
+<li>训练数据的宽<br>第一个是我们有多少个样本，第二个是我们样本的通道数（有rgb三通道和灰度图像这样子的），宽高就是图片的宽高了，填充方法如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Blob <span class="title">getImages</span><span class="params">(String fileName)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">try</span> (BufferedInputStream bin = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(fileName))) &#123;</span><br><span class="line">           <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];</span><br><span class="line">           bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">           <span class="keyword">if</span> (!<span class="string">"00000803"</span>.equals(bytesToHex(bytes))) &#123;                        <span class="comment">// 读取魔数</span></span><br><span class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Please select the correct file!"</span>);</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">               <span class="keyword">int</span> number = Integer.parseInt(bytesToHex(bytes), <span class="number">16</span>);           <span class="comment">// 读取样本总数</span></span><br><span class="line">               bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">               <span class="keyword">int</span> xPixel = Integer.parseInt(bytesToHex(bytes), <span class="number">16</span>);           <span class="comment">// 读取每行所含像素点数</span></span><br><span class="line">               bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">               <span class="keyword">int</span> yPixel = Integer.parseInt(bytesToHex(bytes), <span class="number">16</span>);           <span class="comment">// 读取每列所含像素点数</span></span><br><span class="line">               Blob res = <span class="keyword">new</span> Blob(number, <span class="number">1</span>,yPixel, xPixel, Cube.FILLZEZORS);</span><br><span class="line">               <span class="comment">//Blob res = new Blob(number, 3,yPixel, xPixel, Cube.FILLZEZORS);</span></span><br><span class="line">               <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number; i++) &#123;</span><br><span class="line">               	<span class="keyword">for</span>(<span class="keyword">int</span> y = <span class="number">0</span>;y&lt;yPixel;y++) &#123;</span><br><span class="line">               		<span class="keyword">for</span>(<span class="keyword">int</span> x = <span class="number">0</span>;x&lt;xPixel;x++) &#123;</span><br><span class="line">               			res.Get(i).set(<span class="number">0</span>, y, x, bin.read() / <span class="number">255.0</span>);</span><br><span class="line">               			<span class="comment">//res.Get(i).set(1, y, x, 1);</span></span><br><span class="line">               			<span class="comment">//res.Get(i).set(2, y, x, 0);</span></span><br><span class="line">               		&#125;</span><br><span class="line">               	&#125;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">return</span> res;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * get labels of `train` or `test`</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> fileName the file of 'train' or 'test' about label</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Blob <span class="title">getLabels</span><span class="params">(String fileName)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">try</span> (BufferedInputStream bin = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(fileName))) &#123;</span><br><span class="line">           <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];</span><br><span class="line">           bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">           <span class="keyword">if</span> (!<span class="string">"00000801"</span>.equals(bytesToHex(bytes))) &#123;</span><br><span class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Please select the correct file!"</span>);</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               bin.read(bytes, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">               <span class="keyword">int</span> number = Integer.parseInt(bytesToHex(bytes), <span class="number">16</span>);</span><br><span class="line">               Blob res = <span class="keyword">new</span> Blob(number, <span class="number">10</span>,<span class="number">1</span>, <span class="number">1</span>, Cube.FILLZEZORS);</span><br><span class="line">               <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; number; i++) &#123;</span><br><span class="line">                   res.Get(i).set(bin.read(), <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">return</span> res;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+分别需要填充到输入和输出。<br>输入的话呢是60000 * 1 * 28 * 28，这里需要注意的是灰度值我除了255.0<br>输出的话呢用one-hot，因为10种可能（0-9），所以就是60000 * 10 * 1 * 1<br>是个通道对应着softmax的是个输入输出。<br>准备完了这些之后我们需要准备我们训练的模型：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">	<span class="attr">"train"</span>:&#123;</span><br><span class="line">        <span class="attr">"learning rate"</span> : <span class="number">0.001</span>,</span><br><span class="line">        <span class="attr">"lr decay"</span>: <span class="number">0.9999</span>,</span><br><span class="line">        <span class="attr">"optimizer"</span>: <span class="string">"rmsprop"</span>,</span><br><span class="line">        <span class="attr">"momentum coefficient"</span>: <span class="number">0.95</span>,</span><br><span class="line">        <span class="attr">"rmsprop decay"</span>: <span class="number">0.99</span>,</span><br><span class="line">        <span class="attr">"reg coefficient"</span>: <span class="number">0.2</span>,</span><br><span class="line">        <span class="attr">"num epochs"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"batch size"</span>: <span class="number">50</span>,</span><br><span class="line">        <span class="attr">"lr update"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"snapshot"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"snapshot interval"</span>:<span class="number">20</span>,</span><br><span class="line">        <span class="attr">"fine tune"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"pre train model"</span>: <span class="string">"./test.modle"</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"net"</span>:[</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"conv1"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Conv"</span>,</span><br><span class="line">			<span class="attr">"kernel num"</span>:<span class="number">3</span>,</span><br><span class="line">			<span class="attr">"kernel height"</span>:<span class="number">5</span>,</span><br><span class="line">			<span class="attr">"kernel width"</span>:<span class="number">5</span>,</span><br><span class="line">			<span class="attr">"pad"</span>:<span class="number">2</span>,</span><br><span class="line">			<span class="attr">"stride"</span>:<span class="number">1</span>,			</span><br><span class="line">			<span class="attr">"conv weight init"</span>: <span class="string">"msra"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"pool1"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Pool"</span>, </span><br><span class="line">			<span class="attr">"kernel height"</span>:<span class="number">3</span>,</span><br><span class="line">			<span class="attr">"kernel width"</span>:<span class="number">3</span>,</span><br><span class="line">			<span class="attr">"stride"</span>:<span class="number">2</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"relu1"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Relu"</span> </span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"drop1"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Dropout"</span>,</span><br><span class="line">			<span class="attr">"drop rate"</span>: <span class="number">0.5</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"fc2"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Fc"</span>,   </span><br><span class="line">			<span class="attr">"kernel num"</span>:<span class="number">10</span>,</span><br><span class="line">			<span class="attr">"fc weight init"</span>:<span class="string">"msra"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="attr">"name"</span>:<span class="string">"softmax"</span>,</span><br><span class="line">			<span class="attr">"type"</span>:<span class="string">"Softmax"</span>	</span><br><span class="line">		&#125;</span><br><span class="line">	]      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+快照啥的我还没实现，主要是有点懒。。。</li>
+</ol>
+<ul>
+<li>学习率：0.001</li>
+<li>学习率衰减0.9999，给个接近一的数就好了，不用衰减的很大</li>
+<li>参数更新使用rmsprop，当然我还提供了momentum和sgd</li>
+<li>训练样本1次</li>
+<li>每个batch size有50个样本</li>
+<li>下面就是各种层了</li>
+</ul>
+<p>有了模型之后我们就需要加载这个模型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NetParam param = <span class="keyword">new</span> NetParam();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	param = JsonTools.GetCnnParam(<span class="string">"myModel_cnnfirst.json"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	System.out.println(<span class="string">"CNN Param read Error!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我提供了个静态方法专门用来导入。<br>填充数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Blob train_images = Mnist.getImages(<span class="string">"mnist/train/train-images.idx3-ubyte"</span>);</span><br><span class="line">Blob train_labels = Mnist.getLabels(<span class="string">"mnist/train/train-labels.idx1-ubyte"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>初始化网络：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Net net = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	net = <span class="keyword">new</span> Net(param,train_images,train_labels);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">	System.out.println(<span class="string">"Net init error!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写的比较草，所以只要了训练集。<br>在训练之前我们手写几个数字：<br><img src="img2.jpg" alt="shouxie"><br>然后我们直接输出他的可能性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\0.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\1.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\2.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\3.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\4.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\5.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\6.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\7.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\8.bmp"</span>)))[<span class="number">0</span>]));</span><br><span class="line">System.out.println(GetString(SoftmaxLayer.softmax_get_(net.test( Graph.getBlob(<span class="string">"C:\\Users\\a\\Desktop\\test\\9.bmp"</span>)))[<span class="number">0</span>]));</span><br></pre></td></tr></table></figure>
+<p><code>Graph.getBlob</code>得到我们单个图片的输入，使用net.test得到需要测试的输入数据的输出值，然后传递给softmax进行概率计算，返回的是一个double类型的数组（就是每个输出的概率值），然后调用自己的GetString得到字符串输出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">GetString</span><span class="params">(<span class="keyword">double</span>[] g)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">double</span> max = g[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; g.length;i++) &#123;</span><br><span class="line">		<span class="keyword">if</span>(g[i] &gt; max) &#123;</span><br><span class="line">			max = g[i];</span><br><span class="line">			index = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	String res = <span class="string">"预测最大可能的类别:"</span>+index+<span class="string">"\t可能性:"</span>+max;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了这些之后我们就可以调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.train();<span class="comment">//训练</span></span><br></pre></td></tr></table></figure>
+<p>训练就开始了，训练期间会输出损失值，正确率和进度<br>训练完毕之后就可以再预测一下，看下结果，我这里简单贴一下输出的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">预测最大可能的类别:1	可能性:0.15088678841313677</span><br><span class="line">预测最大可能的类别:7	可能性:0.13096024361576306</span><br><span class="line">预测最大可能的类别:9	可能性:0.16541533979038608</span><br><span class="line">预测最大可能的类别:9	可能性:0.15770358849700633</span><br><span class="line">预测最大可能的类别:1	可能性:0.1580772891202943</span><br><span class="line">预测最大可能的类别:9	可能性:0.1644280197622801</span><br><span class="line">预测最大可能的类别:9	可能性:0.16054313587429986</span><br><span class="line">预测最大可能的类别:9	可能性:0.1315615988557002</span><br><span class="line">预测最大可能的类别:9	可能性:0.15567194300064927</span><br><span class="line">预测最大可能的类别:9	可能性:0.16451444471281498</span><br><span class="line">当前训练次数:0	損失值:2.3914618339620244	准确率14.000000000000002%	当前进度:0.0%</span><br><span class="line">当前训练次数:1	損失值:2.300239870224877	准确率12.0%	当前进度:0.08333333333333334%</span><br><span class="line">当前训练次数:2	損失值:2.2317275920680752	准确率24.0%	当前进度:0.16666666666666669%</span><br><span class="line">当前训练次数:3	損失值:2.242225818126596	准确率20.0%	当前进度:0.25%</span><br><span class="line">当前训练次数:4	損失值:2.171027707628599	准确率20.0%	当前进度:0.33333333333333337%</span><br><span class="line">当前训练次数:5	損失值:2.1067916567748552	准确率22.0%	当前进度:0.4166666666666667%</span><br><span class="line">当前训练次数:6	損失值:2.0932036593437715	准确率34.0%	当前进度:0.5%</span><br><span class="line">当前训练次数:7	損失值:2.0302915435219466	准确率32.0%	当前进度:0.5833333333333334%</span><br><span class="line">当前训练次数:8	損失值:1.8635343803725808	准确率50.0%	当前进度:0.6666666666666667%</span><br><span class="line">当前训练次数:9	損失值:1.9585453836591684	准确率32.0%	当前进度:0.75%</span><br><span class="line">当前训练次数:10	損失值:1.978877139528592	准确率22.0%	当前进度:0.8333333333333334%</span><br><span class="line">当前训练次数:11	損失值:1.9902384241645896	准确率24.0%	当前进度:0.9166666666666666%</span><br><span class="line">当前训练次数:12	損失值:2.0420873144096543	准确率26.0%	当前进度:1.0%</span><br><span class="line">当前训练次数:13	損失值:1.6897064679384752	准确率54.0%	当前进度:1.0833333333333335%</span><br><span class="line">当前训练次数:14	損失值:1.6926356764617654	准确率60.0%	当前进度:1.1666666666666667%</span><br><span class="line">当前训练次数:15	損失值:1.7189233098386958	准确率46.0%	当前进度:1.25%</span><br><span class="line">当前训练次数:16	損失值:1.480252896290082	准确率60.0%	当前进度:1.3333333333333335%</span><br><span class="line">当前训练次数:17	損失值:1.5389264293606228	准确率54.0%	当前进度:1.4166666666666665%</span><br><span class="line">当前训练次数:18	損失值:1.626967065007884	准确率52.0%	当前进度:1.5%</span><br><span class="line">......中间内容省略......</span><br><span class="line">当前训练次数:1195	損失值:0.19112057434706473	准确率96.0%	当前进度:99.58333333333333%</span><br><span class="line">当前训练次数:1196	損失值:0.05352951050307908	准确率100.0%	当前进度:99.66666666666667%</span><br><span class="line">当前训练次数:1197	損失值:0.0803565317731044	准确率100.0%	当前进度:99.75%</span><br><span class="line">当前训练次数:1198	損失值:0.5872361406379709	准确率84.0%	当前进度:99.83333333333333%</span><br><span class="line">当前训练次数:1199	損失值:0.10712553062810029	准确率100.0%	当前进度:99.91666666666667%</span><br><span class="line">预测最大可能的类别:0	可能性:0.9926752540760908</span><br><span class="line">预测最大可能的类别:0	可能性:0.9967641949574358</span><br><span class="line">预测最大可能的类别:1	可能性:0.9918003449031905</span><br><span class="line">预测最大可能的类别:2	可能性:0.9924374734570615</span><br><span class="line">预测最大可能的类别:3	可能性:0.9849900242379964</span><br><span class="line">预测最大可能的类别:4	可能性:0.9893327948873324</span><br><span class="line">预测最大可能的类别:5	可能性:0.9545521357289892</span><br><span class="line">预测最大可能的类别:6	可能性:0.9961029307767508</span><br><span class="line">预测最大可能的类别:7	可能性:0.9998860249502625</span><br><span class="line">预测最大可能的类别:8	可能性:0.9756162928779206</span><br><span class="line">预测最大可能的类别:9	可能性:0.9679179856928872</span><br></pre></td></tr></table></figure>
+<p>可以看到我们一开始的预测是错误的，并且概率都在0.1左右，因为十分类，概率都是初始化都是0.1的，并且我们一开始的损失是2.3，原因是 -log(0.1) 就是2.3，随着我们的训练（大约半分钟吧），最终我们对预测的结果都是非常准确的，叨叨了0.999左右，这才是训练了一次训练集，训练个两三次差不多对这个模型就能拟合的差不多。<br>但是经过我对一些比较复杂的图片的识别测试发现，有的时候损失值一直不怎么下降，这也是我现在还没发出来的原因，我准备找找原因之后，先把CPU这个版本发出来，主要发亮部分：</p>
+<ol>
+<li>java代码框架</li>
+<li>工具</li>
+</ol>
+<p>这个工具主要由两部分组成，我前段时间编写的那个Cheetah脚本语言作为数据输入，然后驱动后面的CNN框架进行训练，前面用一个语言进行输入是为了提高工具的灵活性，比如可以从网络中进行数据获取之类的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/11/CTF%E5%85%A5%E9%97%A8%E9%A2%98/" rel="prev" title="CTF入门题">
+      <i class="fa fa-chevron-left"></i> CTF入门题
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN"><span class="nav-number">1.</span> <span class="nav-text">CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络"><span class="nav-number">1.1.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">1.2.</span> <span class="nav-text">卷积神经网络</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">134</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
