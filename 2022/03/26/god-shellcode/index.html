@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="上帝模式下的shellcode“当上帝想要隐藏，无法跳出思维的人们永远也不会发现”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="god_shellcode">
+<meta property="og:url" content="http://yoursite.com/2022/03/26/god-shellcode/index.html">
+<meta property="og:site_name" content="Wker">
+<meta property="og:description" content="上帝模式下的shellcode“当上帝想要隐藏，无法跳出思维的人们永远也不会发现”">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2022/03/26/god-shellcode/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/03/26/god-shellcode/2.jpg">
+<meta property="article:published_time" content="2022-03-26T01:45:49.000Z">
+<meta property="article:modified_time" content="2022-03-26T03:18:25.067Z">
+<meta property="article:author" content="Wker">
+<meta property="article:tag" content="VT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/03/26/god-shellcode/1.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/26/god-shellcode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>god_shellcode | Wker</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wker</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">计算机安全</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-首页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-首页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-文章">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-文章"></i>文章</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/26/god-shellcode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Image.JPG">
+      <meta itemprop="name" content="Wker">
+      <meta itemprop="description" content="一个萌新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wker">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          god_shellcode
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-26 09:45:49 / Modified: 11:18:25" itemprop="dateCreated datePublished" datetime="2022-03-26T09:45:49+08:00">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VT/" itemprop="url" rel="index">
+                    <span itemprop="name">VT</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="上帝模式下的shellcode"><a href="#上帝模式下的shellcode" class="headerlink" title="上帝模式下的shellcode"></a>上帝模式下的shellcode</h1><p>“当上帝想要隐藏，无法跳出思维的人们永远也不会发现”<br>                                                                                                                                                                    ——Wker</p>
+<p>对于硬盘文件中的shellcode保护起来相对轻松，可以使用的方法比较多，加密方法也比较多。但是当shellcode被加载到内存中时，由于特征的暴露，杀软也可以比较快速的定位到特征位置。</p>
+<p>那么是否有一种方法可以让处在ring0的内核也无法探测到这段被加载到应用程序的内存呢？</p>
+<p>是有的。</p>
+<p>计算机中存在比较严格的权限划分。</p>
+<p>在Windows操作系统的认知下，他所在的ring0是已经达到了最高权限，所以他可以俯视一切，并且可以欺骗一切，他欺骗应用程序独占4GB的内存，但是他没有想到是否有一种权限是高于他并且可以欺骗他。</p>
+<p>VT虚拟化已经不算是什么新颖的技术了，早在二零一几年的时候就已经应用比较广泛。</p>
+<p>当Windows开启虚拟化之后，整个操作系统跑在cpu给其设计的虚拟机上，为了能够更好的管理操作系统，衍生出了需要管理操作系统的权限，即host权限，因为当时在设计权限命名时可能没有虚拟化的概念，所以为了能够更好的表示其权限高于Windows操作系统的R0(guest权限)，所以将其称之为R-1，也就是这里我所描述的上帝视角。</p>
+<p>和操作系统欺骗应用程序类似，处于R-1的host同样的可以欺骗Windows内核。</p>
+<p>那么本篇文章将会通过内存隐匿的方式达到shellcode无痕化。</p>
+<h2 id="内存无痕化原理"><a href="#内存无痕化原理" class="headerlink" title="内存无痕化原理"></a>内存无痕化原理</h2><p>为了简化内存虚拟化的实现，以及提升内存虚拟化的性能，Intel推出了EPT(Enhanced Page Table)技术，即在原有的页表基础上新增了EPT页表实现另一次映射。这样，GVA-GPA-HPA两次地址转换都由CPU硬件自动完成。</p>
+<p>描述有点繁琐，简单介绍一下，由于开启了VT(虚拟化)，所以Windows认为的物理地址需要经过root的EPT进行映射。</p>
+<p>guest的虚拟内存转化为guest的物理内存，但这并不一定是真正的物理内存，需要经过EPT表进行转化到host的物理地址。</p>
+<p>EPT表的具体转化方式类似于四级页表，具体详细内容可以百度搜索。</p>
+<p>处在host权限的程序可以创建一张虚假的EPT传递给操作系统，当操作系统想要查找某一页内存时，我们返回其真正的内存页，担当需要执行这块内存时，通过EPT得到的是我们预先准备好的虚假内存。</p>
+<p>所以出现了执行的代码与读出来的代码不一致的情况。</p>
+<p>并且因特尔cpu允许内存页权限的完全可控化，也就是说这块内存可以只有执行权限，但是没有读写权限，这种畸形的内存页属性。</p>
+<h2 id="上帝模式的shellcode整体注入方式"><a href="#上帝模式的shellcode整体注入方式" class="headerlink" title="上帝模式的shellcode整体注入方式"></a>上帝模式的shellcode整体注入方式</h2><p>首先是得到程序将会执行的一块内存地址，这块内存地址中是正常的代码，也就是写一个比较长的无用代码（类似于__asm{mov eax,eax}）但是最好要长一些，防止覆盖。</p>
+<p>得到这个函数的虚拟地址之后，通过IRP传递给R0，通过IRP执行的代码运行在程序内部，所以得到的虚拟地址可以通过pdbr指向的页表转化为真实的物理地址。</p>
+<p>再在IRP中开启一个R0权限的线程，此线程用于开启VT虚拟化。</p>
+<p>在开启VT虚拟化之前生成一张自定义的EPT表，这张表中将得到的物理地址内容拷贝出一份作为执行页面，并且假页面的内容根据需要注入shellcode，将物理地址内存所在页权限设置为只可读写。</p>
+<p>当执行到shellcode所在内存时，由于没有执行权限，host将会接管操作系统，将页面替换为注入了shellcode的内存页面，并且将属性设置为只可以执行，当有程序读取这块内存时，又发生了异常，host将其页面修改为原始页面，并且属性设置为只可读写，以此往复，达到了读写与执行的分离。</p>
+<p>这种host接管操作系统的方式非常类似于Windows调试器的处理方式，并且处理这种页面问题和Wker_EXEDebug中的内存读写执行断点十分类似，如果还不清楚内存断点具体是如何运作的，可以参考Wker的博客了解如何实现内存断点。</p>
+<h3 id="第一步应用程序创建一个垃圾函数"><a href="#第一步应用程序创建一个垃圾函数" class="headerlink" title="第一步应用程序创建一个垃圾函数"></a>第一步应用程序创建一个垃圾函数</h3><p>很简单，只需要编写一些废话代码就可以。类似于：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">testFun</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		mov a,<span class="number">15</span></span><br><span class="line">		mov eax,ebx</span><br><span class="line">		mov ebx,eax</span><br><span class="line">		mov eax,ebx</span><br><span class="line">		mov ebx,eax</span><br><span class="line">		mov eax,ebx</span><br><span class="line">		mov ebx,eax</span><br><span class="line">		mov eax,ebx</span><br><span class="line">		mov ebx,eax</span><br><span class="line">		........</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是需要注意的是，需要关闭编译器自动转化内敛函数的开关，否则当编译器看到你这段代码不长，并且有极大优化空间，没有参数之类的情况时，将会自动将其以内敛函数的方式编译，当值此函数地址无法被调用。</p>
+<p>在加载内核驱动之后传递IRP之后，执行此垃圾函数。</p>
+<h3 id="得到虚拟地址的物理地址"><a href="#得到虚拟地址的物理地址" class="headerlink" title="得到虚拟地址的物理地址"></a>得到虚拟地址的物理地址</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 得到传入的ring3层虚拟地址</span></span><br><span class="line">			pOutAddress = (<span class="keyword">size_t</span>*)MmGetSystemAddressForMdlSafe(pIrp-&gt;MdlAddress, NormalPagePriority);</span><br><span class="line">			</span><br><span class="line">			RtlZeroMemory(&amp;virtualAddress,<span class="keyword">sizeof</span>(VIRTUAL_ADDRESS));</span><br><span class="line">			virtualAddress.ulVirtualAddress = *pOutAddress;</span><br><span class="line">			</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 得到页目录指针物理地址</span></span><br><span class="line">			_asm&#123;</span><br><span class="line">				mov eax,  cr3;</span><br><span class="line">				mov pdbr, eax;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 映射为虚拟地址以便取值</span></span><br><span class="line">			RtlZeroMemory(&amp;phyAddress,<span class="keyword">sizeof</span>(PHYSICAL_ADDRESS));</span><br><span class="line">			phyAddress.LowPart = pdbr;</span><br><span class="line">			pPdbr = (PULONG)MmMapIoSpace(phyAddress, <span class="keyword">sizeof</span>(PHYSICAL_ADDRESS), MmNonCached);</span><br><span class="line">			KdPrint((<span class="string">"pdbr = 0x%08X, 映射后的地址0x%p\n"</span>, pdbr, pPdbr));</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 定位页目录指针表并获取页目录表物理页地址</span></span><br><span class="line">			<span class="comment">// ulDirAddress 为页目录表物理页地址</span></span><br><span class="line">			ulPointerIdx = virtualAddress.stVirtualAddress.dirPointer;</span><br><span class="line">			ulDirBaseAddress = pPdbr[ulPointerIdx];</span><br><span class="line">			ulDirBaseAddress &amp;= <span class="number">0xFFFFF000</span>;			<span class="comment">// 中间物理地址</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">// 定位页表项</span></span><br><span class="line">			ulDirAddress = ulDirBaseAddress + virtualAddress.stVirtualAddress.dirIndex * <span class="number">0x8</span>;</span><br><span class="line">			phyAddress.LowPart = ulDirAddress;</span><br><span class="line">			pPageTable = (PULONG)MmMapIoSpace(phyAddress, <span class="keyword">sizeof</span>(PHYSICAL_ADDRESS), MmNonCached);</span><br><span class="line">			ulPageTable = *pPageTable;</span><br><span class="line">			ulPageTable &amp;= <span class="number">0xFFFFF000</span>;				 <span class="comment">// 中间物理地址</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">// 定位物理页面</span></span><br><span class="line">			ulPageTable += virtualAddress.stVirtualAddress.tableIndex * <span class="number">0x8</span>;</span><br><span class="line">			phyAddress.LowPart = ulPageTable;</span><br><span class="line">			pPageBase = (PULONG)MmMapIoSpace(phyAddress, <span class="keyword">sizeof</span>(PHYSICAL_ADDRESS), MmNonCached);</span><br><span class="line">			ulPageBase = *pPageBase;</span><br><span class="line">			ulPageBase &amp;= <span class="number">0xFFFFF000</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 得到物理地址</span></span><br><span class="line">			ulPhyAddress = ulPageBase + virtualAddress.stVirtualAddress.offset;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 映射为虚拟地址，获取其值进行验证</span></span><br><span class="line">			phyAddress.LowPart = ulPhyAddress;</span><br><span class="line">			pPhyAddress = (PWCHAR)MmMapIoSpace(phyAddress, <span class="keyword">sizeof</span>(PHYSICAL_ADDRESS), MmNonCached);</span><br><span class="line">			KdPrint((<span class="string">"虚拟地址：0x%08X, 对应物理地址：0x%08X"</span>, *pOutAddress, ulPhyAddress));</span><br></pre></td></tr></table></figure>
+
+<p>通过CR3寄存器得到页目录表页面的物理地址(pdbr)，然后一级级寻址得到物理地址。</p>
+<h3 id="创建虚假的EPT表"><a href="#创建虚假的EPT表" class="headerlink" title="创建虚假的EPT表"></a>创建虚假的EPT表</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ULONG64* <span class="title">MyEptInitialization</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ULONG64 *ept_PDPT, *ept_PDT, *ept_PT;</span><br><span class="line">	</span><br><span class="line">	ULONG64 * create_page;</span><br><span class="line">	PHYSICAL_ADDRESS create_page_PA;</span><br><span class="line">    PHYSICAL_ADDRESS FirstPtePA, FirstPdePA, FirstPdptePA;</span><br><span class="line">	ULONG deviation;<span class="comment">//这个是函数地址对于函数页面地址的偏移</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> a, b, c;</span><br><span class="line">	</span><br><span class="line">	createCode();</span><br><span class="line">	</span><br><span class="line">    initEptPagesPool();</span><br><span class="line">    ept_PML4T = AllocateOnePage();</span><br><span class="line">    ept_PDPT = AllocateOnePage();</span><br><span class="line">    FirstPdptePA = MmGetPhysicalAddress(ept_PDPT);</span><br><span class="line">    *ept_PML4T = (FirstPdptePA.QuadPart) + <span class="number">7</span>;</span><br><span class="line">    <span class="keyword">for</span> (a = <span class="number">0</span>; a &lt; <span class="number">4</span>; a++)</span><br><span class="line">    &#123;</span><br><span class="line">        ept_PDT = AllocateOnePage();</span><br><span class="line">        FirstPdePA = MmGetPhysicalAddress(ept_PDT);</span><br><span class="line">        *ept_PDPT = (FirstPdePA.QuadPart) + <span class="number">7</span>;</span><br><span class="line">        ept_PDPT++;</span><br><span class="line">        <span class="keyword">for</span> (b = <span class="number">0</span>; b &lt; <span class="number">512</span>; b++)</span><br><span class="line">        &#123;</span><br><span class="line">            ept_PT = AllocateOnePage();</span><br><span class="line">            FirstPtePA = MmGetPhysicalAddress(ept_PT);</span><br><span class="line">            *ept_PDT = (FirstPtePA.QuadPart) + <span class="number">7</span>;</span><br><span class="line">            ept_PDT++;</span><br><span class="line">            <span class="keyword">for</span> (c = <span class="number">0</span>; c &lt; <span class="number">512</span>; c++)</span><br><span class="line">            &#123;	</span><br><span class="line">                *ept_PT  = ((a &lt;&lt; <span class="number">30</span>) | (b &lt;&lt; <span class="number">21</span>) | (c &lt;&lt; <span class="number">12</span>) | <span class="number">0x37</span>) &amp; <span class="number">0xFFFFFFFF</span>;</span><br><span class="line">                <span class="keyword">if</span> ((((a &lt;&lt; <span class="number">30</span>) | (b &lt;&lt; <span class="number">21</span>) | (c &lt;&lt; <span class="number">12</span>) | <span class="number">0x37</span>) &amp; <span class="number">0xFFFFF000</span>) == (origin_fun_pa &amp; <span class="number">0xFFFFF000</span>))</span><br><span class="line">                &#123;</span><br><span class="line">					RtlZeroMemory(&amp;create_page_PA,<span class="keyword">sizeof</span>(PHYSICAL_ADDRESS));</span><br><span class="line">					create_page_PA.LowPart = origin_fun_pa &amp; <span class="number">0xFFFFF000</span>;</span><br><span class="line">					create_page = MmMapIoSpace(create_page_PA,PAGE_SIZE,MmNonCached);</span><br><span class="line">					RtlZeroMemory(&amp;origin_pa,<span class="keyword">sizeof</span>(PHYSICAL_ADDRESS));</span><br><span class="line">					origin_pa.LowPart = ((a &lt;&lt; <span class="number">30</span>) | (b &lt;&lt; <span class="number">21</span>) | (c &lt;&lt; <span class="number">12</span>) | <span class="number">0x37</span>);</span><br><span class="line">					deviation = origin_fun_pa - (origin_fun_pa &amp; <span class="number">0xFFFFF000</span>);</span><br><span class="line">					fake_mem = AllocateFakePage(create_page,deviation,code,codelength);</span><br><span class="line">					hook_pa = MmGetPhysicalAddress(fake_mem);</span><br><span class="line">					*ept_PT = (hook_pa.QuadPart | <span class="number">0x34</span>) &amp; <span class="number">0xFFFFFFFF</span>;</span><br><span class="line">					Log(<span class="string">"fake_mem"</span>,fake_mem);</span><br><span class="line">					Log(<span class="string">"*ept_PT"</span>,*ept_PT);</span><br><span class="line">					</span><br><span class="line">					<span class="comment">//__asm int 3;</span></span><br><span class="line">                    hook_ept_pt = ept_PT;</span><br><span class="line">                &#125;</span><br><span class="line">                ept_PT++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ept_PML4T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体操作方式和创建一个四级页表很相似，但是需要注意的是，将垃圾函数所在的物理内存页属性设置为只可读写不可执行。</p>
+<h3 id="开启VT虚拟化"><a href="#开启VT虚拟化" class="headerlink" title="开启VT虚拟化"></a>开启VT虚拟化</h3><p>此过程稍许复杂，类似于Windows窗口注册的方式，所以只简单介绍需要填充EPT的字段。</p>
+<p>EPT填充在虚拟化的guest控制域中</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vmx_VmWrite(CPU_BASED_VM_EXEC_CONTROL, VmxAdjustControls(<span class="number">0x80000000</span>, MSR_IA32_VMX_PROCBASED_CTLS));</span><br><span class="line">Vmx_VmWrite(EPT_POINTER, (EPTP | <span class="number">6</span> | (<span class="number">3</span> &lt;&lt; <span class="number">3</span>)) &amp; <span class="number">0xFFFFFFFF</span>);</span><br><span class="line">Vmx_VmWrite(EPT_POINTER_HIGH, (EPTP | <span class="number">6</span> | (<span class="number">3</span> &lt;&lt; <span class="number">3</span>)) &gt;&gt; <span class="number">32</span>);</span><br><span class="line">Vmx_VmWrite(EPT_POINTER_HIGH, EPTP &gt;&gt; <span class="number">32</span>);</span><br><span class="line">Vmx_VmWrite(SECONDARY_VM_EXEC_CONTROL, VmxAdjustControls(<span class="number">0x2</span>, MSR_IA32_VMX_PROCBASED_CTLS2));</span><br></pre></td></tr></table></figure>
+
+<p>打开EPT开关，传入自己的EPT表地址，通过高低32位的方式填充。</p>
+<h3 id="捕获FP异常"><a href="#捕获FP异常" class="headerlink" title="捕获FP异常"></a>捕获FP异常</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HandleEPT</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ULONG		ExitQualification;</span><br><span class="line"></span><br><span class="line">    ExitQualification = Vmx_VmRead(EXIT_QUALIFICATION) ;</span><br><span class="line">	<span class="keyword">if</span>(ExitQualification &amp; <span class="number">3</span>)&#123;</span><br><span class="line">		<span class="comment">//read write</span></span><br><span class="line">		Log(<span class="string">"EPT read"</span>,<span class="number">0</span>);</span><br><span class="line">		*hook_ept_pt = ((origin_pa.LowPart &amp; <span class="number">0xFFFFF000</span>) | <span class="number">0x33</span>);</span><br><span class="line">		<span class="comment">//*hook_ept_pt = ((hook_pa.LowPart &amp; 0xFFFFF000) | 0x33);</span></span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="comment">//exec</span></span><br><span class="line">		Log(<span class="string">"EPT EXEC"</span>,<span class="number">0</span>);</span><br><span class="line">		*hook_ept_pt = ((hook_pa.LowPart &amp; <span class="number">0xFFFFF000</span>) | <span class="number">0x34</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处可以看到，页面异常时将虚假页面和真正页面的替换过程</p>
+<p>3代表可读写(11)，4代表可执行(100)，7代表可读写执行(111)</p>
+<p>和linux的chmod权限设置方式相同。</p>
+<h3 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h3><p>shellcode需要注意的是，最好使用push addr,ret的方式进行函数跳转，防止因为绝对地址带来的干扰问题。</p>
+<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p><img src="1.jpg" alt="效果1"></p>
+<p>可以看到，这里od读取的内存时原本正常的代码内容</p>
+<p>按下回车再次执行垃圾函数。</p>
+<p><img src="2.jpg" alt="效果2"></p>
+<p>此时虽然内存展示是原本函数，但是执行的却是弹出了MessageBox（由于push的type类型是0，xp上面显示的就是这个样子）。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>由于内存读写执行的分离，当时用msf类型的shellcode时，需要分离读写，将写与执行在一起，保证shellcode更改自身可以成功写入到注入了shellcode的内存</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>代码会上传到我的github上，想了解可以关注我的github</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VT/" rel="tag"># VT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/07/CNN%E6%A1%86%E6%9E%B6%E5%88%9D%E6%8E%A2/" rel="prev" title="CNN框架初探">
+      <i class="fa fa-chevron-left"></i> CNN框架初探
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#上帝模式下的shellcode"><span class="nav-number">1.</span> <span class="nav-text">上帝模式下的shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存无痕化原理"><span class="nav-number">1.1.</span> <span class="nav-text">内存无痕化原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上帝模式的shellcode整体注入方式"><span class="nav-number">1.2.</span> <span class="nav-text">上帝模式的shellcode整体注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步应用程序创建一个垃圾函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一步应用程序创建一个垃圾函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#得到虚拟地址的物理地址"><span class="nav-number">1.2.2.</span> <span class="nav-text">得到虚拟地址的物理地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建虚假的EPT表"><span class="nav-number">1.2.3.</span> <span class="nav-text">创建虚假的EPT表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启VT虚拟化"><span class="nav-number">1.2.4.</span> <span class="nav-text">开启VT虚拟化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获FP异常"><span class="nav-number">1.2.5.</span> <span class="nav-text">捕获FP异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shellcode"><span class="nav-number">1.2.6.</span> <span class="nav-text">shellcode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果展示"><span class="nav-number">1.3.</span> <span class="nav-text">效果展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">1.4.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">1.5.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Wker"
+      src="/images/Image.JPG">
+  <p class="site-author-name" itemprop="name">Wker</p>
+  <div class="site-description" itemprop="description">一个萌新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wker</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+
+
+<br/>
+        
+        <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv" style='display:none'>
+                本站访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
